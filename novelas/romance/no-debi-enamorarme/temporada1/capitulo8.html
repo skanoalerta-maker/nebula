@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capítulo 8 | No debí enamorarme de ti</title>
+  <meta name="description" content="Capítulo 8 de No debí enamorarme de ti: Cinco minutos." />
+
+  <style>
+    :root{
+      --bg:#0a0b10;
+      --bg2:#131722;
+      --card:rgba(20,24,35,.9);
+      --line:rgba(255,255,255,.08);
+      --text:#f7f7fb;
+      --muted:#b8bfd1;
+      --muted2:#8f98b0;
+      --accent:#b91c1c;
+      --accent2:#ef4444;
+      --shadow:0 24px 60px rgba(0,0,0,.42);
+      --radius:22px;
+      --max:860px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+
+    body{
+      margin:0;
+      font-family:Arial,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(185,28,28,.08), transparent 24%),
+        radial-gradient(circle at top right, rgba(239,68,68,.05), transparent 22%),
+        linear-gradient(180deg, #07080d 0%, #10131d 48%, #0a0b10 100%);
+      line-height:1.8;
+    }
+
+    a{color:inherit;text-decoration:none}
+
+    .topbar{
+      position:sticky;
+      top:0;
+      backdrop-filter:blur(14px);
+      background:rgba(7,8,13,.72);
+      border-bottom:1px solid var(--line);
+    }
+
+    .topbar-inner{
+      max-width:1100px;
+      margin:auto;
+      padding:16px 20px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    .brand{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+
+    .brand-badge{
+      width:38px;height:38px;
+      border-radius:12px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg, rgba(185,28,28,.22), rgba(239,68,68,.08));
+      border:1px solid rgba(239,68,68,.18);
+      color:#ffd2d2;
+      font-weight:700;
+    }
+
+    .brand-title{
+      font-size:14px;
+      font-weight:700;
+      color:#fff;
+    }
+
+    .brand-sub{
+      font-size:12px;
+      color:var(--muted2);
+    }
+
+    .btn{
+      padding:10px 16px;
+      border-radius:12px;
+      font-size:14px;
+      font-weight:700;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg, var(--accent), var(--accent2));
+      border:none;
+      color:#fff;
+    }
+
+    .hero{
+      padding:60px 20px;
+      background:
+        linear-gradient(180deg, rgba(7,8,13,.6), rgba(7,8,13,1)),
+        url("../../assets/covers/no-debi-enamorarme.jpg");
+      background-size:cover;
+      background-position:center;
+    }
+
+    .hero-inner{
+      max-width:900px;
+      margin:auto;
+    }
+
+    .hero h1{
+      font-size:48px;
+      margin-bottom:10px;
+    }
+
+    .hero p{
+      font-size:18px;
+      color:#eadede;
+    }
+
+    .content{
+      max-width:860px;
+      margin:auto;
+      padding:30px 20px 60px;
+    }
+
+    .reader{
+      background:rgba(20,24,35,.85);
+      border-radius:22px;
+      padding:30px;
+      border:1px solid var(--line);
+    }
+
+    .lead{
+      font-size:19px;
+      margin-bottom:24px;
+      border-left:3px solid var(--accent2);
+      padding-left:16px;
+    }
+
+    .story p{
+      margin-bottom:18px;
+      font-size:17px;
+    }
+
+    .quote{
+      margin:26px 0;
+      padding:16px;
+      text-align:center;
+      border-radius:16px;
+      background:rgba(239,68,68,.08);
+    }
+
+    .divider{
+      height:1px;
+      margin:28px auto;
+      width:80px;
+      background:linear-gradient(90deg, transparent, var(--accent2), transparent);
+    }
+
+    .nav{
+      margin-top:30px;
+      display:flex;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    @media(max-width:640px){
+      .btn{width:100%}
+      .hero h1{font-size:32px}
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <div class="brand-badge">R</div>
+      <div>
+        <div class="brand-title">No debí enamorarme de ti</div>
+        <div class="brand-sub">Romance</div>
+      </div>
+    </div>
+
+    <a href="../../index.html" class="btn">← Inicio</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <h1>Capítulo 8</h1>
+    <p>Cinco minutos nunca son solo cinco minutos.</p>
+  </div>
+</section>
+
+<main class="content">
+  <div class="reader">
+
+    <p class="lead">
+      Valentina salió sabiendo exactamente lo que estaba haciendo… y aun así no se detuvo.
+    </p>
+
+    <div class="story">
+
+      <p>No era impulso.</p>
+      <p>No era error.</p>
+      <p>No era accidente.</p>
+
+      <div class="quote">Era elección.</div>
+
+      <div class="divider"></div>
+
+      <p>Cuando lo vio, todo volvió demasiado rápido.</p>
+
+      <p>La noche.</p>
+      <p>El café.</p>
+      <p>La forma en que él la miraba.</p>
+
+      <div class="quote">Demasiado cerca para ser casual.</div>
+
+      <div class="divider"></div>
+
+      <p>—Hola —dijo Martín.</p>
+      <p>—Hola.</p>
+
+      <p>Valentina mantuvo distancia.</p>
+
+      <div class="quote">Pero no suficiente.</div>
+
+      <div class="divider"></div>
+
+      <p>—Esto no es buena idea —dijo ella.</p>
+
+      <p>—Entonces ¿por qué bajaste?</p>
+
+      <div class="quote">Porque quería verlo.</div>
+
+      <div class="divider"></div>
+
+      <p>—No me gusta perder el control —dijo.</p>
+
+      <p>—No lo estás perdiendo.</p>
+
+      <div class="quote">—Lo estás entregando.</div>
+
+      <div class="divider"></div>
+
+      <p>Valentina sintió el golpe de esa frase.</p>
+
+      <p>No era discusión.</p>
+      <p>Era verdad.</p>
+
+      <div class="quote">Y eso la desarmó.</div>
+
+      <div class="divider"></div>
+
+      <p>—Tengo que subir —dijo.</p>
+
+      <p>Martín asintió.</p>
+
+      <div class="quote">Y no insistió.</div>
+
+      <div class="divider"></div>
+
+      <p>Valentina lo miró un segundo más.</p>
+
+      <div class="quote">Demasiado.</div>
+
+      <div class="divider"></div>
+
+      <p>Se dio la vuelta.</p>
+      <p>Entró sin mirar atrás.</p>
+
+      <div class="quote">
+        Porque sabía exactamente lo que iba a pasar si lo hacía.
+      </div>
+
+    </div>
+
+    <div class="nav">
+      <a href="capitulo7.html" class="btn">← Capítulo 7</a>
+      <a href="capitulo9.html" class="btn btn-primary">Capítulo 9 →</a>
+    </div>
+
+  </div>
+</main>
+
+</body>
+</html>
