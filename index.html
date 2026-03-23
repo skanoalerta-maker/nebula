@@ -15,9 +15,44 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="bg-orb orb-1"></div>
-  <div class="bg-orb orb-2"></div>
-  <div class="bg-grid"></div>
+  <div class="cosmos">
+    <div class="stars stars-a"></div>
+    <div class="stars stars-b"></div>
+    <div class="nebula-glow glow-1"></div>
+    <div class="nebula-glow glow-2"></div>
+
+    <svg class="constellations" viewBox="0 0 1440 900" preserveAspectRatio="none" aria-hidden="true">
+      <g class="constellation-group group-1">
+        <line x1="120" y1="160" x2="220" y2="220"></line>
+        <line x1="220" y1="220" x2="300" y2="180"></line>
+        <line x1="300" y1="180" x2="360" y2="260"></line>
+        <circle cx="120" cy="160" r="3"></circle>
+        <circle cx="220" cy="220" r="3"></circle>
+        <circle cx="300" cy="180" r="3"></circle>
+        <circle cx="360" cy="260" r="3"></circle>
+      </g>
+
+      <g class="constellation-group group-2">
+        <line x1="980" y1="140" x2="1060" y2="210"></line>
+        <line x1="1060" y1="210" x2="1140" y2="170"></line>
+        <line x1="1140" y1="170" x2="1220" y2="250"></line>
+        <circle cx="980" cy="140" r="3"></circle>
+        <circle cx="1060" cy="210" r="3"></circle>
+        <circle cx="1140" cy="170" r="3"></circle>
+        <circle cx="1220" cy="250" r="3"></circle>
+      </g>
+
+      <g class="constellation-group group-3">
+        <line x1="420" y1="620" x2="520" y2="680"></line>
+        <line x1="520" y1="680" x2="610" y2="640"></line>
+        <line x1="610" y1="640" x2="700" y2="710"></line>
+        <circle cx="420" cy="620" r="3"></circle>
+        <circle cx="520" cy="680" r="3"></circle>
+        <circle cx="610" cy="640" r="3"></circle>
+        <circle cx="700" cy="710" r="3"></circle>
+      </g>
+    </svg>
+  </div>
 
   <header class="site-header">
     <div class="container nav-shell">
@@ -45,35 +80,20 @@
     <section class="hero" id="destacada">
       <div class="container hero-grid">
         <div class="hero-copy">
-          <div class="eyebrow">Plataforma de lectura</div>
+          <div class="eyebrow">Universo Nébula</div>
           <h1>
-            Historias que te atrapan
-            <span>desde el primer capítulo</span>
+            Historias con alma cósmica
+            <span>para leer desde cualquier lugar</span>
           </h1>
+
           <p>
-            Explora novelas por géneros, guarda tu progreso y sigue leyendo
-            desde cualquier dispositivo. Nébula está pensada para una
-            experiencia moderna, limpia y adictiva.
+            Explora novelas por géneros, sigue tu progreso y descubre nuevas
+            historias en una experiencia visual más limpia, elegante y envolvente.
           </p>
 
           <div class="hero-actions">
             <a class="btn btn-primary" href="#catalogo">Explorar historias</a>
             <a class="btn btn-secondary" href="#generos">Ver géneros</a>
-          </div>
-
-          <div class="hero-stats">
-            <div class="stat-card">
-              <small>Lectura gratis</small>
-              <strong>Primeros 3 capítulos</strong>
-            </div>
-            <div class="stat-card">
-              <small>Acceso premium</small>
-              <strong>$1.500 CLP</strong>
-            </div>
-            <div class="stat-card">
-              <small>Compatible</small>
-              <strong>PC · Móvil · Tablet</strong>
-            </div>
           </div>
         </div>
 
@@ -91,7 +111,6 @@
           <div class="hero-feature-content">
             <div class="story-tags">
               <span id="featuredGenreTag">Futurista</span>
-              <span id="featuredSeasonTag">Temporada 1</span>
             </div>
 
             <h2 id="featuredTitle">Código Nébula</h2>
@@ -100,15 +119,10 @@
               abre una nueva grieta en el sistema.
             </p>
 
-            <div class="feature-meta">
-              <div>
-                <small>Visitas</small>
-                <strong id="featuredViews">0</strong>
-              </div>
-              <div>
-                <small>Gratis</small>
-                <strong id="featuredFree">3 capítulos</strong>
-              </div>
+            <div class="feature-inline-meta">
+              <span><strong id="featuredChapters">12</strong> capítulos</span>
+              <span><strong id="featuredViews">0</strong> vistas</span>
+              <span><strong id="featuredFree">3</strong> gratis</span>
             </div>
 
             <div class="story-actions">
@@ -209,6 +223,7 @@
         ruta: "novelas/futurista/codigo-nebula/temporada1/capitulo1.html",
         carpeta: "codigo-nebula",
         temporada: "Temporada 1",
+        capitulos: 12,
         visitas: 1542,
         gratis: 3,
         destacada: true
@@ -223,6 +238,7 @@
         ruta: "novelas/romance/no-debi-enamorarme/temporada1/capitulo1.html",
         carpeta: "no-debi-enamorarme",
         temporada: "Temporada 1",
+        capitulos: 10,
         visitas: 2984,
         gratis: 3,
         destacada: false
@@ -237,6 +253,7 @@
         ruta: "novelas/romance/despues-de-tu-adios/temporada1/capitulo1.html",
         carpeta: "despues-de-tu-adios",
         temporada: "Temporada 1",
+        capitulos: 8,
         visitas: 1187,
         gratis: 3,
         destacada: false
@@ -275,11 +292,11 @@
       document.getElementById("featuredCover").src = destacada.portada;
       document.getElementById("featuredCover").alt = destacada.titulo;
       document.getElementById("featuredGenreTag").textContent = capitalizar(destacada.genero);
-      document.getElementById("featuredSeasonTag").textContent = destacada.temporada || "Temporada 1";
       document.getElementById("featuredTitle").textContent = destacada.titulo;
       document.getElementById("featuredDescription").textContent = destacada.descripcion;
       document.getElementById("featuredViews").textContent = destacada.visitas || 0;
-      document.getElementById("featuredFree").textContent = (destacada.gratis || 3) + " capítulos";
+      document.getElementById("featuredChapters").textContent = destacada.capitulos || 0;
+      document.getElementById("featuredFree").textContent = destacada.gratis || 3;
       document.getElementById("featuredReadLink").href = destacada.ruta;
 
       const continueBtn = document.getElementById("featuredContinueBtn");
@@ -326,27 +343,20 @@
             <div class="story-cover-shadow"></div>
             <div class="story-badges">
               <span>${capitalizar(novela.genero)}</span>
-              <span>${novela.temporada || "Temporada 1"}</span>
             </div>
           </div>
 
           <div class="story-body">
             <div class="story-topline">
               <h3>${novela.titulo}</h3>
-              <small>${novela.visitas || 0} visitas</small>
             </div>
 
             <p>${novela.descripcion}</p>
 
-            <div class="story-mini-meta">
-              <div>
-                <small>Gratis</small>
-                <strong>${novela.gratis || 3} capítulos</strong>
-              </div>
-              <div>
-                <small>Acceso completo</small>
-                <strong>$1.500 CLP</strong>
-              </div>
+            <div class="story-footer-meta">
+              <span>${novela.capitulos || 0} capítulos</span>
+              <span>${novela.visitas || 0} vistas</span>
+              <span>${novela.gratis || 3} gratis</span>
             </div>
 
             <div class="story-card-actions">
