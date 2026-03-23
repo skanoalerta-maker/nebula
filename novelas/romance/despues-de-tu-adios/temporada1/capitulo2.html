@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capítulo 2 | Después de tu adiós</title>
+  <meta name="description" content="Capítulo 2 de Después de tu adiós: Verte otra vez." />
+  <style>
+    :root{
+      --bg:#0a0b10;
+      --bg2:#131722;
+      --card:rgba(20,24,35,.9);
+      --line:rgba(255,255,255,.08);
+      --text:#f7f7fb;
+      --muted:#b8bfd1;
+      --muted2:#8f98b0;
+      --accent:#b91c1c;
+      --accent2:#ef4444;
+      --shadow:0 24px 60px rgba(0,0,0,.42);
+      --radius:22px;
+      --max:860px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+
+    body{
+      margin:0;
+      font-family:Arial,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(185,28,28,.08), transparent 24%),
+        radial-gradient(circle at top right, rgba(239,68,68,.05), transparent 22%),
+        linear-gradient(180deg, #07080d 0%, #10131d 48%, #0a0b10 100%);
+      line-height:1.8;
+      overflow-x:hidden;
+      position:relative;
+    }
+
+    a{color:inherit;text-decoration:none}
+
+    .page{
+      min-height:100vh;
+      position:relative;
+      z-index:1;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:30;
+      backdrop-filter:blur(14px);
+      background:rgba(7,8,13,.72);
+      border-bottom:1px solid var(--line);
+    }
+
+    .topbar-inner{
+      max-width:1100px;
+      margin:0 auto;
+      padding:16px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .brand-badge{
+      width:38px;
+      height:38px;
+      border-radius:12px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg, rgba(185,28,28,.22), rgba(239,68,68,.08));
+      border:1px solid rgba(239,68,68,.18);
+      box-shadow:0 0 24px rgba(185,28,28,.12);
+      font-weight:700;
+      color:#ffd2d2;
+      flex:0 0 auto;
+    }
+
+    .brand-title{
+      font-size:14px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:#fff1f1;
+      margin:0 0 2px;
+    }
+
+    .brand-sub{
+      font-size:12px;
+      color:var(--muted2);
+      margin:0;
+    }
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height:44px;
+      padding:0 18px;
+      border-radius:12px;
+      font-size:14px;
+      font-weight:700;
+      transition:transform .18s ease, background .18s ease, border-color .18s ease;
+      border:1px solid transparent;
+      cursor:pointer;
+    }
+
+    .btn:hover{transform:translateY(-1px)}
+
+    .btn-primary{
+      background:linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+      color:#fff;
+      box-shadow:0 12px 28px rgba(185,28,28,.25);
+    }
+
+    .btn-ghost{
+      background:rgba(255,255,255,.03);
+      border-color:var(--line);
+      color:#f2eaea;
+    }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      border-bottom:1px solid rgba(255,255,255,.04);
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(180deg, rgba(7,8,13,.56) 0%, rgba(7,8,13,.90) 82%, rgba(7,8,13,1) 100%),
+        url("../../assets/covers/despues-de-tu-adios.jpg");
+      background-size:cover;
+      background-position:center;
+      opacity:.28;
+      filter:saturate(.95);
+    }
+
+    .hero-inner{
+      position:relative;
+      z-index:1;
+      max-width:1100px;
+      margin:0 auto;
+      padding:56px 20px 34px;
+    }
+
+    .crumb{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.06);
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:18px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:28px;
+      align-items:end;
+    }
+
+    .hero-copy h1{
+      margin:0 0 12px;
+      font-size:clamp(34px, 6vw, 64px);
+      line-height:1.02;
+      letter-spacing:.02em;
+      color:white;
+      text-shadow:0 0 22px rgba(185,28,28,.18);
+    }
+
+    .eyebrow{
+      margin:0 0 14px;
+      color:#ffb1b1;
+      font-weight:700;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      font-size:12px;
+    }
+
+    .hero-copy p{
+      margin:0;
+      max-width:700px;
+      color:#eadede;
+      font-size:18px;
+      line-height:1.75;
+    }
+
+    .hero-side{
+      display:flex;
+      justify-content:flex-end;
+    }
+
+    .chapter-card{
+      width:min(100%,360px);
+      background:linear-gradient(180deg, rgba(20,24,35,.85), rgba(12,14,22,.92));
+      border:1px solid rgba(239,68,68,.16);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:22px;
+      backdrop-filter:blur(16px);
+    }
+
+    .chapter-label{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 12px;
+      border-radius:999px;
+      background:rgba(239,68,68,.08);
+      border:1px solid rgba(239,68,68,.14);
+      color:#ffbdbd;
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:14px;
+    }
+
+    .chapter-card h2{
+      margin:0 0 10px;
+      font-size:24px;
+      line-height:1.15;
+      color:white;
+    }
+
+    .chapter-card p{
+      margin:0 0 18px;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.7;
+    }
+
+    .meta{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .meta-item{
+      padding:12px;
+      border-radius:14px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.05);
+    }
+
+    .meta-k{
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--muted2);
+      margin:0 0 6px;
+    }
+
+    .meta-v{
+      margin:0;
+      font-size:13px;
+      color:#fff1f1;
+      font-weight:700;
+    }
+
+    .content-wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:24px 18px 70px;
+    }
+
+    .reader{
+      position:relative;
+      background:linear-gradient(180deg, rgba(20,24,35,.80), rgba(10,12,18,.90));
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+
+    .reader-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:18px 22px;
+      border-bottom:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+    }
+
+    .reader-top-left h3{
+      margin:0 0 4px;
+      font-size:18px;
+      color:#fff7f7;
+    }
+
+    .reader-top-left p{
+      margin:0;
+      color:var(--muted2);
+      font-size:13px;
+    }
+
+    .reader-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:34px;
+      padding:0 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.06);
+      color:#ffe2e2;
+      font-size:12px;
+      font-weight:700;
+      white-space:nowrap;
+    }
+
+    .reader-body{
+      padding:30px 24px 18px;
+    }
+
+    .lead{
+      font-size:19px;
+      line-height:1.85;
+      color:#fff1f1;
+      margin:0 0 24px;
+      padding:18px 18px 18px 20px;
+      border-left:3px solid rgba(239,68,68,.42);
+      background:rgba(239,68,68,.06);
+      border-radius:0 14px 14px 0;
+    }
+
+    .story p{
+      margin:0 0 20px;
+      color:#e7dede;
+      font-size:17px;
+      line-height:1.8;
+      letter-spacing:.01em;
+    }
+
+    .story .quote{
+      margin:30px 0;
+      padding:18px 20px;
+      border-radius:18px;
+      background:linear-gradient(180deg, rgba(185,28,28,.10), rgba(239,68,68,.04));
+      border:1px solid rgba(239,68,68,.12);
+      color:#fff3f3;
+      font-size:18px;
+      line-height:1.6;
+      text-align:center;
+      box-shadow:0 12px 30px rgba(0,0,0,.18);
+    }
+
+    .story .divider{
+      width:86px;
+      height:1px;
+      background:linear-gradient(90deg, transparent, rgba(239,68,68,.6), transparent);
+      margin:30px auto;
+    }
+
+    .reader-bottom{
+      padding:22px 24px 26px;
+      border-top:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .reader-note{
+      color:var(--muted2);
+      font-size:13px;
+      margin:0;
+    }
+
+    .nav-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .footer-space{height:20px}
+
+    @media (max-width:900px){
+      .hero-grid{grid-template-columns:1fr}
+      .hero-side{justify-content:flex-start}
+      .chapter-card{width:100%;max-width:unset}
+    }
+
+    @media (max-width:640px){
+      .topbar-inner{padding:14px}
+      .hero-inner{padding:30px 14px 20px}
+      .content-wrap{padding:16px 12px 50px}
+      .reader{border-radius:16px}
+      .reader-top,.reader-body,.reader-bottom{padding-left:16px;padding-right:16px}
+      .reader-body{padding-top:22px}
+      .hero-copy h1{font-size:30px}
+      .hero-copy p{font-size:15px;line-height:1.65}
+      .chapter-card{padding:16px}
+      .chapter-card h2{font-size:21px}
+      .meta{grid-template-columns:1fr}
+      .lead{font-size:16px;line-height:1.75}
+      .story p{font-size:15px;line-height:1.72}
+      .story .quote{font-size:16px;padding:16px}
+      .top-actions,.nav-actions{width:100%}
+      .btn,.nav-actions .btn{width:100%;flex:1 1 100%}
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <div class="brand-badge">R</div>
+          <div class="brand-text">
+            <p class="brand-title">Después de tu adiós</p>
+            <p class="brand-sub">Historia de romance</p>
+          </div>
+        </div>
+        <div class="top-actions">
+          <a href="../../index.html" class="btn btn-ghost">← Volver al inicio</a>
+          <a href="capitulo3.html" class="btn btn-primary">Seguir con la historia →</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="crumb">Romance / Capítulo 2</div>
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Romance</p>
+            <h1>Después de tu adiós</h1>
+            <p>
+              Hay mensajes que no traen respuestas. Solo traen de vuelta la parte de una misma que había hecho un esfuerzo inmenso por no seguir esperando.
+            </p>
+          </div>
+          <div class="hero-side">
+            <aside class="chapter-card">
+              <div class="chapter-label">Reencuentro</div>
+              <h2>Verte otra vez</h2>
+              <p>
+                Emilia creyó que escribir una sola palabra no significaba nada. Pero a veces una conversación vuelve a empezar exactamente en el lugar donde una juró que ya no iba a temblar.
+              </p>
+              <div class="meta">
+                <div class="meta-item"><p class="meta-k">Estado</p><p class="meta-v">Gratis</p></div>
+                <div class="meta-item"><p class="meta-k">Ritmo</p><p class="meta-v">Tensión</p></div>
+                <div class="meta-item"><p class="meta-k">Clave</p><p class="meta-v">Regreso</p></div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="content-wrap">
+      <article class="reader">
+        <div class="reader-top">
+          <div class="reader-top-left">
+            <h3>Capítulo 2: Verte otra vez</h3>
+            <p>Romance · Hay personas que no reaparecen: vuelven a desordenarte</p>
+          </div>
+          <div class="reader-badge">Capítulo abierto</div>
+        </div>
+
+        <div class="reader-body">
+          <div class="story">
+            <p class="lead">
+              Emilia no esperaba que una sola palabra pudiera mover tanto por dentro. Pero después de enviar ese “¿por qué?”, se quedó mirando la pantalla como si su cuerpo supiera antes que ella que esa conversación no iba a terminar en un intercambio simple.
+            </p>
+
+            <p>La respuesta llegó rápido.</p>
+
+            <p><em>Porque nunca dejé de pensar en ti.</em></p>
+
+            <div class="quote">
+              Y ahí estuvo el primer golpe real.
+            </div>
+
+            <div class="divider"></div>
+
+            <p>No porque fuera la frase más intensa que hubiera leído en su vida.</p>
+            <p>No porque la convirtiera automáticamente en una mujer de nuevo enamorada.</p>
+            <p>No porque deshiciera de golpe el daño.</p>
+
+            <p>No.</p>
+
+            <p>La golpeó porque sonó sincera.</p>
+
+            <p>Y la sinceridad, cuando llega desde alguien que una ha intentado dejar atrás, rara vez alivia.</p>
+
+            <div class="quote">
+              Más bien abre.
+            </div>
+
+            <div class="divider"></div>
+
+            <p>Emilia apoyó el teléfono sobre la mesa.</p>
+            <p>Se llevó una mano a la frente.</p>
+            <p>Después al cuello.</p>
+
+            <p>Había una tensión incómoda recorriéndole el cuerpo con demasiada facilidad, como si meses enteros de distancia apenas hubieran servido para cubrir algo que seguía vivo debajo.</p>
+
+            <p>Eso la irritó.</p>
+            <p>Muchísimo.</p>
+
+            <div class="quote">
+              Porque una parte de ella quería estar más curada de lo que realmente estaba.
+            </div>
+
+            <div class="divider"></div>
+
+            <p>Tomó el teléfono otra vez.</p>
+
+            <p>Escribió:</p>
+
+            <p><em>Eso no cambia lo que pasó.</em></p>
+
+            <p>Lo envió.</p>
+
+            <p>Esta vez él tardó más.</p>
+
+            <p>Y esa pausa, breve y absurda, se sintió demasiado larga.</p>
+
+            <p>Emilia odió notar eso.</p>
+
+            <div class="quote">
+              Todavía esperaba algo de él.
+            </div>
+
+            <div class="divider"></div>
+
+            <p>Cuando finalmente apareció la respuesta, fueron dos líneas.</p>
+
+            <p><em>Lo sé.</em></p>
+            <p><em>Pero tampoco cambia lo que siento.</em></p>
+
+            <p>Emilia cerró los ojos un segundo.</p>
+
+            <p>No era justo.</p>
+
+            <p>Porque él no tenía derecho a volver con ese tono sereno.</p>
+            <p>No tenía derecho a sonar vulnerable.</p>
+            <p>No tenía derecho a volver humano el lugar exacto donde ella había necesitado endurecerlo para sobrevivir.</p>
+
+            <div class="quote">
+              Había sido más fácil extrañarlo cuando también podía enojarse con él.
+            </div>
+
+            <div class="divider"></div>
+
+            <p>Se levantó del sofá y caminó hasta la cocina.</p>
+            <p>Tomó la taza de café que ya se había enfriado.</p>
+            <p>La dejó en el lavaplatos sin beberla.</p>
+
+            <p>Después volvió al living.</p>
+
+            <p>No estaba nerviosa.</p>
+            <p>No exactamente.</p>
+
+            <p>Estaba alterada.</p>
+            <p>Desacomodada.</p>
+            <p>Como si alguien hubiera tocado una parte de su día que hasta hacía una hora estaba perfectamente sellada.</p>
+
+            <div class="quote">
+              Y el problema no era solo Tomás.
+            </div>
+
+            <div class="quote">
+              El problema era la parte de ella que todavía sabía abrirse apenas él volvía.
+            </div>
+
+            <div class="divider"></div>
+
+            <p>El teléfono vibró otra vez.</p>
+
+            <p><em>No quiero incomodarte.</em></p>
+            <p><em>Solo necesitaba dejar de fingir que esto me daba igual.</em></p>
+
+            <p>Emilia leyó el mensaje dos veces.</p>
+            <p>Después una tercera.</p>
+
+            <p>Y de pronto entendió qué era lo que más la desarmaba.</p>
+
+            <p>No la insistencia.</p>
+            <p>No el dramatismo.</p>
+            <p>No una presión demasiado evidente que la obligara a levantar una defensa limpia.</p>
+
+            <p>Era todo lo contrario.</p>
+
+            <div class="quote">
+              La honestidad tranquila.
+            </div>
+
+            <div class="divider"></div>
+
+            <p>Porque la honestidad tranquila deja menos lugares donde esconderse.</p>
+
+            <p>Si él hubiera llegado reclamando, habría sido fácil cerrarse.</p>
+            <p>Si hubiera vuelto arrogante, habría sido más simple despreciarlo.</p>
+            <p>Si hubiera fingido normalidad, podría haberlo tratado con distancia automática.</p>
+
+            <p>Pero no.</p>
+
+            <p>Volvía desde un lugar que se parecía demasiado al que ella también había evitado nombrar.</p>
+
+            <div class="quote">
+              El de no haber terminado de irse del todo.
+            </div>
+
+            <div class="divider"></div>
+
+            <p>Emilia se sentó otra vez.</p>
+
+            <p>Miró el mensaje largo rato.</p>
+
+            <p>Y cuando él escribió la siguiente pregunta, sintió que el aire cambiaba de forma a su alrededor.</p>
+
+            <p><em>¿Podemos vernos?</em></p>
+
+            <div class="quote">
+              Ahí ya no hubo refugio.
+            </div>
+
+            <div class="divider"></div>
+
+            <p>Una llamada puede ser un impulso.</p>
+            <p>Un mensaje puede ser una grieta.</p>
+            <p>Una conversación puede seguir siendo ambigua si una la mantiene en pantalla.</p>
+
+            <p>Pero un encuentro era otra cosa.</p>
+
+            <p>Era cuerpo.</p>
+            <p>Era voz.</p>
+            <p>Era mirada.</p>
+            <p>Era confirmar si todo eso seguía teniendo el peso que ambos parecían fingir que no tenía.</p>
+
+            <div class="quote">
+              Y Emilia tuvo miedo.
+            </div>
+
+            <div class="divider"></div>
+
+            <p>No miedo de él.</p>
+            <p>No de una escena.</p>
+            <p>No de una humillación concreta.</p>
+
+            <p>Miedo de verse a sí misma frente a él otra vez.</p>
+
+            <p>De descubrir con demasiada claridad cuánto había sanado y cuánto no.</p>
+            <p>De comprobar si todavía podía sostenerle la mirada sin que el pasado le reorganizara por dentro demasiadas cosas a la vez.</p>
+
+            <div class="quote">
+              Porque hay personas que no vuelven a tu vida.
+            </div>
+
+            <div class="quote">
+              Vuelven a medir el lugar exacto donde todavía te duele.
+            </div>
+
+            <div class="divider"></div>
+
+            <p>Miró la pantalla.</p>
+            <p>Luego la apagó.</p>
+            <p>La dejó boca abajo.</p>
+
+            <p>Pasaron treinta segundos.</p>
+            <p>Tal vez cuarenta.</p>
+
+            <p>La volvió a tomar.</p>
+
+            <p>No estaba lista.</p>
+            <p>Eso era cierto.</p>
+            <p>Tampoco estaba completamente cerrada.</p>
+            <p>Eso era más cierto todavía.</p>
+
+            <div class="quote">
+              Y a veces lo peligroso no es querer volver.
+            </div>
+
+            <div class="quote">
+              Es no haber dejado nunca de querer entender qué habría pasado si las cosas hubieran sido distintas.
+            </div>
+
+            <div class="divider"></div>
+
+            <p>Escribió despacio:</p>
+
+            <p><em>No sé si es buena idea.</em></p>
+
+            <p>Él tardó poco en responder.</p>
+
+            <p><em>Tal vez no.</em></p>
+            <p><em>Pero igual quería pedirlo.</em></p>
+
+            <p>Eso la hizo apretar los labios.</p>
+
+            <p>La respuesta no buscaba convencerla.</p>
+            <p>No le prometía que sería fácil.</p>
+            <p>No adornaba el riesgo.</p>
+
+            <p>Solo lo dejaba ahí.</p>
+
+            <div class="quote">
+              Y eso volvió todo todavía más difícil de rechazar.
+            </div>
+
+            <div class="divider"></div>
+
+            <p>Emilia apoyó la espalda en el sofá y miró el techo.</p>
+
+            <p>La verdad era insoportable en su sencillez.</p>
+
+            <p>Quería verlo.</p>
+
+            <p>No porque eso resolviera algo.</p>
+            <p>No porque estuviera lista para perdonar.</p>
+            <p>No porque el amor hubiera vuelto de repente en forma clara y noble.</p>
+
+            <p>Quería verlo porque seguía existiendo una parte de ella que no soportaba tenerlo de nuevo tan cerca y solo en palabras.</p>
+
+            <div class="quote">
+              Necesitaba comprobar con sus propios ojos si seguía siendo él.
+            </div>
+
+            <div class="quote">
+              O si el tiempo por fin lo había convertido en alguien al que pudiera dejar atrás sin mentirse.
+            </div>
+
+            <div class="divider"></div>
+
+            <p>Escribió una sola frase:</p>
+
+            <p><em>Una vez.</em></p>
+
+            <p>La dejó ahí unos segundos.</p>
+            <p>Después la envió.</p>
+
+            <div class="quote">
+              Y en ese mismo instante sintió el cambio.
+            </div>
+
+            <div class="divider"></div>
+
+            <p>No externo.</p>
+            <p>No visible.</p>
+
+            <p>Interno.</p>
+
+            <p>Como si hubiera movido una pieza pequeña en un mecanismo mucho más delicado de lo que parecía.</p>
+
+            <p>La respuesta llegó casi de inmediato.</p>
+
+            <p><em>Mañana.</em></p>
+            <p><em>Donde siempre.</em></p>
+
+            <div class="quote">
+              Donde siempre.
+            </div>
+
+            <div class="divider"></div>
+
+            <p>Esas dos palabras arrastraron demasiado detrás.</p>
+
+            <p>No era solo un lugar.</p>
+            <p>Era una época.</p>
+            <p>Una versión de ellos.</p>
+            <p>Una rutina que había dejado de existir y que, sin embargo, seguía viva lo suficiente como para ser convocada en una sola línea.</p>
+
+            <p>Emilia apoyó el teléfono sobre la mesa de centro con una lentitud casi ceremoniosa.</p>
+            <p>Miró al frente.</p>
+            <p>No encendió la televisión.</p>
+            <p>No puso música.</p>
+            <p>No llamó a nadie.</p>
+
+            <p>Se quedó sola con la verdad de lo que acababa de hacer.</p>
+
+            <div class="quote">
+              Había aceptado verlo.
+            </div>
+
+            <p>Y aceptar verlo no era volver con él.</p>
+            <p>No era perdonarlo.</p>
+            <p>No era olvidar.</p>
+
+            <p>Pero tampoco era poco.</p>
+
+            <div class="quote">
+              Porque hay puertas que no se abren del todo cuando dices que sí.
+            </div>
+
+            <div class="quote">
+              Basta con que se destraben.
+            </div>
+          </div>
+        </div>
+
+        <div class="reader-bottom">
+          <p class="reader-note">
+            A veces una historia no regresa cuando vuelven a hablarse. Regresa en el instante exacto en que aceptan volver a mirarse de frente.
+          </p>
+          <div class="nav-actions">
+            <a href="capitulo1.html" class="btn btn-ghost">← Capítulo 1</a>
+            <a href="capitulo3.html" class="btn btn-primary">Continuar al capítulo 3 →</a>
+          </div>
+        </div>
+      </article>
+      <div class="footer-space"></div>
+    </main>
+  </div>
+</body>
+</html>
