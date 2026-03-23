@@ -15,13 +15,9 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="cosmos" aria-hidden="true">
-    <div class="stars stars-a"></div>
-    <div class="stars stars-b"></div>
-    <div class="nebula-glow glow-1"></div>
-    <div class="nebula-glow glow-2"></div>
-    <div class="nebula-glow glow-3"></div>
-  </div>
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+  <div class="bg-grid"></div>
 
   <header class="site-header">
     <div class="container nav-shell">
@@ -34,8 +30,8 @@
       </a>
 
       <nav class="top-nav" aria-label="Principal">
-        <a href="#destacada">Inicio</a>
-        <a href="#catalogo">Historias</a>
+        <a href="#destacada">Destacada</a>
+        <a href="#catalogo">Catálogo</a>
         <a href="#generos">Géneros</a>
       </nav>
 
@@ -46,25 +42,38 @@
   </header>
 
   <main>
-    <!-- HERO PRINCIPAL -->
     <section class="hero" id="destacada">
       <div class="container hero-grid">
         <div class="hero-copy">
-          <div class="eyebrow">Universo Nébula</div>
+          <div class="eyebrow">Plataforma de lectura</div>
           <h1>
-            Historias con alma cósmica
-            <span>para leer desde cualquier lugar</span>
+            Historias que te atrapan
+            <span>desde el primer capítulo</span>
           </h1>
-
           <p>
-            Explora novelas por géneros, guarda tu progreso y sigue leyendo desde
-            donde quedaste. Nébula está pensada para una experiencia envolvente,
-            moderna y visualmente potente.
+            Explora novelas por géneros, guarda tu progreso y sigue leyendo
+            desde cualquier dispositivo. Nébula está pensada para una
+            experiencia moderna, limpia y adictiva.
           </p>
 
           <div class="hero-actions">
             <a class="btn btn-primary" href="#catalogo">Explorar historias</a>
             <a class="btn btn-secondary" href="#generos">Ver géneros</a>
+          </div>
+
+          <div class="hero-stats">
+            <div class="stat-card">
+              <small>Lectura gratis</small>
+              <strong>Primeros 3 capítulos</strong>
+            </div>
+            <div class="stat-card">
+              <small>Acceso premium</small>
+              <strong>$1.500 CLP</strong>
+            </div>
+            <div class="stat-card">
+              <small>Compatible</small>
+              <strong>PC · Móvil · Tablet</strong>
+            </div>
           </div>
         </div>
 
@@ -82,6 +91,7 @@
           <div class="hero-feature-content">
             <div class="story-tags">
               <span id="featuredGenreTag">Futurista</span>
+              <span id="featuredSeasonTag">Temporada 1</span>
             </div>
 
             <h2 id="featuredTitle">Código Nébula</h2>
@@ -90,10 +100,15 @@
               abre una nueva grieta en el sistema.
             </p>
 
-            <div class="feature-inline-meta">
-              <span><strong id="featuredChapters">12</strong> capítulos</span>
-              <span><strong id="featuredViews">200</strong> vistas</span>
-              <span><strong id="featuredFree">3</strong> gratis</span>
+            <div class="feature-meta">
+              <div>
+                <small>Visitas</small>
+                <strong id="featuredViews">0</strong>
+              </div>
+              <div>
+                <small>Gratis</small>
+                <strong id="featuredFree">3 capítulos</strong>
+              </div>
             </div>
 
             <div class="story-actions">
@@ -118,7 +133,6 @@
       </div>
     </section>
 
-    <!-- GÉNEROS -->
     <section class="section" id="generos">
       <div class="container">
         <div class="section-head">
@@ -135,8 +149,7 @@
       </div>
     </section>
 
-    <!-- NOVELAS ABAJO RECTANGULARES -->
-    <section class="section section-stories" id="catalogo">
+    <section class="section" id="catalogo">
       <div class="container">
         <div class="section-head">
           <div>
@@ -161,8 +174,7 @@
           </div>
         </div>
 
-        <div class="story-list" id="storyGrid"></div>
-
+        <div class="story-grid" id="storyGrid"></div>
         <div class="empty-state hidden" id="emptyState">
           No se encontraron historias con esa búsqueda.
         </div>
@@ -179,7 +191,7 @@
 
       <div class="footer-links">
         <a href="#destacada">Inicio</a>
-        <a href="#catalogo">Historias</a>
+        <a href="#catalogo">Catálogo</a>
         <a href="#generos">Géneros</a>
       </div>
     </div>
@@ -197,8 +209,7 @@
         ruta: "novelas/futurista/codigo-nebula/temporada1/capitulo1.html",
         carpeta: "codigo-nebula",
         temporada: "Temporada 1",
-        capitulos: 12,
-        visitas: 200,
+        visitas: 1542,
         gratis: 3,
         destacada: true
       },
@@ -212,8 +223,7 @@
         ruta: "novelas/romance/no-debi-enamorarme/temporada1/capitulo1.html",
         carpeta: "no-debi-enamorarme",
         temporada: "Temporada 1",
-        capitulos: 10,
-        visitas: 200,
+        visitas: 2984,
         gratis: 3,
         destacada: false
       },
@@ -227,8 +237,7 @@
         ruta: "novelas/romance/despues-de-tu-adios/temporada1/capitulo1.html",
         carpeta: "despues-de-tu-adios",
         temporada: "Temporada 1",
-        capitulos: 8,
-        visitas: 200,
+        visitas: 1187,
         gratis: 3,
         destacada: false
       }
@@ -266,11 +275,11 @@
       document.getElementById("featuredCover").src = destacada.portada;
       document.getElementById("featuredCover").alt = destacada.titulo;
       document.getElementById("featuredGenreTag").textContent = capitalizar(destacada.genero);
+      document.getElementById("featuredSeasonTag").textContent = destacada.temporada || "Temporada 1";
       document.getElementById("featuredTitle").textContent = destacada.titulo;
       document.getElementById("featuredDescription").textContent = destacada.descripcion;
-      document.getElementById("featuredViews").textContent = destacada.visitas || 200;
-      document.getElementById("featuredChapters").textContent = destacada.capitulos || 0;
-      document.getElementById("featuredFree").textContent = destacada.gratis || 3;
+      document.getElementById("featuredViews").textContent = destacada.visitas || 0;
+      document.getElementById("featuredFree").textContent = (destacada.gratis || 3) + " capítulos";
       document.getElementById("featuredReadLink").href = destacada.ruta;
 
       const continueBtn = document.getElementById("featuredContinueBtn");
@@ -311,37 +320,41 @@
       emptyState.classList.add("hidden");
 
       storyGrid.innerHTML = items.map(novela => `
-        <article class="story-row">
-          <div class="story-row-cover-shell">
-            <img class="story-row-cover" src="${novela.portada}" alt="${novela.titulo}" />
-            <div class="story-row-cover-shadow"></div>
+        <article class="story-card">
+          <div class="story-cover-shell">
+            <img class="story-cover" src="${novela.portada}" alt="${novela.titulo}" />
+            <div class="story-cover-shadow"></div>
+            <div class="story-badges">
+              <span>${capitalizar(novela.genero)}</span>
+              <span>${novela.temporada || "Temporada 1"}</span>
+            </div>
           </div>
 
-          <div class="story-row-body">
-            <div class="story-row-top">
-              <div class="story-row-headings">
-                <div class="story-row-badges">
-                  <span>${capitalizar(novela.genero)}</span>
-                  <span>${novela.temporada || "Temporada 1"}</span>
-                </div>
-                <h3>${novela.titulo}</h3>
-              </div>
+          <div class="story-body">
+            <div class="story-topline">
+              <h3>${novela.titulo}</h3>
+              <small>${novela.visitas || 0} visitas</small>
             </div>
 
             <p>${novela.descripcion}</p>
 
-            <div class="story-row-meta">
-              <span>${novela.capitulos || 0} capítulos</span>
-              <span>${novela.visitas || 200} vistas</span>
-              <span>${novela.gratis || 3} gratis</span>
+            <div class="story-mini-meta">
+              <div>
+                <small>Gratis</small>
+                <strong>${novela.gratis || 3} capítulos</strong>
+              </div>
+              <div>
+                <small>Acceso completo</small>
+                <strong>$1.500 CLP</strong>
+              </div>
             </div>
 
-            <div class="story-row-actions">
+            <div class="story-card-actions">
               <a class="btn btn-primary" href="${novela.ruta}" data-read-id="${novela.id}">
-                Comenzar a leer
+                Comenzar
               </a>
               <button class="btn btn-secondary" type="button" data-continue-id="${novela.id}">
-                Seguir leyendo
+                Seguir
               </button>
             </div>
           </div>
