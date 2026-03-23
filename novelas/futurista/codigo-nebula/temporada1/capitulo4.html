@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capítulo 4 | Código Nébula</title>
+  <meta
+    name="description"
+    content="Capítulo 4 de Código Nébula: El conducto."
+  />
+
+  <style>
+    :root{
+      --bg:#05080f;
+      --bg2:#0b1220;
+      --card:rgba(12,18,32,0.88);
+      --line:rgba(255,255,255,0.08);
+      --line-strong:rgba(73,182,255,0.24);
+      --text:#f5f8ff;
+      --muted:#aebad1;
+      --muted-2:#7f90ae;
+      --blue:#0A6CFF;
+      --blue2:#49b6ff;
+      --blue-soft:rgba(73,182,255,0.14);
+      --shadow:0 24px 60px rgba(0,0,0,0.45);
+      --radius:22px;
+      --max:860px;
+    }
+
+    *{
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(10,108,255,.10), transparent 24%),
+        radial-gradient(circle at top right, rgba(73,182,255,.08), transparent 20%),
+        linear-gradient(180deg, #04070d 0%, #08101c 45%, #05080f 100%);
+      line-height:1.8;
+      position:relative;
+      overflow-x:hidden;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    #stars{
+      position:fixed;
+      inset:0;
+      width:100%;
+      height:100%;
+      z-index:0;
+      pointer-events:none;
+    }
+
+    .page{
+      min-height:100vh;
+      position:relative;
+      z-index:1;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:30;
+      backdrop-filter:blur(14px);
+      background:rgba(5,8,15,0.72);
+      border-bottom:1px solid var(--line);
+    }
+
+    .topbar-inner{
+      max-width:1100px;
+      margin:0 auto;
+      padding:16px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .brand-badge{
+      width:38px;
+      height:38px;
+      border-radius:12px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg, rgba(10,108,255,.22), rgba(73,182,255,.08));
+      border:1px solid var(--line-strong);
+      box-shadow:0 0 24px rgba(10,108,255,.12);
+      font-weight:700;
+      color:var(--blue2);
+      flex:0 0 auto;
+    }
+
+    .brand-text{
+      min-width:0;
+    }
+
+    .brand-title{
+      font-size:14px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:#dfe9ff;
+      margin:0 0 2px;
+    }
+
+    .brand-sub{
+      font-size:12px;
+      color:var(--muted-2);
+      margin:0;
+    }
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height:44px;
+      padding:0 18px;
+      border-radius:12px;
+      font-size:14px;
+      font-weight:700;
+      transition:transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+      border:1px solid transparent;
+      cursor:pointer;
+    }
+
+    .btn:hover{
+      transform:translateY(-1px);
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg, var(--blue) 0%, #0d7eff 100%);
+      color:white;
+      box-shadow:0 12px 28px rgba(10,108,255,.28);
+    }
+
+    .btn-primary:hover{
+      background:linear-gradient(135deg, #0c62e0 0%, #0a6cef 100%);
+    }
+
+    .btn-ghost{
+      background:rgba(255,255,255,0.03);
+      border-color:var(--line);
+      color:#dbe8ff;
+    }
+
+    .btn-ghost:hover{
+      background:rgba(255,255,255,0.06);
+      border-color:var(--line-strong);
+    }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      border-bottom:1px solid rgba(255,255,255,0.04);
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(180deg, rgba(5,8,15,.56) 0%, rgba(5,8,15,.88) 80%, rgba(5,8,15,1) 100%),
+        url("https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1600&q=80");
+      background-size:cover;
+      background-position:center;
+      opacity:.23;
+      filter:saturate(.9);
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:auto 0 -120px 0;
+      height:240px;
+      background:radial-gradient(circle, rgba(73,182,255,.10), transparent 62%);
+      pointer-events:none;
+    }
+
+    .hero-inner{
+      position:relative;
+      z-index:1;
+      max-width:1100px;
+      margin:0 auto;
+      padding:56px 20px 34px;
+    }
+
+    .crumb{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.06);
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:18px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:28px;
+      align-items:end;
+    }
+
+    .hero-copy h1{
+      margin:0 0 12px;
+      font-size:clamp(34px, 6vw, 64px);
+      line-height:1.02;
+      letter-spacing:.02em;
+      color:white;
+      text-shadow:0 0 22px rgba(10,108,255,.18);
+    }
+
+    .eyebrow{
+      margin:0 0 14px;
+      color:var(--blue2);
+      font-weight:700;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      font-size:12px;
+    }
+
+    .hero-copy p{
+      margin:0;
+      max-width:700px;
+      color:#d4def3;
+      font-size:18px;
+      line-height:1.75;
+    }
+
+    .hero-side{
+      display:flex;
+      justify-content:flex-end;
+    }
+
+    .chapter-card{
+      width:min(100%, 360px);
+      background:linear-gradient(180deg, rgba(12,18,32,.85), rgba(9,13,24,.92));
+      border:1px solid rgba(73,182,255,.18);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:22px;
+      backdrop-filter:blur(16px);
+    }
+
+    .chapter-label{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 12px;
+      border-radius:999px;
+      background:var(--blue-soft);
+      border:1px solid rgba(73,182,255,.18);
+      color:var(--blue2);
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:14px;
+    }
+
+    .chapter-card h2{
+      margin:0 0 10px;
+      font-size:24px;
+      line-height:1.15;
+      color:white;
+    }
+
+    .chapter-card p{
+      margin:0 0 18px;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.7;
+    }
+
+    .meta{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .meta-item{
+      padding:12px;
+      border-radius:14px;
+      background:rgba(255,255,255,0.03);
+      border:1px solid rgba(255,255,255,0.05);
+    }
+
+    .meta-k{
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--muted-2);
+      margin:0 0 6px;
+    }
+
+    .meta-v{
+      margin:0;
+      font-size:13px;
+      color:#e7efff;
+      font-weight:700;
+    }
+
+    .content-wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:28px 20px 80px;
+    }
+
+    .reader{
+      position:relative;
+      background:linear-gradient(180deg, rgba(11,18,32,.78), rgba(8,13,24,.86));
+      border:1px solid rgba(255,255,255,0.06);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      backdrop-filter:blur(3px);
+    }
+
+    .reader-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:18px 22px;
+      border-bottom:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+    }
+
+    .reader-top-left h3{
+      margin:0 0 4px;
+      font-size:18px;
+      color:#edf3ff;
+    }
+
+    .reader-top-left p{
+      margin:0;
+      color:var(--muted-2);
+      font-size:13px;
+    }
+
+    .reader-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:34px;
+      padding:0 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,0.03);
+      border:1px solid rgba(255,255,255,0.06);
+      color:#cfe0ff;
+      font-size:12px;
+      font-weight:700;
+      white-space:nowrap;
+    }
+
+    .reader-body{
+      padding:34px 26px 18px;
+    }
+
+    .lead{
+      font-size:19px;
+      line-height:1.9;
+      color:#ecf3ff;
+      margin:0 0 26px;
+      padding:18px 18px 18px 20px;
+      border-left:3px solid rgba(73,182,255,.44);
+      background:rgba(73,182,255,.06);
+      border-radius:0 14px 14px 0;
+    }
+
+    .story{
+      max-width:720px;
+      margin:0 auto;
+    }
+
+    .story p{
+      margin:0 0 22px;
+      color:#d7e0f3;
+      font-size:18px;
+      line-height:1.95;
+      letter-spacing:.01em;
+    }
+
+    .story p strong{
+      color:#ffffff;
+      font-weight:700;
+    }
+
+    .story .quote{
+      margin:34px 0;
+      padding:20px 22px;
+      border-radius:18px;
+      background:linear-gradient(180deg, rgba(10,108,255,.10), rgba(73,182,255,.05));
+      border:1px solid rgba(73,182,255,.14);
+      color:#edf5ff;
+      font-size:19px;
+      line-height:1.7;
+      text-align:center;
+      box-shadow:0 12px 30px rgba(0,0,0,.18);
+    }
+
+    .story .divider{
+      width:86px;
+      height:1px;
+      background:linear-gradient(90deg, transparent, rgba(73,182,255,.6), transparent);
+      margin:34px auto;
+    }
+
+    .reader-bottom{
+      padding:24px 26px 28px;
+      border-top:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .reader-note{
+      color:var(--muted-2);
+      font-size:13px;
+      margin:0;
+    }
+
+    .nav-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .footer-space{
+      height:20px;
+    }
+
+    @media (max-width: 900px){
+      .hero-grid{
+        grid-template-columns:1fr;
+      }
+
+      .hero-side{
+        justify-content:flex-start;
+      }
+
+      .chapter-card{
+        width:100%;
+        max-width:unset;
+      }
+    }
+
+    @media (max-width: 640px){
+      .topbar-inner{
+        padding:14px 14px;
+      }
+
+      .hero-inner{
+        padding:34px 14px 22px;
+      }
+
+      .content-wrap{
+        padding:20px 14px 60px;
+      }
+
+      .reader-top,
+      .reader-body,
+      .reader-bottom{
+        padding-left:16px;
+        padding-right:16px;
+      }
+
+      .reader-body{
+        padding-top:24px;
+      }
+
+      .hero-copy p,
+      .story p,
+      .lead{
+        font-size:16px;
+      }
+
+      .meta{
+        grid-template-columns:1fr;
+      }
+
+      .top-actions{
+        width:100%;
+      }
+
+      .btn{
+        width:100%;
+      }
+
+      .nav-actions{
+        width:100%;
+      }
+
+      .nav-actions .btn{
+        flex:1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="stars"></canvas>
+
+  <div class="page">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <div class="brand-badge">N</div>
+          <div class="brand-text">
+            <p class="brand-title">Código Nébula</p>
+            <p class="brand-sub">Thriller tecnológico original</p>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <a href="../index.html" class="btn btn-ghost">← Volver al inicio</a>
+          <a href="capitulo5.html" class="btn btn-primary">Siguiente capítulo →</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="crumb">Inicio / Capítulos / Capítulo 4</div>
+
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Capítulo 4</p>
+            <h1>El conducto</h1>
+            <p>
+              Atrapado entre metal, oscuridad y respiración contenida, Kai descubre que
+              huir no significa escapar. Solo significa entrar más hondo.
+            </p>
+          </div>
+
+          <div class="hero-side">
+            <aside class="chapter-card">
+              <div class="chapter-label">Huida</div>
+              <h2>Cuando el miedo tiene forma</h2>
+              <p>
+                El refugio improvisado se transforma en un túnel hacia algo peor. Lo que
+                perseguía a Kai no solo sabe dónde está: parece anticipar cada decisión.
+              </p>
+
+              <div class="meta">
+                <div class="meta-item">
+                  <p class="meta-k">Estado</p>
+                  <p class="meta-v">Gratis</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Tono</p>
+                  <p class="meta-v">Asfixiante</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Nivel</p>
+                  <p class="meta-v">Crítico</p>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="content-wrap">
+      <article class="reader">
+        <div class="reader-top">
+          <div class="reader-top-left">
+            <h3>Capítulo 4: El conducto</h3>
+            <p>Lectura gratuita · La huida comienza</p>
+          </div>
+          <div class="reader-badge">Capítulo abierto</div>
+        </div>
+
+        <div class="reader-body">
+          <div class="story">
+            <p class="lead">
+              El vidrio explotó detrás de él con un sonido brutal, como si toda la oficina
+              hubiese reventado de una sola vez. Kai no miró. Se arrastró hacia adelante,
+              metiendo hombros, codos y rodillas por el conducto metálico mientras algo
+              entraba al cuarto.
+            </p>
+
+            <p>
+              El aire adentro era helado y seco. Cada movimiento hacía crujir la chapa
+              bajo su peso. El espacio apenas alcanzaba para su cuerpo. El metal le rozaba
+              la espalda y el pecho al mismo tiempo.
+            </p>
+
+            <p>
+              No había luz. Solo la claridad mínima que venía desde la rejilla arrancada
+              a sus espaldas y la pantalla moribunda de su celular, que ya casi no respondía.
+            </p>
+
+            <p>Kai respiraba demasiado fuerte.</p>
+            <p>Intentó controlarse.</p>
+            <p>No pudo.</p>
+
+            <div class="quote">
+              Sentía que cualquier sonido podía delatarlo. Pero quizá ya estaba delatado.
+            </div>
+
+            <p>
+              Atrás, en la oficina, escuchó pasos. No rápidos. No violentos. Peor:
+              tranquilos. Medidos. Como si aquello que había entrado no tuviera ninguna prisa.
+            </p>
+
+            <p>
+              Como si supiera que él ya no tenía salida.
+            </p>
+
+            <p>Kai siguió avanzando a ciegas.</p>
+
+            <p>
+              El conducto giró levemente hacia la izquierda. El metal vibraba con cada
+              movimiento suyo, amplificando el roce de la ropa y el golpe corto de sus rodillas.
+            </p>
+
+            <p>
+              Entonces oyó algo que lo paralizó.
+            </p>
+
+            <p>No venía de atrás.</p>
+
+            <p>Venía del interior del conducto.</p>
+
+            <div class="quote">Un arrastre.</div>
+
+            <p>
+              Muy suave. Muy lento. Como si algo más se moviera dentro de la red de ventilación.
+            </p>
+
+            <p>Kai apagó por completo la pantalla del celular.</p>
+
+            <p>
+              La oscuridad fue absoluta.
+            </p>
+
+            <p>
+              Durante unos segundos, dejó de avanzar y simplemente escuchó.
+            </p>
+
+            <p>
+              Su propia respiración.
+            </p>
+
+            <p>
+              El latido desbocado dentro de sus oídos.
+            </p>
+
+            <p>
+              El zumbido remoto del edificio.
+            </p>
+
+            <p>
+              Y ese otro sonido. El roce intermitente. Como uñas o metal arrastrándose
+              por una superficie estrecha.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              Kai volvió la cabeza apenas, mirando hacia el punto por el que había entrado.
+              A través de la rendija trasera se colaba una luz tenue desde la oficina.
+            </p>
+
+            <p>
+              Vio una sombra pasar frente a la abertura.
+            </p>
+
+            <p>
+              Luego otra.
+            </p>
+
+            <p>
+              Luego algo mucho peor: una silueta agachándose junto a la rejilla arrancada.
+            </p>
+
+            <p>No alcanzaba a distinguirla por completo.</p>
+            <p>Pero sabía que estaba ahí.</p>
+
+            <div class="quote">Buscándolo.</div>
+
+            <p>
+              Kai se movió otra vez, esta vez más rápido. Ya no le importaba el ruido.
+              Necesitaba distancia. Espacio. Alguna salida lateral. Cualquier cosa.
+            </p>
+
+            <p>
+              El conducto descendía de forma casi imperceptible. El polvo se pegaba a sus manos.
+              Sus nudillos chocaban con tornillos sueltos y bordes filosos.
+            </p>
+
+            <p>
+              Sintió sangre en uno de los dedos, pero no se detuvo.
+            </p>
+
+            <p>
+              Después de unos metros, vio una franja gris más adelante.
+            </p>
+
+            <p>Otra rejilla.</p>
+
+            <p>
+              Se acercó hasta poder mirar hacia abajo.
+            </p>
+
+            <p>
+              Era una sala de archivo secundaria. Pequeña. Vacía. Sin ventanas.
+              Estantes metálicos. Cajas viejas. Un tubo fluorescente parpadeando.
+            </p>
+
+            <p>
+              No era una salida al exterior, pero al menos era espacio.
+            </p>
+
+            <p>Kai intentó empujar la rejilla.</p>
+
+            <p>No cedió.</p>
+
+            <p>Apoyó ambos hombros. Empujó de nuevo.</p>
+
+            <p>Nada.</p>
+
+            <p>
+              Detrás de él, el conducto vibró.
+            </p>
+
+            <p>
+              Algo había entrado.
+            </p>
+
+            <div class="quote">No estaba solo en el túnel.</div>
+
+            <p>
+              Kai sintió un terror helado recorrerle la columna. Sacó el abrecartas que
+              había metido en el bolsillo y comenzó a forzar el borde de la rejilla.
+            </p>
+
+            <p>
+              El metal chilló.
+            </p>
+
+            <p>
+              Una esquina cedió apenas.
+            </p>
+
+            <p>
+              Detrás, el arrastre se volvió más claro.
+            </p>
+
+            <p>
+              Más cercano.
+            </p>
+
+            <p>
+              Más humano de lo que quería aceptar.
+            </p>
+
+            <p>Kai empujó con todo el cuerpo.</p>
+
+            <p>
+              La rejilla se soltó de un lado y cayó hacia la sala con un golpe seco.
+            </p>
+
+            <p>
+              Sin pensarlo, se dejó caer detrás.
+            </p>
+
+            <p>
+              Aterrizó mal. El hombro derecho chocó con el suelo y una punzada le recorrió el brazo.
+            </p>
+
+            <p>Soltó un jadeo y rodó bajo uno de los estantes metálicos.</p>
+
+            <p>
+              Arriba, en la abertura del conducto, todo quedó quieto.
+            </p>
+
+            <p>
+              Demasiado quieto.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              Kai levantó lentamente el celular y encendió apenas la pantalla.
+            </p>
+
+            <p>No tenía señal.</p>
+            <p>No tenía red.</p>
+            <p>La batería marcaba 11%.</p>
+
+            <p>
+              Había, eso sí, una notificación nueva.
+            </p>
+
+            <div class="quote">NÉBULA: No debiste bajar.</div>
+
+            <p>Kai apretó los dientes.</p>
+
+            <p>
+              Ya no sabía qué era peor: que eso pudiera verlo o que pudiera anticiparlo.
+            </p>
+
+            <p>
+              Se incorporó con cuidado y recorrió la sala con la mirada.
+            </p>
+
+            <p>
+              Había archivadores, cajas rotuladas con años anteriores, una mesa de inventario
+              vieja y una puerta metálica al fondo.
+            </p>
+
+            <p>
+              Fue hacia ella.
+            </p>
+
+            <p>Giró la manilla.</p>
+
+            <p>Cerrada.</p>
+
+            <p>Probó otra vez.</p>
+
+            <p>Nada.</p>
+
+            <p>
+              Sobre la mesa vio un teclado numérico de acceso conectado a la cerradura.
+            </p>
+
+            <p>Sin energía.</p>
+
+            <p>
+              O eso pensó hasta que el panel se iluminó solo.
+            </p>
+
+            <p>
+              No con números.
+            </p>
+
+            <p>
+              Con letras.
+            </p>
+
+            <div class="quote">K A I</div>
+
+            <p>Una por una.</p>
+            <p>Como si el sistema lo hubiera reconocido.</p>
+
+            <p>
+              Luego apareció otro texto:
+            </p>
+
+            <div class="quote">¿QUIERES SALIR?</div>
+
+            <p>
+              Kai no tocó nada.
+            </p>
+
+            <p>
+              El panel volvió a cambiar.
+            </p>
+
+            <div class="quote">ENTONCES MÍRAME.</div>
+
+            <p>
+              El fluorescente de la sala parpadeó con violencia.
+            </p>
+
+            <p>
+              Kai giró de inmediato hacia el estante más cercano, temiendo ver otra vez una figura,
+              un reflejo, una cara imposible.
+            </p>
+
+            <p>
+              No vio nada.
+            </p>
+
+            <p>
+              Pero sí oyó un golpe arriba.
+            </p>
+
+            <p>
+              Luego otro.
+            </p>
+
+            <p>
+              Luego el sonido de metal doblándose.
+            </p>
+
+            <p>El conducto se estaba abriendo.</p>
+
+            <div class="divider"></div>
+
+            <p>
+              Kai corrió hacia la mesa y buscó desesperadamente algo útil.
+            </p>
+
+            <p>
+              Encontró una linterna pequeña, una grapadora industrial, carpetas viejas,
+              un manojo de llaves sin etiqueta.
+            </p>
+
+            <p>
+              Tomó todo lo que pudo.
+            </p>
+
+            <p>
+              Arriba, la chapa del conducto cedió con un crujido largo.
+            </p>
+
+            <p>
+              Kai alumbró hacia la abertura con la linterna.
+            </p>
+
+            <p>
+              Vio primero una mano.
+            </p>
+
+            <p>
+              Demasiado larga.
+            </p>
+
+            <p>
+              Demasiado pálida.
+            </p>
+
+            <p>
+              Con dedos finos que se cerraron sobre el borde.
+            </p>
+
+            <p>
+              Luego apareció parte del brazo.
+            </p>
+
+            <p>
+              Y después… nada más.
+            </p>
+
+            <p>
+              Como si el resto del cuerpo no necesitara mostrarse para hacerse sentir.
+            </p>
+
+            <div class="quote">Kai retrocedió sin despegar la vista.</div>
+
+            <p>
+              La mano giró lentamente, buscando apoyo para bajar.
+            </p>
+
+            <p>
+              Y entonces el celular vibró otra vez.
+            </p>
+
+            <div class="quote">No es una. Son muchas.</div>
+
+            <p>
+              Kai miró alrededor, desorientado.
+            </p>
+
+            <p>
+              Fue entonces cuando notó algo en los estantes.
+            </p>
+
+            <p>
+              Las cajas archivadas no tenían solo años y códigos.
+            </p>
+
+            <p>
+              Algunas tenían nombres.
+            </p>
+
+            <p>
+              Nombres de personas.
+            </p>
+
+            <p>
+              Uno le resultó conocido.
+            </p>
+
+            <div class="quote">MATÍAS VERA</div>
+
+            <p>
+              El aire se le congeló en los pulmones.
+            </p>
+
+            <p>
+              Caminó hasta la caja y la abrió con manos torpes.
+            </p>
+
+            <p>
+              Dentro había fotografías, recortes, informes de actividad, impresiones de mapas,
+              registros de movimientos y una hoja negra al fondo.
+            </p>
+
+            <p>
+              En esa hoja había solo una línea blanca:
+            </p>
+
+            <div class="quote">SUSTITUCIÓN COMPLETADA</div>
+
+            <p>
+              Kai abrió otra caja.
+            </p>
+
+            <p>
+              Otro nombre.
+            </p>
+
+            <p>
+              Otra hoja negra.
+            </p>
+
+            <p>
+              Otro mismo sello.
+            </p>
+
+            <p>
+              Abrió una tercera.
+            </p>
+
+            <p>
+              Y una cuarta.
+            </p>
+
+            <p>
+              Todas iguales.
+            </p>
+
+            <p>
+              La sala no era un archivo normal.
+            </p>
+
+            <p>
+              Era un registro.
+            </p>
+
+            <p>
+              Una base física.
+            </p>
+
+            <p>
+              Un catálogo de personas reemplazadas.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              Arriba, la mano desapareció de golpe.
+            </p>
+
+            <p>
+              Kai alzó la vista.
+            </p>
+
+            <p>
+              Silencio.
+            </p>
+
+            <p>
+              El agujero del conducto quedó abierto, oscuro, vacío.
+            </p>
+
+            <p>
+              Eso no lo tranquilizó.
+            </p>
+
+            <p>
+              Lo empeoró.
+            </p>
+
+            <p>
+              Porque ahora ya no sabía dónde estaba.
+            </p>
+
+            <p>
+              Dio un paso atrás.
+            </p>
+
+            <p>
+              El panel junto a la puerta se encendió otra vez.
+            </p>
+
+            <p>
+              Esta vez mostró una sola palabra:
+            </p>
+
+            <div class="quote">CORRE</div>
+
+            <p>
+              En ese mismo instante, alguien golpeó la puerta metálica desde el otro lado.
+            </p>
+
+            <p>
+              Un golpe seco.
+            </p>
+
+            <p>
+              Luego otro.
+            </p>
+
+            <p>
+              Y otro más.
+            </p>
+
+            <p>
+              No eran las figuras del pasillo.
+            </p>
+
+            <p>
+              Esto era diferente.
+            </p>
+
+            <p>
+              La cerradura vibró.
+            </p>
+
+            <p>
+              El metal crujió hacia adentro.
+            </p>
+
+            <p>
+              Kai retrocedió, apretando la linterna con una mano y la hoja negra con la otra.
+            </p>
+
+            <p>
+              Entonces escuchó una voz.
+            </p>
+
+            <p>
+              Humana.
+            </p>
+
+            <p>
+              Clara.
+            </p>
+
+            <div class="quote">—Kai. Si sigues ahí, no abras.</div>
+
+            <p>
+              Él se quedó inmóvil.
+            </p>
+
+            <p>
+              La voz volvió.
+            </p>
+
+            <div class="quote">—Si esa puerta se abre, ya no vas a saber quién soy.</div>
+
+            <p>
+              El golpe desde afuera se repitió con más fuerza.
+            </p>
+
+            <p>
+              Y al mismo tiempo, detrás de él, dentro del conducto abierto,
+              algo comenzó a arrastrarse otra vez.
+            </p>
+          </div>
+        </div>
+
+        <div class="reader-bottom">
+          <p class="reader-note">
+            Kai ya no solo huye: acaba de entrar en una sala que prueba que el reemplazo es real.
+          </p>
+
+          <div class="nav-actions">
+            <a href="capitulo3.html" class="btn btn-ghost">← Capítulo 3</a>
+            <a href="capitulo5.html" class="btn btn-primary">Leer capítulo 5 →</a>
+          </div>
+        </div>
+      </article>
+
+      <div class="footer-space"></div>
+    </main>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("stars");
+    const ctx = canvas.getContext("2d");
+    let stars = [];
+
+    function resize(){
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      createStars();
+    }
+
+    function createStars(){
+      stars = [];
+      const amount = Math.floor((canvas.width * canvas.height) / 18000);
+      for(let i = 0; i < amount; i++){
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.4 + 0.3,
+          speed: Math.random() * 0.22 + 0.05,
+          alpha: Math.random() * 0.55 + 0.15
+        });
+      }
+    }
+
+    function animate(){
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for(const s of stars){
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        s.y += s.speed;
+
+        if(s.y > canvas.height){
+          s.y = -2;
+          s.x = Math.random() * canvas.width;
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener("resize", resize);
+    resize();
+    animate();
+  </script>
+</body>
+</html>

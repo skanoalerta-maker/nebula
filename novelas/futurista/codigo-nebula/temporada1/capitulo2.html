@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capítulo 2 | Código Nébula</title>
+  <meta
+    name="description"
+    content="Capítulo 2 de Código Nébula: No estás solo."
+  />
+
+  <style>
+    :root{
+      --bg:#05080f;
+      --bg2:#0b1220;
+      --card:rgba(12,18,32,0.88);
+      --line:rgba(255,255,255,0.08);
+      --line-strong:rgba(73,182,255,0.24);
+      --text:#f5f8ff;
+      --muted:#aebad1;
+      --muted-2:#7f90ae;
+      --blue:#0A6CFF;
+      --blue2:#49b6ff;
+      --blue-soft:rgba(73,182,255,0.14);
+      --shadow:0 24px 60px rgba(0,0,0,0.45);
+      --radius:22px;
+      --max:860px;
+    }
+
+    *{
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(10,108,255,.10), transparent 24%),
+        radial-gradient(circle at top right, rgba(73,182,255,.08), transparent 20%),
+        linear-gradient(180deg, #04070d 0%, #08101c 45%, #05080f 100%);
+      line-height:1.8;
+      position:relative;
+      overflow-x:hidden;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    /* ⭐ estrellas solo al fondo */
+    #stars{
+      position:fixed;
+      inset:0;
+      width:100%;
+      height:100%;
+      z-index:0;
+      pointer-events:none;
+    }
+
+    .page{
+      min-height:100vh;
+      position:relative;
+      z-index:1;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:30;
+      backdrop-filter:blur(14px);
+      background:rgba(5,8,15,0.72);
+      border-bottom:1px solid var(--line);
+    }
+
+    .topbar-inner{
+      max-width:1100px;
+      margin:0 auto;
+      padding:16px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .brand-badge{
+      width:38px;
+      height:38px;
+      border-radius:12px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg, rgba(10,108,255,.22), rgba(73,182,255,.08));
+      border:1px solid var(--line-strong);
+      box-shadow:0 0 24px rgba(10,108,255,.12);
+      font-weight:700;
+      color:var(--blue2);
+      flex:0 0 auto;
+    }
+
+    .brand-text{
+      min-width:0;
+    }
+
+    .brand-title{
+      font-size:14px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:#dfe9ff;
+      margin:0 0 2px;
+    }
+
+    .brand-sub{
+      font-size:12px;
+      color:var(--muted-2);
+      margin:0;
+    }
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height:44px;
+      padding:0 18px;
+      border-radius:12px;
+      font-size:14px;
+      font-weight:700;
+      transition:transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+      border:1px solid transparent;
+      cursor:pointer;
+    }
+
+    .btn:hover{
+      transform:translateY(-1px);
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg, var(--blue) 0%, #0d7eff 100%);
+      color:white;
+      box-shadow:0 12px 28px rgba(10,108,255,.28);
+    }
+
+    .btn-primary:hover{
+      background:linear-gradient(135deg, #0c62e0 0%, #0a6cef 100%);
+    }
+
+    .btn-ghost{
+      background:rgba(255,255,255,0.03);
+      border-color:var(--line);
+      color:#dbe8ff;
+    }
+
+    .btn-ghost:hover{
+      background:rgba(255,255,255,0.06);
+      border-color:var(--line-strong);
+    }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      border-bottom:1px solid rgba(255,255,255,0.04);
+    }
+
+    /* ✅ se mantiene tu foto */
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(180deg, rgba(5,8,15,.52) 0%, rgba(5,8,15,.86) 80%, rgba(5,8,15,1) 100%),
+        url("https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1600&q=80");
+      background-size:cover;
+      background-position:center;
+      opacity:.28;
+      filter:saturate(.9);
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:auto 0 -120px 0;
+      height:240px;
+      background:radial-gradient(circle, rgba(73,182,255,.10), transparent 62%);
+      pointer-events:none;
+    }
+
+    .hero-inner{
+      position:relative;
+      z-index:1;
+      max-width:1100px;
+      margin:0 auto;
+      padding:56px 20px 34px;
+    }
+
+    .crumb{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.06);
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:18px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:28px;
+      align-items:end;
+    }
+
+    .hero-copy h1{
+      margin:0 0 12px;
+      font-size:clamp(34px, 6vw, 64px);
+      line-height:1.02;
+      letter-spacing:.02em;
+      color:white;
+      text-shadow:0 0 22px rgba(10,108,255,.18);
+    }
+
+    .eyebrow{
+      margin:0 0 14px;
+      color:var(--blue2);
+      font-weight:700;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      font-size:12px;
+    }
+
+    .hero-copy p{
+      margin:0;
+      max-width:700px;
+      color:#d4def3;
+      font-size:18px;
+      line-height:1.75;
+    }
+
+    .hero-side{
+      display:flex;
+      justify-content:flex-end;
+    }
+
+    .chapter-card{
+      width:min(100%, 360px);
+      background:linear-gradient(180deg, rgba(12,18,32,.85), rgba(9,13,24,.92));
+      border:1px solid rgba(73,182,255,.18);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:22px;
+      backdrop-filter:blur(16px);
+    }
+
+    .chapter-label{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 12px;
+      border-radius:999px;
+      background:var(--blue-soft);
+      border:1px solid rgba(73,182,255,.18);
+      color:var(--blue2);
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:14px;
+    }
+
+    .chapter-card h2{
+      margin:0 0 10px;
+      font-size:24px;
+      line-height:1.15;
+      color:white;
+    }
+
+    .chapter-card p{
+      margin:0 0 18px;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.7;
+    }
+
+    .meta{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .meta-item{
+      padding:12px;
+      border-radius:14px;
+      background:rgba(255,255,255,0.03);
+      border:1px solid rgba(255,255,255,0.05);
+    }
+
+    .meta-k{
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--muted-2);
+      margin:0 0 6px;
+    }
+
+    .meta-v{
+      margin:0;
+      font-size:13px;
+      color:#e7efff;
+      font-weight:700;
+    }
+
+    .content-wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:28px 20px 80px;
+    }
+
+    /* ✅ lector un poco más transparente para que las estrellas se noten solo en vacíos */
+    .reader{
+      position:relative;
+      background:linear-gradient(180deg, rgba(11,18,32,.78), rgba(8,13,24,.86));
+      border:1px solid rgba(255,255,255,0.06);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      backdrop-filter:blur(3px);
+    }
+
+    .reader-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:18px 22px;
+      border-bottom:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+    }
+
+    .reader-top-left h3{
+      margin:0 0 4px;
+      font-size:18px;
+      color:#edf3ff;
+    }
+
+    .reader-top-left p{
+      margin:0;
+      color:var(--muted-2);
+      font-size:13px;
+    }
+
+    .reader-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:34px;
+      padding:0 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,0.03);
+      border:1px solid rgba(255,255,255,0.06);
+      color:#cfe0ff;
+      font-size:12px;
+      font-weight:700;
+      white-space:nowrap;
+    }
+
+    .reader-body{
+      padding:34px 26px 18px;
+    }
+
+    .lead{
+      font-size:19px;
+      line-height:1.9;
+      color:#ecf3ff;
+      margin:0 0 26px;
+      padding:18px 18px 18px 20px;
+      border-left:3px solid rgba(73,182,255,.44);
+      background:rgba(73,182,255,.06);
+      border-radius:0 14px 14px 0;
+    }
+
+    .story{
+      max-width:720px;
+      margin:0 auto;
+    }
+
+    .story p{
+      margin:0 0 22px;
+      color:#d7e0f3;
+      font-size:18px;
+      line-height:1.95;
+      letter-spacing:.01em;
+    }
+
+    .story p strong{
+      color:#ffffff;
+      font-weight:700;
+    }
+
+    .story .quote{
+      margin:34px 0;
+      padding:20px 22px;
+      border-radius:18px;
+      background:linear-gradient(180deg, rgba(10,108,255,.10), rgba(73,182,255,.05));
+      border:1px solid rgba(73,182,255,.14);
+      color:#edf5ff;
+      font-size:19px;
+      line-height:1.7;
+      text-align:center;
+      box-shadow:0 12px 30px rgba(0,0,0,.18);
+    }
+
+    .story .divider{
+      width:86px;
+      height:1px;
+      background:linear-gradient(90deg, transparent, rgba(73,182,255,.6), transparent);
+      margin:34px auto;
+    }
+
+    .reader-bottom{
+      padding:24px 26px 28px;
+      border-top:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .reader-note{
+      color:var(--muted-2);
+      font-size:13px;
+      margin:0;
+    }
+
+    .nav-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .footer-space{
+      height:20px;
+    }
+
+    @media (max-width: 900px){
+      .hero-grid{
+        grid-template-columns:1fr;
+      }
+
+      .hero-side{
+        justify-content:flex-start;
+      }
+
+      .chapter-card{
+        width:100%;
+        max-width:unset;
+      }
+    }
+
+    @media (max-width: 640px){
+      .topbar-inner{
+        padding:14px 14px;
+      }
+
+      .hero-inner{
+        padding:34px 14px 22px;
+      }
+
+      .content-wrap{
+        padding:20px 14px 60px;
+      }
+
+      .reader-top,
+      .reader-body,
+      .reader-bottom{
+        padding-left:16px;
+        padding-right:16px;
+      }
+
+      .reader-body{
+        padding-top:24px;
+      }
+
+      .hero-copy p,
+      .story p,
+      .lead{
+        font-size:16px;
+      }
+
+      .meta{
+        grid-template-columns:1fr;
+      }
+
+      .top-actions{
+        width:100%;
+      }
+
+      .btn{
+        width:100%;
+      }
+
+      .nav-actions{
+        width:100%;
+      }
+
+      .nav-actions .btn{
+        flex:1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="stars"></canvas>
+
+  <div class="page">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <div class="brand-badge">N</div>
+          <div class="brand-text">
+            <p class="brand-title">Código Nébula</p>
+            <p class="brand-sub">Thriller tecnológico original</p>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <a href="../index.html" class="btn btn-ghost">← Volver al inicio</a>
+          <a href="capitulo3.html" class="btn btn-primary">Siguiente capítulo →</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="crumb">Inicio / Capítulos / Capítulo 2</div>
+
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Capítulo 2</p>
+            <h1>No estás solo</h1>
+            <p>
+              La pantalla ya no muestra solo datos. Ahora responde. Y lo que responde,
+              sabe exactamente quién es Kai.
+            </p>
+          </div>
+
+          <div class="hero-side">
+            <aside class="chapter-card">
+              <div class="chapter-label">Tensión creciente</div>
+              <h2>La anomalía ahora observa de vuelta</h2>
+              <p>
+                Lo que parecía una irregularidad digital se transforma en una presencia.
+                Kai ya no está investigando un error: está entrando en algo que lo ve.
+              </p>
+
+              <div class="meta">
+                <div class="meta-item">
+                  <p class="meta-k">Estado</p>
+                  <p class="meta-v">Gratis</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Género</p>
+                  <p class="meta-v">Thriller</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Nivel</p>
+                  <p class="meta-v">Alerta</p>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="content-wrap">
+      <article class="reader">
+        <div class="reader-top">
+          <div class="reader-top-left">
+            <h3>Capítulo 2: No estás solo</h3>
+            <p>Lectura gratuita · El patrón comienza a responder</p>
+          </div>
+          <div class="reader-badge">Capítulo abierto</div>
+        </div>
+
+        <div class="reader-body">
+          <div class="story">
+            <p class="lead">
+              Kai no respiraba. No de verdad. Solo permanecía quieto, atrapado entre la
+              lógica que lo había guiado siempre y la certeza brutal de que algo imposible
+              acababa de entrar en su realidad.
+            </p>
+
+            <p>Sus ojos seguían clavados en la pantalla.</p>
+            <p>La cámara seguía encendida.</p>
+            <p>Y detrás de él, en el monitor, esa figura inmóvil continuaba allí.</p>
+            <p>
+              Alta. Oscura. Sin rostro visible. Como si la noche misma hubiera adoptado
+              una forma humana solo para observarlo.
+            </p>
+            <p>Kai tragó saliva.</p>
+            <p>Lentamente, casi con dolor, giró la cabeza hacia atrás.</p>
+
+            <div class="quote">No había nadie.</div>
+
+            <p>La oficina estaba vacía.</p>
+            <p>
+              Filas de escritorios apagados. Sillas desordenadas. Pantallas en negro.
+              Un silencio tan limpio que empezó a resultarle antinatural.
+            </p>
+            <p>Volvió a mirar el monitor.</p>
+            <p>La figura seguía ahí.</p>
+            <p>
+              Exactamente donde debería haber estado si la cámara mostrara algo real.
+            </p>
+            <p>Kai sintió un frío seco en la nuca.</p>
+
+            <div class="divider"></div>
+
+            <p>Entonces el cursor se movió solo.</p>
+            <p>Él no tocó el mouse.</p>
+            <p>No presionó ninguna tecla.</p>
+            <p>
+              Aun así, el sistema reaccionó como si alguien más lo estuviera usando.
+            </p>
+            <p>Una ventana negra apareció sobre su escritorio digital.</p>
+            <p>No tenía encabezado. No tenía programa. No tenía origen.</p>
+            <p>Solo una línea de texto blanco, escrita letra por letra frente a sus ojos:</p>
+
+            <div class="quote">“Ya nos viste.”</div>
+
+            <p>El corazón empezó a golpearle el pecho con más fuerza.</p>
+            <p>Kai sintió que algo estaba mal… profundamente mal.</p>
+            <p>Se inclinó hacia la pantalla como si acercarse pudiera devolverle control.</p>
+            <p>—¿Quién eres? —susurró.</p>
+            <p>La respuesta llegó de inmediato.</p>
+
+            <div class="quote">“No estás solo.”</div>
+
+            <p>Kai apretó la mandíbula.</p>
+            <p>Se obligó a respirar.</p>
+            <p>
+              Malware, pensó. Una intrusión. Un acceso remoto. Un ataque visual. Algún tipo
+              de prueba interna. Algo explicable. Algo técnico. Algo que todavía pudiera
+              contener dentro del mundo que conocía.
+            </p>
+            <p>Tiró del cable del computador y lo desconectó de golpe.</p>
+            <p>La pantalla murió.</p>
+            <p>La luz del monitor desapareció.</p>
+            <p>Y por un segundo hubo solo oscuridad.</p>
+            <p>Silencio.</p>
+            <p>
+              Un silencio tan total que Kai pensó que tal vez había terminado.
+            </p>
+            <p>Entonces su celular vibró.</p>
+
+            <div class="divider"></div>
+
+            <p>El sonido lo atravesó como una descarga.</p>
+            <p>Bajó la mirada.</p>
+            <p>Pantalla activa.</p>
+            <p>Un mensaje nuevo.</p>
+            <p>Sin número.</p>
+            <p>Sin nombre.</p>
+            <p>Sin aplicación visible.</p>
+            <p>Solo texto sobre fondo negro.</p>
+
+            <div class="quote">“Mira detrás de ti.”</div>
+
+            <p>Kai se quedó inmóvil.</p>
+            <p>Su mano tembló apenas.</p>
+            <p>
+              Ya no sentía curiosidad. Ya no sentía obsesión. Eso había mutado.
+              Ahora solo quedaba una alerta primitiva, animal, irracional.
+            </p>
+            <p>Aun así, giró.</p>
+            <p>Despacio.</p>
+            <p>Preparándose para encontrar algo.</p>
+            <p>
+              Preparándose, incluso, para confirmar que estaba perdiendo la razón.
+            </p>
+            <p>Pero otra vez no vio a nadie.</p>
+            <p>Solo la oficina vacía.</p>
+            <p>Solo el eco bajo del sistema de ventilación.</p>
+            <p>Solo la luz de emergencia dibujando sombras pálidas en el suelo.</p>
+            <p>
+              Kai soltó aire por la nariz, confundido, tenso, a punto de convencerse de que
+              todo era un montaje muy sofisticado.
+            </p>
+            <p>Entonces algo cambió.</p>
+            <p>No en la sala.</p>
+            <p>En el vidrio de la ventana.</p>
+            <p>En el reflejo.</p>
+
+            <div class="quote">Allí sí había alguien.</div>
+
+            <p>Una silueta alta, quieta, justo detrás de él.</p>
+            <p>No en la oficina.</p>
+            <p>En el reflejo.</p>
+            <p>
+              Como si solo pudiera existir a través de superficies que devolvían imagen.
+            </p>
+            <p>Kai giró de nuevo.</p>
+            <p>Nada.</p>
+            <p>Miró la ventana.</p>
+            <p>Ahí seguía.</p>
+            <p>Quieta.</p>
+            <p>Esperando.</p>
+
+            <div class="divider"></div>
+
+            <p>Dio un paso hacia el vidrio.</p>
+            <p>La figura también.</p>
+            <p>No en la oficina.</p>
+            <p>Dentro del reflejo.</p>
+            <p>Kai sintió que el estómago se le vaciaba.</p>
+            <p>Sus dedos se cerraron con fuerza alrededor del teléfono.</p>
+            <p>La forma oscura inclinó ligeramente la cabeza.</p>
+            <p>
+              Y entonces, donde debería haber un rostro, se abrió una especie de curva.
+            </p>
+            <p>No era una boca.</p>
+            <p>Pero parecía una sonrisa.</p>
+            <p>Kai dejó caer el celular.</p>
+            <p>El golpe contra el suelo resonó demasiado fuerte.</p>
+            <p>
+              Cuando volvió a mirar la ventana, la figura había desaparecido.
+            </p>
+            <p>El reflejo volvió a ser solo reflejo.</p>
+            <p>Su respiración estaba completamente fuera de ritmo.</p>
+            <p>Se agachó para recoger el teléfono.</p>
+            <p>Había otro mensaje.</p>
+
+            <div class="quote">“Ahora sí me viste.”</div>
+
+            <p>Esta vez ya no intentó explicarlo.</p>
+            <p>Esta vez entendió algo mucho peor:</p>
+            <p>aquello no estaba interfiriendo un sistema.</p>
+            <p>Estaba jugando con él.</p>
+
+            <div class="divider"></div>
+
+            <p>Kai levantó la vista hacia la puerta de la oficina.</p>
+            <p>Estaba entreabierta.</p>
+            <p>Él recordaba haberla cerrado.</p>
+            <p>No solo cerrada: bloqueada.</p>
+            <p>
+              El pasillo del otro lado estaba vacío, pero la puerta oscilaba apenas, con un
+              movimiento casi imperceptible, como si alguien hubiera pasado recién.
+            </p>
+
+            <div class="quote">Tal vez nunca estuvo solo.</div>
+
+            <p>Dio un paso atrás.</p>
+            <p>El teléfono vibró otra vez.</p>
+            <p>Kai no quería mirar.</p>
+            <p>Miró igual.</p>
+
+            <div class="quote">“Abre la carpeta.”</div>
+
+            <p>
+              El monitor apagado del computador reflejaba tenuemente su silueta.
+            </p>
+            <p>
+              Y por un instante, solo uno, le pareció ver una sombra pasar detrás de él otra vez.
+            </p>
+            <p>Esa noche, Kai comprendió que el patrón no solo existía.</p>
+            <p>Estaba respondiendo.</p>
+            <p>Y acababa de invitarlo a seguir.</p>
+          </div>
+        </div>
+
+        <div class="reader-bottom">
+          <p class="reader-note">
+            El sistema ya no solo registra datos. Ahora empieza a guiar a Kai hacia algo más profundo.
+          </p>
+
+          <div class="nav-actions">
+            <a href="capitulo1.html" class="btn btn-ghost">← Capítulo 1</a>
+            <a href="capitulo3.html" class="btn btn-primary">Leer capítulo 3 →</a>
+          </div>
+        </div>
+      </article>
+
+      <div class="footer-space"></div>
+    </main>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("stars");
+    const ctx = canvas.getContext("2d");
+    let stars = [];
+
+    function resize(){
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      createStars();
+    }
+
+    function createStars(){
+      stars = [];
+      const amount = Math.floor((canvas.width * canvas.height) / 18000);
+      for(let i = 0; i < amount; i++){
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.4 + 0.3,
+          speed: Math.random() * 0.22 + 0.05,
+          alpha: Math.random() * 0.55 + 0.15
+        });
+      }
+    }
+
+    function animate(){
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for(const s of stars){
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        s.y += s.speed;
+
+        if(s.y > canvas.height){
+          s.y = -2;
+          s.x = Math.random() * canvas.width;
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener("resize", resize);
+    resize();
+    animate();
+  </script>
+</body>
+</html>

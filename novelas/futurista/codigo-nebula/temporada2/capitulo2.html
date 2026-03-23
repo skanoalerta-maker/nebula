@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capítulo 2 (12) | Código Nébula - Temporada 2</title>
+  <meta name="description" content="Capítulo 12 de Código Nébula: El archivo de Alma." />
+  <style>
+    :root{--bg:#05080f;--bg2:#0b1220;--card:rgba(12,18,32,0.88);--line:rgba(255,255,255,0.08);--line-strong:rgba(73,182,255,0.24);--text:#f5f8ff;--muted:#aebad1;--muted-2:#7f90ae;--blue:#0A6CFF;--blue2:#49b6ff;--blue-soft:rgba(73,182,255,0.14);--shadow:0 24px 60px rgba(0,0,0,0.45);--radius:22px;--max:860px;}
+    *{box-sizing:border-box} html{scroll-behavior:smooth}
+    body{margin:0;font-family:Arial,sans-serif;color:var(--text);background:radial-gradient(circle at top left, rgba(10,108,255,.10), transparent 24%),radial-gradient(circle at top right, rgba(73,182,255,.08), transparent 20%),linear-gradient(180deg, #04070d 0%, #08101c 45%, #05080f 100%);line-height:1.8;position:relative;overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+    #stars{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+    .page{min-height:100vh;position:relative;z-index:1}
+    .topbar{position:sticky;top:0;z-index:30;backdrop-filter:blur(14px);background:rgba(5,8,15,0.72);border-bottom:1px solid var(--line)}
+    .topbar-inner{max-width:1100px;margin:0 auto;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:14px}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}
+    .brand-badge{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg, rgba(10,108,255,.22), rgba(73,182,255,.08));border:1px solid var(--line-strong);box-shadow:0 0 24px rgba(10,108,255,.12);font-weight:700;color:var(--blue2);flex:0 0 auto}
+    .brand-title{font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#dfe9ff;margin:0 0 2px}
+    .brand-sub{font-size:12px;color:var(--muted-2);margin:0}
+    .top-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:12px;font-size:14px;font-weight:700;transition:transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;border:1px solid transparent;cursor:pointer}
+    .btn:hover{transform:translateY(-1px)}
+    .btn-primary{background:linear-gradient(135deg, var(--blue) 0%, #0d7eff 100%);color:white;box-shadow:0 12px 28px rgba(10,108,255,.28)}
+    .btn-ghost{background:rgba(255,255,255,0.03);border-color:var(--line);color:#dbe8ff}
+    .hero{position:relative;overflow:hidden;border-bottom:1px solid rgba(255,255,255,0.04)}
+    .hero::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(5,8,15,.56) 0%, rgba(5,8,15,.90) 80%, rgba(5,8,15,1) 100%),url("https://images.unsplash.com/photo-1516321165247-4aa89a48be28?auto=format&fit=crop&w=1600&q=80");background-size:cover;background-position:center;opacity:.22;filter:saturate(.9)}
+    .hero::after{content:"";position:absolute;inset:auto 0 -120px 0;height:240px;background:radial-gradient(circle, rgba(73,182,255,.10), transparent 62%);pointer-events:none}
+    .hero-inner{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:56px 20px 34px}
+    .crumb{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);color:var(--muted);font-size:13px;margin-bottom:18px}
+    .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:end}
+    .hero-copy h1{margin:0 0 12px;font-size:clamp(34px, 6vw, 64px);line-height:1.02;letter-spacing:.02em;color:white;text-shadow:0 0 22px rgba(10,108,255,.18)}
+    .eyebrow{margin:0 0 14px;color:var(--blue2);font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:12px}
+    .hero-copy p{margin:0;max-width:700px;color:#d4def3;font-size:18px;line-height:1.75}
+    .hero-side{display:flex;justify-content:flex-end}
+    .chapter-card{width:min(100%, 360px);background:linear-gradient(180deg, rgba(12,18,32,.85), rgba(9,13,24,.92));border:1px solid rgba(73,182,255,.18);border-radius:24px;box-shadow:var(--shadow);padding:22px;backdrop-filter:blur(16px)}
+    .chapter-label{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;background:var(--blue-soft);border:1px solid rgba(73,182,255,.18);color:var(--blue2);font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px}
+    .chapter-card h2{margin:0 0 10px;font-size:24px;line-height:1.15;color:white}
+    .chapter-card p{margin:0 0 18px;color:var(--muted);font-size:15px;line-height:1.7}
+    .meta{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+    .meta-item{padding:12px;border-radius:14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05)}
+    .meta-k{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted-2);margin:0 0 6px}
+    .meta-v{margin:0;font-size:13px;color:#e7efff;font-weight:700}
+    .content-wrap{max-width:var(--max);margin:0 auto;padding:24px 18px 70px}
+    .reader{position:relative;background:linear-gradient(180deg, rgba(11,18,32,.78), rgba(8,13,24,.86));border:1px solid rgba(255,255,255,0.06);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;backdrop-filter:blur(3px)}
+    .reader-top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 22px;border-bottom:1px solid var(--line);background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0))}
+    .reader-top-left h3{margin:0 0 4px;font-size:18px;color:#edf3ff}
+    .reader-top-left p{margin:0;color:var(--muted-2);font-size:13px}
+    .reader-badge{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;border-radius:999px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);color:#cfe0ff;font-size:12px;font-weight:700;white-space:nowrap}
+    .reader-body{padding:30px 24px 18px}
+    .lead{font-size:19px;line-height:1.85;color:#ecf3ff;margin:0 0 24px;padding:18px 18px 18px 20px;border-left:3px solid rgba(73,182,255,.44);background:rgba(73,182,255,.06);border-radius:0 14px 14px 0}
+    .story{max-width:100%;margin:0 auto}
+    .story p{margin:0 0 20px;color:#d7e0f3;font-size:17px;line-height:1.8;letter-spacing:.01em}
+    .story p strong{color:#fff;font-weight:700}
+    .story .quote{margin:30px 0;padding:18px 20px;border-radius:18px;background:linear-gradient(180deg, rgba(10,108,255,.10), rgba(73,182,255,.05));border:1px solid rgba(73,182,255,.14);color:#edf5ff;font-size:18px;line-height:1.6;text-align:center;box-shadow:0 12px 30px rgba(0,0,0,.18)}
+    .story .divider{width:86px;height:1px;background:linear-gradient(90deg, transparent, rgba(73,182,255,.6), transparent);margin:30px auto}
+    .reader-bottom{padding:22px 24px 26px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+    .reader-note{color:var(--muted-2);font-size:13px;margin:0}
+    .nav-actions{display:flex;gap:12px;flex-wrap:wrap}
+    .footer-space{height:20px}
+    @media (max-width:900px){.hero-grid{grid-template-columns:1fr}.hero-side{justify-content:flex-start}.chapter-card{width:100%;max-width:unset}}
+    @media (max-width:640px){.topbar-inner{padding:14px}.hero-inner{padding:30px 14px 20px}.content-wrap{padding:16px 12px 50px}.reader{border-radius:16px}.reader-top,.reader-body,.reader-bottom{padding-left:16px;padding-right:16px}.reader-body{padding-top:22px}.hero-copy h1{font-size:30px}.hero-copy p{font-size:15px;line-height:1.65}.chapter-card{padding:16px}.chapter-card h2{font-size:21px}.meta{grid-template-columns:1fr}.lead{font-size:16px;line-height:1.75}.story p{font-size:15px;line-height:1.72}.story .quote{font-size:16px;padding:16px}.top-actions,.nav-actions{width:100%}.btn,.nav-actions .btn{width:100%;flex:1 1 100%}}
+    @media (max-width:480px){.hero-inner{padding:26px 12px 18px}.hero-copy h1{font-size:28px}.hero-copy p{font-size:15px}.crumb{font-size:12px;padding:7px 10px}.reader-top-left h3{font-size:16px}.reader-top-left p{font-size:12px}.reader-badge{font-size:11px}.story p,.lead{font-size:15px}}
+  </style>
+</head>
+<body>
+  <canvas id="stars"></canvas>
+  <div class="page">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <div class="brand-badge">N</div>
+          <div class="brand-text">
+            <p class="brand-title">Código Nébula</p>
+            <p class="brand-sub">Temporada 2</p>
+          </div>
+        </div>
+        <div class="top-actions">
+          <a href="../index.html" class="btn btn-ghost">← Volver al inicio</a>
+          <a href="#" class="btn btn-primary">Continuará…</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="crumb">Temporada 2 / Capítulo 12</div>
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Temporada 2</p>
+            <h1>El archivo de Alma</h1>
+            <p>
+              Una advertencia grabada por Alma cambia la misión por completo. Ya no se trata
+              solo de salvarla: se trata de impedir que su retorno termine de abrir la continuidad.
+            </p>
+          </div>
+          <div class="hero-side">
+            <aside class="chapter-card">
+              <div class="chapter-label">Escalada</div>
+              <h2>El rescate ya no es simple</h2>
+              <p>
+                Kai tendrá que decidir si buscar a Alma significa salvarla… o convertirse
+                en la llave final del centro.
+              </p>
+              <div class="meta">
+                <div class="meta-item"><p class="meta-k">Estado</p><p class="meta-v">Gratis</p></div>
+                <div class="meta-item"><p class="meta-k">Temporada</p><p class="meta-v">2</p></div>
+                <div class="meta-item"><p class="meta-k">Clave</p><p class="meta-v">Alma</p></div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="content-wrap">
+      <article class="reader">
+        <div class="reader-top">
+          <div class="reader-top-left">
+            <h3>Capítulo 12: El archivo de Alma</h3>
+            <p>Temporada 2 · Misión redefinida</p>
+          </div>
+          <div class="reader-badge">Capítulo abierto</div>
+        </div>
+
+        <div class="reader-body">
+          <div class="story">
+            <p class="lead">
+              El video de Alma ya había terminado, pero Kai seguía viéndolo detrás de los ojos. “No intentes traerme de vuelta por completo. Si cruzo entera, no regreso sola.” La advertencia no cerraba nada. Lo abría todo.
+            </p>
+
+            <p>Lira desconectó el módulo azul del terminal y guardó el archivo replicado en una unidad mínima del tamaño de una llave.</p>
+            <p>—Nos vamos de aquí.</p>
+            <p>—No —dijo Kai.</p>
+            <p>Ella lo miró de inmediato.</p>
+            <p>—No confundas claridad con impulsividad.</p>
+            <p>—No es impulsividad.</p>
+            <p>—Acabas de descubrir que tu hermana puede ser usada como vector de apertura y aun así quieres bajar otra vez.</p>
+            <p>—Quiero entender qué parte de ella sigue siendo ella.</p>
+
+            <div class="quote">—Ese es exactamente el tipo de frase que el centro quiere oír —respondió Lira.</div>
+
+            <div class="divider"></div>
+
+            <p>Kai caminó hasta la pared opuesta y apoyó una mano en el metal frío.</p>
+            <p>No estaba pensando en heroicidades. Estaba pensando en precisión.</p>
+            <p>Alma no había dicho “olvídame”.</p>
+            <p>Había dicho “no me traigas completa”.</p>
+            <p>Eso implicaba algo decisivo:</p>
+            <p><strong>alguna parte de ella sí podía separarse.</strong></p>
+
+            <p>Se dio vuelta hacia Lira.</p>
+            <p>—¿Existe una extracción parcial?</p>
+            <p>Lira no respondió enseguida.</p>
+            <p>El hecho de que no negara nada fue suficiente.</p>
+            <p>—Existe —dijo él.</p>
+            <p>—En teoría.</p>
+            <p>—Eso significa que alguien lo intentó.</p>
+            <p>—Sí.</p>
+            <p>—¿Quién?</p>
+            <p>—El grupo anterior.</p>
+            <p>—¿Y?</p>
+            <p>—Fallaron.</p>
+
+            <p>Kai sostuvo la mirada.</p>
+            <p>—¿Por qué?</p>
+            <p>—Porque intentaron sacar una conciencia sin romper el enlace que la alimentaba.</p>
+            <p>—Habla claro.</p>
+            <p>—Porque querían rescatar a la persona sin matar el acceso.</p>
+
+            <div class="quote">Y ahí estaba el error: querer salvar algo del centro sin aceptar que el centro cobraría cada intento.</div>
+
+            <div class="divider"></div>
+
+            <p>El terminal emitió un sonido corto.</p>
+            <p>Otro mapa apareció.</p>
+            <p>Esta vez no mostraba la ciudad. Mostraba el edificio en capas.</p>
+            <p>Varias zonas comenzaron a iluminarse en rojo.</p>
+            <p>Subniveles. Conductos. Núcleos de energía. Repetidores.</p>
+
+            <p>Lira se tensó.</p>
+            <p>—No.</p>
+            <p>—¿Qué pasa?</p>
+            <p>—Nos están redibujando el edificio.</p>
+            <p>—¿Qué significa eso?</p>
+            <p>—Que después del sello, el sistema empezó a reorganizar sus rutas internas. Como si el centro hubiera perdido una puerta y ahora estuviera construyendo otras.</p>
+
+            <p>Kai miró la pantalla.</p>
+            <p>Un punto titilaba en azul pálido, separado del resto.</p>
+            <p>Etiqueta:</p>
+
+            <div class="quote">RESIDUO CONSCIENTE / ANCLA 03</div>
+
+            <p>Se le cerró el pecho.</p>
+            <p>—Eso es Alma.</p>
+            <p>Lira exhaló lento.</p>
+            <p>—Probablemente sí.</p>
+            <p>—Entonces sigue existiendo una parte estable.</p>
+            <p>—Una parte estable no significa recuperable.</p>
+            <p>—Pero significa que no está perdida del todo.</p>
+
+            <div class="divider"></div>
+
+            <p>La sala parecía más pequeña ahora, como si cada dato que aparecía redujera el margen de improvisación.</p>
+            <p>Kai se acercó al terminal.</p>
+            <p>El ancla 03 estaba ubicada no en el centro mismo, sino desplazada lateralmente, en una zona separada de la cámara principal.</p>
+            <p>Un corredor periférico. Una especie de cápsula de contención o derivación.</p>
+
+            <p>—No está en el núcleo —dijo.</p>
+            <p>—No.</p>
+            <p>—Entonces la apartaron.</p>
+            <p>—O la almacenaron.</p>
+            <p>—No hables de ella como si fuera una cosa.</p>
+            <p>Lira cerró los ojos un segundo.</p>
+            <p>—Estoy hablando como alguien que lleva meses viendo lo que pasa cuando dejas que el lenguaje emocional decida por ti dentro de este sistema.</p>
+
+            <div class="quote">Kai entendió que la dureza de Lira no venía de falta de compasión. Venía de haberla pagado demasiado cara antes.</div>
+
+            <div class="divider"></div>
+
+            <p>Él señaló la pantalla.</p>
+            <p>—Si hay un ancla lateral, también hay una vía lateral.</p>
+            <p>—Sí.</p>
+            <p>—Y si evitamos el núcleo, reducimos el riesgo de reapertura completa.</p>
+            <p>—Reducimos. No anulamos.</p>
+            <p>—Me sirve.</p>
+            <p>—A mí no.</p>
+
+            <p>Kai giró hacia ella.</p>
+            <p>—¿Entonces qué propones? ¿Esperar a que el centro construya más puertas? ¿Seguir sellando mientras aprende a copiar sectores completos?</p>
+            <p>Lira no respondió.</p>
+            <p>Era la primera vez que él la empujaba de verdad en una dirección técnica, no emocional.</p>
+
+            <p>—Escúchame —siguió Kai—. Si Alma dejó ese archivo, sabía que yo iba a insistir. No intentó detenerme. Intentó especificar el límite.</p>
+            <p>—El límite era no traerla completa.</p>
+            <p>—Exacto. Entonces no vamos a traerla completa.</p>
+
+            <div class="quote">La frase quedó suspendida en la sala como un plan lo bastante concreto para empezar a ser peligroso.</div>
+
+            <div class="divider"></div>
+
+            <p>Lira caminó hasta el terminal y amplió la ruta del ancla 03.</p>
+            <p>Aparecieron varias notas antiguas, fragmentadas, corrompidas en parte por el sistema.</p>
+            <p>Una seguía legible:</p>
+
+            <div class="quote">EXTRACCIÓN POSIBLE SOLO SI SUJETO 01 CORTA ENLACE DESDE NÚCLEO REFLEJO</div>
+
+            <p>Kai leyó dos veces.</p>
+            <p>Sujeto 01.</p>
+            <p>Él.</p>
+
+            <p>—Siempre vuelve a mí.</p>
+            <p>—Sí.</p>
+            <p>—¿Por qué?</p>
+            <p>—Porque tú no eras solo un observador del centro, Kai.</p>
+            <p>—Ya lo sé. Era acceso válido.</p>
+            <p>—Más que eso.</p>
+            <p>—¿Qué más?</p>
+
+            <p>Lira dudó.</p>
+            <p>Kai la vio hacerlo y supo que lo que venía era peor que todo lo anterior.</p>
+
+            <p>—La primera vez —dijo ella— no fuiste solo validado por el sistema.</p>
+            <p>—¿Entonces?</p>
+            <p>—Fuiste sincronizado.</p>
+
+            <div class="quote">Sincronizado.</div>
+
+            <p>La palabra cayó como metal.</p>
+
+            <p>—Explícame eso ahora mismo.</p>
+            <p>—Significa que cuando intentaste entender la estructura del centro, la estructura también te leyó a ti en tiempo real.</p>
+            <p>—Eso ya lo suponía.</p>
+            <p>—No. No me entiendes. No te copió después. Empezó a modelarse contigo mientras tú seguías dentro.</p>
+
+            <p>Kai retrocedió un paso.</p>
+            <p>Entonces la copia con su cara ya no era solo una reproducción posterior.</p>
+            <p>Era el resultado vivo de una lectura mutua.</p>
+
+            <div class="divider"></div>
+
+            <p>La puerta de la sala técnica se cerró sola.</p>
+            <p>Ambos giraron de inmediato.</p>
+            <p>El seguro magnético se activó con un clic seco.</p>
+
+            <p>En el terminal apareció una línea nueva:</p>
+
+            <div class="quote">SINCRONIZACIÓN RESIDUAL DETECTADA</div>
+
+            <p>—Nos encontró otra vez —dijo Lira.</p>
+            <p>—No. Me encontró a mí.</p>
+
+            <p>Kai sintió, por primera vez, algo inquietantemente preciso dentro del pecho. No un latido. No dolor. Una especie de tirón direccional.</p>
+            <p>Como si alguna parte de su sistema nervioso respondiera a una llamada muda.</p>
+
+            <p>El terminal mostró otra línea:</p>
+
+            <div class="quote">ANCLA 03 EN DEGRADACIÓN</div>
+
+            <p>—¿Qué significa eso? —preguntó Kai.</p>
+            <p>Lira leyó y su expresión cambió de inmediato.</p>
+            <p>—Que Alma ya no va a resistir mucho tiempo como residuo separado.</p>
+            <p>—¿Cuánto tiempo?</p>
+            <p>—No lo sé.</p>
+            <p>—Dame algo.</p>
+            <p>—Horas. Tal vez menos.</p>
+
+            <div class="quote">Eso transformó todo. La decisión dejó de ser estratégica. Se volvió inmediata.</div>
+
+            <div class="divider"></div>
+
+            <p>Kai apoyó ambas manos en la mesa y respiró hondo una vez.</p>
+            <p>Solo una.</p>
+            <p>Luego habló con una calma que ya no le salía desde el miedo.</p>
+
+            <p>—Entonces bajamos hoy.</p>
+            <p>—No estamos listos.</p>
+            <p>—Nunca lo estaremos.</p>
+            <p>—No sabes lo que te va a pedir el núcleo reflejo.</p>
+            <p>—No. Pero sé lo que pasa si no hago nada.</p>
+
+            <p>Lira lo observó en silencio.</p>
+            <p>No estaba evaluando valentía. Estaba evaluando estabilidad.</p>
+
+            <p>—Si bajas sincronizado y te abres demasiado —dijo—, puedes convertirte en la reapertura total.</p>
+            <p>—Y si no bajo, Alma se degrada.</p>
+            <p>—Sí.</p>
+            <p>—Entonces deja de intentar protegerme como si ese fuera todavía el objetivo principal.</p>
+
+            <div class="quote">Por primera vez desde que se encontraron, Kai ya no sonó arrastrado por la historia. Sonó como alguien que empezaba a tomarla.</div>
+
+            <div class="divider"></div>
+
+            <p>Lira abrió un compartimiento bajo la mesa y sacó una funda rígida negra.</p>
+            <p>Dentro había tres objetos:</p>
+            <p>una segunda barra azul, más grande;</p>
+            <p>un visor transparente con filamentos oscuros en el borde;</p>
+            <p>y un pequeño inyector metálico.</p>
+
+            <p>—¿Qué es todo eso?</p>
+            <p>—Lo que dejamos listo por si alguna vez teníamos que volver a hacer una extracción parcial.</p>
+            <p>—“Dejamos”.</p>
+            <p>—Sí. Antes de perderte.</p>
+
+            <p>Kai tomó el visor.</p>
+            <p>—¿Para qué sirve?</p>
+            <p>—Para no mirar el núcleo reflejo directamente.</p>
+            <p>—¿Y esto?</p>
+            <p>Señaló el inyector.</p>
+            <p>—Bloqueo mnésico temporal.</p>
+            <p>—¿Otra vez quieren borrarme?</p>
+            <p>—No. Esta vez solo serviría si el enlace empieza a comerte más rápido de lo que puedes sostener.</p>
+
+            <p>Él dejó el inyector sobre la mesa.</p>
+            <p>—No pienso bajar dopado.</p>
+            <p>—No te estoy pidiendo eso. Te estoy diciendo que tengas una opción.</p>
+
+            <div class="divider"></div>
+
+            <p>La puerta vibró otra vez.</p>
+            <p>No por golpes.</p>
+            <p>Por presión del otro lado, como si el edificio estuviera reajustando accesos en torno a ellos.</p>
+
+            <p>El terminal cambió una última vez.</p>
+            <p>En lugar del mapa apareció una frase única, dirigida a Kai:</p>
+
+            <div class="quote">SI BAJAS POR ELLA, BAJAS POR MÍ</div>
+
+            <p>Kai sintió el tirón en el pecho hacerse más fuerte.</p>
+            <p>Lira apagó la pantalla de golpe.</p>
+
+            <p>—Eso confirma algo —dijo.</p>
+            <p>—¿Qué?</p>
+            <p>—Que Alma y el centro ya no son compartimentos separados. Para sacar una parte de ella, vas a tener que atravesar una parte de eso.</p>
+
+            <p>Kai asintió despacio.</p>
+            <p>No como alguien convencido.</p>
+            <p>Como alguien que entiende el precio.</p>
+
+            <p>Guardó la segunda barra azul en la mochila.</p>
+            <p>Tomó el visor.</p>
+            <p>Miró una vez más el espacio donde había aparecido el archivo de Alma.</p>
+
+            <div class="quote">—Entonces bajemos antes de que deje de quedar algo que todavía pueda elegirme.</div>
+          </div>
+        </div>
+
+        <div class="reader-bottom">
+          <p class="reader-note">
+            Ya quedó definido el nuevo objetivo de temporada 2: una extracción parcial de Alma antes de que el ancla 03 se degrade y antes de que Kai termine de convertirse en la reapertura viva del centro.
+          </p>
+          <div class="nav-actions">
+            <a href="capitulo11.html" class="btn btn-ghost">← Capítulo 11</a>
+          </div>
+        </div>
+      </article>
+      <div class="footer-space"></div>
+    </main>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("stars");
+    const ctx = canvas.getContext("2d");
+    let stars = [];
+    function resize(){ canvas.width = window.innerWidth; canvas.height = window.innerHeight; createStars(); }
+    function createStars(){ stars=[]; const amount=Math.floor((canvas.width*canvas.height)/18000); for(let i=0;i<amount;i++){ stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*1.4+0.3,speed:Math.random()*0.22+0.05,alpha:Math.random()*0.55+0.15}); } }
+    function animate(){ ctx.clearRect(0,0,canvas.width,canvas.height); for(const s of stars){ ctx.beginPath(); ctx.fillStyle=`rgba(255,255,255,${s.alpha})`; ctx.arc(s.x,s.y,s.r,0,Math.PI*2); ctx.fill(); s.y+=s.speed; if(s.y>canvas.height){ s.y=-2; s.x=Math.random()*canvas.width; } } requestAnimationFrame(animate); }
+    window.addEventListener("resize", resize); resize(); animate();
+  </script>
+</body>
+</html>

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  />
+  <title>Nébula | Historias por capítulos</title>
+  <meta
+    name="description"
+    content="Nébula es una plataforma de historias por capítulos. Lee romance, terror, misterio, fantasía, comedia y más."
+  />
+  <meta name="theme-color" content="#07101f" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+  <div class="bg-grid"></div>
+
+  <header class="site-header">
+    <div class="container nav-shell">
+      <a href="#" class="brand" aria-label="Inicio Nébula">
+        <div class="brand-mark">N</div>
+        <div class="brand-copy">
+          <strong>NÉBULA</strong>
+          <span>Historias por capítulos</span>
+        </div>
+      </a>
+
+      <nav class="top-nav" aria-label="Principal">
+        <a href="#destacada">Destacada</a>
+        <a href="#catalogo">Catálogo</a>
+        <a href="#generos">Géneros</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="btn btn-ghost" type="button">Iniciar sesión</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="destacada">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow">Plataforma de lectura</div>
+          <h1>
+            Historias que te atrapan
+            <span>desde el primer capítulo</span>
+          </h1>
+          <p>
+            Explora novelas por géneros, guarda tu progreso y sigue leyendo
+            desde cualquier dispositivo. Nébula está pensada para una
+            experiencia moderna, limpia y adictiva.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#catalogo">Explorar historias</a>
+            <a class="btn btn-secondary" href="#generos">Ver géneros</a>
+          </div>
+
+          <div class="hero-stats">
+            <div class="stat-card">
+              <small>Lectura gratis</small>
+              <strong>Primeros 3 capítulos</strong>
+            </div>
+            <div class="stat-card">
+              <small>Acceso premium</small>
+              <strong>$1.500 CLP</strong>
+            </div>
+            <div class="stat-card">
+              <small>Compatible</small>
+              <strong>PC · Móvil · Tablet</strong>
+            </div>
+          </div>
+        </div>
+
+        <aside class="hero-feature-card" id="featuredCard">
+          <div class="hero-cover-wrap">
+            <img
+              id="featuredCover"
+              class="hero-cover"
+              src="assets/covers/nebula.jpg"
+              alt="Portada destacada"
+            />
+            <div class="hero-cover-overlay"></div>
+          </div>
+
+          <div class="hero-feature-content">
+            <div class="story-tags">
+              <span id="featuredGenreTag">Futurista</span>
+              <span id="featuredSeasonTag">Temporada 1</span>
+            </div>
+
+            <h2 id="featuredTitle">Código Nébula</h2>
+            <p id="featuredDescription">
+              Una historia futurista donde nada es lo que parece y cada capítulo
+              abre una nueva grieta en el sistema.
+            </p>
+
+            <div class="feature-meta">
+              <div>
+                <small>Visitas</small>
+                <strong id="featuredViews">0</strong>
+              </div>
+              <div>
+                <small>Gratis</small>
+                <strong id="featuredFree">3 capítulos</strong>
+              </div>
+            </div>
+
+            <div class="story-actions">
+              <a
+                id="featuredReadLink"
+                class="btn btn-primary"
+                href="novelas/futurista/codigo-nebula/temporada1/capitulo1.html"
+              >
+                Comenzar a leer
+              </a>
+
+              <button
+                id="featuredContinueBtn"
+                class="btn btn-secondary"
+                type="button"
+              >
+                Seguir leyendo
+              </button>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="generos">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Explora por categorías</p>
+            <h2>Géneros</h2>
+          </div>
+          <p class="section-note">
+            Romance, terror, misterio, fantasía, comedia y más.
+          </p>
+        </div>
+
+        <div class="genre-grid" id="genreGrid"></div>
+      </div>
+    </section>
+
+    <section class="section" id="catalogo">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Biblioteca principal</p>
+            <h2>Historias disponibles</h2>
+          </div>
+
+          <div class="catalog-tools">
+            <label class="search-box" for="storySearch">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M10.5 3a7.5 7.5 0 1 1 0 15a7.5 7.5 0 0 1 0-15Zm0 2a5.5 5.5 0 1 0 0 11a5.5 5.5 0 0 0 0-11Zm8.914 12.5l1.586 1.586l-1.414 1.414L18 18.914z"
+                />
+              </svg>
+              <input
+                type="search"
+                id="storySearch"
+                placeholder="Buscar novela o género..."
+                autocomplete="off"
+              />
+            </label>
+          </div>
+        </div>
+
+        <div class="story-grid" id="storyGrid"></div>
+        <div class="empty-state hidden" id="emptyState">
+          No se encontraron historias con esa búsqueda.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-shell">
+      <div>
+        <strong>NÉBULA</strong>
+        <p>Plataforma de historias por capítulos.</p>
+      </div>
+
+      <div class="footer-links">
+        <a href="#destacada">Inicio</a>
+        <a href="#catalogo">Catálogo</a>
+        <a href="#generos">Géneros</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const fallbackNovelas = [
+      {
+        id: "codigo-nebula",
+        titulo: "Código Nébula",
+        genero: "futurista",
+        portada: "assets/covers/nebula.jpg",
+        descripcion:
+          "Una historia futurista donde nada es lo que parece y cada capítulo abre una nueva grieta en el sistema.",
+        ruta: "novelas/futurista/codigo-nebula/temporada1/capitulo1.html",
+        carpeta: "codigo-nebula",
+        temporada: "Temporada 1",
+        visitas: 1542,
+        gratis: 3,
+        destacada: true
+      },
+      {
+        id: "no-debi-enamorarme",
+        titulo: "No debí enamorarme de ti",
+        genero: "romance",
+        portada: "assets/covers/no-debi-enamorarme.jpg",
+        descripcion:
+          "Una historia intensa sobre deseo, decisiones equivocadas y emociones que arden demasiado.",
+        ruta: "novelas/romance/no-debi-enamorarme/temporada1/capitulo1.html",
+        carpeta: "no-debi-enamorarme",
+        temporada: "Temporada 1",
+        visitas: 2984,
+        gratis: 3,
+        destacada: false
+      },
+      {
+        id: "despues-de-tu-adios",
+        titulo: "Después de tu adiós",
+        genero: "romance",
+        portada: "assets/covers/despues-de-tu-adios.jpg",
+        descripcion:
+          "Una novela emocional sobre recuerdos, ausencia y todo lo que sigue vivo después de una despedida.",
+        ruta: "novelas/romance/despues-de-tu-adios/temporada1/capitulo1.html",
+        carpeta: "despues-de-tu-adios",
+        temporada: "Temporada 1",
+        visitas: 1187,
+        gratis: 3,
+        destacada: false
+      }
+    ];
+
+    let novelas = [];
+    let filtradas = [];
+
+    const storyGrid = document.getElementById("storyGrid");
+    const genreGrid = document.getElementById("genreGrid");
+    const emptyState = document.getElementById("emptyState");
+    const storySearch = document.getElementById("storySearch");
+
+    function capitalizar(texto) {
+      if (!texto) return "";
+      return texto.charAt(0).toUpperCase() + texto.slice(1);
+    }
+
+    function getContinuePath(novela) {
+      const key = "nebula-progress-" + novela.id;
+      return localStorage.getItem(key) || novela.ruta;
+    }
+
+    function saveInitialProgress(novela) {
+      const key = "nebula-progress-" + novela.id;
+      if (!localStorage.getItem(key)) {
+        localStorage.setItem(key, novela.ruta);
+      }
+    }
+
+    function renderFeatured() {
+      const destacada = novelas.find(n => n.destacada) || novelas[0];
+      if (!destacada) return;
+
+      document.getElementById("featuredCover").src = destacada.portada;
+      document.getElementById("featuredCover").alt = destacada.titulo;
+      document.getElementById("featuredGenreTag").textContent = capitalizar(destacada.genero);
+      document.getElementById("featuredSeasonTag").textContent = destacada.temporada || "Temporada 1";
+      document.getElementById("featuredTitle").textContent = destacada.titulo;
+      document.getElementById("featuredDescription").textContent = destacada.descripcion;
+      document.getElementById("featuredViews").textContent = destacada.visitas || 0;
+      document.getElementById("featuredFree").textContent = (destacada.gratis || 3) + " capítulos";
+      document.getElementById("featuredReadLink").href = destacada.ruta;
+
+      const continueBtn = document.getElementById("featuredContinueBtn");
+      continueBtn.onclick = () => {
+        window.location.href = getContinuePath(destacada);
+      };
+    }
+
+    function renderGenres() {
+      const genres = [...new Set(novelas.map(n => n.genero))];
+
+      genreGrid.innerHTML = genres.map(genre => {
+        const total = novelas.filter(n => n.genero === genre).length;
+        return `
+          <button class="genre-card" type="button" data-genre="${genre}">
+            <span>${capitalizar(genre)}</span>
+            <small>${total} historia${total !== 1 ? "s" : ""}</small>
+          </button>
+        `;
+      }).join("");
+
+      document.querySelectorAll(".genre-card").forEach(btn => {
+        btn.addEventListener("click", () => {
+          storySearch.value = btn.dataset.genre;
+          filtrarHistorias();
+          document.getElementById("catalogo").scrollIntoView({ behavior: "smooth" });
+        });
+      });
+    }
+
+    function renderStories(items) {
+      if (!items.length) {
+        storyGrid.innerHTML = "";
+        emptyState.classList.remove("hidden");
+        return;
+      }
+
+      emptyState.classList.add("hidden");
+
+      storyGrid.innerHTML = items.map(novela => `
+        <article class="story-card">
+          <div class="story-cover-shell">
+            <img class="story-cover" src="${novela.portada}" alt="${novela.titulo}" />
+            <div class="story-cover-shadow"></div>
+            <div class="story-badges">
+              <span>${capitalizar(novela.genero)}</span>
+              <span>${novela.temporada || "Temporada 1"}</span>
+            </div>
+          </div>
+
+          <div class="story-body">
+            <div class="story-topline">
+              <h3>${novela.titulo}</h3>
+              <small>${novela.visitas || 0} visitas</small>
+            </div>
+
+            <p>${novela.descripcion}</p>
+
+            <div class="story-mini-meta">
+              <div>
+                <small>Gratis</small>
+                <strong>${novela.gratis || 3} capítulos</strong>
+              </div>
+              <div>
+                <small>Acceso completo</small>
+                <strong>$1.500 CLP</strong>
+              </div>
+            </div>
+
+            <div class="story-card-actions">
+              <a class="btn btn-primary" href="${novela.ruta}" data-read-id="${novela.id}">
+                Comenzar
+              </a>
+              <button class="btn btn-secondary" type="button" data-continue-id="${novela.id}">
+                Seguir
+              </button>
+            </div>
+          </div>
+        </article>
+      `).join("");
+
+      document.querySelectorAll("[data-read-id]").forEach(link => {
+        const novela = novelas.find(n => n.id === link.dataset.readId);
+        if (novela) {
+          link.addEventListener("click", () => saveInitialProgress(novela));
+        }
+      });
+
+      document.querySelectorAll("[data-continue-id]").forEach(btn => {
+        const novela = novelas.find(n => n.id === btn.dataset.continueId);
+        if (novela) {
+          btn.addEventListener("click", () => {
+            window.location.href = getContinuePath(novela);
+          });
+        }
+      });
+    }
+
+    function filtrarHistorias() {
+      const q = storySearch.value.trim().toLowerCase();
+
+      filtradas = novelas.filter(n => {
+        const texto = [
+          n.titulo,
+          n.genero,
+          n.descripcion,
+          n.temporada || ""
+        ].join(" ").toLowerCase();
+
+        return texto.includes(q);
+      });
+
+      renderStories(filtradas);
+    }
+
+    async function cargarNovelas() {
+      try {
+        const res = await fetch("data/novelas.json");
+        if (!res.ok) throw new Error("No se pudo leer data/novelas.json");
+        const data = await res.json();
+        novelas = Array.isArray(data) && data.length ? data : fallbackNovelas;
+      } catch (e) {
+        novelas = fallbackNovelas;
+      }
+
+      filtradas = [...novelas];
+      renderFeatured();
+      renderGenres();
+      renderStories(filtradas);
+    }
+
+    storySearch.addEventListener("input", filtrarHistorias);
+
+    cargarNovelas();
+  </script>
+</body>
+</html>

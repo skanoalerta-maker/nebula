@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capítulo 3 | Código Nébula</title>
+  <meta
+    name="description"
+    content="Capítulo 3 de Código Nébula: Mira detrás de ti."
+  />
+
+  <style>
+    :root{
+      --bg:#05080f;
+      --bg2:#0b1220;
+      --card:rgba(12,18,32,0.88);
+      --line:rgba(255,255,255,0.08);
+      --line-strong:rgba(73,182,255,0.24);
+      --text:#f5f8ff;
+      --muted:#aebad1;
+      --muted-2:#7f90ae;
+      --blue:#0A6CFF;
+      --blue2:#49b6ff;
+      --blue-soft:rgba(73,182,255,0.14);
+      --shadow:0 24px 60px rgba(0,0,0,0.45);
+      --radius:22px;
+      --max:860px;
+    }
+
+    *{
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(10,108,255,.10), transparent 24%),
+        radial-gradient(circle at top right, rgba(73,182,255,.08), transparent 20%),
+        linear-gradient(180deg, #04070d 0%, #08101c 45%, #05080f 100%);
+      line-height:1.8;
+      position:relative;
+      overflow-x:hidden;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    #stars{
+      position:fixed;
+      inset:0;
+      width:100%;
+      height:100%;
+      z-index:0;
+      pointer-events:none;
+    }
+
+    .page{
+      min-height:100vh;
+      position:relative;
+      z-index:1;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:30;
+      backdrop-filter:blur(14px);
+      background:rgba(5,8,15,0.72);
+      border-bottom:1px solid var(--line);
+    }
+
+    .topbar-inner{
+      max-width:1100px;
+      margin:0 auto;
+      padding:16px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .brand-badge{
+      width:38px;
+      height:38px;
+      border-radius:12px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg, rgba(10,108,255,.22), rgba(73,182,255,.08));
+      border:1px solid var(--line-strong);
+      box-shadow:0 0 24px rgba(10,108,255,.12);
+      font-weight:700;
+      color:var(--blue2);
+      flex:0 0 auto;
+    }
+
+    .brand-text{
+      min-width:0;
+    }
+
+    .brand-title{
+      font-size:14px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:#dfe9ff;
+      margin:0 0 2px;
+    }
+
+    .brand-sub{
+      font-size:12px;
+      color:var(--muted-2);
+      margin:0;
+    }
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height:44px;
+      padding:0 18px;
+      border-radius:12px;
+      font-size:14px;
+      font-weight:700;
+      transition:transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+      border:1px solid transparent;
+      cursor:pointer;
+    }
+
+    .btn:hover{
+      transform:translateY(-1px);
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg, var(--blue) 0%, #0d7eff 100%);
+      color:white;
+      box-shadow:0 12px 28px rgba(10,108,255,.28);
+    }
+
+    .btn-primary:hover{
+      background:linear-gradient(135deg, #0c62e0 0%, #0a6cef 100%);
+    }
+
+    .btn-ghost{
+      background:rgba(255,255,255,0.03);
+      border-color:var(--line);
+      color:#dbe8ff;
+    }
+
+    .btn-ghost:hover{
+      background:rgba(255,255,255,0.06);
+      border-color:var(--line-strong);
+    }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      border-bottom:1px solid rgba(255,255,255,0.04);
+    }
+
+    /* FOTO NUEVA DEL CAPÍTULO 3 */
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(180deg, rgba(5,8,15,.54) 0%, rgba(5,8,15,.86) 80%, rgba(5,8,15,1) 100%),
+        url("https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1600&q=80");
+      background-size:cover;
+      background-position:center;
+      opacity:.24;
+      filter:saturate(.9);
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:auto 0 -120px 0;
+      height:240px;
+      background:radial-gradient(circle, rgba(73,182,255,.10), transparent 62%);
+      pointer-events:none;
+    }
+
+    .hero-inner{
+      position:relative;
+      z-index:1;
+      max-width:1100px;
+      margin:0 auto;
+      padding:56px 20px 34px;
+    }
+
+    .crumb{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.06);
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:18px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:28px;
+      align-items:end;
+    }
+
+    .hero-copy h1{
+      margin:0 0 12px;
+      font-size:clamp(34px, 6vw, 64px);
+      line-height:1.02;
+      letter-spacing:.02em;
+      color:white;
+      text-shadow:0 0 22px rgba(10,108,255,.18);
+    }
+
+    .eyebrow{
+      margin:0 0 14px;
+      color:var(--blue2);
+      font-weight:700;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      font-size:12px;
+    }
+
+    .hero-copy p{
+      margin:0;
+      max-width:700px;
+      color:#d4def3;
+      font-size:18px;
+      line-height:1.75;
+    }
+
+    .hero-side{
+      display:flex;
+      justify-content:flex-end;
+    }
+
+    .chapter-card{
+      width:min(100%, 360px);
+      background:linear-gradient(180deg, rgba(12,18,32,.85), rgba(9,13,24,.92));
+      border:1px solid rgba(73,182,255,.18);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:22px;
+      backdrop-filter:blur(16px);
+    }
+
+    .chapter-label{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 12px;
+      border-radius:999px;
+      background:var(--blue-soft);
+      border:1px solid rgba(73,182,255,.18);
+      color:var(--blue2);
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:14px;
+    }
+
+    .chapter-card h2{
+      margin:0 0 10px;
+      font-size:24px;
+      line-height:1.15;
+      color:white;
+    }
+
+    .chapter-card p{
+      margin:0 0 18px;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.7;
+    }
+
+    .meta{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .meta-item{
+      padding:12px;
+      border-radius:14px;
+      background:rgba(255,255,255,0.03);
+      border:1px solid rgba(255,255,255,0.05);
+    }
+
+    .meta-k{
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--muted-2);
+      margin:0 0 6px;
+    }
+
+    .meta-v{
+      margin:0;
+      font-size:13px;
+      color:#e7efff;
+      font-weight:700;
+    }
+
+    .content-wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:28px 20px 80px;
+    }
+
+    .reader{
+      position:relative;
+      background:linear-gradient(180deg, rgba(11,18,32,.78), rgba(8,13,24,.86));
+      border:1px solid rgba(255,255,255,0.06);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      backdrop-filter:blur(3px);
+    }
+
+    .reader-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:18px 22px;
+      border-bottom:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+    }
+
+    .reader-top-left h3{
+      margin:0 0 4px;
+      font-size:18px;
+      color:#edf3ff;
+    }
+
+    .reader-top-left p{
+      margin:0;
+      color:var(--muted-2);
+      font-size:13px;
+    }
+
+    .reader-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:34px;
+      padding:0 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,0.03);
+      border:1px solid rgba(255,255,255,0.06);
+      color:#cfe0ff;
+      font-size:12px;
+      font-weight:700;
+      white-space:nowrap;
+    }
+
+    .reader-body{
+      padding:34px 26px 18px;
+    }
+
+    .lead{
+      font-size:19px;
+      line-height:1.9;
+      color:#ecf3ff;
+      margin:0 0 26px;
+      padding:18px 18px 18px 20px;
+      border-left:3px solid rgba(73,182,255,.44);
+      background:rgba(73,182,255,.06);
+      border-radius:0 14px 14px 0;
+    }
+
+    .story{
+      max-width:720px;
+      margin:0 auto;
+    }
+
+    .story p{
+      margin:0 0 22px;
+      color:#d7e0f3;
+      font-size:18px;
+      line-height:1.95;
+      letter-spacing:.01em;
+    }
+
+    .story p strong{
+      color:#ffffff;
+      font-weight:700;
+    }
+
+    .story .quote{
+      margin:34px 0;
+      padding:20px 22px;
+      border-radius:18px;
+      background:linear-gradient(180deg, rgba(10,108,255,.10), rgba(73,182,255,.05));
+      border:1px solid rgba(73,182,255,.14);
+      color:#edf5ff;
+      font-size:19px;
+      line-height:1.7;
+      text-align:center;
+      box-shadow:0 12px 30px rgba(0,0,0,.18);
+    }
+
+    .story .divider{
+      width:86px;
+      height:1px;
+      background:linear-gradient(90deg, transparent, rgba(73,182,255,.6), transparent);
+      margin:34px auto;
+    }
+
+    .reader-bottom{
+      padding:24px 26px 28px;
+      border-top:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .reader-note{
+      color:var(--muted-2);
+      font-size:13px;
+      margin:0;
+    }
+
+    .nav-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .footer-space{
+      height:20px;
+    }
+
+    @media (max-width: 900px){
+      .hero-grid{
+        grid-template-columns:1fr;
+      }
+
+      .hero-side{
+        justify-content:flex-start;
+      }
+
+      .chapter-card{
+        width:100%;
+        max-width:unset;
+      }
+    }
+
+    @media (max-width: 640px){
+      .topbar-inner{
+        padding:14px 14px;
+      }
+
+      .hero-inner{
+        padding:34px 14px 22px;
+      }
+
+      .content-wrap{
+        padding:20px 14px 60px;
+      }
+
+      .reader-top,
+      .reader-body,
+      .reader-bottom{
+        padding-left:16px;
+        padding-right:16px;
+      }
+
+      .reader-body{
+        padding-top:24px;
+      }
+
+      .hero-copy p,
+      .story p,
+      .lead{
+        font-size:16px;
+      }
+
+      .meta{
+        grid-template-columns:1fr;
+      }
+
+      .top-actions{
+        width:100%;
+      }
+
+      .btn{
+        width:100%;
+      }
+
+      .nav-actions{
+        width:100%;
+      }
+
+      .nav-actions .btn{
+        flex:1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="stars"></canvas>
+
+  <div class="page">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <div class="brand-badge">N</div>
+          <div class="brand-text">
+            <p class="brand-title">Código Nébula</p>
+            <p class="brand-sub">Thriller tecnológico original</p>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <a href="../index.html" class="btn btn-ghost">← Volver al inicio</a>
+          <a href="capitulo4.html" class="btn btn-primary">Siguiente capítulo →</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="crumb">Inicio / Capítulos / Capítulo 3</div>
+
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Capítulo 3</p>
+            <h1>Mira detrás de ti</h1>
+            <p>
+              El mensaje no era una amenaza. Era una instrucción. Y cuando Kai obedece,
+              entiende que ya no está frente a un simple patrón digital.
+            </p>
+          </div>
+
+          <div class="hero-side">
+            <aside class="chapter-card">
+              <div class="chapter-label">Cruce de umbral</div>
+              <h2>La presencia ya no se limita a la pantalla</h2>
+              <p>
+                Reflejos, mensajes sin origen y una figura imposible empiezan a romper
+                las reglas. Kai descubre que observar también significa ser encontrado.
+              </p>
+
+              <div class="meta">
+                <div class="meta-item">
+                  <p class="meta-k">Estado</p>
+                  <p class="meta-v">Gratis</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Género</p>
+                  <p class="meta-v">Sci-fi oscuro</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Riesgo</p>
+                  <p class="meta-v">Alto</p>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="content-wrap">
+      <article class="reader">
+        <div class="reader-top">
+          <div class="reader-top-left">
+            <h3>Capítulo 3: Mira detrás de ti</h3>
+            <p>Lectura gratuita · El patrón cruza el límite</p>
+          </div>
+          <div class="reader-badge">Capítulo abierto</div>
+        </div>
+
+        <div class="reader-body">
+          <div class="story">
+            <p class="lead">
+              Kai leyó el mensaje una vez. Luego otra. Y una tercera, como si repetirlo
+              fuera a cambiar algo. “Mira detrás de ti.” No sonaba a advertencia.
+              Sonaba a certeza.
+            </p>
+
+            <p>
+              Sintió un escalofrío recorrerle la espalda, lento, helado, casi inteligente.
+              No fue miedo inmediato. Fue algo peor: la sensación de que aquello ya sabía
+              exactamente lo que provocaría en él.
+            </p>
+
+            <p>El teléfono tembló entre sus dedos.</p>
+
+            <p>
+              La oficina seguía a oscuras, apenas iluminada por la luz de emergencia del pasillo
+              y el reflejo lejano de los edificios vecinos.
+            </p>
+
+            <p>
+              Afuera, la ciudad permanecía viva e indiferente, como si miles de personas
+              continuaran con sus rutinas sin tener idea de que algo estaba creciendo
+              debajo de todo lo normal.
+            </p>
+
+            <p>Kai no quería girarse.</p>
+
+            <p>
+              Su mente, entrenada para analizar patrones, buscar lógica y reducir todo
+              a causas medibles, intentó reaccionar. Tal vez era una broma. Un acceso remoto.
+              Un malware. Un ataque interno. Alguna clase de prueba de seguridad.
+            </p>
+
+            <p>Pero ninguna explicación encajaba con lo que había visto.</p>
+
+            <div class="quote">
+              La cámara encendida sola. La figura detrás de él. El mensaje sin origen.
+            </div>
+
+            <p>“Respira”, se dijo en silencio.</p>
+            <p>Contó hasta tres.</p>
+            <p>Uno.</p>
+            <p>Dos.</p>
+            <p>Tres.</p>
+
+            <p>Y giró lentamente.</p>
+
+            <p>Nada.</p>
+
+            <p>
+              Solo la oficina vacía. Filas de escritorios apagados. Monitores negros.
+              Sillas mal alineadas. Una impresora con una luz roja parpadeando al fondo.
+            </p>
+
+            <p>
+              Kai soltó el aire de golpe, pero el alivio le duró apenas un segundo.
+            </p>
+
+            <p>Porque en el vidrio de la ventana, en el reflejo, sí había alguien.</p>
+
+            <div class="divider"></div>
+
+            <p>
+              Una silueta alta, inmóvil, con hombros demasiado angostos y brazos
+              demasiado largos.
+            </p>
+
+            <p>
+              No se distinguía un rostro. Solo una forma oscura, apenas recortada
+              por la luz azulada del exterior.
+            </p>
+
+            <p>Como una mancha vertical plantada a pocos pasos de su espalda.</p>
+
+            <p>Kai se dio vuelta de nuevo.</p>
+            <p>Nada.</p>
+            <p>Miró el reflejo.</p>
+            <p>La figura seguía ahí.</p>
+
+            <p>
+              El corazón comenzó a latirle con violencia. El reflejo y la realidad no coincidían.
+              Eso no existía. No en su mundo. No en su lógica. No en ninguna física que conociera.
+            </p>
+
+            <p>Dio un paso hacia la ventana.</p>
+            <p>La silueta hizo lo mismo.</p>
+
+            <p>Kai se congeló.</p>
+
+            <p>
+              La figura no avanzó en la oficina. Avanzó dentro del vidrio.
+            </p>
+
+            <p>Y entonces ocurrió algo peor.</p>
+
+            <div class="quote">Sonrió.</div>
+
+            <p>
+              No con labios. No con dientes. Con una deformación del vacío donde debería
+              haber un rostro. Como si la oscuridad misma se hubiese rasgado en una curva
+              delgada y burlona.
+            </p>
+
+            <p>Kai dejó caer el teléfono.</p>
+
+            <p>
+              El golpe contra el suelo resonó demasiado fuerte, demasiado humano, demasiado normal
+              para esa escena imposible.
+            </p>
+
+            <p>
+              Retrocedió de inmediato, chocando con la base de una silla. Casi cayó,
+              pero logró sostenerse del borde de un escritorio.
+            </p>
+
+            <p>El reflejo se distorsionó.</p>
+            <p>La figura desapareció.</p>
+
+            <p>La ventana volvió a ser solo una ventana.</p>
+
+            <div class="divider"></div>
+
+            <p>Kai respiraba rápido, con la garganta cerrada.</p>
+
+            <p>Se agachó para recoger el teléfono.</p>
+
+            <p>La pantalla seguía encendida.</p>
+
+            <p>Había otro mensaje.</p>
+
+            <div class="quote">“Ahora sí me viste.”</div>
+
+            <p>
+              Esa frase no se sentía escrita. Se sentía pronunciada.
+            </p>
+
+            <p>Miró la hora. 02:17.</p>
+
+            <p>
+              Nadie en el edificio debería estar ahí. El turno nocturno se había ido
+              horas antes. Él se había quedado solo porque quería revisar los registros
+              sin ruido, sin interrupciones, sin supervisión.
+            </p>
+
+            <p>
+              Desde que detectó usuarios activos con fecha de defunción, algo en su cabeza
+              ya no le permitía descansar.
+            </p>
+
+            <p>
+              Abrió el detalle del mensaje. No había remitente. No había número.
+              No había historial.
+            </p>
+
+            <p>
+              Solo una conversación vacía que parecía generarse y borrarse sola.
+            </p>
+
+            <p>Levantó la vista hacia la puerta de vidrio de la oficina.</p>
+
+            <p>Estaba abierta.</p>
+
+            <p>Él recordaba haberla cerrado.</p>
+            <p>No solo cerrada: bloqueada.</p>
+
+            <p>
+              El pasillo del otro lado estaba vacío, iluminado por luces blancas frías.
+              Pero la puerta oscilaba apenas, como si alguien hubiera pasado recién.
+            </p>
+
+            <div class="quote">Tal vez nunca estuvo solo.</div>
+
+            <p>
+              Quiso correr. Quiso bajar por las escaleras, salir del edificio,
+              olvidar los registros, olvidar la noche, olvidar todo.
+            </p>
+
+            <p>
+              Pero había una parte de él —la parte obsesiva, exacta, peligrosa—
+              que no podía retirarse sin entender.
+            </p>
+
+            <p>Volvió al escritorio.</p>
+
+            <p>Conectó otra vez el computador.</p>
+
+            <p>La pantalla tardó unos segundos en reaccionar.</p>
+
+            <p>
+              Esperaba encontrarla bloqueada o dañada. En cambio, el sistema inició
+              con normalidad.
+            </p>
+
+            <p>Escritorio. Archivos. Red. Herramientas de monitoreo.</p>
+            <p>Todo parecía en su sitio.</p>
+
+            <p>Hasta que vio una carpeta nueva en el escritorio.</p>
+
+            <div class="quote">NÉBULA</div>
+
+            <p>No estaba antes.</p>
+
+            <p>
+              No parecía creada por ningún software conocido. Era apenas un rectángulo
+              oscuro con letras blancas, demasiado limpio, demasiado simple, casi elegante.
+            </p>
+
+            <p>Acercó el cursor.</p>
+            <p>Hizo clic.</p>
+
+            <p>La pantalla titiló una vez.</p>
+
+            <p>Se abrió una sola ventana.</p>
+
+            <p>No había archivos. No había subcarpetas.</p>
+
+            <p>Solo una línea de texto en el centro:</p>
+
+            <div class="quote">“Si puedes ver esto, ya entraste.”</div>
+
+            <p>Kai apretó la mandíbula.</p>
+            <p>—¿Entré dónde?</p>
+
+            <p>
+              Como respuesta, apareció una barra de carga.
+            </p>
+
+            <p>0%.</p>
+            <p>3%.</p>
+            <p>8%.</p>
+
+            <p>Intentó cerrarla.</p>
+            <p>No pudo.</p>
+
+            <p>
+              Movió el cursor a otras ventanas. Nada respondió. Todo el sistema quedó
+              tomado por esa barra muda que avanzaba sin permiso.
+            </p>
+
+            <p>
+              A los 15%, el portátil comenzó a calentarse. A los 21%, los parlantes
+              emitieron un ruido blanco muy leve.
+            </p>
+
+            <p>
+              A los 30%, la luz del techo sobre su escritorio parpadeó tres veces.
+            </p>
+
+            <p>Kai tiró del cable de corriente.</p>
+            <p>Nada.</p>
+            <p>La máquina seguía encendida.</p>
+
+            <div class="divider"></div>
+
+            <p>A los 36%, el ruido blanco empezó a parecerse a voces.</p>
+
+            <p>
+              No era una sola voz. Eran muchas. Superpuestas. Cortadas. Lejanas.
+              Como estaciones de radio mezcladas en un túnel.
+            </p>
+
+            <p>
+              Kai se inclinó hacia la pantalla, intentando distinguir una palabra.
+            </p>
+
+            <p>Y entonces la oyó claramente.</p>
+
+            <div class="quote">—Kai.</div>
+
+            <p>La voz había dicho su nombre.</p>
+
+            <p>A los 44%, aparecieron imágenes debajo de la barra.</p>
+
+            <p>Fotografías.</p>
+            <p>Una por una.</p>
+
+            <p>
+              Personas mirando a cámara. Hombres, mujeres, jóvenes, ancianos.
+              En todas había algo mal.
+            </p>
+
+            <p>No en el cuerpo. No de inmediato.</p>
+            <p>El error estaba en los ojos.</p>
+
+            <p>
+              Todos compartían la misma mirada fija, hueca, sin vibración humana.
+              Como si detrás de cada rostro hubiera exactamente la misma cosa.
+            </p>
+
+            <p>La siguiente foto le heló la sangre.</p>
+
+            <p>Era Matías.</p>
+
+            <p>
+              Su compañero de equipo. Muerto hacía once meses en un accidente de carretera.
+              Kai había ido al velorio.
+            </p>
+
+            <p>Y sin embargo, allí estaba.</p>
+
+            <p>Sentado en un café. Mirando a cámara.</p>
+
+            <div class="quote">ACTIVO HACE 2 HORAS</div>
+
+            <p>
+              Otra foto. Otra más. Nombres conocidos. Nombres ajenos. Personas reportadas
+              como fallecidas. Personas con actividad reciente.
+            </p>
+
+            <p>La barra avanzó a 51%.</p>
+
+            <p>El ruido blanco subió.</p>
+            <p>La luz del pasillo se apagó.</p>
+
+            <p>Toda la oficina quedó a media sombra.</p>
+
+            <p>Kai se puso de pie de golpe.</p>
+
+            <p>Ahora ya no quería entender. Quería salir.</p>
+
+            <p>
+              Pero la pantalla cambió otra vez. Un mapa de la ciudad apareció lleno
+              de puntos rojos.
+            </p>
+
+            <p>Decenas.</p>
+            <p>Luego cientos.</p>
+
+            <p>
+              Parpadeando sobre sectores residenciales, hospitales, estaciones,
+              centros comerciales, escuelas.
+            </p>
+
+            <div class="quote">REEMPLAZO EN CURSO</div>
+
+            <p>Kai sintió que el estómago se le iba al suelo.</p>
+
+            <p>Abrió una consola paralela. Intentó rastrear origen, IP, tráfico.</p>
+            <p>Todo devolvía lo mismo:</p>
+
+            <div class="quote">NO DISPONIBLE</div>
+
+            <p>
+              Como si la señal no viniera de internet.
+            </p>
+
+            <p>Como si viniera de otra parte.</p>
+
+            <p>
+              De pronto, la ventana desapareció. Ahora se veía la cámara del portátil otra vez.
+            </p>
+
+            <p>Kai frente al monitor.</p>
+            <p>Pálido. Tenso. Solo.</p>
+
+            <p>O eso creyó durante dos segundos.</p>
+
+            <p>
+              Porque al fondo, junto a la impresora, había una figura inmóvil.
+            </p>
+
+            <div class="quote">Más cerca que antes.</div>
+
+            <p>Esta vez no era un reflejo.</p>
+            <p>Estaba en la cámara real.</p>
+
+            <p>Kai giró.</p>
+            <p>Nada.</p>
+
+            <p>Volvió a mirar la pantalla.</p>
+            <p>La figura seguía ahí.</p>
+
+            <p>
+              Más cerca. Más definida. Uno de sus brazos se elevó lentamente y lo señaló.
+            </p>
+
+            <p>La cámara murió.</p>
+
+            <p>Pantalla negra.</p>
+
+            <p>En el centro apareció una sola frase:</p>
+
+            <div class="quote">“Te encontró.”</div>
+
+            <p>Detrás de él sonó un clic.</p>
+
+            <p>
+              Pequeño. Metálico. Inconfundible.
+            </p>
+
+            <p>El seguro de la puerta acababa de activarse solo.</p>
+
+            <p>Kai giró hacia la salida.</p>
+            <p>La puerta estaba cerrada.</p>
+
+            <p>Luego escuchó otro sonido.</p>
+
+            <p>Pasos.</p>
+
+            <p>Lentos. Arrastrados.</p>
+
+            <p>No uno. Varios.</p>
+
+            <p>
+              Como si más de una persona se acercara desde ambos extremos del pasillo.
+            </p>
+
+            <p>Kai corrió hacia la puerta y presionó el panel de apertura.</p>
+            <p>Rojo. Bloqueado.</p>
+
+            <p>Golpeó el cristal con la palma.</p>
+            <p>Nada.</p>
+
+            <p>Los pasos seguían acercándose.</p>
+
+            <p>Uno.</p>
+            <p>Dos.</p>
+            <p>Tres ritmos distintos.</p>
+
+            <p>
+              Kai volvió al escritorio. Tomó su mochila. Metió el portátil de golpe.
+              Recogió el teléfono del suelo.
+            </p>
+
+            <p>
+              Abrió la cámara del celular y apuntó hacia la puerta.
+            </p>
+
+            <p>El pasillo aparecía vacío.</p>
+
+            <p>Luego la imagen tembló.</p>
+
+            <p>
+              Y tres siluetas comenzaron a formarse lentamente en la pantalla.
+            </p>
+
+            <div class="quote">Solo existían a través de la cámara.</div>
+
+            <p>
+              Tres figuras demasiado delgadas, avanzando con movimientos desfasados,
+              como si cada paso llegara con retraso respecto de su cuerpo.
+            </p>
+
+            <p>Kai retrocedió sin dejar de mirar la pantalla.</p>
+
+            <p>Las siluetas se detuvieron frente a la puerta.</p>
+
+            <p>
+              A simple vista seguía sin haber nadie.
+            </p>
+
+            <p>Pero a través de la cámara estaban ahí.</p>
+
+            <p>Observándolo.</p>
+
+            <p>Una levantó la cabeza.</p>
+            <p>Sus ojos eran dos huecos blancos.</p>
+            <p>La segunda apoyó la palma contra el cristal.</p>
+            <p>La tercera inclinó el cuello de una forma imposible.</p>
+
+            <p>El teléfono vibró.</p>
+
+            <div class="quote">“Abre.”</div>
+
+            <p>Kai sintió pánico real por primera vez.</p>
+
+            <p>
+              No ansiedad. No paranoia. Pánico.
+            </p>
+
+            <p>Corrió hacia la ventana. Era demasiado alto para saltar.</p>
+            <p>Buscó otra salida. Nada.</p>
+
+            <p>Las luces del piso completo se apagaron.</p>
+
+            <p>
+              El celular quedó como su única fuente de luz.
+            </p>
+
+            <p>
+              Y en esa pantalla, frente a la puerta, las tres figuras seguían esperando.
+            </p>
+
+            <p>Sin moverse.</p>
+
+            <p>Como si supieran que ya no tenía tiempo.</p>
+
+            <div class="divider"></div>
+
+            <p>
+              Entonces vio la rejilla de mantención junto a un archivador del fondo.
+              Nunca le había prestado atención.
+            </p>
+
+            <p>
+              Una salida pequeña. Ridícula. Pero posible.
+            </p>
+
+            <p>Detrás de él, el vidrio crujió.</p>
+
+            <p>
+              Kai tomó un abrecartas del cajón más cercano, se lanzó al suelo y comenzó
+              a arrancar los tornillos con desesperación.
+            </p>
+
+            <p>El metal cedió.</p>
+
+            <p>Un soplo de aire helado salió del conducto.</p>
+
+            <p>Oscuro. Estrecho. Asfixiante.</p>
+
+            <p>Perfecto.</p>
+
+            <p>
+              Alzó por última vez el celular hacia la puerta.
+            </p>
+
+            <p>Las tres siluetas habían dejado de golpear.</p>
+
+            <p>Ahora estaban quietas.</p>
+
+            <p>Y una cuarta forma acababa de aparecer detrás de ellas.</p>
+
+            <div class="quote">La misma del reflejo.</div>
+
+            <p>La misma que había sonreído.</p>
+
+            <p>La pantalla del teléfono se llenó de interferencia.</p>
+
+            <p>Antes de apagarse, mostró una última frase:</p>
+
+            <div class="quote">“Ya sabes mirar.”</div>
+
+            <p>El vidrio explotó.</p>
+
+            <p>
+              Kai se metió de cabeza en el conducto y comenzó a arrastrarse en la oscuridad,
+              mientras algo entraba en la oficina detrás de él.
+            </p>
+          </div>
+        </div>
+
+        <div class="reader-bottom">
+          <p class="reader-note">
+            Kai ya no investiga una anomalía: ahora huye de algo que lo reconoció.
+          </p>
+
+          <div class="nav-actions">
+            <a href="capitulo2.html" class="btn btn-ghost">← Capítulo 2</a>
+            <a href="capitulo4.html" class="btn btn-primary">Leer capítulo 4 →</a>
+          </div>
+        </div>
+      </article>
+
+      <div class="footer-space"></div>
+    </main>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("stars");
+    const ctx = canvas.getContext("2d");
+    let stars = [];
+
+    function resize(){
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      createStars();
+    }
+
+    function createStars(){
+      stars = [];
+      const amount = Math.floor((canvas.width * canvas.height) / 18000);
+      for(let i = 0; i < amount; i++){
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.4 + 0.3,
+          speed: Math.random() * 0.22 + 0.05,
+          alpha: Math.random() * 0.55 + 0.15
+        });
+      }
+    }
+
+    function animate(){
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for(const s of stars){
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        s.y += s.speed;
+
+        if(s.y > canvas.height){
+          s.y = -2;
+          s.x = Math.random() * canvas.width;
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener("resize", resize);
+    resize();
+    animate();
+  </script>
+</body>
+</html>

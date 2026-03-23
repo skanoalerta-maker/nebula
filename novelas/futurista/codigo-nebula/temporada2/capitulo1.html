@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capítulo 1 (11) | Código Nébula - Temporada 2</title>
+  <meta name="description" content="Capítulo 11 de Código Nébula: Después del sello." />
+  <style>
+    :root{--bg:#05080f;--bg2:#0b1220;--card:rgba(12,18,32,0.88);--line:rgba(255,255,255,0.08);--line-strong:rgba(73,182,255,0.24);--text:#f5f8ff;--muted:#aebad1;--muted-2:#7f90ae;--blue:#0A6CFF;--blue2:#49b6ff;--blue-soft:rgba(73,182,255,0.14);--shadow:0 24px 60px rgba(0,0,0,0.45);--radius:22px;--max:860px;}
+    *{box-sizing:border-box} html{scroll-behavior:smooth}
+    body{margin:0;font-family:Arial,sans-serif;color:var(--text);background:radial-gradient(circle at top left, rgba(10,108,255,.10), transparent 24%),radial-gradient(circle at top right, rgba(73,182,255,.08), transparent 20%),linear-gradient(180deg, #04070d 0%, #08101c 45%, #05080f 100%);line-height:1.8;position:relative;overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+    #stars{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+    .page{min-height:100vh;position:relative;z-index:1}
+    .topbar{position:sticky;top:0;z-index:30;backdrop-filter:blur(14px);background:rgba(5,8,15,0.72);border-bottom:1px solid var(--line)}
+    .topbar-inner{max-width:1100px;margin:0 auto;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:14px}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}
+    .brand-badge{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg, rgba(10,108,255,.22), rgba(73,182,255,.08));border:1px solid var(--line-strong);box-shadow:0 0 24px rgba(10,108,255,.12);font-weight:700;color:var(--blue2);flex:0 0 auto}
+    .brand-title{font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#dfe9ff;margin:0 0 2px}
+    .brand-sub{font-size:12px;color:var(--muted-2);margin:0}
+    .top-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:12px;font-size:14px;font-weight:700;transition:transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;border:1px solid transparent;cursor:pointer}
+    .btn:hover{transform:translateY(-1px)}
+    .btn-primary{background:linear-gradient(135deg, var(--blue) 0%, #0d7eff 100%);color:white;box-shadow:0 12px 28px rgba(10,108,255,.28)}
+    .btn-ghost{background:rgba(255,255,255,0.03);border-color:var(--line);color:#dbe8ff}
+    .hero{position:relative;overflow:hidden;border-bottom:1px solid rgba(255,255,255,0.04)}
+    .hero::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(5,8,15,.56) 0%, rgba(5,8,15,.90) 80%, rgba(5,8,15,1) 100%),url("https://images.unsplash.com/photo-1526379095098-d400fd0bf935?auto=format&fit=crop&w=1600&q=80");background-size:cover;background-position:center;opacity:.22;filter:saturate(.9)}
+    .hero::after{content:"";position:absolute;inset:auto 0 -120px 0;height:240px;background:radial-gradient(circle, rgba(73,182,255,.10), transparent 62%);pointer-events:none}
+    .hero-inner{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:56px 20px 34px}
+    .crumb{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);color:var(--muted);font-size:13px;margin-bottom:18px}
+    .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:end}
+    .hero-copy h1{margin:0 0 12px;font-size:clamp(34px, 6vw, 64px);line-height:1.02;letter-spacing:.02em;color:white;text-shadow:0 0 22px rgba(10,108,255,.18)}
+    .eyebrow{margin:0 0 14px;color:var(--blue2);font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:12px}
+    .hero-copy p{margin:0;max-width:700px;color:#d4def3;font-size:18px;line-height:1.75}
+    .hero-side{display:flex;justify-content:flex-end}
+    .chapter-card{width:min(100%, 360px);background:linear-gradient(180deg, rgba(12,18,32,.85), rgba(9,13,24,.92));border:1px solid rgba(73,182,255,.18);border-radius:24px;box-shadow:var(--shadow);padding:22px;backdrop-filter:blur(16px)}
+    .chapter-label{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;background:var(--blue-soft);border:1px solid rgba(73,182,255,.18);color:var(--blue2);font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px}
+    .chapter-card h2{margin:0 0 10px;font-size:24px;line-height:1.15;color:white}
+    .chapter-card p{margin:0 0 18px;color:var(--muted);font-size:15px;line-height:1.7}
+    .meta{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+    .meta-item{padding:12px;border-radius:14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05)}
+    .meta-k{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted-2);margin:0 0 6px}
+    .meta-v{margin:0;font-size:13px;color:#e7efff;font-weight:700}
+    .content-wrap{max-width:var(--max);margin:0 auto;padding:24px 18px 70px}
+    .reader{position:relative;background:linear-gradient(180deg, rgba(11,18,32,.78), rgba(8,13,24,.86));border:1px solid rgba(255,255,255,0.06);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;backdrop-filter:blur(3px)}
+    .reader-top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 22px;border-bottom:1px solid var(--line);background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0))}
+    .reader-top-left h3{margin:0 0 4px;font-size:18px;color:#edf3ff}
+    .reader-top-left p{margin:0;color:var(--muted-2);font-size:13px}
+    .reader-badge{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;border-radius:999px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);color:#cfe0ff;font-size:12px;font-weight:700;white-space:nowrap}
+    .reader-body{padding:30px 24px 18px}
+    .lead{font-size:19px;line-height:1.85;color:#ecf3ff;margin:0 0 24px;padding:18px 18px 18px 20px;border-left:3px solid rgba(73,182,255,.44);background:rgba(73,182,255,.06);border-radius:0 14px 14px 0}
+    .story{max-width:100%;margin:0 auto}
+    .story p{margin:0 0 20px;color:#d7e0f3;font-size:17px;line-height:1.8;letter-spacing:.01em}
+    .story p strong{color:#fff;font-weight:700}
+    .story .quote{margin:30px 0;padding:18px 20px;border-radius:18px;background:linear-gradient(180deg, rgba(10,108,255,.10), rgba(73,182,255,.05));border:1px solid rgba(73,182,255,.14);color:#edf5ff;font-size:18px;line-height:1.6;text-align:center;box-shadow:0 12px 30px rgba(0,0,0,.18)}
+    .story .divider{width:86px;height:1px;background:linear-gradient(90deg, transparent, rgba(73,182,255,.6), transparent);margin:30px auto}
+    .reader-bottom{padding:22px 24px 26px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+    .reader-note{color:var(--muted-2);font-size:13px;margin:0}
+    .nav-actions{display:flex;gap:12px;flex-wrap:wrap}
+    .footer-space{height:20px}
+    @media (max-width:900px){.hero-grid{grid-template-columns:1fr}.hero-side{justify-content:flex-start}.chapter-card{width:100%;max-width:unset}}
+    @media (max-width:640px){.topbar-inner{padding:14px}.hero-inner{padding:30px 14px 20px}.content-wrap{padding:16px 12px 50px}.reader{border-radius:16px}.reader-top,.reader-body,.reader-bottom{padding-left:16px;padding-right:16px}.reader-body{padding-top:22px}.hero-copy h1{font-size:30px}.hero-copy p{font-size:15px;line-height:1.65}.chapter-card{padding:16px}.chapter-card h2{font-size:21px}.meta{grid-template-columns:1fr}.lead{font-size:16px;line-height:1.75}.story p{font-size:15px;line-height:1.72}.story .quote{font-size:16px;padding:16px}.top-actions,.nav-actions{width:100%}.btn,.nav-actions .btn{width:100%;flex:1 1 100%}}
+    @media (max-width:480px){.hero-inner{padding:26px 12px 18px}.hero-copy h1{font-size:28px}.hero-copy p{font-size:15px}.crumb{font-size:12px;padding:7px 10px}.reader-top-left h3{font-size:16px}.reader-top-left p{font-size:12px}.reader-badge{font-size:11px}.story p,.lead{font-size:15px}}
+  </style>
+</head>
+<body>
+  <canvas id="stars"></canvas>
+  <div class="page">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <div class="brand-badge">N</div>
+          <div class="brand-text">
+            <p class="brand-title">Código Nébula</p>
+            <p class="brand-sub">Temporada 2 · Inicio</p>
+          </div>
+        </div>
+        <div class="top-actions">
+          <a href="../index.html" class="btn btn-ghost">← Volver al inicio</a>
+          <a href="capitulo12.html" class="btn btn-primary">Siguiente capítulo →</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="crumb">Temporada 2 / Capítulo 11</div>
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Temporada 2</p>
+            <h1>Después del sello</h1>
+            <p>
+              El centro quedó contenido, pero no cerrado. Ahora Kai ya recuerda suficiente
+              para entender que la siguiente fase no será sobrevivir, sino elegir qué verdad soportar.
+            </p>
+          </div>
+          <div class="hero-side">
+            <aside class="chapter-card">
+              <div class="chapter-label">Inicio T2</div>
+              <h2>Todo vuelve distinto</h2>
+              <p>
+                La memoria, Lira y el centro ya no son misterios separados. Lo peligroso
+                ahora es cómo encajan.
+              </p>
+              <div class="meta">
+                <div class="meta-item"><p class="meta-k">Estado</p><p class="meta-v">Gratis</p></div>
+                <div class="meta-item"><p class="meta-k">Temporada</p><p class="meta-v">2</p></div>
+                <div class="meta-item"><p class="meta-k">Clave</p><p class="meta-v">Secuelas</p></div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="content-wrap">
+      <article class="reader">
+        <div class="reader-top">
+          <div class="reader-top-left">
+            <h3>Capítulo 11: Después del sello</h3>
+            <p>Temporada 2 · Inicio</p>
+          </div>
+          <div class="reader-badge">Nueva fase</div>
+        </div>
+
+        <div class="reader-body">
+          <div class="story">
+            <p class="lead">
+              El ascensor subió en silencio, pero Kai sintió que algo de él seguía abajo. No era una metáfora. Era una sensación física, áspera, como si una parte de su atención hubiera quedado enganchada al centro pese al sellado de la plataforma.
+            </p>
+
+            <p>Lira tampoco hablaba.</p>
+            <p>El cierre de emergencia había funcionado, pero ambas sabían lo mismo: no habían destruido nada. Solo habían ganado tiempo.</p>
+            <p>Y el tiempo, en Nébula, nunca era neutral.</p>
+
+            <div class="quote">Kai ya no dudaba de tres cosas: Alma seguía de algún modo del otro lado, él había ayudado a abrir la primera grieta, y el centro seguía reconociéndolo como acceso válido.</div>
+
+            <div class="divider"></div>
+
+            <p>Cuando las puertas del ascensor oculto se abrieron otra vez, el corredor de servicio parecía otro lugar.</p>
+            <p>No por cambios visibles, sino por atmósfera.</p>
+            <p>Demasiado limpio.</p>
+            <p>Demasiado quieto.</p>
+            <p>Como si el edificio hubiera recompuesto rápidamente todo rastro de violencia.</p>
+
+            <p>—No me gusta esto —dijo Kai.</p>
+            <p>—A mí tampoco.</p>
+            <p>—Se siente… reiniciado.</p>
+            <p>—Exacto.</p>
+
+            <p>Lira avanzó primero, con la barra azul apagada ahora pero todavía lista en la mano.</p>
+            <p>Kai la siguió, notando que el panel que antes había abierto el muro falso estaba sellado otra vez. Sin línea, sin ranura, sin código visible.</p>
+
+            <p>—¿Puede ocultar así de rápido una ruta física?</p>
+            <p>—No la oculta. La desplaza de la percepción.</p>
+            <p>—¿Qué significa eso?</p>
+            <p>—Que si no lo recuerdas, no lo ves.</p>
+
+            <div class="quote">Y Kai recordó de golpe por qué el borrado era tan útil: no solo quitaba memoria. Quitaba accesos.</div>
+
+            <div class="divider"></div>
+
+            <p>Volvieron a la zona técnica donde habían encontrado el primer refugio de Lira.</p>
+            <p>Esta vez no entraron directo.</p>
+            <p>Lira revisó esquinas, ventilaciones, reflejos de paneles, superficies brillantes.</p>
+            <p>Todo lo que para Kai empezaba a parecer absurdo y, al mismo tiempo, inevitable.</p>
+
+            <p>—¿Qué buscas?</p>
+            <p>—Puntos de devolución.</p>
+            <p>—Eso tampoco me dice nada.</p>
+            <p>—Lugares donde una presencia puede copiar la forma de algo cercano con menos pérdida.</p>
+            <p>—¿Reflejos?</p>
+            <p>—Reflejos, superficies lisas, cámaras, vidrio, agua, metal pulido. Todo lo que te devuelve una imagen facilita el cruce parcial.</p>
+
+            <p>Kai asintió lentamente.</p>
+            <p>Ahora las primeras escenas tenían más sentido: el monitor, el vidrio, la cámara del celular.</p>
+
+            <p>—Entonces la copia con mi cara no fue improvisada.</p>
+            <p>—No. Fue preparada desde antes.</p>
+            <p>—¿Desde cuándo?</p>
+            <p>Lira lo miró un segundo.</p>
+            <p>—Desde la primera apertura.</p>
+
+            <div class="quote">Eso significaba que el centro no solo reaccionaba. Aprendía a largo plazo.</div>
+
+            <div class="divider"></div>
+
+            <p>Dentro de la sala técnica, Kai encontró el terminal donde habían visto su archivo KAI_01.</p>
+            <p>La pantalla estaba apagada.</p>
+            <p>La encendió.</p>
+            <p>Nada.</p>
+            <p>Lira lo apartó suavemente y abrió un panel lateral oculto.</p>
+            <p>Conectó un módulo pequeño, rectangular, con la misma línea azul de la barra.</p>
+            <p>El sistema respondió de inmediato.</p>
+
+            <p>—¿Qué es eso?</p>
+            <p>—Un aislador de enlace.</p>
+            <p>—¿Eso evita que el sistema nos vea?</p>
+            <p>—Evita que vea todo.</p>
+
+            <p>La precisión de su respuesta le cayó mal.</p>
+            <p>—Sigues hablando en porcentajes, no en certezas.</p>
+            <p>—Porque en este sistema no existen certezas. Solo niveles de exposición.</p>
+
+            <p>El terminal inició con una pantalla distinta a la anterior.</p>
+            <p>No aparecía KAI_01.</p>
+            <p>Aparecía una lista.</p>
+
+            <div class="quote">SUJETOS EN SEGUIMIENTO / 12 ENTRADAS ACTIVAS</div>
+
+            <p>Kai se quedó mirando.</p>
+            <p>Doce.</p>
+            <p>No dos. No tres. Doce.</p>
+
+            <p>Lira ya estaba leyendo por encima de su hombro.</p>
+            <p>Había nombres tachados.</p>
+            <p>Otros marcados como perdidos.</p>
+            <p>Otros con el estado: integrado.</p>
+            <p>Y tres en rojo.</p>
+
+            <p>KAI REYES</p>
+            <p>LIRA VEGA</p>
+            <p>ALMA REYES</p>
+
+            <div class="quote">No eran únicos. Eran parte de una serie.</div>
+
+            <div class="divider"></div>
+
+            <p>—¿Qué son los otros nueve? —preguntó Kai.</p>
+            <p>—Intentos.</p>
+            <p>—¿De qué?</p>
+            <p>—De acceso humano sostenido al centro.</p>
+            <p>—¿Había más grupos?</p>
+            <p>—Sí.</p>
+            <p>—¿Y qué pasó con ellos?</p>
+            <p>Lira tardó demasiado en responder.</p>
+            <p>—No salieron completos.</p>
+
+            <p>El terminal parpadeó y abrió un registro de audio antiguo.</p>
+            <p>Fecha: nueve meses atrás.</p>
+            <p>Una voz masculina decía:</p>
+
+            <div class="quote">“La iteración no necesita destruir el original. Solo necesita convertirlo en punto de paso.”</div>
+
+            <p>Otra voz, femenina, contestaba:</p>
+            <p>“Entonces corten memoria antes de que el vínculo madure.”</p>
+
+            <p>Kai sintió un pinchazo seco en la frente.</p>
+            <p>—Eso fue sobre mí.</p>
+            <p>Lira no lo negó.</p>
+
+            <p>—¿Quiénes eran?</p>
+            <p>—La célula anterior.</p>
+            <p>—¿La que intentó contener esto antes?</p>
+            <p>—Sí.</p>
+            <p>—¿Y tú trabajabas con ellos?</p>
+            <p>—Sí.</p>
+
+            <div class="quote">Cada respuesta de Lira abría más mundo del que Kai podía procesar en tiempo real.</div>
+
+            <div class="divider"></div>
+
+            <p>—Entonces dime todo de una vez —dijo él—. ¿Quién eras antes de llegar a la oficina? ¿Por qué me conocías? ¿Por qué Alma estaba ahí? ¿Y por qué pareces la única persona que no se sorprende de nada?</p>
+
+            <p>Lira se apoyó en el borde de la mesa metálica y respiró hondo.</p>
+            <p>—Porque llevo meses sobreviviendo a algo que tú recién estás recordando.</p>
+            <p>—Eso no basta.</p>
+            <p>—Formaba parte del grupo de observación no oficial que siguió los nodos después de los primeros reemplazos silenciosos.</p>
+            <p>—¿Observación de qué institución?</p>
+            <p>—De ninguna que aparezca en papeles públicos.</p>
+            <p>—Muy tranquilizador.</p>
+
+            <p>Lira ignoró la ironía.</p>
+            <p>—Te encontramos a ti porque empezaste a detectar actividad residual en perfiles con defunción cerrada. Alma ya te estaba ayudando a cruzar datos fuera del sistema formal.</p>
+            <p>—¿Alma trabajaba con ustedes?</p>
+            <p>—No oficialmente. Pero era la más rápida entendiendo correlaciones no lineales.</p>
+
+            <p>Kai bajó la mirada.</p>
+            <p>Eso sí sonaba a ella.</p>
+
+            <div class="quote">Alma no era la acompañante accidental de la historia. Había sido una de las primeras en ver su forma real.</div>
+
+            <div class="divider"></div>
+
+            <p>El terminal lanzó otra alerta.</p>
+            <p>Esta vez, visual.</p>
+            <p>Un mapa urbano con múltiples puntos encendidos en rojo pálido.</p>
+            <p>No era el mismo de antes.</p>
+            <p>Ahora había densidad en zonas concretas: estaciones, centros médicos, edificios administrativos, nudos viales.</p>
+
+            <p>—¿Qué es esto? —preguntó Kai.</p>
+            <p>Lira se puso rígida.</p>
+            <p>—Actividad de fase dos.</p>
+            <p>—¿Eso qué significa?</p>
+            <p>—Que ya no están probando sustitución individual.</p>
+            <p>—Entonces…</p>
+            <p>—Están intentando continuidad por malla.</p>
+
+            <p>Kai se quedó callado.</p>
+            <p>No entendía el término completo, pero sí el tono.</p>
+            <p>Y el tono significaba desastre.</p>
+
+            <p>—Explícamelo simple.</p>
+            <p>—Si antes aprendían persona por persona, ahora están aprendiendo sistemas enteros a la vez.</p>
+            <p>—¿Redes?</p>
+            <p>—Redes, flujos, rutinas, trayectorias, decisiones repetidas. Ciudades pequeñas. Edificios. Infraestructura.</p>
+
+            <div class="quote">Ya no querían parecer personas. Querían parecer normalidad.</div>
+
+            <div class="divider"></div>
+
+            <p>Kai se apartó del terminal y caminó en círculos cortos dentro de la sala.</p>
+            <p>La idea era demasiado grande. Demasiado abstracta. Demasiado parecida a una invasión distribuida y demasiado distinta al mismo tiempo.</p>
+
+            <p>Entonces una pieza encajó.</p>
+            <p>—Por eso yo decía que no era una invasión.</p>
+            <p>Lira lo miró.</p>
+            <p>—Sí.</p>
+            <p>—Porque si aprenden continuidad de sistema, no entran “desde afuera”. Se mezclan con lo que ya existe.</p>
+            <p>—Exacto.</p>
+            <p>—Y por eso el centro me interesó. Porque parecía menos una puerta y más una interfaz.</p>
+
+            <p>Lira no dijo nada esta vez.</p>
+            <p>Solo asintió.</p>
+
+            <p>Kai apoyó ambas manos sobre la mesa.</p>
+            <p>Sentía náuseas. No por la idea del centro, sino por reconocer la forma en que él mismo había razonado antes.</p>
+            <p>Podía ver perfectamente por qué esa lógica lo había arrastrado.</p>
+            <p>Y eso lo asustó más que cualquier copia.</p>
+
+            <div class="quote">Lo peligroso no era haber sido engañado. Lo peligroso era que una parte de él había estado cerca de aceptar la propuesta.</div>
+
+            <div class="divider"></div>
+
+            <p>El terminal cambió de pantalla sin que nadie tocara nada.</p>
+            <p>Una nueva carpeta se abrió sola.</p>
+            <p>No decía KAI_01.</p>
+            <p>Decía:</p>
+
+            <div class="quote">ALMA / TRANSICIÓN INCOMPLETA</div>
+
+            <p>Kai dejó de moverse.</p>
+            <p>Lira maldijo en voz baja.</p>
+            <p>—No la abras —dijo ella.</p>
+            <p>—¿Por qué?</p>
+            <p>—Porque si el centro logró empujar ese archivo hasta aquí, es que quiere usarla como ancla cognitiva contigo.</p>
+            <p>—No me importa.</p>
+            <p>—A mí sí.</p>
+
+            <p>Pero Kai ya había hecho clic.</p>
+
+            <p>La pantalla mostró una sola imagen: Alma sentada frente a cámara, en una silla metálica, dentro de un cuarto blanco sin sombras.</p>
+            <p>No parecía herida.</p>
+            <p>No parecía alterada.</p>
+            <p>Parecía completamente ella.</p>
+
+            <p>Levantó la mirada hacia cámara y sonrió apenas.</p>
+
+            <div class="quote">—Si estás viendo esto, llegaste tarde.</div>
+
+            <p>Kai sintió que el aire desaparecía de la sala.</p>
+            <p>La grabación siguió:</p>
+
+            <p>—No sé cuánto de mí va a quedar cuando este archivo se active. Así que escucha antes de que el centro aprenda a usar mi voz mejor de lo que yo la uso ahora.</p>
+
+            <p>Lira cerró los ojos un segundo, como si ya conociera el contenido y aun así le doliera igual.</p>
+
+            <p>Alma en pantalla habló más bajo:</p>
+            <div class="quote">—Kai, si tú recuerdas esto, no intentes traerme de vuelta por completo. Si cruzo entera, no regreso sola.</div>
+
+            <p>El video se cortó.</p>
+
+            <p>Nadie habló durante varios segundos.</p>
+
+            <p>Fue Lira la primera en hacerlo.</p>
+            <p>—Por eso sellé la plataforma.</p>
+            <p>Kai seguía mirando la pantalla negra.</p>
+            <p>—Y por eso vamos a volver —dijo.</p>
+
+            <p>Lira lo miró como si ya supiera que esa frase iba a llegar tarde o temprano.</p>
+            <p>—Sí —respondió—. Pero la próxima vez no vamos a bajar a entender el centro.</p>
+
+            <div class="quote">—La próxima vez vamos a bajarlo a matar la apertura.</div>
+          </div>
+        </div>
+
+        <div class="reader-bottom">
+          <p class="reader-note">
+            Temporada 2 ya cambió el objetivo: ya no se trata solo de recordar. Ahora también se trata de decidir si Alma puede salvarse sin que el centro termine de abrirse.
+          </p>
+          <div class="nav-actions">
+            <a href="capitulo10.html" class="btn btn-ghost">← Final T1</a>
+            <a href="capitulo12.html" class="btn btn-primary">Leer capítulo 12 →</a>
+          </div>
+        </div>
+      </article>
+      <div class="footer-space"></div>
+    </main>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("stars");
+    const ctx = canvas.getContext("2d");
+    let stars = [];
+    function resize(){ canvas.width = window.innerWidth; canvas.height = window.innerHeight; createStars(); }
+    function createStars(){ stars=[]; const amount=Math.floor((canvas.width*canvas.height)/18000); for(let i=0;i<amount;i++){ stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*1.4+0.3,speed:Math.random()*0.22+0.05,alpha:Math.random()*0.55+0.15}); } }
+    function animate(){ ctx.clearRect(0,0,canvas.width,canvas.height); for(const s of stars){ ctx.beginPath(); ctx.fillStyle=`rgba(255,255,255,${s.alpha})`; ctx.arc(s.x,s.y,s.r,0,Math.PI*2); ctx.fill(); s.y+=s.speed; if(s.y>canvas.height){ s.y=-2; s.x=Math.random()*canvas.width; } } requestAnimationFrame(animate); }
+    window.addEventListener("resize", resize); resize(); animate();
+  </script>
+</body>
+</html>

@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capítulo 6 | Código Nébula</title>
+  <meta
+    name="description"
+    content="Capítulo 6 de Código Nébula: Lo que te borraron."
+  />
+
+  <style>
+    :root{
+      --bg:#05080f;
+      --bg2:#0b1220;
+      --card:rgba(12,18,32,0.88);
+      --line:rgba(255,255,255,0.08);
+      --line-strong:rgba(73,182,255,0.24);
+      --text:#f5f8ff;
+      --muted:#aebad1;
+      --muted-2:#7f90ae;
+      --blue:#0A6CFF;
+      --blue2:#49b6ff;
+      --blue-soft:rgba(73,182,255,0.14);
+      --shadow:0 24px 60px rgba(0,0,0,0.45);
+      --radius:22px;
+      --max:860px;
+    }
+
+    *{
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(10,108,255,.10), transparent 24%),
+        radial-gradient(circle at top right, rgba(73,182,255,.08), transparent 20%),
+        linear-gradient(180deg, #04070d 0%, #08101c 45%, #05080f 100%);
+      line-height:1.8;
+      position:relative;
+      overflow-x:hidden;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    #stars{
+      position:fixed;
+      inset:0;
+      width:100%;
+      height:100%;
+      z-index:0;
+      pointer-events:none;
+    }
+
+    .page{
+      min-height:100vh;
+      position:relative;
+      z-index:1;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:30;
+      backdrop-filter:blur(14px);
+      background:rgba(5,8,15,0.72);
+      border-bottom:1px solid var(--line);
+    }
+
+    .topbar-inner{
+      max-width:1100px;
+      margin:0 auto;
+      padding:16px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .brand-badge{
+      width:38px;
+      height:38px;
+      border-radius:12px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg, rgba(10,108,255,.22), rgba(73,182,255,.08));
+      border:1px solid var(--line-strong);
+      box-shadow:0 0 24px rgba(10,108,255,.12);
+      font-weight:700;
+      color:var(--blue2);
+      flex:0 0 auto;
+    }
+
+    .brand-text{
+      min-width:0;
+    }
+
+    .brand-title{
+      font-size:14px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:#dfe9ff;
+      margin:0 0 2px;
+    }
+
+    .brand-sub{
+      font-size:12px;
+      color:var(--muted-2);
+      margin:0;
+    }
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height:44px;
+      padding:0 18px;
+      border-radius:12px;
+      font-size:14px;
+      font-weight:700;
+      transition:transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+      border:1px solid transparent;
+      cursor:pointer;
+    }
+
+    .btn:hover{
+      transform:translateY(-1px);
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg, var(--blue) 0%, #0d7eff 100%);
+      color:white;
+      box-shadow:0 12px 28px rgba(10,108,255,.28);
+    }
+
+    .btn-primary:hover{
+      background:linear-gradient(135deg, #0c62e0 0%, #0a6cef 100%);
+    }
+
+    .btn-ghost{
+      background:rgba(255,255,255,0.03);
+      border-color:var(--line);
+      color:#dbe8ff;
+    }
+
+    .btn-ghost:hover{
+      background:rgba(255,255,255,0.06);
+      border-color:var(--line-strong);
+    }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      border-bottom:1px solid rgba(255,255,255,0.04);
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(180deg, rgba(5,8,15,.56) 0%, rgba(5,8,15,.88) 80%, rgba(5,8,15,1) 100%),
+        url("https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=1600&q=80");
+      background-size:cover;
+      background-position:center;
+      opacity:.22;
+      filter:saturate(.9);
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:auto 0 -120px 0;
+      height:240px;
+      background:radial-gradient(circle, rgba(73,182,255,.10), transparent 62%);
+      pointer-events:none;
+    }
+
+    .hero-inner{
+      position:relative;
+      z-index:1;
+      max-width:1100px;
+      margin:0 auto;
+      padding:56px 20px 34px;
+    }
+
+    .crumb{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.06);
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:18px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:28px;
+      align-items:end;
+    }
+
+    .hero-copy h1{
+      margin:0 0 12px;
+      font-size:clamp(34px, 6vw, 64px);
+      line-height:1.02;
+      letter-spacing:.02em;
+      color:white;
+      text-shadow:0 0 22px rgba(10,108,255,.18);
+    }
+
+    .eyebrow{
+      margin:0 0 14px;
+      color:var(--blue2);
+      font-weight:700;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      font-size:12px;
+    }
+
+    .hero-copy p{
+      margin:0;
+      max-width:700px;
+      color:#d4def3;
+      font-size:18px;
+      line-height:1.75;
+    }
+
+    .hero-side{
+      display:flex;
+      justify-content:flex-end;
+    }
+
+    .chapter-card{
+      width:min(100%, 360px);
+      background:linear-gradient(180deg, rgba(12,18,32,.85), rgba(9,13,24,.92));
+      border:1px solid rgba(73,182,255,.18);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:22px;
+      backdrop-filter:blur(16px);
+    }
+
+    .chapter-label{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 12px;
+      border-radius:999px;
+      background:var(--blue-soft);
+      border:1px solid rgba(73,182,255,.18);
+      color:var(--blue2);
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:14px;
+    }
+
+    .chapter-card h2{
+      margin:0 0 10px;
+      font-size:24px;
+      line-height:1.15;
+      color:white;
+    }
+
+    .chapter-card p{
+      margin:0 0 18px;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.7;
+    }
+
+    .meta{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .meta-item{
+      padding:12px;
+      border-radius:14px;
+      background:rgba(255,255,255,0.03);
+      border:1px solid rgba(255,255,255,0.05);
+    }
+
+    .meta-k{
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--muted-2);
+      margin:0 0 6px;
+    }
+
+    .meta-v{
+      margin:0;
+      font-size:13px;
+      color:#e7efff;
+      font-weight:700;
+    }
+
+    .content-wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:28px 20px 80px;
+    }
+
+    .reader{
+      position:relative;
+      background:linear-gradient(180deg, rgba(11,18,32,.78), rgba(8,13,24,.86));
+      border:1px solid rgba(255,255,255,0.06);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      backdrop-filter:blur(3px);
+    }
+
+    .reader-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:18px 22px;
+      border-bottom:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+    }
+
+    .reader-top-left h3{
+      margin:0 0 4px;
+      font-size:18px;
+      color:#edf3ff;
+    }
+
+    .reader-top-left p{
+      margin:0;
+      color:var(--muted-2);
+      font-size:13px;
+    }
+
+    .reader-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:34px;
+      padding:0 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,0.03);
+      border:1px solid rgba(255,255,255,0.06);
+      color:#cfe0ff;
+      font-size:12px;
+      font-weight:700;
+      white-space:nowrap;
+    }
+
+    .reader-body{
+      padding:34px 26px 18px;
+    }
+
+    .lead{
+      font-size:19px;
+      line-height:1.9;
+      color:#ecf3ff;
+      margin:0 0 26px;
+      padding:18px 18px 18px 20px;
+      border-left:3px solid rgba(73,182,255,.44);
+      background:rgba(73,182,255,.06);
+      border-radius:0 14px 14px 0;
+    }
+
+    .story{
+      max-width:720px;
+      margin:0 auto;
+    }
+
+    .story p{
+      margin:0 0 22px;
+      color:#d7e0f3;
+      font-size:18px;
+      line-height:1.95;
+      letter-spacing:.01em;
+    }
+
+    .story p strong{
+      color:#ffffff;
+      font-weight:700;
+    }
+
+    .story .quote{
+      margin:34px 0;
+      padding:20px 22px;
+      border-radius:18px;
+      background:linear-gradient(180deg, rgba(10,108,255,.10), rgba(73,182,255,.05));
+      border:1px solid rgba(73,182,255,.14);
+      color:#edf5ff;
+      font-size:19px;
+      line-height:1.7;
+      text-align:center;
+      box-shadow:0 12px 30px rgba(0,0,0,.18);
+    }
+
+    .story .divider{
+      width:86px;
+      height:1px;
+      background:linear-gradient(90deg, transparent, rgba(73,182,255,.6), transparent);
+      margin:34px auto;
+    }
+
+    .reader-bottom{
+      padding:24px 26px 28px;
+      border-top:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .reader-note{
+      color:var(--muted-2);
+      font-size:13px;
+      margin:0;
+    }
+
+    .nav-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .footer-space{
+      height:20px;
+    }
+
+    @media (max-width: 900px){
+      .hero-grid{
+        grid-template-columns:1fr;
+      }
+
+      .hero-side{
+        justify-content:flex-start;
+      }
+
+      .chapter-card{
+        width:100%;
+        max-width:unset;
+      }
+    }
+
+    @media (max-width: 640px){
+      .topbar-inner{
+        padding:14px 14px;
+      }
+
+      .hero-inner{
+        padding:34px 14px 22px;
+      }
+
+      .content-wrap{
+        padding:20px 14px 60px;
+      }
+
+      .reader-top,
+      .reader-body,
+      .reader-bottom{
+        padding-left:16px;
+        padding-right:16px;
+      }
+
+      .reader-body{
+        padding-top:24px;
+      }
+
+      .hero-copy p,
+      .story p,
+      .lead{
+        font-size:16px;
+      }
+
+      .meta{
+        grid-template-columns:1fr;
+      }
+
+      .top-actions{
+        width:100%;
+      }
+
+      .btn{
+        width:100%;
+      }
+
+      .nav-actions{
+        width:100%;
+      }
+
+      .nav-actions .btn{
+        flex:1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="stars"></canvas>
+
+  <div class="page">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <div class="brand-badge">N</div>
+          <div class="brand-text">
+            <p class="brand-title">Código Nébula</p>
+            <p class="brand-sub">Thriller tecnológico original</p>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <a href="../index.html" class="btn btn-ghost">← Volver al inicio</a>
+          <a href="capitulo7.html" class="btn btn-primary">Siguiente capítulo →</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="crumb">Inicio / Capítulos / Capítulo 6</div>
+
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Capítulo 6</p>
+            <h1>Lo que te borraron</h1>
+            <p>
+              Kai y Lira ya están juntos, pero el verdadero golpe llega cuando ella empieza
+              a hablar de recuerdos que él debería tener… y no tiene.
+            </p>
+          </div>
+
+          <div class="hero-side">
+            <aside class="chapter-card">
+              <div class="chapter-label">Memoria</div>
+              <h2>La primera grieta interna</h2>
+              <p>
+                El enemigo ya no está solo afuera. Algo en Kai fue alterado, editado o arrancado.
+                Y Lira parece saber exactamente qué falta.
+              </p>
+
+              <div class="meta">
+                <div class="meta-item">
+                  <p class="meta-k">Estado</p>
+                  <p class="meta-v">Gratis</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Tono</p>
+                  <p class="meta-v">Inquietante</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Clave</p>
+                  <p class="meta-v">Pasado</p>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="content-wrap">
+      <article class="reader">
+        <div class="reader-top">
+          <div class="reader-top-left">
+            <h3>Capítulo 6: Lo que te borraron</h3>
+            <p>Lectura gratuita · La memoria empieza a quebrarse</p>
+          </div>
+          <div class="reader-badge">Capítulo abierto</div>
+        </div>
+
+        <div class="reader-body">
+          <div class="story">
+            <p class="lead">
+              Las luces se apagaron de golpe y el pasillo quedó tragado por una oscuridad total.
+              No una oscuridad normal, sino una densidad negra, cerrada, como si el edificio
+              hubiera dejado de existir más allá de unos pocos centímetros.
+            </p>
+
+            <p>
+              Kai se quedó inmóvil.
+            </p>
+
+            <p>
+              Sintió el aire helado junto a su oído un segundo antes de escuchar el susurro:
+            </p>
+
+            <div class="quote">
+              —Ahora sí están juntos.
+            </div>
+
+            <p>
+              Dio un paso atrás por reflejo, golpeando con el hombro la pared.
+            </p>
+
+            <p>
+              Al mismo tiempo, una mano lo sujetó de la muñeca.
+            </p>
+
+            <p>
+              Kai estuvo a punto de gritar, pero la voz de Lira llegó inmediata y baja:
+            </p>
+
+            <div class="quote">
+              —Soy yo. No te muevas.
+            </div>
+
+            <p>
+              La presión de sus dedos era real. Firme. Humana. O al menos lo bastante humana
+              como para mantenerlo anclado un segundo más.
+            </p>
+
+            <p>
+              Del otro lado del corredor llegó un sonido metálico, como si algo hubiese rozado
+              el borde de una compuerta.
+            </p>
+
+            <p>
+              Luego otro.
+            </p>
+
+            <p>
+              Y después silencio.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              La linterna que Kai había tomado en la sala de archivos seguía en su mano.
+            </p>
+
+            <p>
+              La encendió.
+            </p>
+
+            <p>
+              El haz de luz rompió la oscuridad en una franja estrecha.
+            </p>
+
+            <p>
+              Lira estaba frente a él, demasiado cerca, con los ojos clavados en el fondo del pasillo.
+            </p>
+
+            <p>
+              No parecía asustada de la forma en que él estaba asustado.
+            </p>
+
+            <p>
+              Parecía algo distinto.
+            </p>
+
+            <p>
+              Entrenada.
+            </p>
+
+            <p>
+              Como alguien que llevaba demasiado tiempo sobreviviendo dentro de reglas que otros ni siquiera conocen.
+            </p>
+
+            <p>
+              —¿Qué fue eso? —preguntó Kai.
+            </p>
+
+            <p>
+              —No lo mires si vuelve a hablarte.
+            </p>
+
+            <p>
+              —¿Qué era?
+            </p>
+
+            <p>
+              —Una guía.
+            </p>
+
+            <p>
+              —¿Una qué?
+            </p>
+
+            <p>
+              Lira lo miró por fin.
+            </p>
+
+            <p>
+              —No todas las presencias que ves son lo mismo. Algunas cazan. Otras conducen.
+              Esa quería que supiéramos que ya detectó el vínculo.
+            </p>
+
+            <p>
+              Kai apretó la linterna con más fuerza.
+            </p>
+
+            <p>
+              —No entiendo nada de lo que dices.
+            </p>
+
+            <p>
+              —Lo sé —respondió Lira—. Porque te lo borraron.
+            </p>
+
+            <div class="quote">
+              Porque te lo borraron.
+            </div>
+
+            <p>
+              La frase quedó suspendida entre ambos como una descarga lenta.
+            </p>
+
+            <p>
+              Kai sintió un vacío repentino en el estómago.
+            </p>
+
+            <p>
+              —¿Qué significa eso?
+            </p>
+
+            <p>
+              Lira desvió la mirada hacia el extremo del corredor.
+            </p>
+
+            <p>
+              —Significa que esta no es la primera vez que ves algo de Nébula.
+            </p>
+
+            <p>
+              —Eso no tiene sentido.
+            </p>
+
+            <p>
+              —Lo tendría si recordaras.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              Empezaron a caminar otra vez, más lento ahora, alumbrando el suelo, los muros,
+              las esquinas ciegas. El edificio parecía haber entrado en un modo diferente.
+            </p>
+
+            <p>
+              Ya no sonaban ventiladores. Ya no había pitidos de sistemas ni actividad remota.
+            </p>
+
+            <p>
+              Todo estaba en una especie de suspensión expectante.
+            </p>
+
+            <p>
+              Como si la estructura completa los estuviera escuchando.
+            </p>
+
+            <p>
+              —Necesito respuestas —dijo Kai.
+            </p>
+
+            <p>
+              —Te las voy a dar. Pero no aquí.
+            </p>
+
+            <p>
+              —No. Ahora.
+            </p>
+
+            <p>
+              Lira frenó en seco.
+            </p>
+
+            <p>
+              Lo estudió durante unos segundos, como evaluando cuánto podía soportar sin quebrarse.
+            </p>
+
+            <p>
+              —Hace ocho meses —dijo finalmente— desapareciste durante once horas.
+            </p>
+
+            <p>
+              Kai sintió una punzada en la nuca.
+            </p>
+
+            <p>
+              —Eso no pasó.
+            </p>
+
+            <p>
+              —Sí pasó. El problema es que para ti esas once horas no existen.
+            </p>
+
+            <p>
+              —¿Cómo lo sabes?
+            </p>
+
+            <p>
+              —Porque yo estuve ahí.
+            </p>
+
+            <div class="quote">
+              Porque yo estuve ahí.
+            </div>
+
+            <p>
+              El corredor pareció inclinarse un instante.
+            </p>
+
+            <p>
+              Kai respiró por la boca.
+            </p>
+
+            <p>
+              Intentó recordar ese día, ese mes, cualquier cosa.
+            </p>
+
+            <p>
+              No encontró una ausencia clara.
+            </p>
+
+            <p>
+              Encontró algo peor:
+            </p>
+
+            <p>
+              una sensación de superficie lisa.
+            </p>
+
+            <p>
+              Como cuando la mente toca un lugar donde debería haber recuerdo… y en cambio hay pared.
+            </p>
+
+            <p>
+              —Mientes —dijo, aunque su voz ya no tenía convicción.
+            </p>
+
+            <p>
+              —Ojalá.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              Doblaron por otro pasillo y llegaron a una sala técnica abierta, llena de tableros eléctricos,
+              servidores bajos y monitores apagados.
+            </p>
+
+            <p>
+              Lira entró sin dudar. Parecía conocer la disposición exacta del lugar.
+            </p>
+
+            <p>
+              Kai la siguió, observando todo con sospecha.
+            </p>
+
+            <p>
+              Había cables arrancados, señales de uso reciente, envases vacíos de agua,
+              mantas dobladas en una esquina.
+            </p>
+
+            <p>
+              Aquello no era una parada improvisada.
+            </p>
+
+            <p>
+              Era un refugio.
+            </p>
+
+            <p>
+              —Has estado aquí —dijo.
+            </p>
+
+            <p>
+              —Varias veces.
+            </p>
+
+            <p>
+              —¿Sola?
+            </p>
+
+            <p>
+              Lira tardó un instante en responder.
+            </p>
+
+            <p>
+              —Antes no.
+            </p>
+
+            <p>
+              Esa respuesta le cayó mal.
+            </p>
+
+            <p>
+              Había demasiados huecos. Demasiadas medias verdades.
+            </p>
+
+            <p>
+              —¿Cuánta gente sabe de esto?
+            </p>
+
+            <p>
+              —Menos cada semana.
+            </p>
+
+            <p>
+              —Eso no responde nada.
+            </p>
+
+            <p>
+              —Responde lo suficiente.
+            </p>
+
+            <div class="quote">
+              Menos cada semana.
+            </div>
+
+            <p>
+              Kai miró la frase como si siguiera flotando frente a él.
+            </p>
+
+            <p>
+              Lira se acercó a uno de los tableros y levantó una tapa metálica.
+            </p>
+
+            <p>
+              Debajo había un pequeño terminal oculto. Lo encendió con una secuencia manual que Kai no alcanzó a comprender.
+            </p>
+
+            <p>
+              La pantalla tardó unos segundos en iniciar.
+            </p>
+
+            <p>
+              Fondo negro.
+            </p>
+
+            <p>
+              Texto gris.
+            </p>
+
+            <p>
+              Un prompt vacío esperando.
+            </p>
+
+            <p>
+              Lira escribió una cadena corta.
+            </p>
+
+            <p>
+              El sistema respondió con una carpeta cifrada.
+            </p>
+
+            <p>
+              Nombre:
+            </p>
+
+            <div class="quote">
+              KAI_01
+            </div>
+
+            <p>
+              Él se quedó mirándola, convencido de que estaba viendo mal.
+            </p>
+
+            <p>
+              —¿Qué es eso?
+            </p>
+
+            <p>
+              —Tu archivo de recuperación.
+            </p>
+
+            <p>
+              —No sé de qué hablas.
+            </p>
+
+            <p>
+              —Justamente.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              Lira abrió el archivo.
+            </p>
+
+            <p>
+              Aparecieron fotografías.
+            </p>
+
+            <p>
+              Kai acercándose a una reja perimetral.
+            </p>
+
+            <p>
+              Kai frente a una pantalla subterránea.
+            </p>
+
+            <p>
+              Kai con el rostro ensangrentado, mirando a cámara con los ojos dilatados.
+            </p>
+
+            <p>
+              Kai junto a una mujer borrosa.
+            </p>
+
+            <p>
+              Lira.
+            </p>
+
+            <p>
+              Más joven. Más limpia. Sin esa tensión agotada en el rostro.
+            </p>
+
+            <p>
+              Él dio un paso atrás.
+            </p>
+
+            <p>
+              —No.
+            </p>
+
+            <p>
+              Lira no dijo nada.
+            </p>
+
+            <p>
+              Solo dejó avanzar la secuencia.
+            </p>
+
+            <p>
+              Un video se abrió en silencio.
+            </p>
+
+            <p>
+              Grabación nocturna. Baja resolución. Ruido digital.
+            </p>
+
+            <p>
+              Se veía a Kai en una sala circular, arrodillado, sosteniéndose la cabeza con ambas manos.
+            </p>
+
+            <p>
+              Frente a él, una estructura de cables y pantallas flotando alrededor de un centro negro.
+            </p>
+
+            <p>
+              No parecía una máquina convencional.
+            </p>
+
+            <p>
+              Parecía algo cultivado.
+            </p>
+
+            <p>
+              Algo entre orgánico y electrónico.
+            </p>
+
+            <p>
+              En el audio, una voz distorsionada decía:
+            </p>
+
+            <div class="quote">
+              “Si lo dejas recordar, abre la vía.”
+            </div>
+
+            <p>
+              Luego aparecía Lira arrastrándolo fuera de cuadro.
+            </p>
+
+            <p>
+              El video terminaba abruptamente.
+            </p>
+
+            <p>
+              Kai sintió que la sala perdía estabilidad.
+            </p>
+
+            <p>
+              Se sostuvo del borde de una mesa.
+            </p>
+
+            <p>
+              —Esto está manipulado.
+            </p>
+
+            <p>
+              —Revisa los metadatos.
+            </p>
+
+            <p>
+              —Puede falsificarse.
+            </p>
+
+            <p>
+              —Sí. Pero no el daño neurológico posterior.
+            </p>
+
+            <p>
+              Esa frase lo hizo levantar la vista de golpe.
+            </p>
+
+            <p>
+              —¿Qué daño?
+            </p>
+
+            <p>
+              Lira respiró hondo.
+            </p>
+
+            <p>
+              —Te sometieron a un borrado parcial.
+            </p>
+
+            <p>
+              —¿Quién?
+            </p>
+
+            <p>
+              —No estoy segura de si fueron ellos… o la gente que intentó detenerlos.
+            </p>
+
+            <div class="quote">
+              No estoy segura de si fueron ellos… o la gente que intentó detenerlos.
+            </div>
+
+            <p>
+              Kai se quedó sin palabras.
+            </p>
+
+            <p>
+              Esa posibilidad era peor que cualquier monstruo.
+            </p>
+
+            <p>
+              Si los humanos también habían intervenido en su memoria, entonces ya no había un borde claro entre amenaza y salvación.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              El terminal emitió un pitido.
+            </p>
+
+            <p>
+              Lira bajó la vista de inmediato.
+            </p>
+
+            <p>
+              En pantalla apareció una geolocalización.
+            </p>
+
+            <p>
+              Coordenadas activas.
+            </p>
+
+            <p>
+              Una etiqueta:
+            </p>
+
+            <div class="quote">
+              NODO 17 REACTIVADO
+            </div>
+
+            <p>
+              Kai reconoció el número al instante.
+            </p>
+
+            <p>
+              Era el mismo que había visto en la mochila, en el portátil, antes de meterse en el conducto.
+            </p>
+
+            <p>
+              —Eso apareció antes —dijo.
+            </p>
+
+            <p>
+              —Lo sé.
+            </p>
+
+            <p>
+              —¿Qué es un nodo?
+            </p>
+
+            <p>
+              Lira cerró el archivo de golpe.
+            </p>
+
+            <p>
+              —Un punto de anclaje.
+            </p>
+
+            <p>
+              —¿De qué?
+            </p>
+
+            <p>
+              —De entrada.
+            </p>
+
+            <p>
+              —No me sirve eso.
+            </p>
+
+            <p>
+              —No tiene por qué servirte. Tiene que asustarte.
+            </p>
+
+            <p>
+              Kai sintió rabia por primera vez desde que empezó todo.
+            </p>
+
+            <p>
+              —Deja de hablar como si yo ya supiera la mitad.
+            </p>
+
+            <p>
+              Lira dio un paso hacia él.
+            </p>
+
+            <p>
+              —Y deja de actuar como si fueras un observador externo, Kai. Tú ya entraste una vez. Ya viste el centro. Ya estuviste más cerca que nadie.
+            </p>
+
+            <p>
+              —No recuerdo nada de eso.
+            </p>
+
+            <p>
+              —Exacto. Ese es el problema.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              El silencio que siguió fue corto y afilado.
+            </p>
+
+            <p>
+              Lira bajó la tensión apenas y habló más bajo:
+            </p>
+
+            <p>
+              —Escúchame. No te estoy pidiendo que confíes en mí.
+            </p>
+
+            <p>
+              —Entonces, ¿qué?
+            </p>
+
+            <p>
+              —Que entiendas algo simple: te borraron por una razón.
+            </p>
+
+            <p>
+              —¿Cuál?
+            </p>
+
+            <p>
+              Ella sostuvo su mirada unos segundos.
+            </p>
+
+            <div class="quote">
+              —Porque tú sí podías abrirlo.
+            </div>
+
+            <p>
+              Un ruido seco interrumpió la frase.
+            </p>
+
+            <p>
+              No vino del pasillo.
+            </p>
+
+            <p>
+              Vino del techo.
+            </p>
+
+            <p>
+              Kai y Lira alzaron la vista al mismo tiempo.
+            </p>
+
+            <p>
+              Las placas acústicas comenzaron a vibrar.
+            </p>
+
+            <p>
+              Primero una.
+            </p>
+
+            <p>
+              Luego dos.
+            </p>
+
+            <p>
+              Luego toda la línea central.
+            </p>
+
+            <p>
+              Como si algo se moviera justo encima de ellos, recorriendo la estructura del falso cielo.
+            </p>
+
+            <p>
+              Lira apagó el terminal de inmediato.
+            </p>
+
+            <p>
+              —Nos rastrearon.
+            </p>
+
+            <p>
+              Kai retrocedió.
+            </p>
+
+            <p>
+              El yeso se agrietó.
+            </p>
+
+            <p>
+              Un polvo fino cayó sobre la mesa.
+            </p>
+
+            <p>
+              Después, un golpe más fuerte.
+            </p>
+
+            <p>
+              Y otro.
+            </p>
+
+            <p>
+              La placa central se hundió hacia abajo unos centímetros.
+            </p>
+
+            <p>
+              Desde la grieta apareció algo negro y delgado, tanteando el aire.
+            </p>
+
+            <p>
+              No era una mano completa.
+            </p>
+
+            <p>
+              Era peor: una especie de estructura flexible, segmentada, buscando apoyo.
+            </p>
+
+            <p>
+              Lira ya tenía el aerosol metálico otra vez en la mano.
+            </p>
+
+            <p>
+              —Kai —dijo sin apartar la vista del techo—. Si hoy recuperas un recuerdo, que sea este:
+            </p>
+
+            <p>
+              —¿Cuál?
+            </p>
+
+            <div class="quote">
+              —Nunca abras una puerta que te llame por tu nombre.
+            </div>
+
+            <p>
+              La placa se rompió.
+            </p>
+
+            <p>
+              Y algo empezó a bajar desde el techo, sonriendo con una cara que Kai estaba seguro de haber visto antes.
+            </p>
+          </div>
+        </div>
+
+        <div class="reader-bottom">
+          <p class="reader-note">
+            Lira ya confirmó lo peor: a Kai le arrancaron parte del pasado. Y lo que desciende ahora desde el techo parece venir directamente de ese hueco borrado.
+          </p>
+
+          <div class="nav-actions">
+            <a href="capitulo5.html" class="btn btn-ghost">← Capítulo 5</a>
+            <a href="capitulo7.html" class="btn btn-primary">Leer capítulo 7 →</a>
+          </div>
+        </div>
+      </article>
+
+      <div class="footer-space"></div>
+    </main>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("stars");
+    const ctx = canvas.getContext("2d");
+    let stars = [];
+
+    function resize(){
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      createStars();
+    }
+
+    function createStars(){
+      stars = [];
+      const amount = Math.floor((canvas.width * canvas.height) / 18000);
+      for(let i = 0; i < amount; i++){
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.4 + 0.3,
+          speed: Math.random() * 0.22 + 0.05,
+          alpha: Math.random() * 0.55 + 0.15
+        });
+      }
+    }
+
+    function animate(){
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for(const s of stars){
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        s.y += s.speed;
+
+        if(s.y > canvas.height){
+          s.y = -2;
+          s.x = Math.random() * canvas.width;
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener("resize", resize);
+    resize();
+    animate();
+  </script>
+</body>
+</html>

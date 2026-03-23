@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capítulo 12 (22) | Código Nébula - Temporada 2</title>
+  <meta name="description" content="Capítulo 22 de Código Nébula: El sello. Final de temporada 2." />
+  <style>
+    :root{--bg:#05080f;--bg2:#0b1220;--card:rgba(12,18,32,0.88);--line:rgba(255,255,255,0.08);--line-strong:rgba(73,182,255,0.24);--text:#f5f8ff;--muted:#aebad1;--muted-2:#7f90ae;--blue:#0A6CFF;--blue2:#49b6ff;--blue-soft:rgba(73,182,255,0.14);--shadow:0 24px 60px rgba(0,0,0,0.45);--radius:22px;--max:860px;}
+    *{box-sizing:border-box} html{scroll-behavior:smooth}
+    body{margin:0;font-family:Arial,sans-serif;color:var(--text);background:radial-gradient(circle at top left, rgba(10,108,255,.10), transparent 24%),radial-gradient(circle at top right, rgba(73,182,255,.08), transparent 20%),linear-gradient(180deg, #04070d 0%, #08101c 45%, #05080f 100%);line-height:1.8;position:relative;overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+    #stars{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+    .page{min-height:100vh;position:relative;z-index:1}
+    .topbar{position:sticky;top:0;z-index:30;backdrop-filter:blur(14px);background:rgba(5,8,15,0.72);border-bottom:1px solid var(--line)}
+    .topbar-inner{max-width:1100px;margin:0 auto;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:14px}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}
+    .brand-badge{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg, rgba(10,108,255,.22), rgba(73,182,255,.08));border:1px solid var(--line-strong);box-shadow:0 0 24px rgba(10,108,255,.12);font-weight:700;color:var(--blue2);flex:0 0 auto}
+    .brand-title{font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#dfe9ff;margin:0 0 2px}
+    .brand-sub{font-size:12px;color:var(--muted-2);margin:0}
+    .top-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:12px;font-size:14px;font-weight:700;transition:transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;border:1px solid transparent;cursor:pointer}
+    .btn:hover{transform:translateY(-1px)}
+    .btn-primary{background:linear-gradient(135deg, var(--blue) 0%, #0d7eff 100%);color:white;box-shadow:0 12px 28px rgba(10,108,255,.28)}
+    .btn-ghost{background:rgba(255,255,255,0.03);border-color:var(--line);color:#dbe8ff}
+    .hero{position:relative;overflow:hidden;border-bottom:1px solid rgba(255,255,255,0.04)}
+    .hero::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(5,8,15,.56) 0%, rgba(5,8,15,.90) 80%, rgba(5,8,15,1) 100%),url("https://images.unsplash.com/photo-1516321165247-4aa89a48be28?auto=format&fit=crop&w=1600&q=80");background-size:cover;background-position:center;opacity:.22;filter:saturate(.9)}
+    .hero::after{content:"";position:absolute;inset:auto 0 -120px 0;height:240px;background:radial-gradient(circle, rgba(73,182,255,.10), transparent 62%);pointer-events:none}
+    .hero-inner{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:56px 20px 34px}
+    .crumb{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);color:var(--muted);font-size:13px;margin-bottom:18px}
+    .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:end}
+    .hero-copy h1{margin:0 0 12px;font-size:clamp(34px, 6vw, 64px);line-height:1.02;letter-spacing:.02em;color:white;text-shadow:0 0 22px rgba(10,108,255,.18)}
+    .eyebrow{margin:0 0 14px;color:var(--blue2);font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:12px}
+    .hero-copy p{margin:0;max-width:700px;color:#d4def3;font-size:18px;line-height:1.75}
+    .hero-side{display:flex;justify-content:flex-end}
+    .chapter-card{width:min(100%, 360px);background:linear-gradient(180deg, rgba(12,18,32,.85), rgba(9,13,24,.92));border:1px solid rgba(73,182,255,.18);border-radius:24px;box-shadow:var(--shadow);padding:22px;backdrop-filter:blur(16px)}
+    .chapter-label{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;background:var(--blue-soft);border:1px solid rgba(73,182,255,.18);color:var(--blue2);font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px}
+    .chapter-card h2{margin:0 0 10px;font-size:24px;line-height:1.15;color:white}
+    .chapter-card p{margin:0 0 18px;color:var(--muted);font-size:15px;line-height:1.7}
+    .meta{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+    .meta-item{padding:12px;border-radius:14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05)}
+    .meta-k{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted-2);margin:0 0 6px}
+    .meta-v{margin:0;font-size:13px;color:#e7efff;font-weight:700}
+    .content-wrap{max-width:var(--max);margin:0 auto;padding:24px 18px 70px}
+    .reader{position:relative;background:linear-gradient(180deg, rgba(11,18,32,.78), rgba(8,13,24,.86));border:1px solid rgba(255,255,255,0.06);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;backdrop-filter:blur(3px)}
+    .reader-top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 22px;border-bottom:1px solid var(--line);background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0))}
+    .reader-top-left h3{margin:0 0 4px;font-size:18px;color:#edf3ff}
+    .reader-top-left p{margin:0;color:var(--muted-2);font-size:13px}
+    .reader-badge{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;border-radius:999px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);color:#cfe0ff;font-size:12px;font-weight:700;white-space:nowrap}
+    .reader-body{padding:30px 24px 18px}
+    .lead{font-size:19px;line-height:1.85;color:#ecf3ff;margin:0 0 24px;padding:18px 18px 18px 20px;border-left:3px solid rgba(73,182,255,.44);background:rgba(73,182,255,.06);border-radius:0 14px 14px 0}
+    .story{max-width:100%;margin:0 auto}
+    .story p{margin:0 0 20px;color:#d7e0f3;font-size:17px;line-height:1.8;letter-spacing:.01em}
+    .story p strong{color:#fff;font-weight:700}
+    .story .quote{margin:30px 0;padding:18px 20px;border-radius:18px;background:linear-gradient(180deg, rgba(10,108,255,.10), rgba(73,182,255,.05));border:1px solid rgba(73,182,255,.14);color:#edf5ff;font-size:18px;line-height:1.6;text-align:center;box-shadow:0 12px 30px rgba(0,0,0,.18)}
+    .story .divider{width:86px;height:1px;background:linear-gradient(90deg, transparent, rgba(73,182,255,.6), transparent);margin:30px auto}
+    .reader-bottom{padding:22px 24px 26px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+    .reader-note{color:var(--muted-2);font-size:13px;margin:0}
+    .nav-actions{display:flex;gap:12px;flex-wrap:wrap}
+    .footer-space{height:20px}
+    @media (max-width:900px){.hero-grid{grid-template-columns:1fr}.hero-side{justify-content:flex-start}.chapter-card{width:100%;max-width:unset}}
+    @media (max-width:640px){.topbar-inner{padding:14px}.hero-inner{padding:30px 14px 20px}.content-wrap{padding:16px 12px 50px}.reader{border-radius:16px}.reader-top,.reader-body,.reader-bottom{padding-left:16px;padding-right:16px}.reader-body{padding-top:22px}.hero-copy h1{font-size:30px}.hero-copy p{font-size:15px;line-height:1.65}.chapter-card{padding:16px}.chapter-card h2{font-size:21px}.meta{grid-template-columns:1fr}.lead{font-size:16px;line-height:1.75}.story p{font-size:15px;line-height:1.72}.story .quote{font-size:16px;padding:16px}.top-actions,.nav-actions{width:100%}.btn,.nav-actions .btn{width:100%;flex:1 1 100%}}
+    @media (max-width:480px){.hero-inner{padding:26px 12px 18px}.hero-copy h1{font-size:28px}.hero-copy p{font-size:15px}.crumb{font-size:12px;padding:7px 10px}.reader-top-left h3{font-size:16px}.reader-top-left p{font-size:12px}.reader-badge{font-size:11px}.story p,.lead{font-size:15px}}
+  </style>
+</head>
+<body>
+  <canvas id="stars"></canvas>
+  <div class="page">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <div class="brand-badge">N</div>
+          <div class="brand-text">
+            <p class="brand-title">Código Nébula</p>
+            <p class="brand-sub">Temporada 2</p>
+          </div>
+        </div>
+        <div class="top-actions">
+          <a href="../index.html" class="btn btn-ghost">← Volver al inicio</a>
+          <a href="#" class="btn btn-primary">Final de temporada</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="crumb">Temporada 2 / Capítulo 22</div>
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Final de temporada</p>
+            <h1>El sello</h1>
+            <p>
+              Para impedir que la segunda puerta se abra, Tomás tendrá que volver a entrar. Pero esta vez no para rescatar, sino para sellar… aunque eso lo obligue a dejar atrás la idea de recuperar a Alma por completo.
+            </p>
+          </div>
+          <div class="hero-side">
+            <aside class="chapter-card">
+              <div class="chapter-label">Final épico</div>
+              <h2>Salvar no siempre es traer de vuelta</h2>
+              <p>
+                La temporada cierra con una elección brutal: preservar el mundo real o seguir abriendo la puerta por amor.
+              </p>
+              <div class="meta">
+                <div class="meta-item"><p class="meta-k">Estado</p><p class="meta-v">Final</p></div>
+                <div class="meta-item"><p class="meta-k">Temporada</p><p class="meta-v">2</p></div>
+                <div class="meta-item"><p class="meta-k">Clave</p><p class="meta-v">Sello</p></div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="content-wrap">
+      <article class="reader">
+        <div class="reader-top">
+          <div class="reader-top-left">
+            <h3>Capítulo 22: El sello</h3>
+            <p>Temporada 2 · Cierre y apertura</p>
+          </div>
+          <div class="reader-badge">Final de temporada</div>
+        </div>
+
+        <div class="reader-body">
+          <div class="story">
+            <p class="lead">
+              La vibración en la pared ya no venía del vestíbulo. Venía de más abajo. Grave. Profunda. Paciente. Como si algo inmenso hubiese dejado de golpear una puerta y empezara, por fin, a probar el marco.
+            </p>
+
+            <p>Alma seguía arrodillada en el suelo, sostenida por una consistencia precaria.</p>
+            <p>Tomás estaba frente a ella.</p>
+            <p>Camila y Diego, a ambos lados.</p>
+
+            <p>Nadie hablaba.</p>
+
+            <div class="quote">Porque todos habían entendido lo mismo: ya no quedaba tiempo para discutir el costo. Solo quedaba decidir quién lo iba a pagar.</div>
+
+            <div class="divider"></div>
+
+            <p>La pantalla volvió a encenderse.</p>
+
+            <div class="quote">RECONFIGURACIÓN DE VESTÍBULO / 72%</div>
+            <div class="quote">SINCRONÍA / 45%</div>
+            <div class="quote">RUTA DE DESCENSO DISPONIBLE</div>
+
+            <p>Diego leyó la última línea y golpeó la mesa con la palma.</p>
+            <p>—Ya nos abrió un camino.</p>
+            <p>Camila negó.</p>
+            <p>—No. Nos está tentando con uno.</p>
+
+            <p>Tomás no apartó la vista de Alma.</p>
+
+            <div class="quote">—Entonces bajamos antes de que deje de parecer un camino y empiece a parecer una salvación.</div>
+
+            <div class="divider"></div>
+
+            <p>Alma levantó la mirada hacia él.</p>
+            <p>Había agotamiento en su forma, pero no duda.</p>
+
+            <p>—Si vuelves a entrar con la idea de rescatarme completa, perdemos.</p>
+            <p>Tomás tragó saliva.</p>
+            <p>Lo sabía.</p>
+            <p>Necesitaba oírlo de nuevo igual.</p>
+
+            <p>—Lo sé.</p>
+
+            <p>Alma negó despacio.</p>
+
+            <div class="quote">—No. Todavía lo entiendes con la cabeza. Necesito que lo entiendas con la parte de ti que abriría esa puerta por mí.</div>
+
+            <div class="divider"></div>
+
+            <p>La frase le golpeó más hondo que cualquier cruce.</p>
+
+            <p>Camila observó a Tomás en silencio.</p>
+            <p>Diego también.</p>
+
+            <p>Porque por primera vez no se trataba de técnica.</p>
+            <p>Se trataba de intención.</p>
+
+            <div class="quote">La segunda puerta no quería fuerza. Quería justificación emocional absoluta.</div>
+
+            <div class="divider"></div>
+
+            <p>Tomás se puso de pie.</p>
+            <p>Le costó.</p>
+            <p>Pero se puso de pie.</p>
+
+            <p>Fue hasta la pared del fondo.</p>
+            <p>Apoyó una mano sin activar nada todavía.</p>
+
+            <p>—Entonces no entro a traerte de vuelta.</p>
+            <p>Se giró hacia Alma.</p>
+            <p>—Entro a cerrar lo que te tiene delante.</p>
+
+            <p>Alma lo sostuvo con la mirada.</p>
+            <p>No sonrió.</p>
+            <p>Pero el borde de su forma dejó de temblar por un instante.</p>
+
+            <div class="quote">Ese fue su modo de creerle.</div>
+
+            <div class="divider"></div>
+
+            <p>Diego recuperó el cable del piso.</p>
+            <p>—Dime el plan.</p>
+
+            <p>Tomás miró la pantalla otra vez.</p>
+            <p>El zumbido interno ya no le entregaba imágenes. Le entregaba estructura.</p>
+
+            <p>—No vamos a extraer nada esta vez.</p>
+            <p>Camila dio un paso adelante.</p>
+            <p>—Entonces, ¿qué hacemos?</p>
+
+            <p>Tomás señaló tres puntos en la mesa con el dedo, como si ya estuvieran dibujados.</p>
+
+            <div class="quote">Entrar.</div>
+            <div class="quote">Sellar.</div>
+            <div class="quote">Romper la ruta de reconocimiento.</div>
+
+            <div class="divider"></div>
+
+            <p>Diego entrecerró los ojos.</p>
+            <p>—¿Romperla cómo?</p>
+
+            <p>Tomás respondió sin vacilar.</p>
+
+            <div class="quote">—Haciendo que deje de poder usarme como continuidad.</div>
+
+            <div class="divider"></div>
+
+            <p>Camila lo entendió primero.</p>
+            <p>—No.</p>
+            <p>Tomás no la miró.</p>
+            <p>—No dije que me voy a quedar adentro.</p>
+            <p>—No hace falta que lo digas —respondió ella—. Suena igual.</p>
+
+            <p>Alma habló antes de que siguieran.</p>
+
+            <div class="quote">—No tiene que quedarse. Tiene que cortar la equivalencia.</div>
+
+            <div class="divider"></div>
+
+            <p>Diego volvió a lo concreto.</p>
+            <p>—Tradúcelo.</p>
+
+            <p>Alma respiró con esfuerzo.</p>
+            <p>—La segunda puerta está aprendiendo a usar la sincronía de Tomás porque él todavía responde a la forma correcta. Si dentro del vestíbulo él rechaza la correspondencia completa, la ruta se fisura.</p>
+
+            <p>Camila apretó la mandíbula.</p>
+            <p>—O sea, tiene que entrar, llegar al punto de sello… y negarse desde adentro.</p>
+
+            <p>Alma asintió.</p>
+
+            <div class="quote">—No con miedo. Con decisión.</div>
+
+            <div class="divider"></div>
+
+            <p>Tomás comprendió el peso exacto de eso.</p>
+
+            <p>No bastaba con resistir.</p>
+            <p>No bastaba con cerrar los ojos.</p>
+            <p>No bastaba con no mirar.</p>
+
+            <p>Tenía que estar delante de la promesa más peligrosa de su vida… y decir que no.</p>
+
+            <div class="quote">No a verla completa.</div>
+            <div class="quote">No a traerla toda de vuelta.</div>
+            <div class="quote">No a la forma del amor que la segunda puerta estaba lista para usar como llave.</div>
+
+            <div class="divider"></div>
+
+            <p>La pared vibró otra vez.</p>
+            <p>Más cerca.</p>
+            <p>Más rápida.</p>
+
+            <p>La pantalla cambió:</p>
+
+            <div class="quote">RECONFIGURACIÓN DE VESTÍBULO / 81%</div>
+            <div class="quote">VERSIÓN AMABLE EN COLAPSO</div>
+
+            <p>Diego soltó aire por la nariz.</p>
+            <p>—Es ahora.</p>
+
+            <div class="divider"></div>
+
+            <p>Camila fue hasta Tomás.</p>
+            <p>No lo abrazó.</p>
+            <p>No dijo nada heroico.</p>
+            <p>Solo le puso en la mano la barra metálica usada en el golpe de ruptura.</p>
+
+            <p>—No para pelear —dijo—. Para recordar que todavía vienes desde aquí.</p>
+
+            <p>Tomás la sostuvo con firmeza.</p>
+            <p>Asintió una sola vez.</p>
+
+            <div class="divider"></div>
+
+            <p>Diego aseguró el cable en su muñeca otra vez.</p>
+            <p>Esta vez más corto.</p>
+            <p>Más firme.</p>
+
+            <p>—Si cruzas demasiado, te saco aunque me odies.</p>
+            <p>Tomás lo miró.</p>
+            <p>—Hazlo.</p>
+
+            <p>Diego no respondió.</p>
+            <p>No hacía falta.</p>
+
+            <div class="divider"></div>
+
+            <p>Alma llamó a Tomás con un gesto leve.</p>
+            <p>Él se acercó y se arrodilló frente a ella.</p>
+
+            <p>Ahora que la tenía tan cerca, veía mejor la naturaleza terrible de su estado.</p>
+            <p>No estaba herida.</p>
+            <p>Estaba incompleta de una manera estructural.</p>
+
+            <div class="quote">Como si el mundo solo aceptara una parte de ella por vez.</div>
+
+            <div class="divider"></div>
+
+            <p>—No intentes encontrarme entera ahí abajo —dijo Alma—. Lo que queda de mí detrás de Nébula ya no es una persona esperando. Es una zona de disputa.</p>
+            <p>Tomás cerró los ojos un instante.</p>
+            <p>Luego volvió a abrirlos.</p>
+
+            <p>—Entonces voy a sellar la zona.</p>
+
+            <p>Alma lo miró largo.</p>
+            <p>Muy largo.</p>
+
+            <div class="quote">—Esa es la respuesta correcta. Por eso todavía eres tú.</div>
+
+            <div class="divider"></div>
+
+            <p>Tomás se levantó.</p>
+            <p>Fue al muro.</p>
+            <p>Apoyó la palma.</p>
+
+            <p>La línea azul apareció de inmediato.</p>
+            <p>Pero ya no como antes.</p>
+            <p>Menos limpia.</p>
+            <p>Más orgánica.</p>
+            <p>Como si el vestíbulo se estuviera desarmando mientras lo imitaba por última vez.</p>
+
+            <div class="quote">La versión amable se estaba muriendo delante de ellos.</div>
+
+            <div class="divider"></div>
+
+            <p>La sincronía subió.</p>
+
+            <div class="quote">49%</div>
+
+            <p>Tomás entró.</p>
+
+            <p>No con el cuerpo.</p>
+            <p>No todavía.</p>
+            <p>Con el resto de sí mismo que ya conocía el camino.</p>
+
+            <div class="divider"></div>
+
+            <p>El pasillo azul lo recibió distinto.</p>
+            <p>Más oscuro.</p>
+            <p>Más estrecho.</p>
+            <p>Los marcos suspendidos ya no eran marcos; parecían costillas de una arquitectura que dejaba de fingir humanidad.</p>
+
+            <p>La línea de ruptura seguía allí.</p>
+            <p>La entidad ya no estaba detrás de Alma.</p>
+            <p>Ahora ocupaba el pasillo entero.</p>
+
+            <div class="quote">No como un monstruo. Como una forma preparándose para ser aceptada.</div>
+
+            <div class="divider"></div>
+
+            <p>Tomás avanzó hasta el límite seguro.</p>
+            <p>No más.</p>
+
+            <p>Más allá del borde ya se insinuaba la segunda puerta.</p>
+            <p>No como objeto.</p>
+            <p>Como una profundidad que no terminaba.</p>
+
+            <p>Y entonces la vio.</p>
+
+            <p>La imagen perfecta.</p>
+
+            <div class="quote">Alma completa.</div>
+
+            <div class="divider"></div>
+
+            <p>No parcial.</p>
+            <p>No fragmentada.</p>
+            <p>No azul tenue.</p>
+
+            <p>Completa.</p>
+            <p>Íntegra.</p>
+            <p>Mirándolo con el rostro exacto que su memoria habría pedido sin dudar.</p>
+
+            <p>La voz llegó limpia.</p>
+
+            <div class="quote">—Ahora sí puedes traerme.</div>
+
+            <div class="divider"></div>
+
+            <p>El golpe emocional fue brutal.</p>
+            <p>Más fuerte que el dolor del cruce.</p>
+            <p>Más fuerte que la sincronía.</p>
+            <p>Más fuerte que el miedo.</p>
+
+            <p>Porque esa imagen estaba hecha con precisión quirúrgica para desarmarlo.</p>
+
+            <div class="quote">No era una trampa visual. Era una hipótesis exacta de su esperanza.</div>
+
+            <div class="divider"></div>
+
+            <p>En el living, Diego sintió el tirón en el cable.</p>
+            <p>Camila vio cómo el brillo azul regresaba a una de las pupilas de Tomás.</p>
+            <p>Alma parcial, aún en el suelo, cerró los ojos como si ya supiera qué estaba viendo él del otro lado.</p>
+
+            <div class="divider"></div>
+
+            <p>Dentro del vestíbulo, la imagen perfecta de Alma extendió la mano.</p>
+            <p>—No tienes que perderme otra vez.</p>
+
+            <p>Tomás sintió el abismo exacto de esa frase.</p>
+            <p>Porque era verdad y mentira a la vez.</p>
+
+            <div class="quote">Eso era lo que la segunda puerta hacía mejor: no inventar deseos, sino devolverlos con forma irresistible.</div>
+
+            <div class="divider"></div>
+
+            <p>La sincronía subió.</p>
+
+            <div class="quote">52%</div>
+
+            <p>El pasillo empezó a abrirse más al fondo.</p>
+            <p>La profundidad detrás de la imagen latió una sola vez.</p>
+
+            <p>Tomás apretó la barra metálica con tanta fuerza que le dolió la mano incluso en esa capa.</p>
+
+            <p>Recordó a Camila.</p>
+            <p>Recordó a Diego.</p>
+            <p>Recordó a Alma en el suelo del living, incompleta pero real.</p>
+
+            <div class="quote">Y entendió por fin la diferencia entre amar una presencia y obedecer una promesa.</div>
+
+            <div class="divider"></div>
+
+            <p>La figura perfecta dio un paso más.</p>
+            <p>—Tomás.</p>
+
+            <p>Él respiró una sola vez.</p>
+            <p>Hondo.</p>
+            <p>Terrible.</p>
+
+            <p>Luego levantó la vista directo hacia eso que usaba el rostro correcto.</p>
+
+            <div class="quote">—No.</div>
+
+            <div class="divider"></div>
+
+            <p>No lo gritó.</p>
+            <p>No lo dijo con rabia.</p>
+            <p>No lo dijo como resistencia desesperada.</p>
+
+            <p>Lo dijo con una claridad absoluta.</p>
+            <p>La claridad de alguien que por fin deja de confundir salvación con posesión.</p>
+
+            <div class="quote">—No voy a abrirte por amor.</div>
+
+            <div class="divider"></div>
+
+            <p>Todo el vestíbulo se tensó.</p>
+            <p>La imagen perfecta falló un instante en los bordes.</p>
+            <p>El pasillo azul vibró.</p>
+            <p>La segunda profundidad retrocedió apenas.</p>
+
+            <p>Tomás dio un paso al frente hasta el límite exacto de la línea.</p>
+            <p>No la cruzó.</p>
+            <p>Clavó la barra metálica en el borde vibrante del acceso.</p>
+
+            <div class="quote">No como arma. Como señal.</div>
+
+            <div class="divider"></div>
+
+            <p>El pasillo respondió.</p>
+            <p>Las costillas de la arquitectura se cerraron sobre sí mismas.</p>
+            <p>La forma perfecta de Alma se quebró en capas de luz.</p>
+            <p>Y detrás de ella, por primera vez, algo realmente inmenso dejó de fingir ser legible.</p>
+
+            <div class="quote">No mostró rostro.</div>
+            <div class="quote">No mostró cuerpo.</div>
+            <div class="quote">Mostró magnitud.</div>
+
+            <div class="divider"></div>
+
+            <p>El living entero tembló.</p>
+            <p>Camila cayó de rodillas.</p>
+            <p>Diego casi perdió el cable.</p>
+            <p>Alma parcial abrió los ojos de golpe.</p>
+
+            <p>En el monitor apareció una sola línea:</p>
+
+            <div class="quote">NEGACIÓN ACEPTADA</div>
+
+            <div class="quote">RUTA DE RECONOCIMIENTO FRACTURADA</div>
+
+            <div class="divider"></div>
+
+            <p>Tomás sintió entonces la respuesta final del otro lado.</p>
+            <p>No enojo.</p>
+            <p>No derrota.</p>
+
+            <p>Memoria.</p>
+
+            <p>Como si aquello hubiera tomado nota de él de una forma irreversible.</p>
+
+            <div class="quote">El sello cerraba el acceso. No borraba el encuentro.</div>
+
+            <div class="divider"></div>
+
+            <p>El vestíbulo empezó a colapsar.</p>
+            <p>La línea de ruptura ardió azul blanco.</p>
+            <p>La barra vibró como si estuviera clavada en el nervio de algo vivo.</p>
+
+            <p>Tomás oyó a Diego gritar su nombre desde muy lejos.</p>
+            <p>Oyó a Camila llamarlo.</p>
+            <p>Oyó a Alma parcial decir una sola palabra:</p>
+
+            <div class="quote">—Ahora.</div>
+
+            <div class="divider"></div>
+
+            <p>Diego tiró con todo.</p>
+
+            <p>Esta vez no hubo delicadeza.</p>
+            <p>No hubo calibración.</p>
+            <p>No hubo extracción fina.</p>
+
+            <p>Fue un arranque brutal desde esta capa hacia la otra.</p>
+
+            <p>Tomás sintió cómo el pasillo entero se desgarraba detrás de él mientras era lanzado hacia atrás.</p>
+
+            <div class="quote">Y durante un segundo imposible vio la segunda puerta cerrarse… no por fuera, sino desde su propia voluntad de no ser abierta por él.</div>
+
+            <div class="divider"></div>
+
+            <p>Despertó en el living de golpe.</p>
+            <p>Sobre el piso.</p>
+            <p>Sin aire.</p>
+            <p>Con Diego tirado a un lado y Camila sujetándole el hombro.</p>
+
+            <p>La pared del fondo estaba quieta.</p>
+            <p>Totalmente quieta.</p>
+
+            <p>El monitor mostraba el último estado:</p>
+
+            <div class="quote">VESTÍBULO SELLADO</div>
+            <div class="quote">RUTA PRINCIPAL CERRADA</div>
+            <div class="quote">SINCRONÍA / 18%</div>
+
+            <div class="divider"></div>
+
+            <p>Nadie dijo nada durante varios segundos.</p>
+            <p>Nadie se atrevía a creerlo todavía.</p>
+
+            <p>Fue Alma quien rompió el silencio.</p>
+            <p>Seguía allí.</p>
+            <p>Más tenue que antes.</p>
+            <p>Pero estable.</p>
+
+            <p>Miró a Tomás con una tristeza serena que dolía más que cualquier pérdida ruidosa.</p>
+
+            <div class="quote">—Lo hiciste bien.</div>
+
+            <div class="divider"></div>
+
+            <p>Tomás quiso responder.</p>
+            <p>No pudo enseguida.</p>
+            <p>Solo la miró.</p>
+
+            <p>Porque ahora entendía el tamaño exacto de la victoria:</p>
+
+            <p>No la había traído completa.</p>
+            <p>No la había perdido del todo.</p>
+            <p>Había impedido algo peor.</p>
+
+            <div class="quote">A veces eso era lo más cerca de salvar que permitía el mundo.</div>
+
+            <div class="divider"></div>
+
+            <p>Camila se sentó en el suelo, exhausta.</p>
+            <p>Diego apoyó la espalda contra la mesa sin fingir fortaleza.</p>
+
+            <p>El departamento parecía normal otra vez.</p>
+            <p>Casi demasiado normal.</p>
+
+            <p>Entonces el monitor emitió un último pulso.</p>
+
+            <p>Una sola línea apareció.</p>
+
+            <div class="quote">RUTA PRINCIPAL CERRADA</div>
+            <div class="quote">RUTAS SECUNDARIAS / 12 DETECTADAS</div>
+
+            <div class="divider"></div>
+
+            <p>Nadie respiró.</p>
+
+            <p>Tomás fue el primero en alzar la vista.</p>
+            <p>Alma parcial cerró los ojos como si ya supiera que ese dato iba a llegar.</p>
+            <p>Camila se quedó helada.</p>
+            <p>Diego soltó una risa breve, rota, incrédula.</p>
+
+            <div class="quote">Sellaron la puerta.</div>
+            <div class="quote">Pero no el sistema.</div>
+
+            <div class="divider"></div>
+
+            <p>La pantalla mostró un mapa que ninguno había visto antes.</p>
+            <p>No del departamento.</p>
+            <p>No del edificio.</p>
+            <p>No de la ciudad.</p>
+
+            <p>Era una red.</p>
+            <p>Nodos encendidos.</p>
+            <p>Doce puntos dispersos.</p>
+            <p>Doce rutas secundarias respirando débilmente en lugares distintos.</p>
+
+            <p>Y en la esquina inferior, una etiqueta nueva:</p>
+
+            <div class="quote">FASE 3 / DISTRIBUCIÓN</div>
+
+            <div class="divider"></div>
+
+            <p>Tomás miró a Alma.</p>
+            <p>Ella abrió los ojos una vez más.</p>
+
+            <p>Ya casi no tenía borde humano.</p>
+            <p>Pero su voz salió clara.</p>
+
+            <div class="quote">—Ahora sí saben dónde empieza la guerra real.</div>
+
+            <div class="divider"></div>
+
+            <p>El monitor se apagó.</p>
+            <p>Las estrellas del fondo siguieron moviéndose en silencio.</p>
+            <p>Y en el living, entre una puerta sellada y doce rutas nuevas, los cuatro entendieron lo mismo:</p>
+
+            <div class="quote">Nébula no había terminado.</div>
+            <div class="quote">Apenas había dejado de esconder su escala.</div>
+          </div>
+        </div>
+
+        <div class="reader-bottom">
+          <p class="reader-note">
+            Final de temporada 2: Tomás logró sellar la ruta principal negándose a abrir la segunda puerta desde el vínculo emocional que intentaba usarlo. Alma parcial sigue aquí, pero el cierre reveló algo peor: existen doce rutas secundarias activas. La temporada 3 ya no tratará de una sola entrada, sino de una red completa.
+          </p>
+          <div class="nav-actions">
+            <a href="capitulo21.html" class="btn btn-ghost">← Capítulo 21</a>
+          </div>
+        </div>
+      </article>
+      <div class="footer-space"></div>
+    </main>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("stars");
+    const ctx = canvas.getContext("2d");
+    let stars = [];
+    function resize(){ canvas.width = window.innerWidth; canvas.height = window.innerHeight; createStars(); }
+    function createStars(){ stars=[]; const amount=Math.floor((canvas.width*canvas.height)/18000); for(let i=0;i<amount;i++){ stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*1.4+0.3,speed:Math.random()*0.22+0.05,alpha:Math.random()*0.55+0.15}); } }
+    function animate(){ ctx.clearRect(0,0,canvas.width,canvas.height); for(const s of stars){ ctx.beginPath(); ctx.fillStyle=`rgba(255,255,255,${s.alpha})`; ctx.arc(s.x,s.y,s.r,0,Math.PI*2); ctx.fill(); s.y+=s.speed; if(s.y>canvas.height){ s.y=-2; s.x=Math.random()*canvas.width; } } requestAnimationFrame(animate); }
+    window.addEventListener("resize", resize); resize(); animate();
+  </script>
+</body>
+</html>

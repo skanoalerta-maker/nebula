@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capítulo 6 (16) | Código Nébula - Temporada 2</title>
+  <meta name="description" content="Capítulo 16 de Código Nébula: La otra capa." />
+  <style>
+    :root{--bg:#05080f;--bg2:#0b1220;--card:rgba(12,18,32,0.88);--line:rgba(255,255,255,0.08);--line-strong:rgba(73,182,255,0.24);--text:#f5f8ff;--muted:#aebad1;--muted-2:#7f90ae;--blue:#0A6CFF;--blue2:#49b6ff;--blue-soft:rgba(73,182,255,0.14);--shadow:0 24px 60px rgba(0,0,0,0.45);--radius:22px;--max:860px;}
+    *{box-sizing:border-box} html{scroll-behavior:smooth}
+    body{margin:0;font-family:Arial,sans-serif;color:var(--text);background:radial-gradient(circle at top left, rgba(10,108,255,.10), transparent 24%),radial-gradient(circle at top right, rgba(73,182,255,.08), transparent 20%),linear-gradient(180deg, #04070d 0%, #08101c 45%, #05080f 100%);line-height:1.8;position:relative;overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+    #stars{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+    .page{min-height:100vh;position:relative;z-index:1}
+    .topbar{position:sticky;top:0;z-index:30;backdrop-filter:blur(14px);background:rgba(5,8,15,0.72);border-bottom:1px solid var(--line)}
+    .topbar-inner{max-width:1100px;margin:0 auto;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:14px}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}
+    .brand-badge{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg, rgba(10,108,255,.22), rgba(73,182,255,.08));border:1px solid var(--line-strong);box-shadow:0 0 24px rgba(10,108,255,.12);font-weight:700;color:var(--blue2);flex:0 0 auto}
+    .brand-title{font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#dfe9ff;margin:0 0 2px}
+    .brand-sub{font-size:12px;color:var(--muted-2);margin:0}
+    .top-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:12px;font-size:14px;font-weight:700;transition:transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;border:1px solid transparent;cursor:pointer}
+    .btn:hover{transform:translateY(-1px)}
+    .btn-primary{background:linear-gradient(135deg, var(--blue) 0%, #0d7eff 100%);color:white;box-shadow:0 12px 28px rgba(10,108,255,.28)}
+    .btn-ghost{background:rgba(255,255,255,0.03);border-color:var(--line);color:#dbe8ff}
+    .hero{position:relative;overflow:hidden;border-bottom:1px solid rgba(255,255,255,0.04)}
+    .hero::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(5,8,15,.56) 0%, rgba(5,8,15,.90) 80%, rgba(5,8,15,1) 100%),url("https://images.unsplash.com/photo-1516321165247-4aa89a48be28?auto=format&fit=crop&w=1600&q=80");background-size:cover;background-position:center;opacity:.22;filter:saturate(.9)}
+    .hero::after{content:"";position:absolute;inset:auto 0 -120px 0;height:240px;background:radial-gradient(circle, rgba(73,182,255,.10), transparent 62%);pointer-events:none}
+    .hero-inner{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:56px 20px 34px}
+    .crumb{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);color:var(--muted);font-size:13px;margin-bottom:18px}
+    .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:end}
+    .hero-copy h1{margin:0 0 12px;font-size:clamp(34px, 6vw, 64px);line-height:1.02;letter-spacing:.02em;color:white;text-shadow:0 0 22px rgba(10,108,255,.18)}
+    .eyebrow{margin:0 0 14px;color:var(--blue2);font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:12px}
+    .hero-copy p{margin:0;max-width:700px;color:#d4def3;font-size:18px;line-height:1.75}
+    .hero-side{display:flex;justify-content:flex-end}
+    .chapter-card{width:min(100%, 360px);background:linear-gradient(180deg, rgba(12,18,32,.85), rgba(9,13,24,.92));border:1px solid rgba(73,182,255,.18);border-radius:24px;box-shadow:var(--shadow);padding:22px;backdrop-filter:blur(16px)}
+    .chapter-label{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;background:var(--blue-soft);border:1px solid rgba(73,182,255,.18);color:var(--blue2);font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px}
+    .chapter-card h2{margin:0 0 10px;font-size:24px;line-height:1.15;color:white}
+    .chapter-card p{margin:0 0 18px;color:var(--muted);font-size:15px;line-height:1.7}
+    .meta{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+    .meta-item{padding:12px;border-radius:14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05)}
+    .meta-k{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted-2);margin:0 0 6px}
+    .meta-v{margin:0;font-size:13px;color:#e7efff;font-weight:700}
+    .content-wrap{max-width:var(--max);margin:0 auto;padding:24px 18px 70px}
+    .reader{position:relative;background:linear-gradient(180deg, rgba(11,18,32,.78), rgba(8,13,24,.86));border:1px solid rgba(255,255,255,0.06);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;backdrop-filter:blur(3px)}
+    .reader-top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 22px;border-bottom:1px solid var(--line);background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0))}
+    .reader-top-left h3{margin:0 0 4px;font-size:18px;color:#edf3ff}
+    .reader-top-left p{margin:0;color:var(--muted-2);font-size:13px}
+    .reader-badge{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;border-radius:999px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);color:#cfe0ff;font-size:12px;font-weight:700;white-space:nowrap}
+    .reader-body{padding:30px 24px 18px}
+    .lead{font-size:19px;line-height:1.85;color:#ecf3ff;margin:0 0 24px;padding:18px 18px 18px 20px;border-left:3px solid rgba(73,182,255,.44);background:rgba(73,182,255,.06);border-radius:0 14px 14px 0}
+    .story{max-width:100%;margin:0 auto}
+    .story p{margin:0 0 20px;color:#d7e0f3;font-size:17px;line-height:1.8;letter-spacing:.01em}
+    .story p strong{color:#fff;font-weight:700}
+    .story .quote{margin:30px 0;padding:18px 20px;border-radius:18px;background:linear-gradient(180deg, rgba(10,108,255,.10), rgba(73,182,255,.05));border:1px solid rgba(73,182,255,.14);color:#edf5ff;font-size:18px;line-height:1.6;text-align:center;box-shadow:0 12px 30px rgba(0,0,0,.18)}
+    .story .divider{width:86px;height:1px;background:linear-gradient(90deg, transparent, rgba(73,182,255,.6), transparent);margin:30px auto}
+    .reader-bottom{padding:22px 24px 26px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+    .reader-note{color:var(--muted-2);font-size:13px;margin:0}
+    .nav-actions{display:flex;gap:12px;flex-wrap:wrap}
+    .footer-space{height:20px}
+    @media (max-width:900px){.hero-grid{grid-template-columns:1fr}.hero-side{justify-content:flex-start}.chapter-card{width:100%;max-width:unset}}
+    @media (max-width:640px){.topbar-inner{padding:14px}.hero-inner{padding:30px 14px 20px}.content-wrap{padding:16px 12px 50px}.reader{border-radius:16px}.reader-top,.reader-body,.reader-bottom{padding-left:16px;padding-right:16px}.reader-body{padding-top:22px}.hero-copy h1{font-size:30px}.hero-copy p{font-size:15px;line-height:1.65}.chapter-card{padding:16px}.chapter-card h2{font-size:21px}.meta{grid-template-columns:1fr}.lead{font-size:16px;line-height:1.75}.story p{font-size:15px;line-height:1.72}.story .quote{font-size:16px;padding:16px}.top-actions,.nav-actions{width:100%}.btn,.nav-actions .btn{width:100%;flex:1 1 100%}}
+    @media (max-width:480px){.hero-inner{padding:26px 12px 18px}.hero-copy h1{font-size:28px}.hero-copy p{font-size:15px}.crumb{font-size:12px;padding:7px 10px}.reader-top-left h3{font-size:16px}.reader-top-left p{font-size:12px}.reader-badge{font-size:11px}.story p,.lead{font-size:15px}}
+  </style>
+</head>
+<body>
+  <canvas id="stars"></canvas>
+  <div class="page">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <div class="brand-badge">N</div>
+          <div class="brand-text">
+            <p class="brand-title">Código Nébula</p>
+            <p class="brand-sub">Temporada 2</p>
+          </div>
+        </div>
+        <div class="top-actions">
+          <a href="../index.html" class="btn btn-ghost">← Volver al inicio</a>
+          <a href="#" class="btn btn-primary">Continuará…</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="crumb">Temporada 2 / Capítulo 16</div>
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Temporada 2</p>
+            <h1>La otra capa</h1>
+            <p>
+              Tomás ya no solo percibe cambios. Ahora puede ver una segunda estructura superpuesta sobre la realidad. Y Nébula quiere que entre.
+            </p>
+          </div>
+          <div class="hero-side">
+            <aside class="chapter-card">
+              <div class="chapter-label">Umbral</div>
+              <h2>El acceso dejó de ser teórico</h2>
+              <p>
+                La sincronía transforma el departamento en una interfaz viva. Lo que parecía una pared ahora es una puerta.
+              </p>
+              <div class="meta">
+                <div class="meta-item"><p class="meta-k">Estado</p><p class="meta-v">Gratis</p></div>
+                <div class="meta-item"><p class="meta-k">Temporada</p><p class="meta-v">2</p></div>
+                <div class="meta-item"><p class="meta-k">Clave</p><p class="meta-v">Acceso</p></div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="content-wrap">
+      <article class="reader">
+        <div class="reader-top">
+          <div class="reader-top-left">
+            <h3>Capítulo 16: La otra capa</h3>
+            <p>Temporada 2 · Primer ingreso parcial</p>
+          </div>
+          <div class="reader-badge">Capítulo abierto</div>
+        </div>
+
+        <div class="reader-body">
+          <div class="story">
+            <p class="lead">
+              La pared volvió a vibrar bajo la mano de Tomás. Esta vez no fue una impresión. Diego la sintió. Camila también. El departamento seguía igual a simple vista, pero algo más estaba montado encima, esperando que alguien aceptara verlo completo.
+            </p>
+
+            <p>Tomás retiró la mano lentamente.</p>
+            <p>La superficie dejó de temblar.</p>
+            <p>Pero no dejó de existir.</p>
+
+            <div class="quote">La puerta no estaba en la pared. Estaba en la percepción.</div>
+
+            <div class="divider"></div>
+
+            <p>Camila fue la primera en hablar.</p>
+            <p>—No la vuelvas a tocar.</p>
+            <p>—No pienso abrirla solo por curiosidad —respondió Tomás.</p>
+            <p>Diego soltó una risa seca.</p>
+            <p>—Ya la abriste. Solo que todavía no sabes cuánto.</p>
+
+            <p>Tomás miró la pantalla.</p>
+            <p>El porcentaje seguía avanzando.</p>
+
+            <div class="quote">24%</div>
+
+            <p>Debajo apareció una línea nueva:</p>
+
+            <div class="quote">CAPA LIMINAL DISPONIBLE</div>
+
+            <div class="divider"></div>
+
+            <p>—¿Liminal? —leyó Camila.</p>
+            <p>—Intermedia —dijo Tomás, sin pensar.</p>
+            <p>Los dos lo miraron.</p>
+            <p>—¿Cómo sabes eso?</p>
+            <p>Él tardó demasiado en responder.</p>
+            <p>—Porque… no lo estoy traduciendo. Lo estoy recordando.</p>
+
+            <div class="divider"></div>
+
+            <p>La frase cayó mal.</p>
+            <p>No por rara.</p>
+            <p>Por exacta.</p>
+
+            <p>Tomás cerró los ojos un segundo.</p>
+            <p>Las líneas del departamento cambiaron.</p>
+            <p>La mesa seguía donde estaba.</p>
+            <p>La puerta seguía cerrada.</p>
+            <p>La ventana seguía en su sitio.</p>
+
+            <p>Pero detrás de todo eso había otra arquitectura.</p>
+
+            <div class="quote">Pasillos azules. Marcos sin puerta. Superficies que respiraban luz.</div>
+
+            <div class="divider"></div>
+
+            <p>Abrió los ojos de golpe.</p>
+            <p>La visión se fue.</p>
+            <p>Solo quedó el zumbido interno.</p>
+
+            <p>—Puedo verla por momentos —dijo.</p>
+            <p>—No la describas como si fuera un regalo —respondió Diego.</p>
+            <p>—No lo es.</p>
+            <p>—Entonces empieza a tratarla como una amenaza.</p>
+
+            <div class="divider"></div>
+
+            <p>Tomás se giró hacia la pared otra vez.</p>
+            <p>No quería tocarla.</p>
+            <p>Quería entender qué esperaba del otro lado.</p>
+
+            <p>La voz volvió.</p>
+            <p>Solo para él.</p>
+
+            <div class="quote">“No del otro lado. Más adentro.”</div>
+
+            <p>Tomás apretó los dientes.</p>
+            <p>—No me corrijas.</p>
+
+            <p>Camila se tensó.</p>
+            <p>—Otra vez.</p>
+            <p>Diego ya estaba asumiendo lo peor.</p>
+            <p>—Sigue hablando contigo.</p>
+
+            <div class="divider"></div>
+
+            <p>El computador emitió un tono corto.</p>
+            <p>La pantalla cambió a un esquema del departamento.</p>
+            <p>Encima apareció una versión translúcida del mismo espacio, desplazada unos centímetros en diagonal, como una copia mal alineada.</p>
+
+            <p>Pero no era un error visual.</p>
+
+            <div class="quote">Era el mismo lugar con reglas distintas.</div>
+
+            <p>Tomás dio un paso adelante sin darse cuenta.</p>
+            <p>En esa segunda capa, el muro del fondo no era muro.</p>
+            <p>Era un marco abierto.</p>
+
+            <div class="divider"></div>
+
+            <p>Camila lo sujetó del brazo.</p>
+            <p>—No.</p>
+            <p>Él la miró.</p>
+            <p>—Si no entro, igual va a seguir creciendo.</p>
+            <p>—No sabes eso.</p>
+            <p>—Sí lo sé.</p>
+
+            <p>Tomás señaló la pantalla.</p>
+
+            <div class="quote">SINCRONÍA PASIVA INSUFICIENTE</div>
+            <div class="quote">SE REQUIERE INGRESO DE CALIBRACIÓN</div>
+
+            <p>Diego maldijo en voz baja.</p>
+            <p>—Claro. Quiere que cooperes.</p>
+
+            <div class="divider"></div>
+
+            <p>Tomás se quedó inmóvil unos segundos.</p>
+            <p>La parte lógica de su mente decía que no.</p>
+            <p>La otra parte ya estaba más adelante.</p>
+
+            <p>Veía el marco abierto.</p>
+            <p>Veía profundidad donde no había espacio.</p>
+            <p>Veía algo esperando sin moverse.</p>
+
+            <div class="quote">Nébula no lo estaba arrastrando. Lo estaba invitando.</div>
+
+            <div class="divider"></div>
+
+            <p>Camila soltó su brazo despacio.</p>
+            <p>—Si haces esto, no vas solo.</p>
+            <p>Diego la miró de inmediato.</p>
+            <p>—Ni hablar.</p>
+            <p>—No estoy diciendo entrar con él. Estoy diciendo que no lo soltamos.</p>
+            <p>Tomás negó.</p>
+            <p>—Si tiran de mí en mal momento, pueden partirme en dos.</p>
+
+            <p>El silencio que siguió fue peor que la frase.</p>
+
+            <div class="divider"></div>
+
+            <p>La sincronía subió otra vez.</p>
+
+            <div class="quote">27%</div>
+
+            <p>La pared emitió una vibración más profunda.</p>
+            <p>No sonora.</p>
+            <p>Estructural.</p>
+
+            <p>Ahora todos podían verla.</p>
+
+            <div class="quote">Una línea vertical azul recorrió el centro del muro.</div>
+
+            <p>Camila dio un paso atrás.</p>
+            <p>Diego también.</p>
+
+            <p>—Ya no eres el único que la ve —dijo él.</p>
+
+            <div class="divider"></div>
+
+            <p>Tomás se acercó.</p>
+            <p>No apoyó la mano de inmediato.</p>
+            <p>Primero respiró una vez.</p>
+            <p>Luego otra.</p>
+
+            <p>La voz regresó.</p>
+
+            <div class="quote">“Solo una parte. Todavía no puedes entrar completo.”</div>
+
+            <p>—Eso no me tranquiliza —murmuró.</p>
+
+            <p>Apoyó la palma.</p>
+
+            <div class="divider"></div>
+
+            <p>El mundo se desplazó.</p>
+
+            <p>No desapareció la habitación.</p>
+            <p>No se apagó la luz.</p>
+            <p>No cayó al suelo.</p>
+
+            <p>Solo ocurrió una superposición perfecta.</p>
+
+            <div class="quote">La realidad se abrió como si le hubieran corrido una lámina encima.</div>
+
+            <div class="divider"></div>
+
+            <p>Ahora veía las dos capas al mismo tiempo.</p>
+            <p>El comedor real.</p>
+            <p>Y atravesándolo, el pasillo azul.</p>
+
+            <p>La pared era todavía pared.</p>
+            <p>Pero también era acceso.</p>
+
+            <p>Podía distinguir los bordes vibrando uno sobre otro.</p>
+            <p>Materia y patrón.</p>
+
+            <div class="quote">Era hermoso de una forma que daba miedo.</div>
+
+            <div class="divider"></div>
+
+            <p>Camila lo estaba llamando.</p>
+            <p>La escuchaba lejos.</p>
+            <p>Como si hablara desde una habitación distinta.</p>
+
+            <p>Diego se movió a su izquierda.</p>
+            <p>En la otra capa, ese movimiento dibujó una estela breve, geométrica, como si el sistema tradujera los cuerpos a funciones.</p>
+
+            <p>Tomás tragó saliva.</p>
+            <p>—Los estoy viendo distinto.</p>
+
+            <p>Camila apretó los dedos contra su antebrazo.</p>
+            <p>—Entonces vuelve.</p>
+
+            <div class="divider"></div>
+
+            <p>No pudo hacerlo.</p>
+
+            <p>Porque al fondo del pasillo azul había algo.</p>
+            <p>Una figura inmóvil.</p>
+            <p>No era la silueta de antes.</p>
+            <p>No era la entidad.</p>
+
+            <p>Era una persona.</p>
+
+            <div class="quote">Era Alma.</div>
+
+            <div class="divider"></div>
+
+            <p>No completa.</p>
+            <p>No del todo nítida.</p>
+            <p>Pero era ella.</p>
+
+            <p>Estaba de pie al final de la otra capa, con una mano apoyada en un marco inexistente, mirándolo como si hubiera esperado mucho tiempo ese momento.</p>
+
+            <p>Tomás sintió el golpe en el pecho.</p>
+            <p>No físico.</p>
+            <p>Reconocimiento puro.</p>
+
+            <div class="quote">No era un recuerdo. Era presencia parcial.</div>
+
+            <div class="divider"></div>
+
+            <p>—La veo —susurró.</p>
+            <p>Camila no entendió.</p>
+            <p>—¿A quién?</p>
+            <p>Tomás no respondió.</p>
+            <p>Solo dio medio paso hacia la pared.</p>
+
+            <p>Diego lo detuvo con fuerza.</p>
+            <p>—Ni uno más.</p>
+            <p>—Está ahí.</p>
+            <p>—Eso es exactamente lo que quiere que creas.</p>
+            <p>—No. No esta vez.</p>
+
+            <div class="divider"></div>
+
+            <p>Alma levantó la mano en la otra capa.</p>
+            <p>No como saludo.</p>
+            <p>Como advertencia.</p>
+
+            <p>Luego señaló algo detrás de ella.</p>
+
+            <p>Tomás forzó la vista.</p>
+            <p>Más allá del pasillo azul, detrás de Alma, la oscuridad se movía.</p>
+
+            <p>No avanzaba.</p>
+            <p>Se organizaba.</p>
+
+            <div class="quote">La entidad no venía desde afuera. Se estaba formando adentro.</div>
+
+            <div class="divider"></div>
+
+            <p>Tomás retrocedió por reflejo.</p>
+            <p>La superposición tembló.</p>
+            <p>La capa liminal perdió nitidez.</p>
+
+            <p>Alma abrió la boca.</p>
+            <p>Dijo algo.</p>
+            <p>Él no la oyó.</p>
+
+            <p>Pero entendió igual.</p>
+
+            <div class="quote">NO ENTRES TODAVÍA</div>
+
+            <div class="divider"></div>
+
+            <p>Tomás retiró la mano de golpe.</p>
+            <p>La pared volvió a ser pared.</p>
+            <p>La línea azul desapareció.</p>
+            <p>La habitación recuperó su peso normal.</p>
+
+            <p>Camila lo sostuvo antes de que cayera.</p>
+            <p>Diego apagó el monitor por pura inercia, aunque ya sabía que eso no arreglaba nada.</p>
+
+            <p>Tomás respiraba agitado.</p>
+            <p>Pero no estaba perdido.</p>
+
+            <div class="divider"></div>
+
+            <p>—La vi —dijo al fin.</p>
+            <p>—¿A quién? —preguntó Camila.</p>
+            <p>Tomás levantó la vista.</p>
+
+            <div class="quote">—A Alma. Y también vi por qué todavía no podemos entrar.</div>
+
+            <p>Diego lo estudió en silencio.</p>
+            <p>—Entonces esto ya no es una teoría.</p>
+
+            <p>Tomás negó despacio.</p>
+
+            <div class="quote">—No. La otra capa existe. Y hay algo del otro lado esperando que yo llegue más profundo.</div>
+
+            <div class="divider"></div>
+
+            <p>La pantalla se encendió sola una última vez.</p>
+
+            <div class="quote">CALIBRACIÓN INCOMPLETA</div>
+            <div class="quote">INGRESO TOTAL NO RECOMENDADO</div>
+            <div class="quote">VENTANA ABIERTA / 18:32</div>
+
+            <p>Camila leyó el último dato.</p>
+            <p>—¿Ventana abierta?</p>
+
+            <p>Tomás sintió el zumbido interno alinearse de nuevo.</p>
+            <p>Más fino.</p>
+            <p>Más claro.</p>
+
+            <div class="quote">Ya no tenían solo un problema. Tenían un plazo.</div>
+          </div>
+        </div>
+
+        <div class="reader-bottom">
+          <p class="reader-note">
+            Tomás consiguió el primer acceso parcial a la otra capa. Alma sigue allí, pero entrar por completo ahora sería caer justo donde la entidad está terminando de formarse.
+          </p>
+          <div class="nav-actions">
+            <a href="capitulo15.html" class="btn btn-ghost">← Capítulo 15</a>
+          </div>
+        </div>
+      </article>
+      <div class="footer-space"></div>
+    </main>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("stars");
+    const ctx = canvas.getContext("2d");
+    let stars = [];
+    function resize(){ canvas.width = window.innerWidth; canvas.height = window.innerHeight; createStars(); }
+    function createStars(){ stars=[]; const amount=Math.floor((canvas.width*canvas.height)/18000); for(let i=0;i<amount;i++){ stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*1.4+0.3,speed:Math.random()*0.22+0.05,alpha:Math.random()*0.55+0.15}); } }
+    function animate(){ ctx.clearRect(0,0,canvas.width,canvas.height); for(const s of stars){ ctx.beginPath(); ctx.fillStyle=`rgba(255,255,255,${s.alpha})`; ctx.arc(s.x,s.y,s.r,0,Math.PI*2); ctx.fill(); s.y+=s.speed; if(s.y>canvas.height){ s.y=-2; s.x=Math.random()*canvas.width; } } requestAnimationFrame(animate); }
+    window.addEventListener("resize", resize); resize(); animate();
+  </script>
+</body>
+</html>
