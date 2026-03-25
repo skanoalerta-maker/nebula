@@ -1386,7 +1386,7 @@
         <div class="made-by-left">
           <img
             class="made-by-logo"
-            src="assets/logo-appfactory.png"
+            src="assets/logo/logo-appfactory.png"
             alt="Logo AppFactory"
           />
 
@@ -1685,17 +1685,9 @@
 
     storySearch.addEventListener("input", filtrarHistorias);
     cargarNovelas();
-  </script>
-
-<script type="module">
+ <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
-  import {
-    getAuth,
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    signOut,
-    onAuthStateChanged
-  } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
+  import { getAuth } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
   import { getFirestore } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
   const firebaseConfig = {
@@ -1717,75 +1709,6 @@
   window.firebaseDb = db;
 
   console.log("🔥 Firebase conectado correctamente");
-
-  const loginBtn = document.getElementById("loginBtn");
-
-  async function registrarUsuario(email, password) {
-    try {
-      const cred = await createUserWithEmailAndPassword(auth, email, password);
-      alert("Usuario creado correctamente: " + cred.user.email);
-    } catch (error) {
-      alert("Error al registrar: " + error.message);
-    }
-  }
-
-  async function iniciarSesion(email, password) {
-    try {
-      const cred = await signInWithEmailAndPassword(auth, email, password);
-      alert("Bienvenido: " + cred.user.email);
-    } catch (error) {
-      alert("Error al iniciar sesión: " + error.message);
-    }
-  }
-
-  async function cerrarSesion() {
-    try {
-      await signOut(auth);
-      alert("Sesión cerrada");
-    } catch (error) {
-      alert("Error al cerrar sesión: " + error.message);
-    }
-  }
-
-  loginBtn.addEventListener("click", async () => {
-    const user = auth.currentUser;
-
-    if (user) {
-      const salir = confirm("Ya tienes sesión iniciada como " + user.email + ". ¿Quieres cerrar sesión?");
-      if (salir) {
-        await cerrarSesion();
-      }
-      return;
-    }
-
-    const opcion = prompt("Escribe 1 para registrarte o 2 para iniciar sesión");
-
-    if (!opcion) return;
-
-    const email = prompt("Ingresa tu correo");
-    if (!email) return;
-
-    const password = prompt("Ingresa tu contraseña (mínimo 6 caracteres)");
-    if (!password) return;
-
-    if (opcion === "1") {
-      await registrarUsuario(email, password);
-    } else if (opcion === "2") {
-      await iniciarSesion(email, password);
-    } else {
-      alert("Opción no válida");
-    }
-  });
-
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      loginBtn.textContent = "Mi cuenta";
-      console.log("Usuario activo:", user.email);
-    } else {
-      loginBtn.textContent = "Iniciar sesión";
-      console.log("Sin sesión activa");
-    }
-  });
 </script>
 </body>
 </html>
