@@ -240,21 +240,23 @@
     .brand{
       display:flex;
       align-items:center;
-      gap:18px;
+      gap:20px;
       min-width:0;
       flex-shrink:0;
     }
 
+    /* LOGO NÉBULA MÁS GRANDE */
     .brand-logo{
-      width:150px;
-      height:150px;
+      width:225px;
+      height:225px;
       object-fit:contain;
       flex-shrink:0;
       filter:
-        drop-shadow(0 0 20px rgba(118,160,255,.26))
-        drop-shadow(0 0 34px rgba(62,123,255,.20));
+        drop-shadow(0 0 24px rgba(118,160,255,.30))
+        drop-shadow(0 0 38px rgba(62,123,255,.22));
     }
 
+    /* TEXTO NÉBULA A LA MITAD */
     .brand-copy{
       display:flex;
       flex-direction:column;
@@ -263,7 +265,7 @@
     }
 
     .brand-copy strong{
-      font-size:.9rem;
+      font-size:.45rem;
       line-height:1;
       letter-spacing:.16em;
       white-space:nowrap;
@@ -273,7 +275,7 @@
 
     .brand-copy span{
       color:var(--muted);
-      font-size:.62rem;
+      font-size:.31rem;
       margin-top:5px;
       white-space:nowrap;
       letter-spacing:.03em;
@@ -919,19 +921,31 @@
       flex:1;
     }
 
+    /* LOGO APPFACTORY EL DOBLE Y FONDO BLANCO */
+    .made-by-logo-box{
+      width:360px;
+      min-width:360px;
+      background:#ffffff;
+      border-radius:24px;
+      padding:18px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:
+        0 18px 40px rgba(0,0,0,.24),
+        0 0 0 1px rgba(255,255,255,.14);
+      flex-shrink:0;
+    }
+
     .made-by-logo{
-      width:180px;
+      width:100%;
       height:auto;
-      border-radius:0;
       object-fit:contain;
       background:none;
       border:none;
       padding:0;
-      flex-shrink:0;
       box-shadow:none;
-      filter:
-        drop-shadow(0 0 12px rgba(104,174,255,.20))
-        drop-shadow(0 0 28px rgba(52,144,255,.16));
+      filter:none;
     }
 
     .made-by-copy{
@@ -1005,16 +1019,16 @@
       }
 
       .brand-logo{
-        width:122px;
-        height:122px;
+        width:180px;
+        height:180px;
       }
 
       .brand-copy strong{
-        font-size:.82rem;
+        font-size:.4rem;
       }
 
       .brand-copy span{
-        font-size:.58rem;
+        font-size:.28rem;
       }
 
       .top-nav{
@@ -1052,8 +1066,10 @@
         align-items:flex-start;
       }
 
-      .made-by-logo{
-        width:145px;
+      .made-by-logo-box{
+        width:300px;
+        min-width:300px;
+        padding:16px 18px;
       }
 
       .made-by-copy h3{
@@ -1075,17 +1091,17 @@
       }
 
       .brand-logo{
-        width:105px;
-        height:105px;
+        width:150px;
+        height:150px;
       }
 
       .brand-copy strong{
-        font-size:.72rem;
+        font-size:.34rem;
         letter-spacing:.13em;
       }
 
       .brand-copy span{
-        font-size:.54rem;
+        font-size:.24rem;
       }
 
       .top-nav{
@@ -1170,8 +1186,10 @@
         align-items:flex-start;
       }
 
-      .made-by-logo{
-        width:132px;
+      .made-by-logo-box{
+        width:100%;
+        min-width:0;
+        max-width:320px;
       }
     }
 
@@ -1183,16 +1201,16 @@
       }
 
       .brand-logo{
-        width:92px;
-        height:92px;
+        width:128px;
+        height:128px;
       }
 
       .brand-copy strong{
-        font-size:.65rem;
+        font-size:.28rem;
       }
 
       .brand-copy span{
-        font-size:.5rem;
+        font-size:.21rem;
       }
 
       .story-badges{
@@ -1213,10 +1231,9 @@
         aspect-ratio:4 / 3;
       }
 
-      .made-by-logo{
-        width:118px;
-        height:auto;
-        border-radius:0;
+      .made-by-logo-box{
+        padding:14px 14px;
+        border-radius:20px;
       }
 
       .made-by-copy h3{
@@ -1427,11 +1444,13 @@
     <div class="container">
       <div class="made-by-shell">
         <div class="made-by-left">
-          <img
-            class="made-by-logo"
-            src="assets/logo/logo-appfactory.png"
-            alt="Logo AppFactory"
-          />
+          <div class="made-by-logo-box">
+            <img
+              class="made-by-logo"
+              src="assets/logo/logo-appfactory.png"
+              alt="Logo AppFactory"
+            />
+          </div>
 
           <div class="made-by-copy">
             <span class="made-by-kicker">Desarrollo digital</span>
