@@ -240,23 +240,22 @@
     .brand{
       display:flex;
       align-items:center;
-      gap:20px;
+      gap:14px;
       min-width:0;
       flex-shrink:0;
     }
 
-    /* LOGO NÉBULA MÁS GRANDE */
+    /* AQUÍ CORREGIDO: LOGO GRANDE, SIN AGRANDAR TODO */
     .brand-logo{
-      width:225px;
-      height:225px;
+      width:120px;
+      height:auto;
       object-fit:contain;
       flex-shrink:0;
       filter:
-        drop-shadow(0 0 24px rgba(118,160,255,.30))
-        drop-shadow(0 0 38px rgba(62,123,255,.22));
+        drop-shadow(0 0 18px rgba(118,160,255,.24))
+        drop-shadow(0 0 28px rgba(62,123,255,.18));
     }
 
-    /* TEXTO NÉBULA A LA MITAD */
     .brand-copy{
       display:flex;
       flex-direction:column;
@@ -264,10 +263,11 @@
       min-width:0;
     }
 
+    /* TEXTO MÁS PEQUEÑO, PERO BIEN VISIBLE */
     .brand-copy strong{
-      font-size:.45rem;
+      font-size:.78rem;
       line-height:1;
-      letter-spacing:.16em;
+      letter-spacing:.14em;
       white-space:nowrap;
       text-shadow:0 0 18px rgba(76,142,255,.12);
       opacity:.95;
@@ -275,8 +275,8 @@
 
     .brand-copy span{
       color:var(--muted);
-      font-size:.31rem;
-      margin-top:5px;
+      font-size:.48rem;
+      margin-top:4px;
       white-space:nowrap;
       letter-spacing:.03em;
       opacity:.86;
@@ -921,13 +921,14 @@
       flex:1;
     }
 
-    /* LOGO APPFACTORY EL DOBLE Y FONDO BLANCO */
+    /* AQUÍ CORREGIDO: CAJA BLANCA NORMAL, LOGO MÁS GRANDE */
     .made-by-logo-box{
-      width:360px;
-      min-width:360px;
+      width:220px;
+      min-width:220px;
+      height:140px;
       background:#ffffff;
-      border-radius:24px;
-      padding:18px 20px;
+      border-radius:22px;
+      padding:14px;
       display:flex;
       align-items:center;
       justify-content:center;
@@ -938,7 +939,7 @@
     }
 
     .made-by-logo{
-      width:100%;
+      width:92%;
       height:auto;
       object-fit:contain;
       background:none;
@@ -1019,16 +1020,15 @@
       }
 
       .brand-logo{
-        width:180px;
-        height:180px;
+        width:100px;
       }
 
       .brand-copy strong{
-        font-size:.4rem;
+        font-size:.7rem;
       }
 
       .brand-copy span{
-        font-size:.28rem;
+        font-size:.44rem;
       }
 
       .top-nav{
@@ -1067,9 +1067,9 @@
       }
 
       .made-by-logo-box{
-        width:300px;
-        min-width:300px;
-        padding:16px 18px;
+        width:200px;
+        min-width:200px;
+        height:128px;
       }
 
       .made-by-copy h3{
@@ -1091,17 +1091,16 @@
       }
 
       .brand-logo{
-        width:150px;
-        height:150px;
+        width:88px;
       }
 
       .brand-copy strong{
-        font-size:.34rem;
-        letter-spacing:.13em;
+        font-size:.62rem;
+        letter-spacing:.12em;
       }
 
       .brand-copy span{
-        font-size:.24rem;
+        font-size:.4rem;
       }
 
       .top-nav{
@@ -1187,9 +1186,9 @@
       }
 
       .made-by-logo-box{
-        width:100%;
-        min-width:0;
-        max-width:320px;
+        width:190px;
+        min-width:190px;
+        height:122px;
       }
     }
 
@@ -1201,16 +1200,15 @@
       }
 
       .brand-logo{
-        width:128px;
-        height:128px;
+        width:76px;
       }
 
       .brand-copy strong{
-        font-size:.28rem;
+        font-size:.56rem;
       }
 
       .brand-copy span{
-        font-size:.21rem;
+        font-size:.36rem;
       }
 
       .story-badges{
@@ -1232,8 +1230,9 @@
       }
 
       .made-by-logo-box{
-        padding:14px 14px;
-        border-radius:20px;
+        width:175px;
+        min-width:175px;
+        height:114px;
       }
 
       .made-by-copy h3{
