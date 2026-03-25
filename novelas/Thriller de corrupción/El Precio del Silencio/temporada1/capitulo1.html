@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capítulo 1 | El Precio del Silencio</title>
+  <meta
+    name="description"
+    content="Capítulo 1 de El Precio del Silencio: la primera grieta en la red de colusión más peligrosa de Chile."
+  />
+
+  <style>
+    :root{
+      --bg:#05080f;
+      --bg2:#0b1220;
+      --card:rgba(12,18,32,0.82);
+      --line:rgba(255,255,255,0.08);
+      --line-strong:rgba(73,182,255,0.24);
+      --text:#f5f8ff;
+      --muted:#aebad1;
+      --muted-2:#7f90ae;
+      --blue:#0A6CFF;
+      --blue2:#49b6ff;
+      --blue-soft:rgba(73,182,255,0.14);
+      --shadow:0 24px 60px rgba(0,0,0,0.45);
+      --radius:22px;
+      --max:860px;
+    }
+
+    *{
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      color:var(--text);
+      background:#04070d;
+      line-height:1.8;
+      position:relative;
+      overflow-x:hidden;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    #stars{
+      position:fixed;
+      inset:0;
+      width:100%;
+      height:100%;
+      z-index:0;
+      background:
+        radial-gradient(circle at top left, rgba(10,108,255,.12), transparent 24%),
+        radial-gradient(circle at top right, rgba(73,182,255,.08), transparent 20%),
+        linear-gradient(180deg, #04070d 0%, #08101c 45%, #05080f 100%);
+    }
+
+    .page{
+      min-height:100vh;
+      position:relative;
+      z-index:1;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:30;
+      backdrop-filter:blur(14px);
+      background:rgba(5,8,15,0.72);
+      border-bottom:1px solid var(--line);
+    }
+
+    .topbar-inner{
+      max-width:1100px;
+      margin:0 auto;
+      padding:16px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .brand-badge{
+      width:38px;
+      height:38px;
+      border-radius:12px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg, rgba(10,108,255,.22), rgba(73,182,255,.08));
+      border:1px solid var(--line-strong);
+      box-shadow:0 0 24px rgba(10,108,255,.12);
+      font-weight:700;
+      color:var(--blue2);
+      flex:0 0 auto;
+    }
+
+    .brand-title{
+      font-size:14px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:#dfe9ff;
+      margin:0 0 2px;
+    }
+
+    .brand-sub{
+      font-size:12px;
+      color:var(--muted-2);
+      margin:0;
+    }
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height:44px;
+      padding:0 18px;
+      border-radius:12px;
+      font-size:14px;
+      font-weight:700;
+      transition:transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+      border:1px solid transparent;
+      cursor:pointer;
+    }
+
+    .btn:hover{
+      transform:translateY(-1px);
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg, var(--blue) 0%, #0d7eff 100%);
+      color:white;
+      box-shadow:0 12px 28px rgba(10,108,255,.28);
+    }
+
+    .btn-primary:hover{
+      background:linear-gradient(135deg, #0c62e0 0%, #0a6cef 100%);
+    }
+
+    .btn-ghost{
+      background:rgba(255,255,255,0.03);
+      border-color:var(--line);
+      color:#dbe8ff;
+    }
+
+    .btn-ghost:hover{
+      background:rgba(255,255,255,0.06);
+      border-color:var(--line-strong);
+    }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      border-bottom:1px solid rgba(255,255,255,0.04);
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(180deg, rgba(5,8,15,.58) 0%, rgba(5,8,15,.86) 80%, rgba(5,8,15,1) 100%),
+        url("../assets/temporada1.jpg");
+      background-size:cover;
+      background-position:center;
+      opacity:.28;
+      filter:saturate(.9) contrast(1.03);
+    }
+
+    .hero-inner{
+      position:relative;
+      z-index:1;
+      max-width:1100px;
+      margin:0 auto;
+      padding:56px 20px 34px;
+    }
+
+    .crumb{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.06);
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:18px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:28px;
+      align-items:end;
+    }
+
+    .hero-copy h1{
+      margin:0 0 12px;
+      font-size:clamp(34px, 6vw, 64px);
+      line-height:1.02;
+      letter-spacing:.02em;
+      color:white;
+      text-shadow:0 0 22px rgba(10,108,255,.18);
+    }
+
+    .eyebrow{
+      margin:0 0 14px;
+      color:var(--blue2);
+      font-weight:700;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      font-size:12px;
+    }
+
+    .hero-copy p{
+      margin:0;
+      max-width:700px;
+      color:#d4def3;
+      font-size:18px;
+      line-height:1.75;
+    }
+
+    .hero-side{
+      display:flex;
+      justify-content:flex-end;
+    }
+
+    .chapter-card{
+      width:min(100%, 360px);
+      background:linear-gradient(180deg, rgba(12,18,32,.75), rgba(9,13,24,.88));
+      border:1px solid rgba(73,182,255,.18);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:22px;
+      backdrop-filter:blur(16px);
+    }
+
+    .chapter-label{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 12px;
+      border-radius:999px;
+      background:var(--blue-soft);
+      border:1px solid rgba(73,182,255,.18);
+      color:var(--blue2);
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:14px;
+    }
+
+    .chapter-card h2{
+      margin:0 0 10px;
+      font-size:24px;
+      line-height:1.15;
+      color:white;
+    }
+
+    .chapter-card p{
+      margin:0 0 18px;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.7;
+    }
+
+    .meta{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .meta-item{
+      padding:12px;
+      border-radius:14px;
+      background:rgba(255,255,255,0.03);
+      border:1px solid rgba(255,255,255,0.05);
+    }
+
+    .meta-k{
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--muted-2);
+      margin:0 0 6px;
+    }
+
+    .meta-v{
+      margin:0;
+      font-size:13px;
+      color:#e7efff;
+      font-weight:700;
+    }
+
+    .content-wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:28px 20px 80px;
+    }
+
+    .reader{
+      position:relative;
+      background:linear-gradient(180deg, rgba(11,18,32,.58), rgba(8,13,24,.72));
+      border:1px solid rgba(255,255,255,0.06);
+      border-radius:22px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      backdrop-filter:blur(4px);
+    }
+
+    .reader-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:18px 22px;
+      border-bottom:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+    }
+
+    .reader-top-left h3{
+      margin:0 0 4px;
+      font-size:18px;
+      color:#edf3ff;
+    }
+
+    .reader-top-left p{
+      margin:0;
+      color:var(--muted-2);
+      font-size:13px;
+    }
+
+    .reader-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:34px;
+      padding:0 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,0.03);
+      border:1px solid rgba(255,255,255,0.06);
+      color:#cfe0ff;
+      font-size:12px;
+      font-weight:700;
+      white-space:nowrap;
+    }
+
+    .reader-body{
+      padding:34px 26px 18px;
+      position:relative;
+    }
+
+    .story{
+      max-width:720px;
+      margin:0 auto;
+      position:relative;
+      z-index:2;
+    }
+
+    .lead{
+      font-size:19px;
+      line-height:1.9;
+      color:#ecf3ff;
+      margin:0 0 26px;
+      padding:18px 18px 18px 20px;
+      border-left:3px solid rgba(73,182,255,.44);
+      background:rgba(9, 18, 35, 0.68);
+      border-radius:0 14px 14px 0;
+      backdrop-filter:blur(4px);
+    }
+
+    .story p{
+      margin:0 0 22px;
+      color:#e4ecfb;
+      font-size:18px;
+      line-height:1.95;
+      letter-spacing:.01em;
+      text-shadow:0 1px 2px rgba(0,0,0,.4);
+    }
+
+    .story p strong{
+      color:#ffffff;
+      font-weight:700;
+    }
+
+    .story .quote{
+      margin:34px 0;
+      padding:20px 22px;
+      border-radius:18px;
+      background:linear-gradient(180deg, rgba(10,108,255,.12), rgba(73,182,255,.06));
+      border:1px solid rgba(73,182,255,.14);
+      color:#edf5ff;
+      font-size:19px;
+      line-height:1.7;
+      text-align:center;
+      box-shadow:0 12px 30px rgba(0,0,0,.18);
+      backdrop-filter:blur(4px);
+    }
+
+    .story .divider{
+      width:86px;
+      height:1px;
+      background:linear-gradient(90deg, transparent, rgba(73,182,255,.6), transparent);
+      margin:34px auto;
+    }
+
+    .reader-bottom{
+      padding:24px 26px 28px;
+      border-top:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .reader-note{
+      color:var(--muted-2);
+      font-size:13px;
+      margin:0;
+    }
+
+    .nav-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    @media (max-width: 900px){
+      .hero-grid{
+        grid-template-columns:1fr;
+      }
+
+      .hero-side{
+        justify-content:flex-start;
+      }
+
+      .chapter-card{
+        width:100%;
+        max-width:unset;
+      }
+    }
+
+    @media (max-width: 640px){
+      .topbar-inner{
+        padding:14px 14px;
+      }
+
+      .hero-inner{
+        padding:34px 14px 22px;
+      }
+
+      .content-wrap{
+        padding:20px 14px 60px;
+      }
+
+      .reader-top,
+      .reader-body,
+      .reader-bottom{
+        padding-left:16px;
+        padding-right:16px;
+      }
+
+      .reader-body{
+        padding-top:24px;
+      }
+
+      .hero-copy p,
+      .story p,
+      .lead{
+        font-size:16px;
+      }
+
+      .meta{
+        grid-template-columns:1fr;
+      }
+
+      .top-actions{
+        width:100%;
+      }
+
+      .btn{
+        width:100%;
+      }
+
+      .nav-actions{
+        width:100%;
+      }
+
+      .nav-actions .btn{
+        flex:1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="stars"></canvas>
+
+  <div class="page">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <div class="brand-badge">N</div>
+          <div>
+            <p class="brand-title">El Precio del Silencio</p>
+            <p class="brand-sub">Thriller político y empresarial</p>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <a href="../index.html" onclick="goBack(event, '../index.html')" class="btn btn-ghost">← Volver al inicio</a>
+          <a href="capitulo2.html" class="btn btn-primary">Siguiente capítulo →</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="crumb">Inicio / Capítulos / Capítulo 1</div>
+
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Capítulo 1</p>
+            <h1>La primera grieta</h1>
+            <p>
+                En Chile, los precios subían cada semana. La gente reclamaba, los canales debatían,
+                los ministros prometían revisar. Pero nadie imaginaba que detrás del alza había una
+                maquinaria perfecta, fría y antigua, diseñada para enriquecerse del silencio de millones
+            </p>
+          </div>
+
+          <div class="hero-side">
+            <aside class="chapter-card">
+              <div class="chapter-label">Lectura inicial</div>
+              <h2>Una historia que parece imposible</h2>
+              <p>
+                Un analista descubre que tres de los conglomerados más poderosos del país están
+                sincronizando precios, favores políticos y desaparición de pruebas. Lo que parecía
+                una sospecha económica pronto se convierte en una cacería.
+              </p>
+
+              <div class="meta">
+                <div class="meta-item">
+                  <p class="meta-k">Estado</p>
+                  <p class="meta-v">Gratis</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Género</p>
+                  <p class="meta-v">Suspenso</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Temporada</p>
+                  <p class="meta-v">1 de 17</p>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="content-wrap">
+      <article class="reader">
+        <div class="reader-top">
+          <div class="reader-top-left">
+            <h3>Capítulo 1: La primera grieta</h3>
+            <p>Lectura gratuita · Inicio de la historia</p>
+          </div>
+          <div class="reader-badge">Acceso abierto</div>
+        </div>
+
+        <div class="reader-body">
+          <div class="story">
+            <p class="lead">
+              A Tomás Rivas no le interesaba cambiar Chile. Lo único que quería era entender por qué
+              los números ya no obedecían las reglas. Durante doce años había trabajado revisando
+              matrices, informes, desvíos, proyecciones. Los números mentían menos que las personas.
+              Por eso, cuando comenzaron a hablarle de coincidencias, supo de inmediato que no eran coincidencias.
+            </p>
+
+            <p>
+              Todo empezó con algo ridículo.
+            </p>
+
+            <p>
+              Una tabla de Excel mal nombrada.
+            </p>
+
+            <p>
+              Tomás trabajaba como analista externo para una consultora que auditaba movimientos
+              de precios en distintas industrias. Era una pega gris, casi invisible. No salía en televisión,
+              no daba entrevistas, no tomaba decisiones. Solo revisaba datos. En teoría, su trabajo consistía
+              en encontrar anomalías técnicas: errores de carga, desfases entre sucursales, diferencias de IVA,
+              promociones mal reflejadas.
+            </p>
+
+            <p>
+              Pero aquella madrugada, mientras revisaba el histórico de tres cadenas de distribución energética,
+              notó algo que lo hizo enderezarse en la silla.
+            </p>
+
+            <div class="quote">Los precios no estaban reaccionando al mercado. Estaban moviéndose al mismo tiempo.</div>
+
+            <p>
+              No el mismo día.
+            </p>
+
+            <p>
+              No la misma semana.
+            </p>
+
+            <p>
+              El mismo minuto.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              Tomás pensó primero en automatización. Tal vez los sistemas estaban conectados a una fuente común.
+              Tal vez un proveedor externo entregaba recomendaciones. Tal vez la competencia solo estaba copiando
+              al líder del mercado con demasiada rapidez.
+            </p>
+
+            <p>
+              Pero mientras más profundizaba, menos sentido tenía.
+            </p>
+
+            <p>
+              Las tres empresas —Alimax, Enerxia y Borel— no solo subían sus precios en simultáneo. También
+              corregían sus descuentos el mismo día, retiraban promociones casi idénticas y activaban campañas
+              de “beneficio al consumidor” justo después de cada alza. Era como ver a tres actores distintos
+              leyendo un guion que nadie debía encontrar.
+            </p>
+
+            <p><strong>Eso fue lo primero que lo asustó.</strong></p>
+
+            <p>
+              Lo segundo llegó cuarenta minutos después.
+            </p>
+
+            <p>
+              Curioso, decidió revisar otros rubros. Farmacias. Distribución alimentaria. Logística.
+              Tomó muestras aleatorias, cruzó fechas, incorporó inflación, importaciones, tipo de cambio,
+              costo de transporte y variación regional. El patrón seguía ahí.
+            </p>
+
+            <p>
+              No idéntico.
+            </p>
+
+            <p>
+              Peor.
+            </p>
+
+            <p>
+              Más sofisticado.
+            </p>
+
+            <p>
+              Los precios subían con una elegancia matemática diseñada para no parecer delictiva. Nunca lo suficiente
+              como para encender una alarma inmediata. Nunca tan parecidos como para que un regulador mediocre pudiera
+              unir los puntos en una sola tarde. Pero al mirar varios años juntos, el mapa completo era brutal.
+            </p>
+
+            <div class="quote">Alguien había convertido la colusión en un sistema de precisión.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              A las 02:14 AM abrió un directorio secundario del servidor y encontró una carpeta escondida entre reportes
+              antiguos con un nombre absurdo: <strong>ajustes_históricos_v3_final_ok</strong>.
+            </p>
+
+            <p>
+              Sonrió por primera vez en horas.
+            </p>
+
+            <p>
+              Ese tipo de nombres solo existían cuando alguien quería esconder algo a plena vista.
+            </p>
+
+            <p>
+              Entró.
+            </p>
+
+            <p>
+              Había seis archivos PDF, tres planillas CSV, dos presentaciones internas y un documento de texto sin título.
+              Lo abrió primero por instinto.
+            </p>
+
+            <p>
+              El archivo estaba casi vacío.
+            </p>
+
+            <p>
+              Solo una frase.
+            </p>
+
+            <div class="quote">“Sincronizar tramo norte después de comité del jueves.”</div>
+
+            <p>
+              Tomás sintió una presión leve en el pecho.
+            </p>
+
+            <p>
+              “Tramo norte” no era un concepto financiero. Era territorial.
+            </p>
+
+            <p>
+              Abrió la primera planilla.
+            </p>
+
+            <p>
+              Columna A: región.
+              <br />
+              Columna B: empresa líder.
+              <br />
+              Columna C: fecha de ajuste.
+              <br />
+              Columna D: diferencia sugerida.
+              <br />
+              Columna E: validación política.
+            </p>
+
+            <p>
+              Se quedó inmóvil.
+            </p>
+
+            <p>
+              Lo leyó otra vez.
+            </p>
+
+            <p><strong>Validación política.</strong></p>
+
+            <div class="divider"></div>
+
+            <p>
+              No era solo una red empresarial.
+            </p>
+
+            <p>
+              Había más gente adentro.
+            </p>
+
+            <p>
+              Demasiada.
+            </p>
+
+            <p>
+              Abrió la segunda planilla. Esta vez aparecían códigos de reuniones, nombres abreviados,
+              referencias a campañas, aportes reservados, asesorías y una columna final titulada
+              “contención mediática”. No se mencionaban periodistas directamente, pero sí “contactos”,
+              “paneles afines” y “cobertura de contexto”.
+            </p>
+
+            <p>
+              Tomás cerró los ojos un segundo.
+            </p>
+
+            <p>
+              El silencio de su departamento se volvió hostil.
+            </p>
+
+            <p>
+              El refrigerador zumbaba al fondo. Afuera pasaba un auto solitario por la avenida.
+              Santiago seguía funcionando como si nada. Como si millones de personas no estuvieran
+              pagando, sin saberlo, un sobreprecio diseñado en directorios privados y aprobado por
+              manos que jamás aparecerían en un tribunal.
+            </p>
+
+            <p>
+              Quiso pensar con calma.
+            </p>
+
+            <p>
+              Quiso convencerse de que podía tratarse de simulaciones internas, escenarios de mercado,
+              hipótesis de consultoría.
+            </p>
+
+            <p>
+              Pero entonces abrió el PDF titulado <strong>resumen_comité_confidencial.pdf</strong>.
+            </p>
+
+            <div class="quote">“Evitar baja brusca para no quebrar disciplina.”</div>
+
+            <p>
+              Esa línea bastó.
+            </p>
+
+            <p>
+              No era un estudio.
+            </p>
+
+            <p>
+              No era teoría.
+            </p>
+
+            <p>
+              Era una instrucción.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              Tomás respiró hondo y tomó su celular. Pensó en llamar a alguien. A un amigo periodista,
+              a una fiscal que había conocido en la universidad, a su exjefa de auditoría. Pero la sola idea
+              de involucrar a otra persona antes de entender el alcance le parecía irresponsable.
+            </p>
+
+            <p>
+              Primero debía copiar todo.
+            </p>
+
+            <p>
+              Arrastró los archivos a una carpeta local.
+            </p>
+
+            <p>
+              La barra de progreso apareció.
+            </p>
+
+            <p>
+              6%.
+            </p>
+
+            <p>
+              19%.
+            </p>
+
+            <p>
+              31%.
+            </p>
+
+            <p>
+              47%.
+            </p>
+
+            <p>
+              Y entonces la pantalla se congeló.
+            </p>
+
+            <p>
+              No del todo.
+            </p>
+
+            <p>
+              Solo lo suficiente para que entendiera que alguien más estaba ahí.
+            </p>
+
+            <div class="quote">Transferencia cancelada por administrador.</div>
+
+            <p>
+              Tomás se inclinó hacia adelante.
+            </p>
+
+            <p>
+              Tecleó su clave.
+            </p>
+
+            <p>
+              Nada.
+            </p>
+
+            <p>
+              Intentó cerrar sesión.
+            </p>
+
+            <p>
+              Nada.
+            </p>
+
+            <p>
+              Luego apareció una ventana negra, pequeña, limpia, imposible de cerrar.
+            </p>
+
+            <div class="quote">No sigas abriendo puertas que no sabes cerrar.</div>
+
+            <p>
+              La garganta se le secó.
+            </p>
+
+            <p>
+              Miró de inmediato el ícono de conexión remota.
+            </p>
+
+            <p>
+              Desactivado.
+            </p>
+
+            <p>
+              Revisó los procesos abiertos.
+            </p>
+
+            <p>
+              Nada raro.
+            </p>
+
+            <p>
+              Pero el mensaje seguía ahí.
+            </p>
+
+            <p>
+              Sintió por primera vez algo que no era curiosidad ni sorpresa.
+            </p>
+
+            <p><strong>Miedo.</strong></p>
+
+            <div class="divider"></div>
+
+            <p>
+              Su celular vibró sobre el escritorio.
+            </p>
+
+            <p>
+              Número desconocido.
+            </p>
+
+            <p>
+              Se quedó mirándolo hasta que casi dejó de sonar. Respondió en el último segundo.
+            </p>
+
+            <p>
+              —¿Aló?
+            </p>
+
+            <p>
+              Al otro lado no hablaron de inmediato. Solo escuchó respiración. Una respiración
+              lenta, serena, sin apuro.
+            </p>
+
+            <p>
+              Luego una voz masculina, madura, sin acento identificable.
+            </p>
+
+            <div class="quote">“Si cierras ahora, mañana sigues teniendo trabajo.”</div>
+
+            <p>
+              Tomás no contestó.
+            </p>
+
+            <p>
+              La voz continuó.
+            </p>
+
+            <div class="quote">“Si copias eso, mañana vas a necesitar algo más que trabajo.”</div>
+
+            <p>
+              La llamada se cortó.
+            </p>
+
+            <p>
+              Sintió un vacío helado en el estómago.
+            </p>
+
+            <p>
+              Se paró y caminó hacia la cocina solo para comprobar que podía seguir moviéndose.
+              Se sirvió agua. La mitad cayó fuera del vaso porque le temblaba la mano.
+            </p>
+
+            <p>
+              Desde ahí vio su reflejo en la ventana. Un hombre de treinta y ocho años, ojeroso,
+              solo, despierto a las tres de la mañana, con información que podía derribar empresas,
+              carreras políticas y quizás algo peor.
+            </p>
+
+            <p>
+              Quiso pensar que estaban exagerando.
+            </p>
+
+            <p>
+              Quiso creer que el llamado era apenas una maniobra para asustarlo.
+            </p>
+
+            <p>
+              Hasta que miró hacia la calle.
+            </p>
+
+            <p>
+              Un sedán oscuro estaba estacionado frente a su edificio.
+            </p>
+
+            <p>
+              Motor encendido.
+            </p>
+
+            <p>
+              Luces apagadas.
+            </p>
+
+            <p>
+              Nadie salía.
+            </p>
+
+            <p>
+              Nadie subía.
+            </p>
+
+            <p>
+              Solo estaba ahí.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              Volvió al computador con la sensación de que el aire del departamento se había vuelto más pesado.
+              Los archivos seguían abiertos. La carpeta seguía en pantalla. Y de pronto entendió algo que hasta
+              ese momento no había querido aceptar:
+            </p>
+
+            <p>
+              si podían ver lo que estaba haciendo en tiempo real, entonces no se trataba de una empresa protegiendo
+              secretos comerciales.
+            </p>
+
+            <p>
+              Se trataba de una red con acceso a infraestructura, monitoreo y capacidad de respuesta inmediata.
+            </p>
+
+            <p><strong>Una red acostumbrada a que nadie la contradijera.</strong></p>
+
+            <p>
+              Tomás hizo lo único que su miedo no alcanzó a impedirle.
+            </p>
+
+            <p>
+              Tomó capturas.
+            </p>
+
+            <p>
+              No de todo.
+            </p>
+
+            <p>
+              Solo de lo necesario.
+            </p>
+
+            <p>
+              Nombres de columnas. Fechas. Códigos. Una página del PDF. La frase del comité.
+              La tabla con validación política. El mensaje negro de advertencia.
+            </p>
+
+            <p>
+              Las guardó en un pendrive que mantenía colgando en su llavero desde hace años,
+              uno viejo, pequeño, casi ridículo. Después lo metió dentro de una taza vacía al fondo
+              del mueble de la cocina, como si ocultar algo infantilmente pudiera protegerlo.
+            </p>
+
+            <p>
+              Sabía que no bastaba.
+            </p>
+
+            <p>
+              Sabía que, si habían decidido llamarlo, ya no estaba mirando una historia.
+            </p>
+
+            <p>
+              Ya estaba dentro de ella.
+            </p>
+
+            <div class="quote">Y las historias grandes no empiezan cuando uno encuentra la verdad. Empiezan cuando la verdad se da cuenta de que fue encontrada.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              A las 03:27 AM el sistema cerró su sesión por “mantenimiento no programado”.
+            </p>
+
+            <p>
+              Las carpetas desaparecieron.
+            </p>
+
+            <p>
+              El acceso al servidor cayó.
+            </p>
+
+            <p>
+              Y cinco minutos después recibió un correo corporativo con asunto:
+              <strong>Reasignación de funciones internas</strong>.
+            </p>
+
+            <p>
+              Lo leyó completo.
+            </p>
+
+            <p>
+              Desde el día siguiente dejaba de participar en auditorías de precios sensibles.
+              Su acceso a bases históricas sería limitado “por actualización de protocolos”.
+              Cualquier duda debía canalizarla por recursos humanos.
+            </p>
+
+            <p>
+              Lo más aterrador no era el contenido.
+            </p>
+
+            <p>
+              Era la velocidad.
+            </p>
+
+            <p>
+              Todo ya estaba preparado.
+            </p>
+
+            <p>
+              Como si hubieran esperado durante años que alguien, tarde o temprano, terminara encontrando la grieta.
+            </p>
+
+            <p>
+              Tomás volvió a mirar por la ventana.
+            </p>
+
+            <p>
+              El auto seguía abajo.
+            </p>
+
+            <p>
+              Esta vez distinguió una luz roja breve en el interior. Como el destello mínimo de un teléfono
+              levantado hacia su departamento.
+            </p>
+
+            <p>
+              Le recorrió un escalofrío completo.
+            </p>
+
+            <p>
+              Corrió las cortinas.
+            </p>
+
+            <p>
+              Y en la oscuridad del living, con el computador todavía encendido detrás de él, entendió que su vida
+              acababa de dividirse en dos partes:
+            </p>
+
+            <p>
+              la de antes de esa noche,
+            </p>
+
+            <p>
+              y la que vendría después.
+            </p>
+
+            <p><strong>La parte en la que ya no podía hacerse el ciego.</strong></p>
+
+            <p>
+              Se sentó de nuevo.
+            </p>
+
+            <p>
+              Abrió un documento en blanco.
+            </p>
+
+            <p>
+              Escribió una línea:
+            </p>
+
+            <div class="quote">“Si algo me pasa, empiecen por las empresas que todos dicen que son intocables.”</div>
+
+            <p>
+              Puso un punto final.
+            </p>
+
+            <p>
+              Iba a escribir el segundo nombre cuando todas las luces del departamento se apagaron al mismo tiempo.
+            </p>
+
+            <p>
+              El refrigerador murió.
+            </p>
+
+            <p>
+              El router cayó.
+            </p>
+
+            <p>
+              El edificio completo quedó en silencio.
+            </p>
+
+            <p>
+              Solo el notebook siguió encendido, alimentado por batería, iluminando el living con una luz azul débil.
+            </p>
+
+            <p>
+              Entonces la pantalla cambió sola.
+            </p>
+
+            <p>
+              Ya no estaba su documento.
+            </p>
+
+            <p>
+              Ya no estaban sus archivos.
+            </p>
+
+            <p>
+              Solo había una imagen en vivo captada desde la calle.
+            </p>
+
+            <p>
+              Su edificio.
+            </p>
+
+            <p>
+              Su ventana.
+            </p>
+
+            <p>
+              Y un pequeño punto rojo fijo exactamente sobre ella.
+            </p>
+
+            <p><strong>Alguien no solo lo estaba viendo. Ya estaba abajo.</strong></p>
+          </div>
+        </div>
+
+        <div class="reader-bottom">
+          <p class="reader-note">
+            Continúa la historia para descubrir quién controla la red y por qué Tomás fue marcado desde la primera noche.
+          </p>
+
+          <div class="nav-actions">
+            <a href="../index.html" onclick="goBack(event, '../index.html')" class="btn btn-ghost">← Volver</a>
+            <a href="capitulo2.html" class="btn btn-primary">Leer capítulo 2 →</a>
+          </div>
+        </div>
+      </article>
+    </main>
+  </div>
+
+  <script>
+    function goBack(event, fallbackUrl){
+      event.preventDefault();
+
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.location.href = fallbackUrl;
+      }
+    }
+
+    const canvas = document.getElementById("stars");
+    const ctx = canvas.getContext("2d");
+    let stars = [];
+
+    function resize(){
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      createStars();
+    }
+
+    function createStars(){
+      stars = [];
+      const amount = Math.floor((canvas.width * canvas.height) / 14000);
+      for(let i = 0; i < amount; i++){
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.6 + 0.3,
+          speed: Math.random() * 0.35 + 0.08,
+          alpha: Math.random() * 0.7 + 0.2
+        });
+      }
+    }
+
+    function animate(){
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for(const s of stars){
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        s.y += s.speed;
+
+        if(s.y > canvas.height){
+          s.y = -2;
+          s.x = Math.random() * canvas.width;
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener("resize", resize);
+    resize();
+    animate();
+  </script>
+</body>
+</html>
