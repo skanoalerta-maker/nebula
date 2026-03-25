@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capítulo 1 | Salvador Allende</title>
+  <meta name="description" content="Capítulo 1: El inicio de un cambio en Chile." />
+
+  <style>
+    :root{
+      --bg:#05080f;
+      --bg2:#0b1220;
+      --card:rgba(12,18,32,0.82);
+      --line:rgba(255,255,255,0.08);
+      --text:#f5f8ff;
+      --muted:#aebad1;
+      --blue:#0A6CFF;
+    }
+
+    *{margin:0;padding:0;box-sizing:border-box;}
+
+    body{
+      background:linear-gradient(180deg,var(--bg),var(--bg2));
+      color:var(--text);
+      font-family:Arial, sans-serif;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:15px;
+      border-bottom:1px solid var(--line);
+    }
+
+    .back-btn{
+      background:none;
+      border:none;
+      color:var(--text);
+      font-size:16px;
+      cursor:pointer;
+    }
+
+    .logo{
+      font-weight:bold;
+      font-size:18px;
+    }
+
+    .hero{
+      padding:20px;
+      text-align:center;
+    }
+
+    .hero img{
+      width:100%;
+      max-width:400px;
+      border-radius:12px;
+    }
+
+    .chapter-card{
+      padding:20px;
+      text-align:center;
+    }
+
+    .reader{
+      padding:20px;
+      line-height:1.6;
+    }
+
+    .story{
+      max-width:700px;
+      margin:auto;
+    }
+
+    .chapter-navigation{
+      display:flex;
+      justify-content:space-between;
+      padding:20px;
+    }
+
+    button{
+      background:var(--blue);
+      border:none;
+      padding:10px 16px;
+      border-radius:8px;
+      color:white;
+      cursor:pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <button class="back-btn" onclick="goToChapter('INDEX')">← Atrás</button>
+    <div class="logo">NÉBULA</div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <img src="../allende_portada_nebula.png" alt="Salvador Allende">
+  </div>
+
+  <!-- INFO -->
+  <div class="chapter-card">
+    <h1>Salvador Allende</h1>
+    <p>Capítulo 1: El inicio de un cambio</p>
+  </div>
+
+  <!-- LECTOR -->
+  <div class="reader">
+    <div class="story">
+
+      <p>
+        Chile, 1970.  
+        El país estaba dividido, pero también lleno de esperanza.
+      </p>
+
+      <p>
+        En las calles, la gente hablaba de cambios. De justicia. De un nuevo camino.
+        Por primera vez, un proyecto político prometía transformar la estructura del país desde dentro.
+      </p>
+
+      <p>
+        :contentReference[oaicite:0]{index=0} no era un desconocido.  
+        Había intentado llegar a la presidencia varias veces, pero esta vez era distinto.
+      </p>
+
+      <p>
+        La llamada “vía chilena al socialismo” comenzaba a tomar forma, no con armas,
+        sino con votos.
+      </p>
+
+      <p>
+        Pero detrás de los discursos, de los aplausos y de las banderas,
+        ya se movían fuerzas invisibles.
+      </p>
+
+      <p>
+        Empresarios, políticos y actores internacionales observaban con atención.
+        Algunos con esperanza… otros con miedo.
+      </p>
+
+      <p>
+        Nadie lo decía en voz alta,
+        pero el país estaba entrando en una tensión silenciosa.
+      </p>
+
+      <p>
+        Y lo que comenzaba como un cambio,
+        pronto se convertiría en un conflicto que marcaría la historia para siempre.
+      </p>
+
+    </div>
+  </div>
+
+  <!-- NAVEGACIÓN -->
+  <div class="chapter-navigation">
+    <button onclick="goToChapter('INDEX')">← Volver</button>
+    <button onclick="goToChapter(2)">Continuar →</button>
+  </div>
+
+  <!-- SCRIPT -->
+  <script>
+    function goToChapter(target) {
+      const base = "allende";
+
+      if (target === "INDEX") {
+        window.location.href = "/nebula/index.html";
+        return;
+      }
+
+      window.location.href = `/${base}/capitulo${target}.html`;
+    }
+  </script>
+
+</body>
+</html>
