@@ -319,5 +319,110 @@ window.NEBULA_NOVELS = {
         description: "La rutina deja de ser confiable cuando cada objeto parece contar una versión distinta de lo ocurrido."
       }
     ]
+  },
+
+  "bajo-la-misma-lluvia": {
+    title: "Bajo la misma lluvia",
+    description: "Dos vidas marcadas por heridas distintas vuelven a cruzarse en el peor momento posible. Bajo la lluvia, lo que parecía casual empieza a sentirse inevitable.",
+    cover: "../assets/covers/bajo-la-misma-lluvia.jpg",
+    baseFolder: "romance/bajo-la-misma-lluvia",
+    defaultSeason: "temporada1",
+    defaultSeasonLabel: "Temporada 1",
+    freeChapters: 3,
+    price: "$1.500 CLP",
+    tags: ["Romance", "Drama", "Emocional"],
+    chapters: [
+      {
+        num: 1,
+        season: "temporada1",
+        seasonLabel: "Temporada 1",
+        title: "La lluvia de esa tarde",
+        description: "Un encuentro inesperado bajo la lluvia despierta emociones que ambos creían enterradas."
+      },
+      {
+        num: 2,
+        season: "temporada1",
+        seasonLabel: "Temporada 1",
+        title: "Lo que no dijimos",
+        description: "Las palabras no dichas pesan más que cualquier silencio cuando el pasado vuelve a tocar la puerta."
+      },
+      {
+        num: 3,
+        season: "temporada1",
+        seasonLabel: "Temporada 1",
+        title: "Otra vez tú",
+        description: "El destino insiste en cruzarlos justo cuando intentar olvidar parecía la única salida."
+      }
+    ]
+  },
+
+  "golpe-de-estado": {
+    title: "Golpe de Estado",
+    description: "Una historia política, social y humana sobre la fractura de un país. Poder, miedo, convicción y ruptura en un capítulo que cambia el destino de todos.",
+    cover: "../assets/covers/golpe_estado_nebula.png",
+    baseFolder: "historia/golpe-de-estado",
+    defaultSeason: "temporada1",
+    defaultSeasonLabel: "Temporada 1",
+    freeChapters: 3,
+    price: "$1.500 CLP",
+    tags: ["Historia", "Política", "Drama"],
+    chapters: [
+      {
+        num: 1,
+        season: "temporada1",
+        seasonLabel: "Temporada 1",
+        title: "La antesala",
+        description: "La tensión política y social se vuelve imposible de contener mientras el país entra en cuenta regresiva."
+      },
+      {
+        num: 2,
+        season: "temporada1",
+        seasonLabel: "Temporada 1",
+        title: "La ruptura",
+        description: "Las alianzas se quiebran y el orden institucional empieza a ceder ante la fuerza."
+      },
+      {
+        num: 3,
+        season: "temporada1",
+        seasonLabel: "Temporada 1",
+        title: "El día que cambió todo",
+        description: "La historia da un giro irreversible y millones entienden que nada volverá a ser igual."
+      }
+    ]
+  },
+
+  "pinochet": {
+    title: "Pinochet",
+    description: "Una novela histórica intensa sobre poder, control, decisiones militares y el impacto humano de un periodo que marcó para siempre la historia de Chile.",
+    cover: "../assets/covers/pinochet_nebula_portada.png",
+    baseFolder: "historia/pinochet",
+    defaultSeason: "temporada1",
+    defaultSeasonLabel: "Temporada 1",
+    freeChapters: 3,
+    price: "$1.500 CLP",
+    tags: ["Historia", "Militar", "Política"],
+    chapters: [
+      {
+        num: 1,
+        season: "temporada1",
+        seasonLabel: "Temporada 1",
+        title: "Ascenso",
+        description: "Un nombre empieza a concentrar poder dentro de una estructura que ya no confía en sus propios límites."
+      },
+      {
+        num: 2,
+        season: "temporada1",
+        seasonLabel: "Temporada 1",
+        title: "Control",
+        description: "La autoridad se impone mientras el miedo pasa a ser parte cotidiana del país."
+      },
+      {
+        num: 3,
+        season: "temporada1",
+        seasonLabel: "Temporada 1",
+        title: "La marca del poder",
+        description: "Las decisiones tomadas desde arriba dejan cicatrices que seguirán vivas por generaciones."
+      }
+    ]
   }
 };
