@@ -1,1 +1,1340 @@
-advvascasc
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capítulo 1 | Ya habías estado ahí</title>
+  <meta
+    name="description"
+    content="Capítulo 1 de Ya habías estado ahí: La puerta estaba abierta antes de que él recordara haber vivido esa noche."
+  />
+
+  <style>
+    :root{
+      --bg:#05080f;
+      --bg2:#0b1220;
+      --card:rgba(12,18,32,0.82);
+      --line:rgba(255,255,255,0.08);
+      --line-strong:rgba(73,182,255,.24);
+      --text:#f5f8ff;
+      --muted:#aebad1;
+      --muted-2:#7f90ae;
+      --blue:#0A6CFF;
+      --blue2:#49b6ff;
+      --blue-soft:rgba(73,182,255,.14);
+      --shadow:0 24px 60px rgba(0,0,0,.45);
+      --radius:22px;
+      --max:860px;
+    }
+
+    *{
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      color:var(--text);
+      background:#04070d;
+      line-height:1.8;
+      position:relative;
+      overflow-x:hidden;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    #stars{
+      position:fixed;
+      inset:0;
+      width:100%;
+      height:100%;
+      z-index:0;
+      background:
+        radial-gradient(circle at top left, rgba(10,108,255,.12), transparent 24%),
+        radial-gradient(circle at top right, rgba(73,182,255,.08), transparent 20%),
+        linear-gradient(180deg, #04070d 0%, #08101c 45%, #05080f 100%);
+    }
+
+    .page{
+      min-height:100vh;
+      position:relative;
+      z-index:1;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:30;
+      backdrop-filter:blur(14px);
+      background:rgba(5,8,15,.72);
+      border-bottom:1px solid var(--line);
+    }
+
+    .topbar-inner{
+      max-width:1100px;
+      margin:0 auto;
+      padding:16px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .brand-badge{
+      width:38px;
+      height:38px;
+      border-radius:12px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg, rgba(10,108,255,.22), rgba(73,182,255,.08));
+      border:1px solid var(--line-strong);
+      box-shadow:0 0 24px rgba(10,108,255,.12);
+      font-weight:700;
+      color:var(--blue2);
+      flex:0 0 auto;
+    }
+
+    .brand-title{
+      font-size:14px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:#dfe9ff;
+      margin:0 0 2px;
+    }
+
+    .brand-sub{
+      font-size:12px;
+      color:var(--muted-2);
+      margin:0;
+    }
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height:44px;
+      padding:0 18px;
+      border-radius:12px;
+      font-size:14px;
+      font-weight:700;
+      transition:transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+      border:1px solid transparent;
+      cursor:pointer;
+    }
+
+    .btn:hover{
+      transform:translateY(-1px);
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg, var(--blue) 0%, #0d7eff 100%);
+      color:white;
+      box-shadow:0 12px 28px rgba(10,108,255,.28);
+    }
+
+    .btn-primary:hover{
+      background:linear-gradient(135deg, #0c62e0 0%, #0a6cef 100%);
+    }
+
+    .btn-ghost{
+      background:rgba(255,255,255,.03);
+      border-color:var(--line);
+      color:#dbe8ff;
+    }
+
+    .btn-ghost:hover{
+      background:rgba(255,255,255,.06);
+      border-color:var(--line-strong);
+    }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      border-bottom:1px solid rgba(255,255,255,.04);
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(180deg, rgba(5,8,15,.58) 0%, rgba(5,8,15,.86) 80%, rgba(5,8,15,1) 100%),
+        url("../assets/temporada1.jpg");
+      background-size:cover;
+      background-position:center;
+      opacity:.28;
+      filter:saturate(.9) contrast(1.03);
+    }
+
+    .hero-inner{
+      position:relative;
+      z-index:1;
+      max-width:1100px;
+      margin:0 auto;
+      padding:56px 20px 34px;
+    }
+
+    .crumb{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.06);
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:18px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:28px;
+      align-items:end;
+    }
+
+    .hero-copy h1{
+      margin:0 0 12px;
+      font-size:clamp(34px, 6vw, 64px);
+      line-height:1.02;
+      letter-spacing:.02em;
+      color:white;
+      text-shadow:0 0 22px rgba(10,108,255,.18);
+    }
+
+    .eyebrow{
+      margin:0 0 14px;
+      color:var(--blue2);
+      font-weight:700;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      font-size:12px;
+    }
+
+    .hero-copy p{
+      margin:0;
+      max-width:700px;
+      color:#d4def3;
+      font-size:18px;
+      line-height:1.75;
+    }
+
+    .hero-side{
+      display:flex;
+      justify-content:flex-end;
+    }
+
+    .chapter-card{
+      width:min(100%, 360px);
+      background:linear-gradient(180deg, rgba(12,18,32,.75), rgba(9,13,24,.88));
+      border:1px solid rgba(73,182,255,.18);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:22px;
+      backdrop-filter:blur(16px);
+    }
+
+    .chapter-label{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 12px;
+      border-radius:999px;
+      background:var(--blue-soft);
+      border:1px solid rgba(73,182,255,.18);
+      color:var(--blue2);
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:14px;
+    }
+
+    .chapter-card h2{
+      margin:0 0 10px;
+      font-size:24px;
+      line-height:1.15;
+      color:white;
+    }
+
+    .chapter-card p{
+      margin:0 0 18px;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.7;
+    }
+
+    .meta{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .meta-item{
+      padding:12px;
+      border-radius:14px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.05);
+    }
+
+    .meta-k{
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--muted-2);
+      margin:0 0 6px;
+    }
+
+    .meta-v{
+      margin:0;
+      font-size:13px;
+      color:#e7efff;
+      font-weight:700;
+    }
+
+    .content-wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:28px 20px 80px;
+    }
+
+    .reader{
+      position:relative;
+      background:linear-gradient(180deg, rgba(11,18,32,.58), rgba(8,13,24,.72));
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:22px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      backdrop-filter:blur(4px);
+    }
+
+    .reader-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:18px 22px;
+      border-bottom:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+    }
+
+    .reader-top-left h3{
+      margin:0 0 4px;
+      font-size:18px;
+      color:#edf3ff;
+    }
+
+    .reader-top-left p{
+      margin:0;
+      color:var(--muted-2);
+      font-size:13px;
+    }
+
+    .reader-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:34px;
+      padding:0 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.06);
+      color:#cfe0ff;
+      font-size:12px;
+      font-weight:700;
+      white-space:nowrap;
+    }
+
+    .reader-body{
+      padding:34px 26px 18px;
+      position:relative;
+    }
+
+    .story{
+      max-width:720px;
+      margin:0 auto;
+      position:relative;
+      z-index:2;
+    }
+
+    .lead{
+      font-size:19px;
+      line-height:1.9;
+      color:#ecf3ff;
+      margin:0 0 26px;
+      padding:18px 18px 18px 20px;
+      border-left:3px solid rgba(73,182,255,.44);
+      background:rgba(9,18,35,.68);
+      border-radius:0 14px 14px 0;
+      backdrop-filter:blur(4px);
+    }
+
+    .story p{
+      margin:0 0 22px;
+      color:#e4ecfb;
+      font-size:18px;
+      line-height:1.95;
+      letter-spacing:.01em;
+      text-shadow:0 1px 2px rgba(0,0,0,.4);
+    }
+
+    .story p strong{
+      color:#ffffff;
+      font-weight:700;
+    }
+
+    .story .quote{
+      margin:34px 0;
+      padding:20px 22px;
+      border-radius:18px;
+      background:linear-gradient(180deg, rgba(10,108,255,.12), rgba(73,182,255,.06));
+      border:1px solid rgba(73,182,255,.14);
+      color:#edf5ff;
+      font-size:19px;
+      line-height:1.7;
+      text-align:center;
+      box-shadow:0 12px 30px rgba(0,0,0,.18);
+      backdrop-filter:blur(4px);
+    }
+
+    .story .divider{
+      width:86px;
+      height:1px;
+      background:linear-gradient(90deg, transparent, rgba(73,182,255,.6), transparent);
+      margin:34px auto;
+    }
+
+    .reader-bottom{
+      padding:24px 26px 28px;
+      border-top:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .reader-note{
+      color:var(--muted-2);
+      font-size:13px;
+      margin:0;
+    }
+
+    .nav-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    @media (max-width: 900px){
+      .hero-grid{
+        grid-template-columns:1fr;
+      }
+
+      .hero-side{
+        justify-content:flex-start;
+      }
+
+      .chapter-card{
+        width:100%;
+        max-width:unset;
+      }
+    }
+
+    @media (max-width: 640px){
+      .topbar-inner{
+        padding:14px 14px;
+      }
+
+      .hero-inner{
+        padding:34px 14px 22px;
+      }
+
+      .content-wrap{
+        padding:20px 14px 60px;
+      }
+
+      .reader-top,
+      .reader-body,
+      .reader-bottom{
+        padding-left:16px;
+        padding-right:16px;
+      }
+
+      .reader-body{
+        padding-top:24px;
+      }
+
+      .hero-copy p,
+      .story p,
+      .lead{
+        font-size:16px;
+      }
+
+      .meta{
+        grid-template-columns:1fr;
+      }
+
+      .top-actions{
+        width:100%;
+      }
+
+      .btn{
+        width:100%;
+      }
+
+      .nav-actions{
+        width:100%;
+      }
+
+      .nav-actions .btn{
+        flex:1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="stars"></canvas>
+
+  <div class="page">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <div class="brand-badge">N</div>
+          <div>
+            <p class="brand-title">Ya habías estado ahí</p>
+            <p class="brand-sub">Thriller psicológico y misterio</p>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <a href="../index.html" class="btn btn-ghost">← Volver</a>
+          <a href="capitulo2.html" class="btn btn-primary">Siguiente capítulo →</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="crumb">Inicio / Capítulos / Capítulo 1</div>
+
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Capítulo 1</p>
+            <h1>La casa que lo recordaba</h1>
+            <p>
+              Adrián nunca había estado en esa calle. Nunca en ese barrio. Nunca frente a esa puerta.
+              Y, sin embargo, cuando la vio entreabierta bajo la luz amarilla del interior,
+              sintió algo peor que miedo: la certeza de que una parte de él ya sabía exactamente lo que había adentro.
+            </p>
+          </div>
+
+          <div class="hero-side">
+            <aside class="chapter-card">
+              <div class="chapter-label">Todo empieza con una puerta abierta</div>
+              <h2>No hay nada más peligroso que entrar a un lugar que parece esperarte.</h2>
+              <p>
+                Una noche cualquiera, una dirección enviada desde un número desconocido y una casa
+                que despierta recuerdos imposibles. Lo que Adrián está a punto de descubrir no es solo un secreto.
+                Es la sospecha de que su vida ya fue escrita antes... y borrada después.
+              </p>
+
+              <div class="meta">
+                <div class="meta-item">
+                  <p class="meta-k">Estado</p>
+                  <p class="meta-v">Gratis</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Género</p>
+                  <p class="meta-v">Misterio</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Temporada</p>
+                  <p class="meta-v">1 de 12</p>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="content-wrap">
+      <article class="reader">
+        <div class="reader-top">
+          <div class="reader-top-left">
+            <h3>Capítulo 1: La casa que lo recordaba</h3>
+            <p>Lectura gratuita · La primera grieta en una memoria que no debería existir</p>
+          </div>
+          <div class="reader-badge">Acceso abierto</div>
+        </div>
+
+        <div class="reader-body">
+          <div class="story">
+            <p class="lead">
+              El mensaje llegó a las 2:13 de la madrugada. No tenía nombre. No tenía explicación.
+              Solo una dirección, una hora y una frase que a Adrián le dejó el corazón helado
+              antes incluso de entender por qué: <strong>“Si quieres recordar, entra solo.”</strong>
+              Durante casi diez minutos miró la pantalla sin moverse. No conocía esa calle.
+              No reconocía el número. Y, sin embargo, al leerlo, sintió la punzada íntima y brutal
+              de algo que no parecía una pista, sino una devolución.
+            </p>
+
+            <p>
+              El barrio quedaba al otro lado de la ciudad.
+            </p>
+
+            <p>
+              Viejas casas.
+            </p>
+
+            <p>
+              Árboles oscuros.
+            </p>
+
+            <p>
+              Calles demasiado tranquilas para esa hora.
+            </p>
+
+            <p>
+              Llegó a las 3:01.
+            </p>
+
+            <p>
+              El portón exterior estaba cerrado.
+            </p>
+
+            <p>
+              Pero la puerta principal no.
+            </p>
+
+            <p>
+              Estaba apenas abierta.
+            </p>
+
+            <p>
+              Lo justo para dejar escapar una línea de luz cálida sobre el piso húmedo del antejardín.
+            </p>
+
+            <p>
+              Adrián se quedó inmóvil frente a ella.
+            </p>
+
+            <p>
+              Podía oír su propia respiración.
+            </p>
+
+            <p>
+              Podía oír un perro ladrando a lo lejos.
+            </p>
+
+            <p>
+              Podía oír, por encima de todo, esa otra cosa:
+            </p>
+
+            <p><strong>la certeza incomprensible de que esa escena no le era nueva.</strong></p>
+
+            <div class="quote">El miedo vino después. Primero llegó el reconocimiento.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              No debería haber entrado.
+            </p>
+
+            <p>
+              Lo supo antes de tocar la puerta.
+            </p>
+
+            <p>
+              Lo supo cuando vio el reflejo de la luz sobre la madera del piso.
+            </p>
+
+            <p>
+              Lo supo cuando sintió el olor:
+            </p>
+
+            <p>
+              polvo limpio,
+            </p>
+
+            <p>
+              café antiguo,
+            </p>
+
+            <p>
+              humedad de casa cerrada demasiado tiempo.
+            </p>
+
+            <p>
+              Un olor que no podía conocer.
+            </p>
+
+            <p>
+              Y que, sin embargo, le cayó encima como un recuerdo de infancia.
+            </p>
+
+            <p>
+              Empujó la puerta.
+            </p>
+
+            <p>
+              No chirrió.
+            </p>
+
+            <p>
+              Se abrió con una suavidad que resultó más perturbadora que cualquier ruido.
+            </p>
+
+            <p>
+              Como si alguien la hubiera dejado así no para que forzaran entrada,
+              sino para que él no tuviera excusas.
+            </p>
+
+            <p>
+              El living era pequeño.
+            </p>
+
+            <p>
+              Oscuro.
+            </p>
+
+            <p>
+              Ordenado con una minuciosidad inquietante.
+            </p>
+
+            <p>
+              Un sillón individual.
+            </p>
+
+            <p>
+              Una mesa baja.
+            </p>
+
+            <p>
+              Una lámpara encendida en la habitación del fondo.
+            </p>
+
+            <p>
+              Un cenicero vacío.
+            </p>
+
+            <p>
+              Y un par de zapatos negros perfectamente alineados junto a un mueble de madera.
+            </p>
+
+            <p>
+              Adrián miró esos zapatos demasiado tiempo.
+            </p>
+
+            <p>
+              No por lo que eran.
+            </p>
+
+            <p>
+              Sino por la brutal sensación de haberlos visto antes.
+            </p>
+
+            <p>
+              En esa misma posición.
+            </p>
+
+            <p>
+              Junto a ese mismo mueble.
+            </p>
+
+            <p>
+              Bajo esa misma luz.
+            </p>
+
+            <div class="quote">A veces la memoria no vuelve como una imagen. Vuelve como una molestia exacta en el cuerpo.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Dio un paso adentro.
+            </p>
+
+            <p>
+              Luego otro.
+            </p>
+
+            <p>
+              Cerró la puerta tras de sí casi por reflejo y enseguida se arrepintió.
+            </p>
+
+            <p>
+              El clic del pestillo sonó demasiado definitivo.
+            </p>
+
+            <p>
+              Demasiado parecido a una decisión tomada por alguien que ya no podía retroceder.
+            </p>
+
+            <p>
+              —¿Hola? —dijo.
+            </p>
+
+            <p>
+              Su voz salió baja.
+            </p>
+
+            <p>
+              Menos firme de lo que habría querido.
+            </p>
+
+            <p>
+              No hubo respuesta.
+            </p>
+
+            <p>
+              Pero algo cambió.
+            </p>
+
+            <p>
+              No en la casa.
+            </p>
+
+            <p>
+              En él.
+            </p>
+
+            <p>
+              Como si el simple hecho de hablar hubiera activado un mecanismo invisible.
+            </p>
+
+            <p>
+              Como si la casa, al oírlo, hubiera confirmado que era él.
+            </p>
+
+            <p>
+              Avanzó hacia el pasillo.
+            </p>
+
+            <p>
+              La lámpara del fondo derramaba una luz amarilla, cálida, doméstica.
+            </p>
+
+            <p>
+              Y justamente por eso resultaba insoportable.
+            </p>
+
+            <p>
+              Nada de ese lugar parecía una trampa evidente.
+            </p>
+
+            <p>
+              No había sangre.
+            </p>
+
+            <p>
+              No había desorden.
+            </p>
+
+            <p>
+              No había una amenaza visible.
+            </p>
+
+            <p>
+              Solo una normalidad demasiado precisa.
+            </p>
+
+            <p><strong>Como si alguien hubiera reconstruido una escena para que él la reconociera antes de entenderla.</strong></p>
+
+            <div class="divider"></div>
+
+            <p>
+              Entonces vio la fotografía.
+            </p>
+
+            <p>
+              Estaba sobre una cómoda baja, casi al final del pasillo.
+            </p>
+
+            <p>
+              Enmarcada.
+            </p>
+
+            <p>
+              Limpia.
+            </p>
+
+            <p>
+              Puesta a la altura exacta para que nadie pudiera pasar sin verla.
+            </p>
+
+            <p>
+              Adrián se acercó.
+            </p>
+
+            <p>
+              Y sintió que el mundo se le vaciaba por dentro.
+            </p>
+
+            <p>
+              En la foto aparecía un niño de unos ocho años.
+            </p>
+
+            <p>
+              Delgado.
+            </p>
+
+            <p>
+              Serio.
+            </p>
+
+            <p>
+              Parado frente a la misma casa.
+            </p>
+
+            <p>
+              Frente a la misma puerta.
+            </p>
+
+            <p>
+              Bajo la misma luz.
+            </p>
+
+            <p>
+              El niño tenía una mano apoyada en el marco.
+            </p>
+
+            <p>
+              Y en la otra sostenía un globo rojo.
+            </p>
+
+            <p>
+              Adrián no respiró durante un segundo entero.
+            </p>
+
+            <p>
+              Porque no necesitó acercarse más para saberlo.
+            </p>
+
+            <p>
+              No necesitó mirar dos veces.
+            </p>
+
+            <p>
+              No necesitó dudar.
+            </p>
+
+            <p><strong>El niño era él.</strong></p>
+
+            <div class="quote">No fue el parecido lo que lo destruyó. Fue la evidencia de que esa foto había sido tomada en un lugar que juraba no haber visto jamás.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Retrocedió un paso.
+            </p>
+
+            <p>
+              Luego otro.
+            </p>
+
+            <p>
+              El corazón le golpeaba en la garganta.
+            </p>
+
+            <p>
+              —No...
+            </p>
+
+            <p>
+              La palabra murió sola.
+            </p>
+
+            <p>
+              Porque de inmediato lo entendió:
+            </p>
+
+            <p>
+              no estaba negando la foto.
+            </p>
+
+            <p>
+              Estaba negando lo que abría.
+            </p>
+
+            <p>
+              La posibilidad de que le faltara una parte entera de su vida.
+            </p>
+
+            <p>
+              La posibilidad de que alguien se la hubiera quitado.
+            </p>
+
+            <p>
+              O peor:
+            </p>
+
+            <p>
+              la posibilidad de que él mismo la hubiera enterrado.
+            </p>
+
+            <p>
+              El aire se volvió más pesado.
+            </p>
+
+            <p>
+              Se acercó otra vez.
+            </p>
+
+            <p>
+              Debajo del marco había una nota doblada.
+            </p>
+
+            <p>
+              Su nombre estaba escrito a mano.
+            </p>
+
+            <p>
+              <strong>Adrián.</strong>
+            </p>
+
+            <p>
+              Nada más.
+            </p>
+
+            <p>
+              La abrió con dedos torpes.
+            </p>
+
+            <p>
+              La tinta parecía reciente.
+            </p>
+
+            <p>
+              El papel no.
+            </p>
+
+            <p>
+              Como si alguien hubiera escrito hoy sobre algo guardado durante años.
+            </p>
+
+            <div class="quote">“Si estás leyendo esto, significa que volviste más tarde de lo que imaginé.”</div>
+
+            <p>
+              Adrián tragó saliva.
+            </p>
+
+            <p>
+              Siguió leyendo.
+            </p>
+
+            <div class="quote">“No confíes en la primera versión de nada. Ni de la casa. Ni de tu madre. Ni de mí. Sobre todo, no confíes en lo que recuerdes después de entrar al cuarto del fondo.”</div>
+
+            <p>
+              El pulso le subió hasta las sienes.
+            </p>
+
+            <p>
+              La última línea estaba escrita con una presión distinta.
+            </p>
+
+            <p>
+              Más marcada.
+            </p>
+
+            <p>
+              Más urgente.
+            </p>
+
+            <div class="quote">“Si la puerta sigue abierta, significa que ya habías estado ahí.”</div>
+
+            <div class="divider"></div>
+
+            <p>
+              El cuarto del fondo.
+            </p>
+
+            <p>
+              Adrián levantó la vista lentamente.
+            </p>
+
+            <p>
+              La luz seguía encendida.
+            </p>
+
+            <p>
+              Suave.
+            </p>
+
+            <p>
+              Cálida.
+            </p>
+
+            <p>
+              Casi amable.
+            </p>
+
+            <p>
+              Como si quisiera convencerlo de que todo estaba bien.
+            </p>
+
+            <p>
+              Como si esa casa no escondiera nada monstruoso,
+              sino algo peor:
+            </p>
+
+            <p>
+              una verdad.
+            </p>
+
+            <p>
+              Y las verdades, pensó de pronto,
+              rara vez esperan en sótanos oscuros.
+            </p>
+
+            <p>
+              A veces esperan en habitaciones perfectamente iluminadas.
+            </p>
+
+            <div class="quote">Hay puertas que separan dos lugares. Otras separan dos versiones de una misma vida.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Dio el primer paso hacia el cuarto.
+            </p>
+
+            <p>
+              Y entonces oyó el sonido.
+            </p>
+
+            <p>
+              No venía de afuera.
+            </p>
+
+            <p>
+              No venía del techo.
+            </p>
+
+            <p>
+              No venía de una cañería.
+            </p>
+
+            <p>
+              Venía de detrás de la puerta iluminada.
+            </p>
+
+            <p>
+              Un leve arrastre.
+            </p>
+
+            <p>
+              Como una silla moviéndose apenas sobre el piso.
+            </p>
+
+            <p>
+              Adrián quedó paralizado.
+            </p>
+
+            <p>
+              Porque la casa no estaba vacía.
+            </p>
+
+            <p>
+              Nunca lo había estado.
+            </p>
+
+            <p>
+              Y en el instante exacto en que entendió eso,
+              la luz del cuarto se interrumpió un segundo,
+              como si una figura hubiese pasado delante de la lámpara.
+            </p>
+
+            <p>
+              Una sombra.
+            </p>
+
+            <p>
+              Humana.
+            </p>
+
+            <p>
+              Quieta.
+            </p>
+
+            <p>
+              Esperándolo del otro lado.
+            </p>
+
+            <p>
+              Adrián no sabía qué era peor:
+            </p>
+
+            <p>
+              que hubiera alguien adentro...
+            </p>
+
+            <p>
+              o que una parte de él pareciera llevar años sabiendo que iba a encontrarlo.
+            </p>
+
+            <div class="quote">Entonces la voz llegó desde el interior del cuarto, baja, serena, imposible:</div>
+
+            <div class="quote"><strong>—Pensé que esta vez tampoco ibas a volver.</strong></div>
+
+            <p>
+              Adrián sintió que las piernas dejaban de responderle.
+            </p>
+
+            <p>
+              Porque no conocía esa voz.
+            </p>
+
+            <p>
+              Y al mismo tiempo,
+            </p>
+
+            <p>
+              la reconoció de inmediato.
+            </p>
+
+            <p>
+              Dio un paso más.
+            </p>
+
+            <p>
+              La mano le tembló al tocar el marco de la puerta.
+            </p>
+
+            <p>
+              Y justo antes de empujarla por completo,
+              vio algo escrito del lado interior,
+              grabado directamente sobre la madera,
+              como si alguien lo hubiera hecho con desesperación y uñas rotas:
+            </p>
+
+            <div class="quote"><strong>NO DEJES QUE TE CUENTE LO QUE PASÓ PRIMERO.</strong></div>
+
+            <p>
+              Adrián levantó la vista.
+            </p>
+
+            <p>
+              La sombra seguía ahí.
+            </p>
+
+            <p>
+              Inmóvil.
+            </p>
+
+            <p>
+              Esperando.
+            </p>
+
+            <p>
+              Y por primera vez en toda la noche,
+              entendió el verdadero tamaño del horror.
+            </p>
+
+            <p><strong>No había llegado a una casa extraña.</strong></p>
+
+            <p><strong>Había regresado a un lugar del que alguien se había asegurado de borrarlo.</strong></p>
+          </div>
+        </div>
+
+        <div class="reader-bottom">
+          <p class="reader-note">
+            Continúa la historia para descubrir quién está en el cuarto del fondo y por qué Adrián parece haber olvidado por completo la noche en que estuvo ahí por primera vez.
+          </p>
+
+          <div class="nav-actions">
+            <a href="../index.html" class="btn btn-ghost">← Volver al inicio</a>
+            <a href="capitulo2.html" class="btn btn-primary">Leer capítulo 2 →</a>
+          </div>
+        </div>
+      </article>
+    </main>
+  </div>
+
+  <script>
+    function goBack(event, fallbackUrl){
+      event.preventDefault();
+
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.location.href = fallbackUrl;
+      }
+    }
+
+    const canvas = document.getElementById("stars");
+    const ctx = canvas.getContext("2d");
+    let stars = [];
+
+    function resize(){
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      createStars();
+    }
+
+    function createStars(){
+      stars = [];
+      const amount = Math.floor((canvas.width * canvas.height) / 14000);
+      for(let i = 0; i < amount; i++){
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.6 + 0.3,
+          speed: Math.random() * 0.35 + 0.08,
+          alpha: Math.random() * 0.7 + 0.2
+        });
+      }
+    }
+
+    function animate(){
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for(const s of stars){
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        s.y += s.speed;
+
+        if(s.y > canvas.height){
+          s.y = -2;
+          s.x = Math.random() * canvas.width;
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener("resize", resize);
+    resize();
+    animate();
+  </script>
+</body>
+</html>
