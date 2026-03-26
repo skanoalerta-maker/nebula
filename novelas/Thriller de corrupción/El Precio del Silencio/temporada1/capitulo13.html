@@ -1,0 +1,1567 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capítulo 13 | El Precio del Silencio</title>
+  <meta
+    name="description"
+    content="Capítulo 13 de El Precio del Silencio: El salón sin nombre."
+  />
+
+  <style>
+    :root{
+      --bg:#05080f;
+      --bg2:#0b1220;
+      --card:rgba(12,18,32,0.82);
+      --line:rgba(255,255,255,0.08);
+      --line-strong:rgba(73,182,255,.24);
+      --text:#f5f8ff;
+      --muted:#aebad1;
+      --muted-2:#7f90ae;
+      --blue:#0A6CFF;
+      --blue2:#49b6ff;
+      --blue-soft:rgba(73,182,255,.14);
+      --shadow:0 24px 60px rgba(0,0,0,.45);
+      --radius:22px;
+      --max:860px;
+    }
+
+    *{
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      color:var(--text);
+      background:#04070d;
+      line-height:1.8;
+      position:relative;
+      overflow-x:hidden;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    #stars{
+      position:fixed;
+      inset:0;
+      width:100%;
+      height:100%;
+      z-index:0;
+      background:
+        radial-gradient(circle at top left, rgba(10,108,255,.12), transparent 24%),
+        radial-gradient(circle at top right, rgba(73,182,255,.08), transparent 20%),
+        linear-gradient(180deg, #04070d 0%, #08101c 45%, #05080f 100%);
+    }
+
+    .page{
+      min-height:100vh;
+      position:relative;
+      z-index:1;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:30;
+      backdrop-filter:blur(14px);
+      background:rgba(5,8,15,.72);
+      border-bottom:1px solid var(--line);
+    }
+
+    .topbar-inner{
+      max-width:1100px;
+      margin:0 auto;
+      padding:16px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .brand-badge{
+      width:38px;
+      height:38px;
+      border-radius:12px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg, rgba(10,108,255,.22), rgba(73,182,255,.08));
+      border:1px solid var(--line-strong);
+      box-shadow:0 0 24px rgba(10,108,255,.12);
+      font-weight:700;
+      color:var(--blue2);
+      flex:0 0 auto;
+    }
+
+    .brand-title{
+      font-size:14px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:#dfe9ff;
+      margin:0 0 2px;
+    }
+
+    .brand-sub{
+      font-size:12px;
+      color:var(--muted-2);
+      margin:0;
+    }
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height:44px;
+      padding:0 18px;
+      border-radius:12px;
+      font-size:14px;
+      font-weight:700;
+      transition:transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+      border:1px solid transparent;
+      cursor:pointer;
+    }
+
+    .btn:hover{
+      transform:translateY(-1px);
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg, var(--blue) 0%, #0d7eff 100%);
+      color:white;
+      box-shadow:0 12px 28px rgba(10,108,255,.28);
+    }
+
+    .btn-primary:hover{
+      background:linear-gradient(135deg, #0c62e0 0%, #0a6cef 100%);
+    }
+
+    .btn-ghost{
+      background:rgba(255,255,255,.03);
+      border-color:var(--line);
+      color:#dbe8ff;
+    }
+
+    .btn-ghost:hover{
+      background:rgba(255,255,255,.06);
+      border-color:var(--line-strong);
+    }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      border-bottom:1px solid rgba(255,255,255,.04);
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(180deg, rgba(5,8,15,.58) 0%, rgba(5,8,15,.86) 80%, rgba(5,8,15,1) 100%),
+        url("../assets/temporada1.jpg");
+      background-size:cover;
+      background-position:center;
+      opacity:.28;
+      filter:saturate(.9) contrast(1.03);
+    }
+
+    .hero-inner{
+      position:relative;
+      z-index:1;
+      max-width:1100px;
+      margin:0 auto;
+      padding:56px 20px 34px;
+    }
+
+    .crumb{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.06);
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:18px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:28px;
+      align-items:end;
+    }
+
+    .hero-copy h1{
+      margin:0 0 12px;
+      font-size:clamp(34px, 6vw, 64px);
+      line-height:1.02;
+      letter-spacing:.02em;
+      color:white;
+      text-shadow:0 0 22px rgba(10,108,255,.18);
+    }
+
+    .eyebrow{
+      margin:0 0 14px;
+      color:var(--blue2);
+      font-weight:700;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      font-size:12px;
+    }
+
+    .hero-copy p{
+      margin:0;
+      max-width:700px;
+      color:#d4def3;
+      font-size:18px;
+      line-height:1.75;
+    }
+
+    .hero-side{
+      display:flex;
+      justify-content:flex-end;
+    }
+
+    .chapter-card{
+      width:min(100%, 360px);
+      background:linear-gradient(180deg, rgba(12,18,32,.75), rgba(9,13,24,.88));
+      border:1px solid rgba(73,182,255,.18);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:22px;
+      backdrop-filter:blur(16px);
+    }
+
+    .chapter-label{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 12px;
+      border-radius:999px;
+      background:var(--blue-soft);
+      border:1px solid rgba(73,182,255,.18);
+      color:var(--blue2);
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:14px;
+    }
+
+    .chapter-card h2{
+      margin:0 0 10px;
+      font-size:24px;
+      line-height:1.15;
+      color:white;
+    }
+
+    .chapter-card p{
+      margin:0 0 18px;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.7;
+    }
+
+    .meta{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .meta-item{
+      padding:12px;
+      border-radius:14px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.05);
+    }
+
+    .meta-k{
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--muted-2);
+      margin:0 0 6px;
+    }
+
+    .meta-v{
+      margin:0;
+      font-size:13px;
+      color:#e7efff;
+      font-weight:700;
+    }
+
+    .content-wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:28px 20px 80px;
+    }
+
+    .reader{
+      position:relative;
+      background:linear-gradient(180deg, rgba(11,18,32,.58), rgba(8,13,24,.72));
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:22px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      backdrop-filter:blur(4px);
+    }
+
+    .reader-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:18px 22px;
+      border-bottom:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+    }
+
+    .reader-top-left h3{
+      margin:0 0 4px;
+      font-size:18px;
+      color:#edf3ff;
+    }
+
+    .reader-top-left p{
+      margin:0;
+      color:var(--muted-2);
+      font-size:13px;
+    }
+
+    .reader-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:34px;
+      padding:0 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.06);
+      color:#cfe0ff;
+      font-size:12px;
+      font-weight:700;
+      white-space:nowrap;
+    }
+
+    .reader-body{
+      padding:34px 26px 18px;
+      position:relative;
+    }
+
+    .story{
+      max-width:720px;
+      margin:0 auto;
+      position:relative;
+      z-index:2;
+    }
+
+    .lead{
+      font-size:19px;
+      line-height:1.9;
+      color:#ecf3ff;
+      margin:0 0 26px;
+      padding:18px 18px 18px 20px;
+      border-left:3px solid rgba(73,182,255,.44);
+      background:rgba(9,18,35,.68);
+      border-radius:0 14px 14px 0;
+      backdrop-filter:blur(4px);
+    }
+
+    .story p{
+      margin:0 0 22px;
+      color:#e4ecfb;
+      font-size:18px;
+      line-height:1.95;
+      letter-spacing:.01em;
+      text-shadow:0 1px 2px rgba(0,0,0,.4);
+    }
+
+    .story p strong{
+      color:#ffffff;
+      font-weight:700;
+    }
+
+    .story .quote{
+      margin:34px 0;
+      padding:20px 22px;
+      border-radius:18px;
+      background:linear-gradient(180deg, rgba(10,108,255,.12), rgba(73,182,255,.06));
+      border:1px solid rgba(73,182,255,.14);
+      color:#edf5ff;
+      font-size:19px;
+      line-height:1.7;
+      text-align:center;
+      box-shadow:0 12px 30px rgba(0,0,0,.18);
+      backdrop-filter:blur(4px);
+    }
+
+    .story .divider{
+      width:86px;
+      height:1px;
+      background:linear-gradient(90deg, transparent, rgba(73,182,255,.6), transparent);
+      margin:34px auto;
+    }
+
+    .reader-bottom{
+      padding:24px 26px 28px;
+      border-top:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .reader-note{
+      color:var(--muted-2);
+      font-size:13px;
+      margin:0;
+    }
+
+    .nav-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    @media (max-width: 900px){
+      .hero-grid{
+        grid-template-columns:1fr;
+      }
+
+      .hero-side{
+        justify-content:flex-start;
+      }
+
+      .chapter-card{
+        width:100%;
+        max-width:unset;
+      }
+    }
+
+    @media (max-width: 640px){
+      .topbar-inner{
+        padding:14px 14px;
+      }
+
+      .hero-inner{
+        padding:34px 14px 22px;
+      }
+
+      .content-wrap{
+        padding:20px 14px 60px;
+      }
+
+      .reader-top,
+      .reader-body,
+      .reader-bottom{
+        padding-left:16px;
+        padding-right:16px;
+      }
+
+      .reader-body{
+        padding-top:24px;
+      }
+
+      .hero-copy p,
+      .story p,
+      .lead{
+        font-size:16px;
+      }
+
+      .meta{
+        grid-template-columns:1fr;
+      }
+
+      .top-actions{
+        width:100%;
+      }
+
+      .btn{
+        width:100%;
+      }
+
+      .nav-actions{
+        width:100%;
+      }
+
+      .nav-actions .btn{
+        flex:1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="stars"></canvas>
+
+  <div class="page">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <div class="brand-badge">N</div>
+          <div>
+            <p class="brand-title">El Precio del Silencio</p>
+            <p class="brand-sub">Thriller político y empresarial</p>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <a href="capitulo12.html" onclick="goBack(event, 'capitulo12.html')" class="btn btn-ghost">← Capítulo anterior</a>
+          <a href="capitulo14.html" class="btn btn-primary">Siguiente capítulo →</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="crumb">Inicio / Capítulos / Capítulo 13</div>
+
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Capítulo 13</p>
+            <h1>El salón sin nombre</h1>
+            <p>
+              El comité ya no quiere estudiar a Tomás desde lejos. Quiere medirlo con sus propios ojos.
+              Y lo que hay detrás de la última puerta no es una simple reunión de poder: es el lugar donde Chile se reescribe antes de salir en la prensa.
+            </p>
+          </div>
+
+          <div class="hero-side">
+            <aside class="chapter-card">
+              <div class="chapter-label">El núcleo se muestra</div>
+              <h2>La sala final no busca convencerlo. Busca clasificarlo.</h2>
+              <p>
+                Tras romper la secuencia de Enerxia, Tomás es llevado al espacio que nadie debía conocer.
+                Pero cuando Ricardo Cárdenas entra al salón, queda claro que el comité no reunió a ambos por casualidad:
+                necesitaba decidir, en una sola tarde, quién cae… y quién puede ser reutilizado.
+              </p>
+
+              <div class="meta">
+                <div class="meta-item">
+                  <p class="meta-k">Estado</p>
+                  <p class="meta-v">Gratis</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Género</p>
+                  <p class="meta-v">Suspenso</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Temporada</p>
+                  <p class="meta-v">13 de 17</p>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="content-wrap">
+      <article class="reader">
+        <div class="reader-top">
+          <div class="reader-top-left">
+            <h3>Capítulo 13: El salón sin nombre</h3>
+            <p>Lectura gratuita · El comité ya lo quiere adentro</p>
+          </div>
+          <div class="reader-badge">Acceso abierto</div>
+        </div>
+
+        <div class="reader-body">
+          <div class="story">
+            <p class="lead">
+              El nombre de Tomás no produjo alarma en el salón. Produjo ajuste. Eso fue lo que más lo perturbó. No gritaron, no improvisaron, no intentaron reducirlo en el acto como haría una organización nerviosa. Al contrario: el aire pareció acomodarse alrededor de su presencia, como si la red hubiera contemplado desde hacía tiempo la posibilidad de que él terminara exactamente ahí, bajo esa luz baja, delante de esas personas que no necesitaban presentarse porque el verdadero poder rara vez pierde tiempo en decir quién es.
+            </p>
+
+            <p>
+              La mujer de traje marfil no le quitaba la vista de encima.
+            </p>
+
+            <p>
+              Valdés había dejado de jugar a la cordialidad ligera.
+            </p>
+
+            <p>
+              La periodista de la tablet ya no fingía que solo tomaba notas.
+            </p>
+
+            <p>
+              Y el “experto independiente” observaba con la calma odiosa de quien ha visto demasiadas veces
+              el momento exacto en que una vida deja de pertenecerle del todo a su dueño.
+            </p>
+
+            <p>
+              Entonces entró Cárdenas.
+            </p>
+
+            <p>
+              Y con él entró otra temperatura.
+            </p>
+
+            <p>
+              No porque tuviera rango.
+            </p>
+
+            <p>
+              No porque impusiera respeto.
+            </p>
+
+            <p>
+              Sino porque llevaba pegado en el cuerpo el olor inconfundible de los hombres que acaban de comprender
+              que la estructura para la que trabajaron ya terminó de decidir su valor.
+            </p>
+
+            <div class="quote">La caída nunca empieza cuando te acusan. Empieza cuando la sala deja de verte como parte de sí misma.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Cárdenas cerró la puerta tras él.
+            </p>
+
+            <p>
+              Sus ojos fueron primero a Valdés.
+            </p>
+
+            <p>
+              Después a la mujer de traje marfil.
+            </p>
+
+            <p>
+              Recién al final miró a Tomás.
+            </p>
+
+            <p>
+              Y en esa última mirada hubo algo peor que sorpresa.
+            </p>
+
+            <p>
+              Hubo entendimiento.
+            </p>
+
+            <p>
+              Como si al verlo ahí hubiera comprendido instantáneamente que el fallo de secuencia ya no era un problema técnico.
+            </p>
+
+            <p>
+              Era un reordenamiento del tablero.
+            </p>
+
+            <p><strong>El intruso ya estaba dentro de la sala. Eso significaba que alguien, en algún nivel, había preferido absorberlo antes que expulsarlo.</strong></p>
+
+            <div class="divider"></div>
+
+            <p>
+              —Llegaste tarde, Ricardo —repitió Valdés, con esa voz suave que parecía diseñada
+              para no dejar huellas de violencia incluso cuando pronunciaba sentencias.
+            </p>
+
+            <p>
+              Cárdenas tragó saliva.
+            </p>
+
+            <p>
+              —Hubo una alteración en el tramo técnico.
+            </p>
+
+            <p>
+              —Sabemos —respondió la mujer de traje marfil.
+            </p>
+
+            <p>
+              Cárdenas asintió apenas.
+            </p>
+
+            <p>
+              No intentó mentir.
+            </p>
+
+            <p>
+              Tal vez porque entendió que ahí dentro las mentiras de supervivencia ya no servían.
+            </p>
+
+            <p>
+              Solo servían los niveles de utilidad restantes.
+            </p>
+
+            <p>
+              —Entonces también saben que aún puedo corregirlo —dijo.
+            </p>
+
+            <p>
+              El “experto independiente” soltó una breve risa nasal.
+            </p>
+
+            <p>
+              —Corregir es una palabra grande para alguien fuera de secuencia.
+            </p>
+
+            <p>
+              La precisión del golpe dejó el salón quieto.
+            </p>
+
+            <p>
+              Tomás observó a Cárdenas.
+            </p>
+
+            <p>
+              El hombre no respondió de inmediato.
+            </p>
+
+            <p>
+              Apretó apenas la mandíbula.
+            </p>
+
+            <p>
+              Miró al suelo un segundo.
+            </p>
+
+            <p>
+              Y Tomás reconoció en ese gesto una verdad simple y aterradora:
+              Cárdenas sabía perfectamente lo que significaba esa frase.
+            </p>
+
+            <div class="quote">No necesitaban explicarle el protocolo. Lo aterrador era que él ya lo conocía.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              La mujer de traje marfil giró un poco, no hacia Tomás ni hacia Valdés,
+              sino hacia la lógica total de la sala.
+            </p>
+
+            <p>
+              —Tenemos dos asuntos —dijo—. Continuidad de ruta superior. Y ruido imprevisto.
+            </p>
+
+            <p>
+              No habló de personas.
+            </p>
+
+            <p>
+              Habló de funciones.
+            </p>
+
+            <p>
+              Ruta superior.
+            </p>
+
+            <p>
+              Ruido imprevisto.
+            </p>
+
+            <p>
+              Bajo esas dos expresiones se escondían un ministro cubierto por fundaciones
+              y un hombre que había irrumpido el filtro hasta llegar al núcleo.
+            </p>
+
+            <p>
+              El lenguaje de la red seguía haciendo lo mismo:
+              quitarle carne a la realidad para volverla administrable.
+            </p>
+
+            <p>
+              —Propongo separar temas —dijo la periodista, dejando la tablet sobre la mesa—.
+              Si mezclamos el caso Cárdenas con la aparición de Rivas, el relato se ensucia demasiado pronto.
+            </p>
+
+            <p>
+              Tomás sintió el peso brutal de esa frase.
+            </p>
+
+            <p>
+              Relato.
+            </p>
+
+            <p>
+              No investigación.
+            </p>
+
+            <p>
+              No verdad.
+            </p>
+
+            <p>
+              Relato.
+            </p>
+
+            <p>
+              Todo lo que estaba pasando allí se pensaba desde ya como narración futura.
+            </p>
+
+            <div class="quote">En el salón sin nombre nadie discutía hechos. Discutían versiones ganadoras.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              —No podemos separar del todo —respondió Valdés—. Si Rivas ya vio la caja negra,
+              entonces cualquier activación de Cárdenas corre el riesgo de parecer precisamente lo que es.
+            </p>
+
+            <p>
+              Esa admisión fue brutal.
+            </p>
+
+            <p>
+              Sin vergüenza.
+            </p>
+
+            <p>
+              Sin máscara.
+            </p>
+
+            <p>
+              Tomás no pestañeó.
+            </p>
+
+            <p>
+              La zona de sacrificio estaba siendo discutida delante suyo como lo que era:
+              una activación.
+            </p>
+
+            <p>
+              Un recurso.
+            </p>
+
+            <p>
+              Un mecanismo.
+            </p>
+
+            <p>
+              Cárdenas dio un paso involuntario hacia adelante.
+            </p>
+
+            <p>
+              —Yo he sostenido esta operación durante años.
+            </p>
+
+            <p>
+              El “experto independiente” lo miró con una compasión tan falsa que casi resultó más ofensiva que el desprecio.
+            </p>
+
+            <p>
+              —Justamente por eso tu exposición sería verosímil.
+            </p>
+
+            <p>
+              La frase cayó como un hachazo limpio.
+            </p>
+
+            <p>
+              No había negociación.
+            </p>
+
+            <p>
+              No había, en rigor, dilema moral.
+            </p>
+
+            <p>
+              Solo cálculo.
+            </p>
+
+            <div class="quote">La red no se preguntaba si era justo sacrificarlo. Se preguntaba si todavía era eficiente hacerlo.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Cárdenas giró hacia Valdés.
+            </p>
+
+            <p>
+              Esa vez no había miedo solamente.
+            </p>
+
+            <p>
+              Había furia.
+            </p>
+
+            <p>
+              Una furia tardía, sucia, inútil quizá, pero real.
+            </p>
+
+            <p>
+              —Tú me pusiste ahí —dijo.
+            </p>
+
+            <p>
+              Valdés sostuvo la mirada con esa serenidad insoportable de los hombres que no se permiten quedar atrapados
+              ni siquiera emocionalmente por los vínculos que usan.
+            </p>
+
+            <p>
+              —Te puse en una posición relevante.
+            </p>
+
+            <p>
+              —Me pusiste en la línea de fuego.
+            </p>
+
+            <p>
+              —A todos nos ponen en alguna línea.
+            </p>
+
+            <p>
+              Esa frase podría haber sonado filosófica en otro lugar.
+            </p>
+
+            <p>
+              Ahí sonó como doctrina.
+            </p>
+
+            <p>
+              Como el credo íntimo de un sistema que había logrado convertir la traición estructural en normalidad adulta.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              Tomás comprendió, con un destello feroz, el verdadero motivo de la escena.
+            </p>
+
+            <p>
+              No habían reunido a Cárdenas y a él para resolver dos problemas separados.
+            </p>
+
+            <p>
+              Los habían reunido para compararlos.
+            </p>
+
+            <p>
+              Uno era una pieza vieja, ya demasiado comprometida, demasiado visible en la zona técnica.
+            </p>
+
+            <p>
+              El otro era una anomalía nueva, todavía no absorbida, todavía no clasificada del todo.
+            </p>
+
+            <p>
+              El comité necesitaba ver cuál servía mejor para el relato siguiente.
+            </p>
+
+            <p><strong>No estaban en una negociación. Estaban en una subasta de destinos.</strong></p>
+
+            <div class="quote">Y en esa subasta, lo más valioso no era la inocencia. Era la utilidad narrativa.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              La mujer de traje marfil volvió a hablar.
+            </p>
+
+            <p>
+              —Ricardo tiene un problema estructural: ya viene asociado al flujo operativo.
+              Su caída sería creíble, sí, pero también cerraría una de nuestras rutas de baja visibilidad.
+            </p>
+
+            <p>
+              Después giró apenas hacia Tomás.
+            </p>
+
+            <p>
+              —Rivas tiene otro tipo de valor. Aún no pertenece a ningún relato fijo. Puede ser destruido, absorbido, desacreditado o reconducido.
+            </p>
+
+            <p>
+              Tomás sintió el cuerpo entero tensarse.
+            </p>
+
+            <p>
+              La palabra reconducido volvía como una sombra constante.
+            </p>
+
+            <p>
+              No querían solo saber si podían callarlo.
+            </p>
+
+            <p>
+              Querían evaluar si podían convertirlo en algo útil para la propia red:
+              testigo domesticado,
+              analista técnico,
+              crítico parcial,
+              informante involuntario.
+            </p>
+
+            <p>
+              Un hombre que hubiera visto lo suficiente para asustarse,
+              pero no lo suficiente para destruir.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              —No voy a trabajar para ustedes —dijo Tomás.
+            </p>
+
+            <p>
+              Nadie discutió la frase.
+            </p>
+
+            <p>
+              Lo peor fue eso.
+            </p>
+
+            <p>
+              La periodista incluso sonrió apenas, como si hubiera escuchado una línea esperable.
+            </p>
+
+            <p>
+              —No es necesario llamarlo así —dijo—. La gente rara vez trabaja “para” un sistema como este.
+              Normalmente solo aprende qué verdades son publicables y cuáles son demasiado caras.
+            </p>
+
+            <p>
+              Tomás sintió un golpe casi físico en el pecho.
+            </p>
+
+            <p>
+              Esa era la verdad más asquerosa del sistema:
+              no siempre necesitaba comprarte de forma explícita.
+            </p>
+
+            <p>
+              A veces le bastaba con enseñarte el costo real de insistir.
+            </p>
+
+            <p>
+              Una pareja rota.
+            </p>
+
+            <p>
+              Un hijo fotografiado.
+            </p>
+
+            <p>
+              Una carrera vaciada.
+            </p>
+
+            <p>
+              Un expediente reescrito.
+            </p>
+
+            <p>
+              Un cuerpo administrativo listo para absorberte como excepción o como error.
+            </p>
+
+            <div class="quote">La obediencia más estable no es la que se compra. Es la que se aprende al medir bien el precio de la desobediencia.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Entonces ocurrió algo que nadie pareció prever del todo.
+            </p>
+
+            <p>
+              Cárdenas se rió.
+            </p>
+
+            <p>
+              No fuerte.
+            </p>
+
+            <p>
+              No histérico.
+            </p>
+
+            <p>
+              Una risa corta, rota, de hombre que ya pasó el punto donde el miedo puro empieza a mutar en desprecio.
+            </p>
+
+            <p>
+              —Qué notable —dijo—. Todavía siguen creyendo que pueden ordenar a la gente como si fuera flujo.
+            </p>
+
+            <p>
+              Valdés no reaccionó.
+            </p>
+
+            <p>
+              La mujer de traje marfil lo miró con atención nueva.
+            </p>
+
+            <p>
+              Cárdenas dio otro paso.
+            </p>
+
+            <p>
+              —A Gabriel lo borraron.
+            </p>
+
+            <p>
+              Nadie interrumpió.
+            </p>
+
+            <p>
+              —A Laura la quebraron mal.
+            </p>
+
+            <p>
+              La periodista desvió apenas la mirada.
+            </p>
+
+            <p>
+              —A Nicolás lo dejaron pudrirse en el margen hasta que entendió lo que era.
+            </p>
+
+            <p>
+              Esa vez sí hubo un pequeño ajuste en la sala.
+            </p>
+
+            <p>
+              Nicolás.
+            </p>
+
+            <p>
+              El nombre estaba ahí ahora, en voz alta, dentro del núcleo.
+            </p>
+
+            <p>
+              Cárdenas siguió, ya sin posibilidad de retorno:
+            </p>
+
+            <p>
+              —Y ahora creen que este —dijo señalando a Tomás— todavía puede ser reordenado porque lo trajeron a ver el decorado desde adentro.
+              Como si el espectáculo de ustedes fuera suficiente para producir obediencia.
+            </p>
+
+            <p>
+              El “experto independiente” dio un paso adelante, pero la mujer de traje marfil levantó apenas un dedo y lo detuvo.
+            </p>
+
+            <p>
+              Lo quería escuchar.
+            </p>
+
+            <p>
+              Todos lo querían escuchar.
+            </p>
+
+            <p>
+              Porque cuando una pieza ya está condenada, a veces el sistema permite unos segundos de sinceridad
+              solo para identificar qué otra ruta quedó expuesta en el estallido.
+            </p>
+
+            <div class="quote">La caída de un hombre también puede ser una auditoría.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Cárdenas respiró hondo.
+            </p>
+
+            <p>
+              Miró a Tomás.
+            </p>
+
+            <p>
+              Y dijo algo que le cambió la sangre:
+            </p>
+
+            <div class="quote">—No están mostrándote el centro. Te están mostrando el salón equivocado.</div>
+
+            <p>
+              El silencio que siguió fue total.
+            </p>
+
+            <p>
+              Incluso el aire pareció haberse detenido.
+            </p>
+
+            <p>
+              Tomás sintió una descarga brutal detrás de los ojos.
+            </p>
+
+            <p>
+              Salón equivocado.
+            </p>
+
+            <p>
+              Entonces esto no era el comité completo.
+            </p>
+
+            <p>
+              Era una sala de evaluación.
+            </p>
+
+            <p>
+              Una cámara intermedia.
+            </p>
+
+            <p>
+              Un espacio donde se afinaban decisiones antes de pasar al verdadero núcleo.
+            </p>
+
+            <p><strong>Lo habían llevado allí para que creyera que ya estaba viendo el corazón de la red, cuando en realidad seguía dentro de otra capa.</strong></p>
+
+            <div class="quote">La magnitud del sistema volvió a abrirse como una grieta infinita: incluso el núcleo tenía antesalas.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              —Ricardo —dijo la mujer con una calma terrible—, esa frase te quita la última posibilidad de preservar algún borde útil para ti.
+            </p>
+
+            <p>
+              Cárdenas ya no parecía escucharla del mismo modo.
+            </p>
+
+            <p>
+              No porque hubiera dejado de entender.
+            </p>
+
+            <p>
+              Porque finalmente había elegido dejar de negociar con el miedo.
+            </p>
+
+            <p>
+              —No me queda ningún borde útil —respondió—. Ustedes ya decidieron eso antes de que yo entrara por la puerta.
+            </p>
+
+            <p>
+              Valdés observó la escena con un cansancio leve, casi administrativo.
+            </p>
+
+            <p>
+              Como si ya hubiera visto otras veces ese momento exacto
+              en que alguien dentro del sistema descubre demasiado tarde que su margen de acuerdo ya fue consumido.
+            </p>
+
+            <p>
+              Tomás comprendió entonces por qué los habían reunido a ambos:
+              no solo para compararlos.
+            </p>
+
+            <p>
+              También para producir un ejemplo.
+            </p>
+
+            <p>
+              Cárdenas era el futuro posible de cualquier operador.
+            </p>
+
+            <p>
+              Él, en cambio, era el futuro posible de cualquier intruso:
+              lo bastante cerca como para asustarse,
+              lo bastante lejos como para aún elegir.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              —¿Dónde está el verdadero comité? —preguntó Tomás.
+            </p>
+
+            <p>
+              Nadie respondió.
+            </p>
+
+            <p>
+              Cárdenas sí.
+            </p>
+
+            <p>
+              —No aquí.
+            </p>
+
+            <p>
+              El “experto independiente” avanzó otro paso.
+            </p>
+
+            <p>
+              La periodista dejó la tablet.
+            </p>
+
+            <p>
+              La mujer de traje marfil ya no sonreía.
+            </p>
+
+            <p>
+              Valdés observó a Cárdenas como se observa una máquina que acaba de empezar a incendiarse desde dentro.
+            </p>
+
+            <p>
+              Pero Tomás ya había obtenido lo más importante.
+            </p>
+
+            <p>
+              No estaba en el centro.
+            </p>
+
+            <p>
+              Todavía no.
+            </p>
+
+            <p>
+              El salón sin nombre era solo la estación donde se decidía qué piezas merecían llegar más adentro y cuáles debían disolverse ahí mismo.
+            </p>
+
+            <p>
+              Eso explicaba el lenguaje.
+            </p>
+
+            <p>
+              La calma.
+            </p>
+
+            <p>
+              La evaluación.
+            </p>
+
+            <p>
+              La ausencia de documentos abiertos del todo.
+            </p>
+
+            <p>
+              No estaban ejecutando el poder final.
+            </p>
+
+            <p>
+              Estaban clasificando materia prima humana para el poder final.
+            </p>
+
+            <div class="quote">Tomás sintió el vértigo puro de comprender que había pasado doce capítulos rompiendo capas… y todavía seguía a una puerta de distancia del centro verdadero.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Entonces sonó una alarma corta.
+            </p>
+
+            <p>
+              No de incendio.
+            </p>
+
+            <p>
+              No de evacuación.
+            </p>
+
+            <p>
+              Un tono interno, discreto, breve.
+            </p>
+
+            <p>
+              La periodista levantó el teléfono.
+            </p>
+
+            <p>
+              El hombre de Control Interno abrió ligeramente la puerta.
+            </p>
+
+            <p>
+              La mujer de traje marfil revisó un mensaje en pantalla y, por primera vez desde que Tomás entró,
+              algo parecido a la urgencia se filtró bajo su compostura.
+            </p>
+
+            <p>
+              —Lo encontraron —dijo alguien al fondo.
+            </p>
+
+            <p>
+              Nadie preguntó quién.
+            </p>
+
+            <p>
+              No hacía falta.
+            </p>
+
+            <p>
+              Tomás lo supo igual.
+            </p>
+
+            <p>
+              Laura.
+            </p>
+
+            <p>
+              O Nicolás.
+            </p>
+
+            <p>
+              O ambos.
+            </p>
+
+            <p>
+              Pero la red acababa de cerrar otro círculo fuera del salón.
+            </p>
+
+            <p>
+              Y eso cambió el equilibrio de inmediato.
+            </p>
+
+            <div class="quote">El sistema ya no estaba discutiendo posibilidades. Ahora estaba sincronizando captura, relato y sacrificio en tiempo real.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              La mujer de traje marfil dio una instrucción sin elevar la voz:
+            </p>
+
+            <p>
+              —Cerramos fase. El comité no espera más.
+            </p>
+
+            <p>
+              Cárdenas bajó la cabeza apenas.
+            </p>
+
+            <p>
+              Valdés se acomodó la chaqueta.
+            </p>
+
+            <p>
+              La periodista retomó la tablet.
+            </p>
+
+            <p>
+              El salón entero empezó a reordenarse con una velocidad impecable.
+            </p>
+
+            <p>
+              No caos.
+            </p>
+
+            <p>
+              Transición.
+            </p>
+
+            <p>
+              Como si una obra hubiera terminado y estuvieran abriendo la siguiente puerta del escenario.
+            </p>
+
+            <p>
+              Entonces la mujer volvió a mirar a Tomás.
+            </p>
+
+            <p>
+              —Ahora sí —dijo—. Ya es momento de decidir si vienes como observador… o como material.
+            </p>
+
+            <p>
+              La frase se le metió a Tomás bajo la piel con una violencia fría.
+            </p>
+
+            <p>
+              Observador o material.
+            </p>
+
+            <p>
+              En esa diferencia cabía una vida completa.
+            </p>
+
+            <p>
+              Porque observador significaba llegar todavía con algún margen de conciencia y lectura.
+            </p>
+
+            <p>
+              Material significaba ser absorbido por la secuencia:
+              prueba,
+              chivo expiatorio,
+              archivo,
+              lección.
+            </p>
+
+            <p><strong>Y Tomás entendió que el siguiente paso no iba a decidir solo qué vería del verdadero comité. Iba a decidir en qué categoría saldría —si es que salía— del edificio.</strong></p>
+          </div>
+        </div>
+
+        <div class="reader-bottom">
+          <p class="reader-note">
+            Continúa la historia para descubrir qué sucede cuando el salón sin nombre se abre al comité real… y cuál es el precio exacto de entrar como observador equivocado.
+          </p>
+
+          <div class="nav-actions">
+            <a href="capitulo12.html" onclick="goBack(event, 'capitulo12.html')" class="btn btn-ghost">← Capítulo 12</a>
+            <a href="capitulo14.html" class="btn btn-primary">Leer capítulo 14 →</a>
+          </div>
+        </div>
+      </article>
+    </main>
+  </div>
+
+  <script>
+    function goBack(event, fallbackUrl){
+      event.preventDefault();
+
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.location.href = fallbackUrl;
+      }
+    }
+
+    const canvas = document.getElementById("stars");
+    const ctx = canvas.getContext("2d");
+    let stars = [];
+
+    function resize(){
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      createStars();
+    }
+
+    function createStars(){
+      stars = [];
+      const amount = Math.floor((canvas.width * canvas.height) / 14000);
+      for(let i = 0; i < amount; i++){
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.6 + 0.3,
+          speed: Math.random() * 0.35 + 0.08,
+          alpha: Math.random() * 0.7 + 0.2
+        });
+      }
+    }
+
+    function animate(){
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for(const s of stars){
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        s.y += s.speed;
+
+        if(s.y > canvas.height){
+          s.y = -2;
+          s.x = Math.random() * canvas.width;
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener("resize", resize);
+    resize();
+    animate();
+  </script>
+</body>
+</html>
