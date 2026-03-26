@@ -1,0 +1,1608 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capítulo 11 | El Precio del Silencio</title>
+  <meta
+    name="description"
+    content="Capítulo 11 de El Precio del Silencio: La caja negra de Enerxia."
+  />
+
+  <style>
+    :root{
+      --bg:#05080f;
+      --bg2:#0b1220;
+      --card:rgba(12,18,32,0.82);
+      --line:rgba(255,255,255,0.08);
+      --line-strong:rgba(73,182,255,.24);
+      --text:#f5f8ff;
+      --muted:#aebad1;
+      --muted-2:#7f90ae;
+      --blue:#0A6CFF;
+      --blue2:#49b6ff;
+      --blue-soft:rgba(73,182,255,.14);
+      --shadow:0 24px 60px rgba(0,0,0,.45);
+      --radius:22px;
+      --max:860px;
+    }
+
+    *{
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      color:var(--text);
+      background:#04070d;
+      line-height:1.8;
+      position:relative;
+      overflow-x:hidden;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    #stars{
+      position:fixed;
+      inset:0;
+      width:100%;
+      height:100%;
+      z-index:0;
+      background:
+        radial-gradient(circle at top left, rgba(10,108,255,.12), transparent 24%),
+        radial-gradient(circle at top right, rgba(73,182,255,.08), transparent 20%),
+        linear-gradient(180deg, #04070d 0%, #08101c 45%, #05080f 100%);
+    }
+
+    .page{
+      min-height:100vh;
+      position:relative;
+      z-index:1;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:30;
+      backdrop-filter:blur(14px);
+      background:rgba(5,8,15,.72);
+      border-bottom:1px solid var(--line);
+    }
+
+    .topbar-inner{
+      max-width:1100px;
+      margin:0 auto;
+      padding:16px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .brand-badge{
+      width:38px;
+      height:38px;
+      border-radius:12px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg, rgba(10,108,255,.22), rgba(73,182,255,.08));
+      border:1px solid var(--line-strong);
+      box-shadow:0 0 24px rgba(10,108,255,.12);
+      font-weight:700;
+      color:var(--blue2);
+      flex:0 0 auto;
+    }
+
+    .brand-title{
+      font-size:14px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:#dfe9ff;
+      margin:0 0 2px;
+    }
+
+    .brand-sub{
+      font-size:12px;
+      color:var(--muted-2);
+      margin:0;
+    }
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height:44px;
+      padding:0 18px;
+      border-radius:12px;
+      font-size:14px;
+      font-weight:700;
+      transition:transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+      border:1px solid transparent;
+      cursor:pointer;
+    }
+
+    .btn:hover{
+      transform:translateY(-1px);
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg, var(--blue) 0%, #0d7eff 100%);
+      color:white;
+      box-shadow:0 12px 28px rgba(10,108,255,.28);
+    }
+
+    .btn-primary:hover{
+      background:linear-gradient(135deg, #0c62e0 0%, #0a6cef 100%);
+    }
+
+    .btn-ghost{
+      background:rgba(255,255,255,.03);
+      border-color:var(--line);
+      color:#dbe8ff;
+    }
+
+    .btn-ghost:hover{
+      background:rgba(255,255,255,.06);
+      border-color:var(--line-strong);
+    }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      border-bottom:1px solid rgba(255,255,255,.04);
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(180deg, rgba(5,8,15,.58) 0%, rgba(5,8,15,.86) 80%, rgba(5,8,15,1) 100%),
+        url("../assets/temporada1.jpg");
+      background-size:cover;
+      background-position:center;
+      opacity:.28;
+      filter:saturate(.9) contrast(1.03);
+    }
+
+    .hero-inner{
+      position:relative;
+      z-index:1;
+      max-width:1100px;
+      margin:0 auto;
+      padding:56px 20px 34px;
+    }
+
+    .crumb{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.06);
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:18px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:28px;
+      align-items:end;
+    }
+
+    .hero-copy h1{
+      margin:0 0 12px;
+      font-size:clamp(34px, 6vw, 64px);
+      line-height:1.02;
+      letter-spacing:.02em;
+      color:white;
+      text-shadow:0 0 22px rgba(10,108,255,.18);
+    }
+
+    .eyebrow{
+      margin:0 0 14px;
+      color:var(--blue2);
+      font-weight:700;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      font-size:12px;
+    }
+
+    .hero-copy p{
+      margin:0;
+      max-width:700px;
+      color:#d4def3;
+      font-size:18px;
+      line-height:1.75;
+    }
+
+    .hero-side{
+      display:flex;
+      justify-content:flex-end;
+    }
+
+    .chapter-card{
+      width:min(100%, 360px);
+      background:linear-gradient(180deg, rgba(12,18,32,.75), rgba(9,13,24,.88));
+      border:1px solid rgba(73,182,255,.18);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:22px;
+      backdrop-filter:blur(16px);
+    }
+
+    .chapter-label{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 12px;
+      border-radius:999px;
+      background:var(--blue-soft);
+      border:1px solid rgba(73,182,255,.18);
+      color:var(--blue2);
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:14px;
+    }
+
+    .chapter-card h2{
+      margin:0 0 10px;
+      font-size:24px;
+      line-height:1.15;
+      color:white;
+    }
+
+    .chapter-card p{
+      margin:0 0 18px;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.7;
+    }
+
+    .meta{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .meta-item{
+      padding:12px;
+      border-radius:14px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.05);
+    }
+
+    .meta-k{
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--muted-2);
+      margin:0 0 6px;
+    }
+
+    .meta-v{
+      margin:0;
+      font-size:13px;
+      color:#e7efff;
+      font-weight:700;
+    }
+
+    .content-wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:28px 20px 80px;
+    }
+
+    .reader{
+      position:relative;
+      background:linear-gradient(180deg, rgba(11,18,32,.58), rgba(8,13,24,.72));
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:22px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      backdrop-filter:blur(4px);
+    }
+
+    .reader-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:18px 22px;
+      border-bottom:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+    }
+
+    .reader-top-left h3{
+      margin:0 0 4px;
+      font-size:18px;
+      color:#edf3ff;
+    }
+
+    .reader-top-left p{
+      margin:0;
+      color:var(--muted-2);
+      font-size:13px;
+    }
+
+    .reader-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:34px;
+      padding:0 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.06);
+      color:#cfe0ff;
+      font-size:12px;
+      font-weight:700;
+      white-space:nowrap;
+    }
+
+    .reader-body{
+      padding:34px 26px 18px;
+      position:relative;
+    }
+
+    .story{
+      max-width:720px;
+      margin:0 auto;
+      position:relative;
+      z-index:2;
+    }
+
+    .lead{
+      font-size:19px;
+      line-height:1.9;
+      color:#ecf3ff;
+      margin:0 0 26px;
+      padding:18px 18px 18px 20px;
+      border-left:3px solid rgba(73,182,255,.44);
+      background:rgba(9,18,35,.68);
+      border-radius:0 14px 14px 0;
+      backdrop-filter:blur(4px);
+    }
+
+    .story p{
+      margin:0 0 22px;
+      color:#e4ecfb;
+      font-size:18px;
+      line-height:1.95;
+      letter-spacing:.01em;
+      text-shadow:0 1px 2px rgba(0,0,0,.4);
+    }
+
+    .story p strong{
+      color:#ffffff;
+      font-weight:700;
+    }
+
+    .story .quote{
+      margin:34px 0;
+      padding:20px 22px;
+      border-radius:18px;
+      background:linear-gradient(180deg, rgba(10,108,255,.12), rgba(73,182,255,.06));
+      border:1px solid rgba(73,182,255,.14);
+      color:#edf5ff;
+      font-size:19px;
+      line-height:1.7;
+      text-align:center;
+      box-shadow:0 12px 30px rgba(0,0,0,.18);
+      backdrop-filter:blur(4px);
+    }
+
+    .story .divider{
+      width:86px;
+      height:1px;
+      background:linear-gradient(90deg, transparent, rgba(73,182,255,.6), transparent);
+      margin:34px auto;
+    }
+
+    .reader-bottom{
+      padding:24px 26px 28px;
+      border-top:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .reader-note{
+      color:var(--muted-2);
+      font-size:13px;
+      margin:0;
+    }
+
+    .nav-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    @media (max-width: 900px){
+      .hero-grid{
+        grid-template-columns:1fr;
+      }
+
+      .hero-side{
+        justify-content:flex-start;
+      }
+
+      .chapter-card{
+        width:100%;
+        max-width:unset;
+      }
+    }
+
+    @media (max-width: 640px){
+      .topbar-inner{
+        padding:14px 14px;
+      }
+
+      .hero-inner{
+        padding:34px 14px 22px;
+      }
+
+      .content-wrap{
+        padding:20px 14px 60px;
+      }
+
+      .reader-top,
+      .reader-body,
+      .reader-bottom{
+        padding-left:16px;
+        padding-right:16px;
+      }
+
+      .reader-body{
+        padding-top:24px;
+      }
+
+      .hero-copy p,
+      .story p,
+      .lead{
+        font-size:16px;
+      }
+
+      .meta{
+        grid-template-columns:1fr;
+      }
+
+      .top-actions{
+        width:100%;
+      }
+
+      .btn{
+        width:100%;
+      }
+
+      .nav-actions{
+        width:100%;
+      }
+
+      .nav-actions .btn{
+        flex:1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="stars"></canvas>
+
+  <div class="page">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <div class="brand-badge">N</div>
+          <div>
+            <p class="brand-title">El Precio del Silencio</p>
+            <p class="brand-sub">Thriller político y empresarial</p>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <a href="capitulo10.html" onclick="goBack(event, 'capitulo10.html')" class="btn btn-ghost">← Capítulo anterior</a>
+          <a href="capitulo12.html" class="btn btn-primary">Siguiente capítulo →</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="crumb">Inicio / Capítulos / Capítulo 11</div>
+
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Capítulo 11</p>
+            <h1>La caja negra de Enerxia</h1>
+            <p>
+              El cronograma sin público no muestra solo salas vacías. Muestra un flujo paralelo de reuniones
+              que conecta al foro con una empresa que ya aparecía en los primeros archivos: Enerxia.
+              Y dentro de esa conexión, Tomás encuentra la verdadera caja negra del sistema.
+            </p>
+          </div>
+
+          <div class="hero-side">
+            <aside class="chapter-card">
+              <div class="chapter-label">Jueves, por fin</div>
+              <h2>El foro ya empezó. Pero el evento real va por otro pasillo.</h2>
+              <p>
+                Mientras el país ve un encuentro sobre transparencia, Tomás recibe el cronograma oculto
+                y descubre que una de las empresas fundadoras de la red está usando el foro como interfaz.
+                Lo que ocurre detrás de Enerxia no es una reunión más: es el sistema hablándose a sí mismo.
+              </p>
+
+              <div class="meta">
+                <div class="meta-item">
+                  <p class="meta-k">Estado</p>
+                  <p class="meta-v">Gratis</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Género</p>
+                  <p class="meta-v">Suspenso</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Temporada</p>
+                  <p class="meta-v">11 de 17</p>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="content-wrap">
+      <article class="reader">
+        <div class="reader-top">
+          <div class="reader-top-left">
+            <h3>Capítulo 11: La caja negra de Enerxia</h3>
+            <p>Lectura gratuita · La fachada ya está en marcha</p>
+          </div>
+          <div class="reader-badge">Acceso abierto</div>
+        </div>
+
+        <div class="reader-body">
+          <div class="story">
+            <p class="lead">
+              El jueves amaneció con un cielo pálido y una normalidad que resultaba ofensiva. Santiago seguía funcionando
+              como si no estuviera a horas de celebrar, dentro de un foro elegante y perfectamente acreditado, una reunión
+              clandestina donde se iban a ordenar precios, titulares, demoras legales y quizá también una caída humana cuidadosamente escogida.
+              Tomás llevaba casi cuarenta horas sin dormir de verdad. Aun así, lo que sentía no era cansancio. Era una lucidez nerviosa,
+              como si el cuerpo hubiera entendido que ya no tenía derecho a distraerse.
+            </p>
+
+            <p>
+              A las 07:12 recibió el archivo de Laura.
+            </p>
+
+            <p>
+              No llegó por WhatsApp.
+            </p>
+
+            <p>
+              No llegó por correo.
+            </p>
+
+            <p>
+              Llegó mediante un enlace temporal sin remitente, protegido con una clave de ocho caracteres
+              que ella le envió en un segundo mensaje distinto, dos minutos después.
+            </p>
+
+            <p>
+              Tomás lo abrió desde un notebook prestado en un hostal de providencia donde había pasado la noche
+              sin registrarse con su nombre completo.
+            </p>
+
+            <p>
+              El archivo se llamaba:
+              <strong>programa_interno_tramos.xlsx</strong>.
+            </p>
+
+            <p>
+              Lo primero que notó fue que no coincidía del todo con el programa público del foro.
+            </p>
+
+            <p>
+              Había paneles que seguían ahí.
+            </p>
+
+            <p>
+              Bienvenida institucional.
+            </p>
+
+            <p>
+              Conversatorio sobre innovación.
+            </p>
+
+            <p>
+              Mesa de desarrollo sustentable.
+            </p>
+
+            <p>
+              Todo impecable.
+            </p>
+
+            <p>
+              Todo perfectamente fotografiable.
+            </p>
+
+            <p>
+              Pero entre medio, en franjas no visibles para asistentes generales, aparecían bloques marcados como:
+              <strong>tramo técnico</strong>, <strong>coordinación proveedor</strong>,
+              <strong>revisión cerrada</strong>, <strong>enlace CN-7</strong>.
+            </p>
+
+            <p>
+              Lo más inquietante era que esos bloques no tenían relato público, pero sí responsables de acceso.
+            </p>
+
+            <p>
+              Y un nombre se repetía más de lo esperable:
+              <strong>Enerxia</strong>.
+            </p>
+
+            <div class="quote">No como sponsor. No como invitado. Como estructura de soporte.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Tomás se quedó mirando el cronograma largo rato.
+            </p>
+
+            <p>
+              Enerxia había aparecido desde el primer capítulo como una de las empresas sincronizadas en precios.
+            </p>
+
+            <p>
+              Había estado en las planillas iniciales.
+            </p>
+
+            <p>
+              En los borradores del comité.
+            </p>
+
+            <p>
+              En la lógica territorial del norte.
+            </p>
+
+            <p>
+              Pero ahora aparecía de otro modo:
+            </p>
+
+            <p>
+              no solo como beneficiaria del sistema,
+            </p>
+
+            <p>
+              sino como infraestructura interna del foro.
+            </p>
+
+            <p><strong>No estaba sentada a la mesa. Estaba ayudando a construir la mesa.</strong></p>
+
+            <div class="quote">Las empresas grandes no siempre compran decisiones. A veces simplemente prestan el edificio emocional donde esas decisiones pueden parecer normales.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Salió del hostal a las 08:05 con ropa lo suficientemente neutra como para no destacar,
+              pero no tan desordenada como para parecer fuera de lugar. Tenía una acreditación temporal impresa
+              con nombre falso y empresa de consultoría menor, conseguida a partir de una de las plantillas que Laura guardaba
+              desde el reportaje truncado. No era perfecta. Pero en un evento de ese tipo, donde media fauna corporativa vive de invitar,
+              reenviar, acreditar y reasignar, a veces la imperfección también parece parte del sistema.
+            </p>
+
+            <p>
+              El edificio del foro imponía más por su pulcritud que por su tamaño.
+            </p>
+
+            <p>
+              Vidrio.
+            </p>
+
+            <p>
+              Acero.
+            </p>
+
+            <p>
+              Hall alto.
+            </p>
+
+            <p>
+              Personal de recepción vestido con sonrisas profesionales.
+            </p>
+
+            <p>
+              Totems con branding de “transparencia”, “innovación” y “futuro institucional”.
+            </p>
+
+            <p>
+              La mentira, como casi siempre, se veía cara.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              El ingreso general fue más fácil de lo que había temido.
+            </p>
+
+            <p>
+              Escaneo rápido.
+            </p>
+
+            <p>
+              Pulsera.
+            </p>
+
+            <p>
+              Entrega de bolso promocional.
+            </p>
+
+            <p>
+              Un coffee station aún sin demasiada fila.
+            </p>
+
+            <p>
+              Música instrumental, suave, impersonal.
+            </p>
+
+            <p>
+              Todo armado para que nadie sintiera que entraba a un mecanismo, sino a una experiencia.
+            </p>
+
+            <p>
+              Tomás avanzó por el lobby observando más que mirando.
+            </p>
+
+            <p>
+              Acreditados legítimos mezclados con rostros demasiado atentos.
+            </p>
+
+            <p>
+              Productores.
+            </p>
+
+            <p>
+              Asesores.
+            </p>
+
+            <p>
+              Un senador saludando a una rectora.
+            </p>
+
+            <p>
+              Un economista televisivo haciéndose el distraído junto a una mesa alta.
+            </p>
+
+            <p>
+              Periodistas que, oficialmente, venían a cubrir paneles, pero ya estaban ubicados
+              en los lugares desde donde mejor se captaba quién se saludaba con quién.
+            </p>
+
+            <p>
+              El poder no entraba por la puerta principal como si fuese secreto.
+            </p>
+
+            <p>
+              Entraba como costumbre.
+            </p>
+
+            <div class="quote">La fachada era tan buena porque no inventaba una realidad falsa. Solo embellecía la verdadera.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Tomás subió al segundo nivel siguiendo el flujo oficial hasta una zona de paneles laterales.
+            </p>
+
+            <p>
+              Desde ahí pudo ver algo que no aparecía en la agenda pública:
+              una señalética pequeña, casi invisible, con tipografía interna y sin logos,
+              apuntando a una zona de servicio:
+              <strong>CN-7 / proveedores acreditados</strong>.
+            </p>
+
+            <p>
+              El acceso no estaba escondido del todo.
+            </p>
+
+            <p>
+              Estaba escondido a plena vista,
+              bajo la lógica del evento.
+            </p>
+
+            <p>
+              Si no supieras buscarlo, era solo una ruta técnica.
+            </p>
+
+            <p>
+              Si sabías, era la puerta lateral hacia otra capa del foro.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              Esperó.
+            </p>
+
+            <p>
+              Observó.
+            </p>
+
+            <p>
+              No podía precipitarse.
+            </p>
+
+            <p>
+              Nicolás había sido claro en algo: no buscar el centro, sino los traspasos humanos.
+            </p>
+
+            <p>
+              Y entonces apareció el primero.
+            </p>
+
+            <p>
+              Un hombre de traje gris claro, sin acreditación visible, entró por CN-7 llevando una carpeta delgada azul.
+            </p>
+
+            <p>
+              Dos minutos después salió sin carpeta.
+            </p>
+
+            <p>
+              No fue a ningún panel.
+            </p>
+
+            <p>
+              No habló con nadie.
+            </p>
+
+            <p>
+              Bajó por el ascensor privado.
+            </p>
+
+            <p>
+              Transferencia.
+            </p>
+
+            <p>
+              Exactamente como Nicolás había descrito.
+            </p>
+
+            <p>
+              Luego una mujer con credencial de prensa pasó por esa misma zona escoltada por una productora,
+              permaneció cuatro minutos dentro y salió revisando un papel que luego dobló sin leer frente a terceros.
+            </p>
+
+            <p>
+              Transferencia otra vez.
+            </p>
+
+            <p>
+              No una reunión.
+            </p>
+
+            <p>
+              Una cadena.
+            </p>
+
+            <p>
+              Un sistema de pequeñas entregas que, vistas por separado, parecían insignificantes.
+            </p>
+
+            <p>
+              Juntas, una coreografía.
+            </p>
+
+            <div class="quote">El comité no funcionaba como una mesa redonda. Funcionaba como una serie de relevos.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              A las 10:11 recibió un mensaje de Laura.
+            </p>
+
+            <p>
+              Solo tres palabras:
+            </p>
+
+            <div class="quote">Enerxia no auspicia.</div>
+
+            <p>
+              Debajo, una segunda línea:
+            </p>
+
+            <div class="quote">Enerxia administra logística cerrada.</div>
+
+            <p>
+              Tomás sintió el estómago hundirse un poco más.
+            </p>
+
+            <p>
+              Eso calzaba con el cronograma oculto.
+            </p>
+
+            <p>
+              También calzaba con algo más profundo:
+              si Enerxia manejaba logística cerrada, entonces la empresa no era solo parte de la red.
+            </p>
+
+            <p>
+              Era uno de sus contenedores materiales.
+            </p>
+
+            <p>
+              La que ponía salas.
+            </p>
+
+            <p>
+              Flujos.
+            </p>
+
+            <p>
+              Proveedores.
+            </p>
+
+            <p>
+              Cobertura administrativa.
+            </p>
+
+            <p>
+              Como si bajo la operación pública de energía existiera otra, invisible,
+              dedicada a mover decisiones humanas del mismo modo en que se mueve carga crítica.
+            </p>
+
+            <div class="quote">Algunas empresas transportan electricidad. Otras, además, transportan obediencia.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Poco antes del mediodía logró acercarse a la zona CN-7 fingiendo que hablaba por teléfono
+              y buscando “la sala equivocada”. Nadie lo detuvo de inmediato.
+            </p>
+
+            <p>
+              El acceso era un pasillo revestido en madera clara, mucho menos vistoso que el resto del evento.
+            </p>
+
+            <p>
+              Sin branding.
+            </p>
+
+            <p>
+              Sin prensa.
+            </p>
+
+            <p>
+              Sin mesas altas ni sonrisas de anfitrión.
+            </p>
+
+            <p>
+              Era la parte funcional del edificio.
+            </p>
+
+            <p>
+              La parte que no se fotografía.
+            </p>
+
+            <p>
+              Ahí, junto a una puerta de vidrio opaco, vio el logo pequeño de Enerxia sobre una credencial apoyada en una mesa auxiliar.
+            </p>
+
+            <p>
+              La tomó solo el tiempo suficiente para leer el cargo:
+              <strong>Coordinación técnica cerrada</strong>.
+            </p>
+
+            <p>
+              Nada decía “comité”.
+            </p>
+
+            <p>
+              Nada decía “reunión secreta”.
+            </p>
+
+            <p>
+              Pero todo hablaba el mismo idioma que los documentos.
+            </p>
+
+            <p>
+              Técnico.
+            </p>
+
+            <p>
+              Cerrado.
+            </p>
+
+            <p>
+              Coordinación.
+            </p>
+
+            <p><strong>La mentira siempre venía vestida de procedimiento.</strong></p>
+
+            <div class="divider"></div>
+
+            <p>
+              Entonces escuchó un nombre.
+            </p>
+
+            <p>
+              No claro al principio.
+            </p>
+
+            <p>
+              Solo una voz detrás del vidrio opaco diciendo:
+            </p>
+
+            <p>
+              “...que lo vea Enerxia primero. Después se mueve al comité.”
+            </p>
+
+            <p>
+              Tomás se quedó quieto.
+            </p>
+
+            <p>
+              El corazón le golpeó una vez con fuerza.
+            </p>
+
+            <p>
+              La frase era decisiva por dos razones.
+            </p>
+
+            <p>
+              Primero, porque confirmaba que el comité era una etapa posterior,
+              no el inicio de la conversación.
+            </p>
+
+            <p>
+              Segundo, porque convertía a Enerxia en filtro previo.
+            </p>
+
+            <p>
+              La empresa no solo alojaba la operación.
+            </p>
+
+            <p>
+              Seleccionaba qué llegaba al núcleo.
+            </p>
+
+            <p>
+              Era una caja negra:
+            </p>
+
+            <p>
+              se le ingresaban papeles, nombres, montos, mensajes;
+            </p>
+
+            <p>
+              y desde ella salía solo lo que el comité debía ver.
+            </p>
+
+            <div class="quote">La red no tenía un corazón único. Tenía órganos. Y Enerxia era uno de ellos.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Retrocedió antes de quedar demasiado quieto en el lugar equivocado.
+            </p>
+
+            <p>
+              Un guardia cruzó al fondo del pasillo.
+            </p>
+
+            <p>
+              No lo miró dos veces.
+            </p>
+
+            <p>
+              Tomás bajó por una escalera lateral y volvió al flujo público justo cuando empezaba una mesa sobre gobernanza digital.
+            </p>
+
+            <p>
+              Se sentó en la penúltima fila, no para escucharla, sino para ordenar lo que acababa de ver.
+            </p>
+
+            <p>
+              Laura tenía razón:
+              el foro era solo la fachada.
+            </p>
+
+            <p>
+              Pero también se había quedado corta.
+            </p>
+
+            <p>
+              No era una sola fachada.
+            </p>
+
+            <p>
+              Era una muñeca rusa:
+            </p>
+
+            <p>
+              evento público,
+            </p>
+
+            <p>
+              logística cerrada,
+            </p>
+
+            <p>
+              filtro empresarial,
+            </p>
+
+            <p>
+              comité final.
+            </p>
+
+            <p>
+              Cada capa protegía a la siguiente.
+            </p>
+
+            <p>
+              Y si una se rompía, la red todavía tenía otras donde seguir respirando.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              Durante la pausa de almuerzo se movió otra vez.
+            </p>
+
+            <p>
+              Esta vez hacia la zona de catering interno, donde proveedores entraban y salían con bandejas, cajas y planillas impresas.
+            </p>
+
+            <p>
+              Ahí lo vio.
+            </p>
+
+            <p>
+              Ricardo Cárdenas.
+            </p>
+
+            <p>
+              No porque alguien lo anunciara.
+            </p>
+
+            <p>
+              Porque una credencial colgando del cuello coincidía con la firma escaneada del archivo:
+              <strong>R. Cárdenas — enlace operativo externo</strong>.
+            </p>
+
+            <p>
+              Estaba más delgado de lo que Tomás había imaginado.
+            </p>
+
+            <p>
+              Más cansado.
+            </p>
+
+            <p>
+              Hablaba con dos asistentes logísticos mirando una planilla y haciendo marcas con lápiz, sin el menor aspecto de hombre central.
+            </p>
+
+            <p>
+              Exactamente por eso era perfecto.
+            </p>
+
+            <p>
+              Si mañana aparecía como responsable de “descoordinaciones”, “pagos irregulares” o “gestión de accesos indebidos”,
+              todo el país lo creería.
+            </p>
+
+            <p>
+              Porque ya estaba físicamente donde una culpa mediana parece plausible.
+            </p>
+
+            <div class="quote">La zona de sacrificio no se improvisa el día del escándalo. Se cultiva mucho antes, en la posición exacta donde la culpa se verá natural.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Tomás lo siguió a distancia.
+            </p>
+
+            <p>
+              No demasiado cerca.
+            </p>
+
+            <p>
+              Lo justo para registrar su patrón.
+            </p>
+
+            <p>
+              Cárdenas entraba a zonas públicas con facilidad,
+              pero cada cierto tiempo desaparecía por puertas técnicas y volvía con nuevos listados.
+            </p>
+
+            <p>
+              No era el dueño del flujo.
+            </p>
+
+            <p>
+              Era el hombre que lo mantenía circulando.
+            </p>
+
+            <p>
+              Y entonces, en uno de esos tránsitos, ocurrió algo pequeño y decisivo.
+            </p>
+
+            <p>
+              Cárdenas dejó caer una hoja.
+            </p>
+
+            <p>
+              Nadie más lo notó.
+            </p>
+
+            <p>
+              Tomás esperó dos segundos.
+            </p>
+
+            <p>
+              La recogió.
+            </p>
+
+            <p>
+              Era una impresión interna con tres columnas:
+              <strong>sala</strong>, <strong>responsable</strong>, <strong>movimiento</strong>.
+            </p>
+
+            <p>
+              En la parte inferior, una línea rodeada con lápiz azul:
+            </p>
+
+            <div class="quote">13:40 / CN-7 / Enerxia / caja negra</div>
+
+            <p>
+              Caja negra.
+            </p>
+
+            <p>
+              Esta vez no era una metáfora de Tomás.
+            </p>
+
+            <p>
+              Estaba escrito ahí.
+            </p>
+
+            <p>
+              Dentro de la logística.
+            </p>
+
+            <p>
+              Como nombre operativo.
+            </p>
+
+            <p><strong>Enerxia había bautizado su propia zona de filtrado interno.</strong></p>
+
+            <div class="divider"></div>
+
+            <p>
+              El cuerpo entero de Tomás se ordenó alrededor de esa línea.
+            </p>
+
+            <p>
+              Ya no era solo percepción.
+            </p>
+
+            <p>
+              Había un bloque real, con hora y responsable, llamado “caja negra”.
+            </p>
+
+            <p>
+              Y ocurriría a las 13:40.
+            </p>
+
+            <p>
+              En menos de una hora.
+            </p>
+
+            <p>
+              Miró alrededor.
+            </p>
+
+            <p>
+              El foro seguía impecable.
+            </p>
+
+            <p>
+              Panelistas sonriendo.
+            </p>
+
+            <p>
+              Fotos oficiales.
+            </p>
+
+            <p>
+              Moderadores agradeciendo el espacio.
+            </p>
+
+            <p>
+              Transparencia por todas partes.
+            </p>
+
+            <p>
+              Y debajo de todo eso, una empresa usando una caja negra real para decidir qué información llegaba al núcleo del comité.
+            </p>
+
+            <div class="quote">El país escuchaba discursos sobre transparencia mientras, a veinte metros, una caja negra elegía qué verdades podían circular.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Tomás se metió al baño del segundo piso para enviarle a Laura una foto rápida de la hoja.
+            </p>
+
+            <p>
+              No escribió mucho.
+            </p>
+
+            <p>
+              Solo:
+            </p>
+
+            <div class="quote">Existe. 13:40. CN-7. “caja negra”. Enerxia.</div>
+
+            <p>
+              Laura respondió en menos de un minuto:
+            </p>
+
+            <div class="quote">No entres solo si ves a Valdés antes.</div>
+
+            <p>
+              Otra línea llegó enseguida:
+            </p>
+
+            <div class="quote">Si Valdés aparece antes de “caja negra”, significa que hoy no vienen a observar. Vienen a cerrar algo.</div>
+
+            <p>
+              Tomás guardó el teléfono.
+            </p>
+
+            <p>
+              Sentía el tiempo comprimirse.
+            </p>
+
+            <p>
+              13:40.
+            </p>
+
+            <p>
+              Caja negra.
+            </p>
+
+            <p>
+              CN-7.
+            </p>
+
+            <p>
+              Enerxia.
+            </p>
+
+            <p>
+              El jueves dejaba de ser promesa.
+            </p>
+
+            <p>
+              Ya estaba corriendo.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              A las 13:21 volvió al nivel de los accesos laterales.
+            </p>
+
+            <p>
+              Quería confirmar primero si Valdés estaba en el edificio.
+            </p>
+
+            <p>
+              Y entonces lo vio.
+            </p>
+
+            <p>
+              No entrando por el lobby.
+            </p>
+
+            <p>
+              No dando una charla.
+            </p>
+
+            <p>
+              No frente a cámaras.
+            </p>
+
+            <p>
+              Lo vio saliendo de un ascensor privado, acompañado por una mujer de prensa y dos hombres sin acreditación visible.
+            </p>
+
+            <p>
+              El senador caminaba como si perteneciera a cada rincón del lugar,
+              sin necesidad de saludar mucho, sin necesidad de explicar nada.
+            </p>
+
+            <p>
+              Tomás se quedó inmóvil.
+            </p>
+
+            <p>
+              Laura había sido precisa:
+              si Valdés estaba ahí antes de la caja negra,
+              entonces el comité no venía a escuchar información nueva.
+            </p>
+
+            <p>
+              Venía a cerrar.
+            </p>
+
+            <p>
+              Cerrar a quién comprar.
+            </p>
+
+            <p>
+              Cerrar a quién culpar.
+            </p>
+
+            <p>
+              Cerrar qué relato liberar si algo se desbordaba.
+            </p>
+
+            <div class="quote">No estaban reaccionando a una amenaza futura. Estaban respondiendo a alguien que ya los había obligado a moverse: él.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Valdés dobló hacia la zona no pública.
+            </p>
+
+            <p>
+              Uno de los hombres sin acreditación visible abrió el paso.
+            </p>
+
+            <p>
+              El senador desapareció tras la puerta de vidrio opaco que Tomás había visto antes.
+            </p>
+
+            <p>
+              Caja negra.
+            </p>
+
+            <p>
+              13:40.
+            </p>
+
+            <p>
+              Quedaban menos de veinte minutos.
+            </p>
+
+            <p>
+              Y por primera vez desde que la historia comenzó, Tomás sintió algo peor que el miedo a ser descubierto:
+            </p>
+
+            <p>
+              el miedo a llegar demasiado tarde.
+            </p>
+
+            <p>
+              Porque si la caja negra de Enerxia terminaba su trabajo antes de que él lograra verla,
+              entonces el comité recibiría solo información filtrada,
+              la zona de sacrificio quedaría lista
+              y el relato de contención ya empezaría a respirar antes de que nadie, fuera de ahí, sospechara siquiera que algo había ocurrido.
+            </p>
+
+            <div class="quote">Tomás entendió entonces que el verdadero corazón del sistema no era la sala final. Era el filtro anterior. Y ese filtro estaba a punto de cerrarse delante suyo.</div>
+          </div>
+        </div>
+
+        <div class="reader-bottom">
+          <p class="reader-note">
+            Continúa la historia para descubrir qué ocurre dentro de la caja negra de Enerxia… y por qué lo que ahí se decide puede condenar a Cárdenas antes de que termine la tarde.
+          </p>
+
+          <div class="nav-actions">
+            <a href="capitulo10.html" onclick="goBack(event, 'capitulo10.html')" class="btn btn-ghost">← Capítulo 10</a>
+            <a href="capitulo12.html" class="btn btn-primary">Leer capítulo 12 →</a>
+          </div>
+        </div>
+      </article>
+    </main>
+  </div>
+
+  <script>
+    function goBack(event, fallbackUrl){
+      event.preventDefault();
+
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.location.href = fallbackUrl;
+      }
+    }
+
+    const canvas = document.getElementById("stars");
+    const ctx = canvas.getContext("2d");
+    let stars = [];
+
+    function resize(){
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      createStars();
+    }
+
+    function createStars(){
+      stars = [];
+      const amount = Math.floor((canvas.width * canvas.height) / 14000);
+      for(let i = 0; i < amount; i++){
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.6 + 0.3,
+          speed: Math.random() * 0.35 + 0.08,
+          alpha: Math.random() * 0.7 + 0.2
+        });
+      }
+    }
+
+    function animate(){
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for(const s of stars){
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        s.y += s.speed;
+
+        if(s.y > canvas.height){
+          s.y = -2;
+          s.x = Math.random() * canvas.width;
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener("resize", resize);
+    resize();
+    animate();
+  </script>
+</body>
+</html>
