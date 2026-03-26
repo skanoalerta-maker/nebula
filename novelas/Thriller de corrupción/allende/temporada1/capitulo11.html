@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capítulo 11 | La Vía y la Ruptura</title>
+  <meta
+    name="description"
+    content="Capítulo 11 de La Vía y la Ruptura: La Moneda cae bajo fuego. La dignidad resiste mientras Chile contempla el instante exacto en que una época se rompe."
+  />
+
+  <style>
+    :root{
+      --bg:#05080f;
+      --bg2:#0b1220;
+      --card:rgba(12,18,32,0.82);
+      --line:rgba(255,255,255,0.08);
+      --line-strong:rgba(73,182,255,.24);
+      --text:#f5f8ff;
+      --muted:#aebad1;
+      --muted-2:#7f90ae;
+      --blue:#0A6CFF;
+      --blue2:#49b6ff;
+      --blue-soft:rgba(73,182,255,.14);
+      --shadow:0 24px 60px rgba(0,0,0,.45);
+      --radius:22px;
+      --max:860px;
+    }
+
+    *{
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      color:var(--text);
+      background:#04070d;
+      line-height:1.8;
+      position:relative;
+      overflow-x:hidden;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    #stars{
+      position:fixed;
+      inset:0;
+      width:100%;
+      height:100%;
+      z-index:0;
+      background:
+        radial-gradient(circle at top left, rgba(10,108,255,.12), transparent 24%),
+        radial-gradient(circle at top right, rgba(73,182,255,.08), transparent 20%),
+        linear-gradient(180deg, #04070d 0%, #08101c 45%, #05080f 100%);
+    }
+
+    .page{
+      min-height:100vh;
+      position:relative;
+      z-index:1;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:30;
+      backdrop-filter:blur(14px);
+      background:rgba(5,8,15,.72);
+      border-bottom:1px solid var(--line);
+    }
+
+    .topbar-inner{
+      max-width:1100px;
+      margin:0 auto;
+      padding:16px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .brand-badge{
+      width:38px;
+      height:38px;
+      border-radius:12px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg, rgba(10,108,255,.22), rgba(73,182,255,.08));
+      border:1px solid var(--line-strong);
+      box-shadow:0 0 24px rgba(10,108,255,.12);
+      font-weight:700;
+      color:var(--blue2);
+      flex:0 0 auto;
+    }
+
+    .brand-title{
+      font-size:14px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:#dfe9ff;
+      margin:0 0 2px;
+    }
+
+    .brand-sub{
+      font-size:12px;
+      color:var(--muted-2);
+      margin:0;
+    }
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height:44px;
+      padding:0 18px;
+      border-radius:12px;
+      font-size:14px;
+      font-weight:700;
+      transition:transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+      border:1px solid transparent;
+      cursor:pointer;
+    }
+
+    .btn:hover{
+      transform:translateY(-1px);
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg, var(--blue) 0%, #0d7eff 100%);
+      color:white;
+      box-shadow:0 12px 28px rgba(10,108,255,.28);
+    }
+
+    .btn-primary:hover{
+      background:linear-gradient(135deg, #0c62e0 0%, #0a6cef 100%);
+    }
+
+    .btn-ghost{
+      background:rgba(255,255,255,.03);
+      border-color:var(--line);
+      color:#dbe8ff;
+    }
+
+    .btn-ghost:hover{
+      background:rgba(255,255,255,.06);
+      border-color:var(--line-strong);
+    }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      border-bottom:1px solid rgba(255,255,255,.04);
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(180deg, rgba(5,8,15,.58) 0%, rgba(5,8,15,.86) 80%, rgba(5,8,15,1) 100%),
+        url("../assets/allende-portada.jpg");
+      background-size:cover;
+      background-position:center;
+      opacity:.28;
+      filter:saturate(.9) contrast(1.03);
+    }
+
+    .hero-inner{
+      position:relative;
+      z-index:1;
+      max-width:1100px;
+      margin:0 auto;
+      padding:56px 20px 34px;
+    }
+
+    .crumb{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.06);
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:18px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:28px;
+      align-items:end;
+    }
+
+    .hero-copy h1{
+      margin:0 0 12px;
+      font-size:clamp(34px, 6vw, 64px);
+      line-height:1.02;
+      letter-spacing:.02em;
+      color:white;
+      text-shadow:0 0 22px rgba(10,108,255,.18);
+    }
+
+    .eyebrow{
+      margin:0 0 14px;
+      color:var(--blue2);
+      font-weight:700;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      font-size:12px;
+    }
+
+    .hero-copy p{
+      margin:0;
+      max-width:700px;
+      color:#d4def3;
+      font-size:18px;
+      line-height:1.75;
+    }
+
+    .hero-side{
+      display:flex;
+      justify-content:flex-end;
+    }
+
+    .chapter-card{
+      width:min(100%, 360px);
+      background:linear-gradient(180deg, rgba(12,18,32,.75), rgba(9,13,24,.88));
+      border:1px solid rgba(73,182,255,.18);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:22px;
+      backdrop-filter:blur(16px);
+    }
+
+    .chapter-label{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 12px;
+      border-radius:999px;
+      background:var(--blue-soft);
+      border:1px solid rgba(73,182,255,.18);
+      color:var(--blue2);
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:14px;
+    }
+
+    .chapter-card h2{
+      margin:0 0 10px;
+      font-size:24px;
+      line-height:1.15;
+      color:white;
+    }
+
+    .chapter-card p{
+      margin:0 0 18px;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.7;
+    }
+
+    .meta{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .meta-item{
+      padding:12px;
+      border-radius:14px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.05);
+    }
+
+    .meta-k{
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--muted-2);
+      margin:0 0 6px;
+    }
+
+    .meta-v{
+      margin:0;
+      font-size:13px;
+      color:#e7efff;
+      font-weight:700;
+    }
+
+    .content-wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:28px 20px 80px;
+    }
+
+    .reader{
+      position:relative;
+      background:linear-gradient(180deg, rgba(11,18,32,.58), rgba(8,13,24,.72));
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:22px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      backdrop-filter:blur(4px);
+    }
+
+    .reader-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:18px 22px;
+      border-bottom:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+    }
+
+    .reader-top-left h3{
+      margin:0 0 4px;
+      font-size:18px;
+      color:#edf3ff;
+    }
+
+    .reader-top-left p{
+      margin:0;
+      color:var(--muted-2);
+      font-size:13px;
+    }
+
+    .reader-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:34px;
+      padding:0 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.06);
+      color:#cfe0ff;
+      font-size:12px;
+      font-weight:700;
+      white-space:nowrap;
+    }
+
+    .reader-body{
+      padding:34px 26px 18px;
+      position:relative;
+    }
+
+    .story{
+      max-width:720px;
+      margin:0 auto;
+      position:relative;
+      z-index:2;
+    }
+
+    .lead{
+      font-size:19px;
+      line-height:1.9;
+      color:#ecf3ff;
+      margin:0 0 26px;
+      padding:18px 18px 18px 20px;
+      border-left:3px solid rgba(73,182,255,.44);
+      background:rgba(9,18,35,.68);
+      border-radius:0 14px 14px 0;
+      backdrop-filter:blur(4px);
+    }
+
+    .story p{
+      margin:0 0 22px;
+      color:#e4ecfb;
+      font-size:18px;
+      line-height:1.95;
+      letter-spacing:.01em;
+      text-shadow:0 1px 2px rgba(0,0,0,.4);
+    }
+
+    .story p strong{
+      color:#ffffff;
+      font-weight:700;
+    }
+
+    .story .quote{
+      margin:34px 0;
+      padding:20px 22px;
+      border-radius:18px;
+      background:linear-gradient(180deg, rgba(10,108,255,.12), rgba(73,182,255,.06));
+      border:1px solid rgba(73,182,255,.14);
+      color:#edf5ff;
+      font-size:19px;
+      line-height:1.7;
+      text-align:center;
+      box-shadow:0 12px 30px rgba(0,0,0,.18);
+      backdrop-filter:blur(4px);
+    }
+
+    .story .divider{
+      width:86px;
+      height:1px;
+      background:linear-gradient(90deg, transparent, rgba(73,182,255,.6), transparent);
+      margin:34px auto;
+    }
+
+    .reader-bottom{
+      padding:24px 26px 28px;
+      border-top:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .reader-note{
+      color:var(--muted-2);
+      font-size:13px;
+      margin:0;
+    }
+
+    .nav-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    @media (max-width: 900px){
+      .hero-grid{
+        grid-template-columns:1fr;
+      }
+
+      .hero-side{
+        justify-content:flex-start;
+      }
+
+      .chapter-card{
+        width:100%;
+        max-width:unset;
+      }
+    }
+
+    @media (max-width: 640px){
+      .topbar-inner{
+        padding:14px 14px;
+      }
+
+      .hero-inner{
+        padding:34px 14px 22px;
+      }
+
+      .content-wrap{
+        padding:20px 14px 60px;
+      }
+
+      .reader-top,
+      .reader-body,
+      .reader-bottom{
+        padding-left:16px;
+        padding-right:16px;
+      }
+
+      .reader-body{
+        padding-top:24px;
+      }
+
+      .hero-copy p,
+      .story p,
+      .lead{
+        font-size:16px;
+      }
+
+      .meta{
+        grid-template-columns:1fr;
+      }
+
+      .top-actions{
+        width:100%;
+      }
+
+      .btn{
+        width:100%;
+      }
+
+      .nav-actions{
+        width:100%;
+      }
+
+      .nav-actions .btn{
+        flex:1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="stars"></canvas>
+
+  <div class="page">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <div class="brand-badge">N</div>
+          <div>
+            <p class="brand-title">La Vía y la Ruptura</p>
+            <p class="brand-sub">Drama histórico chileno</p>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <a href="capitulo10.html" class="btn btn-ghost">← Capítulo anterior</a>
+          <a href="capitulo12.html" class="btn btn-primary">Siguiente capítulo →</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="crumb">Inicio / Corrupción y poder / Capítulo 11</div>
+
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Capítulo 11</p>
+            <h1>La Moneda bajo fuego</h1>
+            <p>
+              El golpe ya no solo ocupa la mañana: ahora destruye el corazón visible de la República. La resistencia queda encerrada en un edificio convertido en símbolo, mientras el país entero escucha cómo una época es atacada con fuego real.
+            </p>
+          </div>
+
+          <div class="hero-side">
+            <aside class="chapter-card">
+              <div class="chapter-label">El último reducto</div>
+              <h2>Cuando la dignidad queda sola frente a la fuerza</h2>
+              <p>
+                La Moneda deja de ser sede de gobierno y se transforma en escenario moral de una nación. Dentro, resiste la lealtad. Afuera, avanza el poder decidido a aplastar hasta el símbolo.
+              </p>
+
+              <div class="meta">
+                <div class="meta-item">
+                  <p class="meta-k">Estado</p>
+                  <p class="meta-v">Gratis</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Género</p>
+                  <p class="meta-v">Histórico</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Temporada</p>
+                  <p class="meta-v">11 de 17</p>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="content-wrap">
+      <article class="reader">
+        <div class="reader-top">
+          <div class="reader-top-left">
+            <h3>Capítulo 11: La Moneda bajo fuego</h3>
+            <p>Lectura gratuita · El instante en que la dignidad queda sitiada por completo</p>
+          </div>
+          <div class="reader-badge">Acceso abierto</div>
+        </div>
+
+        <div class="reader-body">
+          <div class="story">
+            <p class="lead">
+              Después del amanecer vino el estruendo.
+              No el rumor del golpe.
+              No la intuición.
+              No la voz tensa de los comunicados.
+              Vino el fuego.
+              Vino la prueba material y brutal de que el país ya no estaba siendo solo amenazado:
+              estaba siendo sometido.
+              La Moneda quedó bajo ataque,
+              y con ella quedó bajo ataque la última forma visible de una legitimidad que se negaba a arrodillarse.
+            </p>
+
+            <p>
+              El edificio presidencial dejó de ser edificio.
+            </p>
+
+            <p>
+              Se convirtió en símbolo sitiado.
+            </p>
+
+            <p>
+              En una piedra viva sobre la que cayó todo el peso del nuevo lenguaje nacional:
+              el lenguaje de las armas,
+              del ultimátum,
+              del aplastamiento sin disimulo.
+            </p>
+
+            <p>
+              Dentro de sus muros ya no estaban solo funcionarios, pasillos y oficinas.
+            </p>
+
+            <p>
+              Estaba concentrada una pregunta histórica:
+              cuánto puede resistir la dignidad
+              cuando ya no le queda más protección que su propia conciencia.
+            </p>
+
+            <div class="quote">Hay edificios que representan el poder. Y hay días en que un edificio representa la última defensa moral de un país entero.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Afuera, Chile escuchaba.
+            </p>
+
+            <p>
+              Tal vez no todos veían con exactitud lo que estaba ocurriendo,
+              pero la imaginación no necesitaba demasiados detalles.
+            </p>
+
+            <p>
+              Bastaba la noticia.
+            </p>
+
+            <p>
+              Bastaba el tono.
+            </p>
+
+            <p>
+              Bastaba la certeza de que la sede de la República estaba siendo tratada no como una institución legítima,
+              sino como objetivo a neutralizar.
+            </p>
+
+            <p>
+              Ese paso lo cambia todo.
+            </p>
+
+            <p>
+              Porque una vez que el corazón visible del orden democrático puede ser atacado como enemigo,
+              ya no queda espacio para fingir que lo que ocurre es corrección política o restauración institucional.
+            </p>
+
+            <p><strong>Lo que estaba ocurriendo era una conquista interna por la fuerza.</strong></p>
+
+            <div class="quote">Cuando el poder bombardea el símbolo de la legalidad, deja de fingir que viene a salvarla.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Allende seguía allí.
+            </p>
+
+            <p>
+              Esa imagen,
+              aún antes de convertirse en memoria,
+              ya era historia pura.
+            </p>
+
+            <p>
+              Un presidente resistiendo en el centro del Estado que se deshacía bajo sus pies.
+            </p>
+
+            <p>
+              Un hombre obligado a elegir no entre victoria y derrota,
+              sino entre dignidad y rendición.
+            </p>
+
+            <p>
+              Esa es una clase de elección que excede la política cotidiana.
+            </p>
+
+            <p>
+              Entra en la materia de los símbolos duraderos.
+            </p>
+
+            <p>
+              Porque hay momentos en que la biografía individual deja de pertenecer solo a quien la vive
+              y pasa a formar parte del relato irreversible de un pueblo.
+            </p>
+
+            <p>
+              Allende ya estaba entrando allí.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              La Moneda resistía,
+              pero la desproporción era inmensa.
+            </p>
+
+            <p>
+              Esa es otra de las verdades duras de los días heroicos:
+              el heroísmo no elimina la desigualdad de fuerzas.
+            </p>
+
+            <p>
+              La ilumina.
+            </p>
+
+            <p>
+              La vuelve aún más visible.
+            </p>
+
+            <p>
+              De un lado,
+              la decisión de no entregarse dócilmente.
+            </p>
+
+            <p>
+              Del otro,
+              la maquinaria completa de una fuerza que había decidido terminar no solo con un gobierno,
+              sino con la posibilidad de que esa experiencia siguiera respirando.
+            </p>
+
+            <p>
+              Esa asimetría hizo del momento algo todavía más épico y más trágico.
+            </p>
+
+            <p>
+              Porque no había confusión posible:
+              no se estaba frente a dos legitimidades iguales disputando poder.
+            </p>
+
+            <p>
+              Se estaba frente a la violencia organizada avanzando sobre una legitimidad sitiada.
+            </p>
+
+            <div class="quote">La épica no nace de la facilidad. Nace cuando alguien permanece de pie aun sabiendo que la fuerza que viene encima es abrumadora.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Afuera, el pueblo sintió que algo irreparable estaba ocurriendo.
+            </p>
+
+            <p>
+              Algunas personas lloraron sin entender todavía toda la magnitud.
+            </p>
+
+            <p>
+              Otras apretaron los dientes con rabia muda.
+            </p>
+
+            <p>
+              Otras quedaron inmóviles, como si escuchar bastara para comprender que el país estaba cruzando un umbral del que ya no volvería intacto.
+            </p>
+
+            <p>
+              El bombardeo de La Moneda no era solo un hecho militar.
+            </p>
+
+            <p>
+              Era una escena fundacional del nuevo terror.
+            </p>
+
+            <p>
+              Un mensaje.
+            </p>
+
+            <p>
+              Una declaración.
+            </p>
+
+            <p>
+              Una pedagogía del miedo.
+            </p>
+
+            <p>
+              Si podían hacer eso con el centro del poder democrático,
+              podían hacer cualquier cosa con el resto del país.
+            </p>
+
+            <div class="quote">La violencia del golpe no solo buscaba vencer. Buscaba enseñar, desde el primer día, qué clase de obediencia pensaba imponer.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Dentro del edificio,
+              cada minuto debía sentirse como una compresión del tiempo.
+            </p>
+
+            <p>
+              Las decisiones ya no pertenecían al ritmo de la política normal.
+            </p>
+
+            <p>
+              Pertenecían al orden extremo de las horas finales.
+            </p>
+
+            <p>
+              Allí la lealtad también cambia de naturaleza.
+            </p>
+
+            <p>
+              Ya no es solo adhesión.
+            </p>
+
+            <p>
+              Es permanencia.
+            </p>
+
+            <p>
+              Es aceptar que quedarse tiene un sentido más grande que salvarse individualmente.
+            </p>
+
+            <p>
+              Quienes acompañaron ese momento quedaron ligados para siempre a una escena que excedía cualquier cálculo personal.
+            </p>
+
+            <p>
+              Ese es el costo y la grandeza de la historia cuando entra sin piedad sobre los cuerpos reales.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              El fuego sobre La Moneda también quemó algo más abstracto,
+              pero igual de profundo:
+              la ilusión de que el quiebre podría administrarse sin brutalidad visible.
+            </p>
+
+            <p>
+              Ya no había disimulo posible.
+            </p>
+
+            <p>
+              Ya no había lenguaje de corrección, de transición o de necesidad técnica que pudiera cubrir lo que el país veía o intuía.
+            </p>
+
+            <p>
+              La República estaba siendo atacada en su propio centro.
+            </p>
+
+            <p>
+              El nuevo orden nacía mostrando su esencia:
+              no la de una pausa,
+              sino la de una imposición violenta sobre la legitimidad popular.
+            </p>
+
+            <p><strong>El golpe dejó de ser solo cambio de mando. Se reveló como guerra contra un símbolo.</strong></p>
+
+            <div class="quote">Bombardear un palacio presidencial no es solo tomar el poder. Es declarar que la voluntad democrática puede ser reducida a escombros si desafía demasiado a quienes controlan la fuerza.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              En el país profundo,
+              esa imagen se incrustó de inmediato.
+            </p>
+
+            <p>
+              Aunque no todos la vieran en tiempo real,
+              todos la recibirían como herida.
+            </p>
+
+            <p>
+              Durante años,
+              durante décadas,
+              seguiría viva en la memoria colectiva:
+              el palacio en llamas,
+              el humo,
+              el cerco,
+              la resistencia,
+              la certeza de que la democracia chilena no había muerto de cansancio,
+              sino bajo ataque.
+            </p>
+
+            <p>
+              Esa diferencia importa.
+            </p>
+
+            <p>
+              Importa porque define la memoria moral de una nación.
+            </p>
+
+            <p>
+              No fue un simple final administrativo.
+            </p>
+
+            <p>
+              Fue una destrucción cargada de mensaje y de escarmiento.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              Allende,
+              en medio de aquello,
+              se volvió algo más que presidente.
+            </p>
+
+            <p>
+              Se volvió la imagen de una negativa.
+            </p>
+
+            <p>
+              No la negativa ingenua al peligro.
+            </p>
+
+            <p>
+              La negativa histórica a legitimar con sumisión el triunfo de la fuerza.
+            </p>
+
+            <p>
+              Allí reside buena parte de la dimensión épica del momento.
+            </p>
+
+            <p>
+              No en la ilusión de victoria,
+              sino en el rechazo a convertir la derrota material en humillación moral.
+            </p>
+
+            <p>
+              Hay derrotas que, por la manera en que son enfrentadas,
+              dejan sembrada una dignidad más durable que muchas victorias.
+            </p>
+
+            <p>
+              Lo que ocurrió en La Moneda empezó a entrar en esa zona.
+            </p>
+
+            <div class="quote">A veces la historia no recuerda primero quién venció, sino quién se negó a inclinar la cabeza cuando la fuerza exigió obediencia total.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Para los sectores que apoyaban el golpe,
+              ese momento también marcó un no retorno.
+            </p>
+
+            <p>
+              Ya no había vuelta elegante.
+            </p>
+
+            <p>
+              Ya no había retorno a la normalidad anterior.
+            </p>
+
+            <p>
+              Habían cruzado el punto donde el poder necesita justificarse con la violencia que acaba de exhibir.
+            </p>
+
+            <p>
+              Por eso el nuevo régimen no nacería solo de la fuerza,
+              sino de la necesidad permanente de explicar, ocultar, distorsionar o glorificar esa fuerza.
+            </p>
+
+            <p>
+              Todo autoritarismo lleva esa herida de origen.
+            </p>
+
+            <p>
+              Y el bombardeo de La Moneda fue una herida demasiado visible como para desaparecer sin batalla en la memoria.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              Esa mañana,
+              Chile no solo perdió una sede de gobierno bajo ataque.
+            </p>
+
+            <p>
+              Perdió la inocencia histórica de creer que sus conflictos más profundos siempre terminarían resolviéndose dentro de los márgenes republicanos.
+            </p>
+
+            <p>
+              El fuego enseñó otra verdad:
+              que cuando los privilegios se sienten demasiado amenazados,
+              la democracia puede ser abandonada por quienes más la invocaban,
+              siempre que dejarla atrás les permita conservar poder.
+            </p>
+
+            <p>
+              Esa lección quedó inscrita en piedra, humo y memoria.
+            </p>
+
+            <p>
+              Y ninguna generación posterior pudo leerla sin estremecerse.
+            </p>
+
+            <div class="quote">La Moneda ardió, pero en ese incendio también se iluminó la verdad más dura del país: que la República podía ser amada en discurso y traicionada en el instante decisivo.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Al final,
+              lo que quedó en pie no fue la seguridad de una victoria.
+            </p>
+
+            <p>
+              Quedó otra cosa.
+            </p>
+
+            <p>
+              La memoria de una resistencia.
+            </p>
+
+            <p>
+              La imagen de un último acto.
+            </p>
+
+            <p>
+              El peso insoportable de saber que la dignidad había quedado sola frente a la fuerza total y, aun así, no había renunciado a su forma.
+            </p>
+
+            <p>
+              Ese tipo de escenas no terminan cuando termina el día.
+            </p>
+
+            <p>
+              Siguen trabajando la conciencia de una nación durante generaciones.
+            </p>
+
+            <p>
+              Porque lo que ardió allí no fue únicamente un palacio.
+            </p>
+
+            <p>
+              Ardió una época.
+            </p>
+
+            <p>
+              Y en medio del fuego quedó fija una imagen imposible de borrar:
+            </p>
+
+            <p><strong>la dignidad, completamente cercada, negándose todavía a pedir permiso para existir.</strong></p>
+          </div>
+        </div>
+
+        <div class="reader-bottom">
+          <p class="reader-note">
+            Continúa al capítulo 12 para entrar en el instante final de Allende, el silencio que sigue al estruendo y el nacimiento de la larga noche que caerá sobre Chile.
+          </p>
+
+          <div class="nav-actions">
+            <a href="capitulo10.html" class="btn btn-ghost">← Capítulo 10</a>
+            <a href="capitulo12.html" class="btn btn-primary">Leer capítulo 12 →</a>
+          </div>
+        </div>
+      </article>
+    </main>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("stars");
+    const ctx = canvas.getContext("2d");
+    let stars = [];
+
+    function resize(){
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      createStars();
+    }
+
+    function createStars(){
+      stars = [];
+      const amount = Math.floor((canvas.width * canvas.height) / 14000);
+      for(let i = 0; i < amount; i++){
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.6 + 0.3,
+          speed: Math.random() * 0.35 + 0.08,
+          alpha: Math.random() * 0.7 + 0.2
+        });
+      }
+    }
+
+    function animate(){
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for(const s of stars){
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        s.y += s.speed;
+
+        if(s.y > canvas.height){
+          s.y = -2;
+          s.x = Math.random() * canvas.width;
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener("resize", resize);
+    resize();
+    animate();
+  </script>
+</body>
+</html>
