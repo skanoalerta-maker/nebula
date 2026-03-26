@@ -1,0 +1,1719 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capítulo 8 | El Precio del Silencio</title>
+  <meta
+    name="description"
+    content="Capítulo 8 de El Precio del Silencio: Lo que costaba una portada."
+  />
+
+  <style>
+    :root{
+      --bg:#05080f;
+      --bg2:#0b1220;
+      --card:rgba(12,18,32,0.82);
+      --line:rgba(255,255,255,0.08);
+      --line-strong:rgba(73,182,255,.24);
+      --text:#f5f8ff;
+      --muted:#aebad1;
+      --muted-2:#7f90ae;
+      --blue:#0A6CFF;
+      --blue2:#49b6ff;
+      --blue-soft:rgba(73,182,255,.14);
+      --shadow:0 24px 60px rgba(0,0,0,.45);
+      --radius:22px;
+      --max:860px;
+    }
+
+    *{
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      color:var(--text);
+      background:#04070d;
+      line-height:1.8;
+      position:relative;
+      overflow-x:hidden;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    #stars{
+      position:fixed;
+      inset:0;
+      width:100%;
+      height:100%;
+      z-index:0;
+      background:
+        radial-gradient(circle at top left, rgba(10,108,255,.12), transparent 24%),
+        radial-gradient(circle at top right, rgba(73,182,255,.08), transparent 20%),
+        linear-gradient(180deg, #04070d 0%, #08101c 45%, #05080f 100%);
+    }
+
+    .page{
+      min-height:100vh;
+      position:relative;
+      z-index:1;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:30;
+      backdrop-filter:blur(14px);
+      background:rgba(5,8,15,.72);
+      border-bottom:1px solid var(--line);
+    }
+
+    .topbar-inner{
+      max-width:1100px;
+      margin:0 auto;
+      padding:16px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .brand-badge{
+      width:38px;
+      height:38px;
+      border-radius:12px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg, rgba(10,108,255,.22), rgba(73,182,255,.08));
+      border:1px solid var(--line-strong);
+      box-shadow:0 0 24px rgba(10,108,255,.12);
+      font-weight:700;
+      color:var(--blue2);
+      flex:0 0 auto;
+    }
+
+    .brand-title{
+      font-size:14px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:#dfe9ff;
+      margin:0 0 2px;
+    }
+
+    .brand-sub{
+      font-size:12px;
+      color:var(--muted-2);
+      margin:0;
+    }
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height:44px;
+      padding:0 18px;
+      border-radius:12px;
+      font-size:14px;
+      font-weight:700;
+      transition:transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+      border:1px solid transparent;
+      cursor:pointer;
+    }
+
+    .btn:hover{
+      transform:translateY(-1px);
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg, var(--blue) 0%, #0d7eff 100%);
+      color:white;
+      box-shadow:0 12px 28px rgba(10,108,255,.28);
+    }
+
+    .btn-primary:hover{
+      background:linear-gradient(135deg, #0c62e0 0%, #0a6cef 100%);
+    }
+
+    .btn-ghost{
+      background:rgba(255,255,255,.03);
+      border-color:var(--line);
+      color:#dbe8ff;
+    }
+
+    .btn-ghost:hover{
+      background:rgba(255,255,255,.06);
+      border-color:var(--line-strong);
+    }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      border-bottom:1px solid rgba(255,255,255,.04);
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(180deg, rgba(5,8,15,.58) 0%, rgba(5,8,15,.86) 80%, rgba(5,8,15,1) 100%),
+        url("../assets/temporada1.jpg");
+      background-size:cover;
+      background-position:center;
+      opacity:.28;
+      filter:saturate(.9) contrast(1.03);
+    }
+
+    .hero-inner{
+      position:relative;
+      z-index:1;
+      max-width:1100px;
+      margin:0 auto;
+      padding:56px 20px 34px;
+    }
+
+    .crumb{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.06);
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:18px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:28px;
+      align-items:end;
+    }
+
+    .hero-copy h1{
+      margin:0 0 12px;
+      font-size:clamp(34px, 6vw, 64px);
+      line-height:1.02;
+      letter-spacing:.02em;
+      color:white;
+      text-shadow:0 0 22px rgba(10,108,255,.18);
+    }
+
+    .eyebrow{
+      margin:0 0 14px;
+      color:var(--blue2);
+      font-weight:700;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      font-size:12px;
+    }
+
+    .hero-copy p{
+      margin:0;
+      max-width:700px;
+      color:#d4def3;
+      font-size:18px;
+      line-height:1.75;
+    }
+
+    .hero-side{
+      display:flex;
+      justify-content:flex-end;
+    }
+
+    .chapter-card{
+      width:min(100%, 360px);
+      background:linear-gradient(180deg, rgba(12,18,32,.75), rgba(9,13,24,.88));
+      border:1px solid rgba(73,182,255,.18);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:22px;
+      backdrop-filter:blur(16px);
+    }
+
+    .chapter-label{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 12px;
+      border-radius:999px;
+      background:var(--blue-soft);
+      border:1px solid rgba(73,182,255,.18);
+      color:var(--blue2);
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:14px;
+    }
+
+    .chapter-card h2{
+      margin:0 0 10px;
+      font-size:24px;
+      line-height:1.15;
+      color:white;
+    }
+
+    .chapter-card p{
+      margin:0 0 18px;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.7;
+    }
+
+    .meta{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .meta-item{
+      padding:12px;
+      border-radius:14px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.05);
+    }
+
+    .meta-k{
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--muted-2);
+      margin:0 0 6px;
+    }
+
+    .meta-v{
+      margin:0;
+      font-size:13px;
+      color:#e7efff;
+      font-weight:700;
+    }
+
+    .content-wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:28px 20px 80px;
+    }
+
+    .reader{
+      position:relative;
+      background:linear-gradient(180deg, rgba(11,18,32,.58), rgba(8,13,24,.72));
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:22px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      backdrop-filter:blur(4px);
+    }
+
+    .reader-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:18px 22px;
+      border-bottom:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+    }
+
+    .reader-top-left h3{
+      margin:0 0 4px;
+      font-size:18px;
+      color:#edf3ff;
+    }
+
+    .reader-top-left p{
+      margin:0;
+      color:var(--muted-2);
+      font-size:13px;
+    }
+
+    .reader-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:34px;
+      padding:0 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.06);
+      color:#cfe0ff;
+      font-size:12px;
+      font-weight:700;
+      white-space:nowrap;
+    }
+
+    .reader-body{
+      padding:34px 26px 18px;
+      position:relative;
+    }
+
+    .story{
+      max-width:720px;
+      margin:0 auto;
+      position:relative;
+      z-index:2;
+    }
+
+    .lead{
+      font-size:19px;
+      line-height:1.9;
+      color:#ecf3ff;
+      margin:0 0 26px;
+      padding:18px 18px 18px 20px;
+      border-left:3px solid rgba(73,182,255,.44);
+      background:rgba(9,18,35,.68);
+      border-radius:0 14px 14px 0;
+      backdrop-filter:blur(4px);
+    }
+
+    .story p{
+      margin:0 0 22px;
+      color:#e4ecfb;
+      font-size:18px;
+      line-height:1.95;
+      letter-spacing:.01em;
+      text-shadow:0 1px 2px rgba(0,0,0,.4);
+    }
+
+    .story p strong{
+      color:#ffffff;
+      font-weight:700;
+    }
+
+    .story .quote{
+      margin:34px 0;
+      padding:20px 22px;
+      border-radius:18px;
+      background:linear-gradient(180deg, rgba(10,108,255,.12), rgba(73,182,255,.06));
+      border:1px solid rgba(73,182,255,.14);
+      color:#edf5ff;
+      font-size:19px;
+      line-height:1.7;
+      text-align:center;
+      box-shadow:0 12px 30px rgba(0,0,0,.18);
+      backdrop-filter:blur(4px);
+    }
+
+    .story .divider{
+      width:86px;
+      height:1px;
+      background:linear-gradient(90deg, transparent, rgba(73,182,255,.6), transparent);
+      margin:34px auto;
+    }
+
+    .reader-bottom{
+      padding:24px 26px 28px;
+      border-top:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .reader-note{
+      color:var(--muted-2);
+      font-size:13px;
+      margin:0;
+    }
+
+    .nav-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    @media (max-width: 900px){
+      .hero-grid{
+        grid-template-columns:1fr;
+      }
+
+      .hero-side{
+        justify-content:flex-start;
+      }
+
+      .chapter-card{
+        width:100%;
+        max-width:unset;
+      }
+    }
+
+    @media (max-width: 640px){
+      .topbar-inner{
+        padding:14px 14px;
+      }
+
+      .hero-inner{
+        padding:34px 14px 22px;
+      }
+
+      .content-wrap{
+        padding:20px 14px 60px;
+      }
+
+      .reader-top,
+      .reader-body,
+      .reader-bottom{
+        padding-left:16px;
+        padding-right:16px;
+      }
+
+      .reader-body{
+        padding-top:24px;
+      }
+
+      .hero-copy p,
+      .story p,
+      .lead{
+        font-size:16px;
+      }
+
+      .meta{
+        grid-template-columns:1fr;
+      }
+
+      .top-actions{
+        width:100%;
+      }
+
+      .btn{
+        width:100%;
+      }
+
+      .nav-actions{
+        width:100%;
+      }
+
+      .nav-actions .btn{
+        flex:1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="stars"></canvas>
+
+  <div class="page">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <div class="brand-badge">N</div>
+          <div>
+            <p class="brand-title">El Precio del Silencio</p>
+            <p class="brand-sub">Thriller político y empresarial</p>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <a href="capitulo7.html" onclick="goBack(event, 'capitulo7.html')" class="btn btn-ghost">← Capítulo anterior</a>
+          <a href="capitulo9.html" class="btn btn-primary">Siguiente capítulo →</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="crumb">Inicio / Capítulos / Capítulo 8</div>
+
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Capítulo 8</p>
+            <h1>Lo que costaba una portada</h1>
+            <p>
+              El pendrive plateado no guarda solo archivos. Guarda el precio exacto de lo que la red paga para hundir o levantar una historia.
+              Y entre esas cifras, Tomás encuentra una operación que convierte el periodismo en otra mesa del comité.
+            </p>
+          </div>
+
+          <div class="hero-side">
+            <aside class="chapter-card">
+              <div class="chapter-label">La prensa ya estaba adentro</div>
+              <h2>Una portada también puede comprarse, vaciarse o matarse</h2>
+              <p>
+                Después de escapar del archivo, Tomás abre el pendrive que Laura protegió durante años.
+                Lo que aparece adentro no solo explica por qué ciertas investigaciones mueren: explica cuánto cuesta cada silencio.
+              </p>
+
+              <div class="meta">
+                <div class="meta-item">
+                  <p class="meta-k">Estado</p>
+                  <p class="meta-v">Gratis</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Género</p>
+                  <p class="meta-v">Suspenso</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Temporada</p>
+                  <p class="meta-v">8 de 17</p>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="content-wrap">
+      <article class="reader">
+        <div class="reader-top">
+          <div class="reader-top-left">
+            <h3>Capítulo 8: Lo que costaba una portada</h3>
+            <p>Lectura gratuita · El precio del silencio ya tiene tarifa</p>
+          </div>
+          <div class="reader-badge">Acceso abierto</div>
+        </div>
+
+        <div class="reader-body">
+          <div class="story">
+            <p class="lead">
+              Tomás no corrió hasta verse realmente lejos. Corrió hasta que la ciudad volvió a tragárselo.
+              Primero cruzó una calle sin registrar el tránsito, después dos pasajes laterales, después una galería
+              donde el olor a comida recalentada y desinfectante barato lo obligó a bajar la velocidad. Solo entonces,
+              con la respiración cortada y la camiseta pegada a la espalda, entendió que seguía sosteniendo el pendrive plateado
+              con tanta fuerza que le dolían los dedos.
+            </p>
+
+            <p>
+              No sabía qué había pasado arriba.
+            </p>
+
+            <p>
+              No sabía si Laura había logrado negociar tiempo.
+            </p>
+
+            <p>
+              No sabía si el hombre del café había subido solo o acompañado.
+            </p>
+
+            <p>
+              Y lo peor: no sabía si lo correcto era volver o desaparecer por unas horas.
+            </p>
+
+            <p>
+              Pero sí sabía una cosa con una claridad brutal:
+            </p>
+
+            <p><strong>el pendrive no había sido lo último que Laura le pasó por desesperación. Había sido lo primero que quería salvar.</strong></p>
+
+            <div class="quote">Cuando alguien te entrega un objeto mientras el edificio empieza a cerrarse, ese objeto deja de ser evidencia. Se vuelve prioridad.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Entró a un café pequeño cerca de Avenida Matta, uno de esos locales estrechos donde el vapor de la máquina
+              de espresso parece sostener el lugar más que las paredes. Eligió una mesa del fondo, pidió un cortado sin azúcar
+              que no pensaba tomar y sacó el notebook desde la mochila con movimientos lentos, deliberados, como si bajar la velocidad
+              pudiera ordenar la cabeza.
+            </p>
+
+            <p>
+              Miró el pendrive antes de conectarlo.
+            </p>
+
+            <p>
+              No tenía marca.
+            </p>
+
+            <p>
+              No tenía etiqueta.
+            </p>
+
+            <p>
+              Solo una carcasa metálica opaca, rayada en las esquinas, con un desgaste que sugería años de uso
+              y años de ocultamiento.
+            </p>
+
+            <p>
+              Lo enchufó.
+            </p>
+
+            <p>
+              El sistema tardó en reconocerlo.
+            </p>
+
+            <p>
+              Durante tres segundos no apareció nada.
+            </p>
+
+            <p>
+              Luego, una carpeta única:
+              <strong>REV_DOM_3</strong>.
+            </p>
+
+            <p>
+              Debajo, una segunda:
+              <strong>NO_FIRMADO</strong>.
+            </p>
+
+            <p>
+              Y una tercera, siniestramente sencilla:
+              <strong>COSTOS</strong>.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              Tomás abrió primero la carpeta “NO_FIRMADO”.
+            </p>
+
+            <p>
+              Adentro había borradores, capturas de correos, maquetas de diagramación,
+              minutas editoriales y un documento principal fechado cuatro años atrás.
+            </p>
+
+            <p>
+              El nombre del archivo era insoportablemente claro:
+              <strong>portada_valdes_final_ls.docx</strong>.
+            </p>
+
+            <p>
+              LS.
+            </p>
+
+            <p>
+              Laura Sanz.
+            </p>
+
+            <p>
+              Lo abrió.
+            </p>
+
+            <p>
+              Y por primera vez leyó entero el reportaje que nunca llegó a publicarse.
+            </p>
+
+            <div class="quote">No era solo bueno. Era devastador.</div>
+
+            <p>
+              El texto no gritaba.
+            </p>
+
+            <p>
+              No moralizaba.
+            </p>
+
+            <p>
+              No usaba adjetivos heroicos ni frases infladas.
+            </p>
+
+            <p>
+              Hacía algo mucho más peligroso: unía piezas con serenidad.
+            </p>
+
+            <p>
+              Mostraba cómo el senador Valdés aparecía, una y otra vez, en nodos donde coincidían empresas,
+              asesores, estudios jurídicos, mesas legislativas y operadores de medios.
+            </p>
+
+            <p>
+              No lo acusaba de recibir una bolsa de dinero en un estacionamiento.
+            </p>
+
+            <p>
+              Lo ubicaba en la función exacta que la red necesitaba:
+            </p>
+
+            <p>
+              el hombre que podía transformar intereses privados en tiempo político.
+            </p>
+
+            <p>
+              El que no aprobaba la ley.
+            </p>
+
+            <p>
+              El que no bloqueaba la ley.
+            </p>
+
+            <p><strong>El que la hacía demorar lo suficiente para que el negocio siguiera respirando.</strong></p>
+
+            <div class="divider"></div>
+
+            <p>
+              Tomás pasó páginas con el pulso acelerado.
+            </p>
+
+            <p>
+              Había citas.
+            </p>
+
+            <p>
+              Cruces societarios.
+            </p>
+
+            <p>
+              Agendas.
+            </p>
+
+            <p>
+              Correos de coordinación.
+            </p>
+
+            <p>
+              Y una línea subrayada por Laura en una versión previa:
+            </p>
+
+            <div class="quote">“La red no necesita controlar todas las instituciones. Solo necesita ubicar, en cada una, a la persona que sepa cuánto cuesta frenar la verdad.”</div>
+
+            <p>
+              Tomás cerró un momento los ojos.
+            </p>
+
+            <p>
+              Ahí estaba el corazón del sistema.
+            </p>
+
+            <p>
+              No poder absoluto.
+            </p>
+
+            <p>
+              No omnipotencia.
+            </p>
+
+            <p>
+              Eficiencia distribuida.
+            </p>
+
+            <p>
+              Una persona útil en cada borde crítico.
+            </p>
+
+            <p>
+              Suficiente para torcer el curso.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              Luego abrió la carpeta “COSTOS”.
+            </p>
+
+            <p>
+              El primer archivo parecía una simple planilla de control presupuestario.
+            </p>
+
+            <p>
+              Columnas limpias.
+            </p>
+
+            <p>
+              Fechas mensuales.
+            </p>
+
+            <p>
+              Ítems vagos.
+            </p>
+
+            <p>
+              Nada que, a primera vista, llamara la atención.
+            </p>
+
+            <p>
+              Hasta que leyó los encabezados completos:
+            </p>
+
+            <p>
+              <strong>neutralización editorial</strong>,
+              <strong>reencuadre público</strong>,
+              <strong>portadas compensadas</strong>,
+              <strong>contención radial</strong>,
+              <strong>análisis tercero</strong>.
+            </p>
+
+            <p>
+              Tomás se inclinó más cerca de la pantalla.
+            </p>
+
+            <p>
+              Bajó la planilla lentamente.
+            </p>
+
+            <p>
+              Cada fila correspondía a una operación.
+            </p>
+
+            <p>
+              A veces una nota regional.
+            </p>
+
+            <p>
+              A veces una columna de opinión.
+            </p>
+
+            <p>
+              A veces un panel de televisión.
+            </p>
+
+            <p>
+              A veces, y eso fue lo peor, una portada nacional.
+            </p>
+
+            <div class="quote">Las portadas tenían precio. No figurado. Real.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Encontró un registro fechado el mismo fin de semana en que Laura iba a publicar su reportaje.
+            </p>
+
+            <p>
+              La fila decía:
+            </p>
+
+            <p>
+              <strong>DOM / contención mayor / no salida + compensación avisaje / 86.000.000 / ejecutado.</strong>
+            </p>
+
+            <p>
+              Tomás leyó la línea tres veces.
+            </p>
+
+            <p>
+              No salida.
+            </p>
+
+            <p>
+              Compensación avisaje.
+            </p>
+
+            <p>
+              Ejecutado.
+            </p>
+
+            <p>
+              Ochenta y seis millones.
+            </p>
+
+            <p>
+              Ochenta y seis millones para matar una portada sin necesidad de censurarla públicamente.
+            </p>
+
+            <div class="quote">Laura no había perdido solo una publicación. Había sido absorbida por una operación presupuestada.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              El asco que sintió no fue moral primero.
+            </p>
+
+            <p>
+              Fue mecánico.
+            </p>
+
+            <p>
+              La red llevaba la contabilidad del silencio.
+            </p>
+
+            <p>
+              No improvisaba favores.
+            </p>
+
+            <p>
+              No se movía por intuición.
+            </p>
+
+            <p>
+              Medía.
+            </p>
+
+            <p>
+              Presupuestaba.
+            </p>
+
+            <p>
+              Ejecutaba.
+            </p>
+
+            <p>
+              Cerraba.
+            </p>
+
+            <p>
+              Como cualquier empresa eficiente.
+            </p>
+
+            <p>
+              Solo que su producto no era energía, ni seguros, ni alimentos.
+            </p>
+
+            <p><strong>Su producto era la realidad administrada.</strong></p>
+
+            <div class="divider"></div>
+
+            <p>
+              Tomás siguió bajando.
+            </p>
+
+            <p>
+              Otra fila:
+              <strong>panel noche / instalar tesis técnica / 14.500.000 / concretado</strong>.
+            </p>
+
+            <p>
+              Otra:
+              <strong>columna experta externa / minimizar urgencia / 7.200.000 / publicada</strong>.
+            </p>
+
+            <p>
+              Otra:
+              <strong>radio AM / desviar a empleo y estabilidad / 3.800.000 / validado</strong>.
+            </p>
+
+            <p>
+              Y otra, casi peor por lo pequeña:
+              <strong>regional sur / editor dudoso / orden indirecta / 1.900.000 / alineado</strong>.
+            </p>
+
+            <p>
+              No siempre se trataba de grandes cifras.
+            </p>
+
+            <p>
+              A veces bastaba poco.
+            </p>
+
+            <p>
+              Lo suficiente para que alguien bajara un titular, retrasara una confirmación,
+              reemplazara una foto o moviera una pieza de edición sin hacer preguntas.
+            </p>
+
+            <div class="quote">No todas las portadas se compraban con millones. Algunas se compraban con el miedo correcto, en el escritorio correcto, a la hora correcta.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Abrió entonces una subcarpeta dentro de “COSTOS” llamada <strong>Q3_ESPECIALES</strong>.
+            </p>
+
+            <p>
+              Ahí había correos PDF exportados, no todos completos, pero sí lo bastante legibles.
+            </p>
+
+            <p>
+              Uno, en particular, venía reenviado entre tres personas con nombres cortados.
+            </p>
+
+            <p>
+              En el cuerpo del mensaje se leía:
+            </p>
+
+            <div class="quote">“Si no logramos bajar la portada, al menos debemos vaciar el eje político y empujar el texto a problema reputacional interno.”</div>
+
+            <p>
+              Tomás sintió un nudo en la boca del estómago.
+            </p>
+
+            <p>
+              Esa frase no hablaba de desmentir una falsedad.
+            </p>
+
+            <p>
+              Hablaba de administrar daño.
+            </p>
+
+            <p>
+              De redireccionar el foco.
+            </p>
+
+            <p>
+              De convertir una investigación estructural en un conflicto editorial secundario.
+            </p>
+
+            <p>
+              Era exactamente lo que Laura le había mostrado con las dos versiones del reportaje:
+              la red no mataba siempre el texto.
+            </p>
+
+            <p>
+              Lo drenaba.
+            </p>
+
+            <p>
+              Le sacaba el órgano vital.
+            </p>
+
+            <p>
+              Lo devolvía a circulación como si siguiera vivo.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              Tomás miró alrededor por reflejo.
+            </p>
+
+            <p>
+              El café seguía con su ruido pequeño:
+              cucharas,
+              tazas,
+              una máquina de espresso,
+              dos estudiantes compartiendo audífonos en la mesa de al lado,
+              una mujer leyendo correos de trabajo sin levantar la vista.
+            </p>
+
+            <p>
+              Nadie sabía que, en ese rincón, él estaba viendo la planilla que explicaba
+              cuánto costaba manipular la conversación pública de un país.
+            </p>
+
+            <p>
+              Sintió una mezcla de lucidez y asfixia.
+            </p>
+
+            <p>
+              Porque la corrupción grande siempre se imagina como algo torpe, ruidoso, lleno de sobres
+              y llamadas nocturnas.
+            </p>
+
+            <p>
+              Pero esto era peor.
+            </p>
+
+            <p>
+              Esto era administración fina.
+            </p>
+
+            <p>
+              Presupuesto.
+            </p>
+
+            <p>
+              Calendario.
+            </p>
+
+            <p>
+              KPI moral.
+            </p>
+
+            <p>
+              Una empresa paralela montada para domesticar la percepción.
+            </p>
+
+            <div class="quote">El comité del jueves no coordinaba solo decisiones. Coordinaba también lo que la gente iba a creer sobre ellas.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              El archivo más pequeño del pendrive se llamaba <strong>PORTADAS_XLS_NOTAS.txt</strong>.
+            </p>
+
+            <p>
+              Lo abrió esperando referencias técnicas.
+            </p>
+
+            <p>
+              Encontró otra cosa.
+            </p>
+
+            <p>
+              Notas internas, probablemente redactadas por alguien que necesitaba recordar la lógica detrás de cada gasto.
+            </p>
+
+            <p>
+              No estaban escritas en lenguaje jurídico ni financiero.
+            </p>
+
+            <p>
+              Eran brutalmente claras.
+            </p>
+
+            <p>
+              Una de ellas decía:
+            </p>
+
+            <div class="quote">“Una portada hostil sale más cara si se confronta después. Sale más barato evitar que exista.”</div>
+
+            <p>
+              Otra:
+            </p>
+
+            <div class="quote">“Los medios no operan solo por dinero. Operan por acceso, avisaje y miedo a quedar fuera.”</div>
+
+            <p>
+              Y una tercera, todavía peor:
+            </p>
+
+            <div class="quote">“No pelear con periodistas ideales. Aislarlos del escritorio.”</div>
+
+            <p>
+              Tomás se quedó mirando esa línea más tiempo del que necesitaba.
+            </p>
+
+            <p>
+              Aislarlos del escritorio.
+            </p>
+
+            <p>
+              No desacreditarlos en público de inmediato.
+            </p>
+
+            <p>
+              No convertirlos en mártires.
+            </p>
+
+            <p>
+              Solo mover el entorno correcto:
+            </p>
+
+            <p>
+              editor,
+            </p>
+
+            <p>
+              pauta,
+            </p>
+
+            <p>
+              asesoría legal,
+            </p>
+
+            <p>
+              avisaje,
+            </p>
+
+            <p>
+              reputación interna.
+            </p>
+
+            <p>
+              Hasta que el periodista quedara solo frente a un sistema que le diría,
+              con voz aparentemente razonable, que todavía podía seguir… pero sin firma, sin respaldo y sin futuro.
+            </p>
+
+            <div class="quote">No destruían la verdad. Destruían el lugar desde donde podía decirse.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Entonces encontró el archivo que terminó de desplazarle el suelo.
+            </p>
+
+            <p>
+              Una hoja PDF con diseño corporativo limpio, titulada:
+              <strong>Escenarios de contención reputacional — Medios / Q4</strong>.
+            </p>
+
+            <p>
+              La sección tres estaba destacada en amarillo:
+            </p>
+
+            <p>
+              <strong>Evento de alto riesgo: activación de portada nacional con conexión legislativa + sobreprecio.</strong>
+            </p>
+
+            <p>
+              Debajo había tres alternativas operativas:
+            </p>
+
+            <p>
+              1. No salida por compensación y gestión interna.  
+              2. Salida vaciada + encuadre técnico.  
+              3. Salida controlada + sacrificio focalizado.
+            </p>
+
+            <p>
+              Tomás leyó la tercera otra vez.
+            </p>
+
+            <p>
+              Sacrificio focalizado.
+            </p>
+
+            <p>
+              Sintió el hielo subirle por la espalda.
+            </p>
+
+            <p>
+              No estaban dispuestos solo a bajar un artículo.
+            </p>
+
+            <p>
+              Estaban dispuestos a entregar a una persona, una empresa menor o un intermediario secundario
+              para proteger la estructura central.
+            </p>
+
+            <p>
+              Dar un culpable administrable para salvar el mecanismo completo.
+            </p>
+
+            <div class="quote">Cuando una red madura, aprende a perder piezas pequeñas para parecer que se corrige.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              El celular vibró sobre la mesa.
+            </p>
+
+            <p>
+              Tomás dio un salto seco.
+            </p>
+
+            <p>
+              Número desconocido.
+            </p>
+
+            <p>
+              No contestó.
+            </p>
+
+            <p>
+              Un segundo después entró un mensaje.
+            </p>
+
+            <p>
+              No de Laura.
+            </p>
+
+            <p>
+              No de trabajo.
+            </p>
+
+            <p>
+              Un texto breve, sin firma:
+            </p>
+
+            <div class="quote">Abriste el archivo equivocado primero.</div>
+
+            <p>
+              Tomás se quedó inmóvil.
+            </p>
+
+            <p>
+              El café seguía igual.
+            </p>
+
+            <p>
+              Nadie lo miraba.
+            </p>
+
+            <p>
+              Nadie parecía pendiente de su pantalla.
+            </p>
+
+            <p>
+              Pero el mensaje no requería vigilancia visual para funcionar.
+            </p>
+
+            <p>
+              Bastaba con que supiera una cosa:
+            </p>
+
+            <p><strong>alguien sabía exactamente en qué carpeta había entrado.</strong></p>
+
+            <div class="divider"></div>
+
+            <p>
+              Cerró el notebook de golpe.
+            </p>
+
+            <p>
+              Demasiado tarde para fingir calma, demasiado temprano para entrar en pánico útil.
+            </p>
+
+            <p>
+              Miró la taza del cortado.
+            </p>
+
+            <p>
+              Estaba intacta.
+            </p>
+
+            <p>
+              Sacó el pendrive del computador y lo guardó en el bolsillo interior de la chaqueta.
+            </p>
+
+            <p>
+              Pagó en caja sin mirar a nadie.
+            </p>
+
+            <p>
+              Recién al salir a la vereda revisó otra vez el celular.
+            </p>
+
+            <p>
+              Había un segundo mensaje.
+            </p>
+
+            <div class="quote">Lo que cuesta una portada no es nada comparado con lo que cuesta corregir a quien insiste en firmarla.</div>
+
+            <p>
+              Tomás sintió un vacío limpio en el cuerpo.
+            </p>
+
+            <p>
+              No era miedo puro ya.
+            </p>
+
+            <p>
+              Era una comprensión peligrosa:
+            </p>
+
+            <p>
+              el pendrive no había sido detectado por casualidad.
+            </p>
+
+            <p>
+              Laura sabía que estaba entregando algo vivo.
+            </p>
+
+            <p>
+              Algo que probablemente seguía conectado a una cadena de reacción.
+            </p>
+
+            <p>
+              O peor:
+            </p>
+
+            <p>
+              algo que la red llevaba años buscando recuperar y que ahora sabía que se había movido.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              Caminó sin dirección fija durante dos cuadras antes de detenerse en una esquina con tráfico pesado.
+            </p>
+
+            <p>
+              Ahí, entre motos, micros y bocinas, entendió lo verdaderamente insoportable del archivo “COSTOS”.
+            </p>
+
+            <p>
+              No era solo prueba de corrupción mediática.
+            </p>
+
+            <p>
+              Era una teoría económica del silencio.
+            </p>
+
+            <p>
+              Una forma de decidir, antes de que ocurriera, cuánto dinero, cuánta presión y cuánta exposición
+              necesitaba cada historia para morir o desviarse.
+            </p>
+
+            <p>
+              Eso significaba que cualquier movimiento suyo ya podía estar siendo calculado en otro Excel.
+            </p>
+
+            <p>
+              Su costo de neutralización.
+            </p>
+
+            <p>
+              Su costo de desgaste.
+            </p>
+
+            <p>
+              Su costo de compra.
+            </p>
+
+            <p>
+              Su costo de sacrificio.
+            </p>
+
+            <div class="quote">Tomás dejó de sentirse perseguido. Empezó a sentirse presupuestado.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Entonces llegó el tercer mensaje.
+            </p>
+
+            <p>
+              Esta vez con una imagen adjunta.
+            </p>
+
+            <p>
+              Tardó un segundo en cargar.
+            </p>
+
+            <p>
+              Cuando apareció, Tomás dejó de respirar.
+            </p>
+
+            <p>
+              Era la portada que Laura nunca firmó.
+            </p>
+
+            <p>
+              No la maqueta incompleta.
+            </p>
+
+            <p>
+              La portada completa.
+            </p>
+
+            <p>
+              Diagramada.
+            </p>
+
+            <p>
+              Lista para imprenta.
+            </p>
+
+            <p>
+              Título enorme.
+            </p>
+
+            <p>
+              Bajada cerrada.
+            </p>
+
+            <p>
+              Fotos corregidas.
+            </p>
+
+            <p>
+              Y abajo, en la esquina inferior izquierda, el crédito:
+              <strong>Laura Sanz.</strong>
+            </p>
+
+            <p>
+              Tomás sintió un golpe en el pecho.
+            </p>
+
+            <p>
+              La red no solo había matado esa portada.
+            </p>
+
+            <p>
+              La había conservado entera.
+            </p>
+
+            <p>
+              Como prueba.
+            </p>
+
+            <p>
+              Como trofeo.
+            </p>
+
+            <p>
+              Como recordatorio de que podía dejar vivir una verdad completa solo dentro de sus propios archivos.
+            </p>
+
+            <div class="quote">Los monstruos no siempre destruyen lo que vencen. A veces lo guardan para contemplar mejor su dominio.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Debajo de la imagen venía un último texto:
+            </p>
+
+            <div class="quote">El jueves no se habla de portadas. Se decide quién merece una.</div>
+
+            <p>
+              Tomás bajó lentamente el teléfono.
+            </p>
+
+            <p>
+              El tráfico seguía rugiendo delante suyo.
+            </p>
+
+            <p>
+              Pero ya no escuchaba bien la calle.
+            </p>
+
+            <p>
+              Solo esa frase.
+            </p>
+
+            <p>
+              El jueves.
+            </p>
+
+            <p>
+              Otra vez el jueves.
+            </p>
+
+            <p>
+              No se habla de portadas.
+            </p>
+
+            <p>
+              Se decide quién merece una.
+            </p>
+
+            <p>
+              De pronto todo encajó con una violencia nueva.
+            </p>
+
+            <p>
+              El comité no solo coordinaba leyes, precios y titulares.
+            </p>
+
+            <p>
+              También definía qué historias se levantaban como cortina,
+              cuáles se vaciaban,
+              cuáles se postergaban
+              y cuáles debían morir antes de tocar papel.
+            </p>
+
+            <p><strong>El jueves era la sala editorial de un país que creía ser libre.</strong></p>
+
+            <div class="divider"></div>
+
+            <p>
+              Guardó el celular.
+            </p>
+
+            <p>
+              Cruzó la calle sin esperar el verde.
+            </p>
+
+            <p>
+              Ya no tenía espacio para dudas sentimentales ni para huir sin dirección.
+            </p>
+
+            <p>
+              Necesitaba saber si Laura seguía bien.
+            </p>
+
+            <p>
+              Necesitaba entender cómo habían visto el orden de carpetas.
+            </p>
+
+            <p>
+              Y necesitaba llegar al jueves con algo más que intuiciones.
+            </p>
+
+            <p>
+              Pero mientras caminaba, una idea se instaló con una firmeza insoportable:
+            </p>
+
+            <p>
+              si la red había enviado la portada completa justo ahora,
+              no era solo para asustarlo.
+            </p>
+
+            <p>
+              Era para ofrecerle una lección.
+            </p>
+
+            <p>
+              Una lección de escala.
+            </p>
+
+            <p>
+              De archivo.
+            </p>
+
+            <p>
+              De paciencia.
+            </p>
+
+            <p>
+              La red llevaba años guardando no solo pruebas, sino también derrotas ajenas,
+              clasificadas, listas para ser reutilizadas sobre el siguiente que insistiera demasiado.
+            </p>
+
+            <div class="quote">Y Tomás entendió, con un frío perfecto, que el comité del jueves no iba a decidir solo noticias o leyes. Iba a decidir también qué hacer con él.</div>
+          </div>
+        </div>
+
+        <div class="reader-bottom">
+          <p class="reader-note">
+            Continúa la historia para descubrir quién envía las imágenes del archivo muerto… y por qué el jueves ya no es una cita de investigación, sino una fecha de selección.
+          </p>
+
+          <div class="nav-actions">
+            <a href="capitulo7.html" onclick="goBack(event, 'capitulo7.html')" class="btn btn-ghost">← Capítulo 7</a>
+            <a href="capitulo9.html" class="btn btn-primary">Leer capítulo 9 →</a>
+          </div>
+        </div>
+      </article>
+    </main>
+  </div>
+
+  <script>
+    function goBack(event, fallbackUrl){
+      event.preventDefault();
+
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.location.href = fallbackUrl;
+      }
+    }
+
+    const canvas = document.getElementById("stars");
+    const ctx = canvas.getContext("2d");
+    let stars = [];
+
+    function resize(){
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      createStars();
+    }
+
+    function createStars(){
+      stars = [];
+      const amount = Math.floor((canvas.width * canvas.height) / 14000);
+      for(let i = 0; i < amount; i++){
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.6 + 0.3,
+          speed: Math.random() * 0.35 + 0.08,
+          alpha: Math.random() * 0.7 + 0.2
+        });
+      }
+    }
+
+    function animate(){
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for(const s of stars){
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        s.y += s.speed;
+
+        if(s.y > canvas.height){
+          s.y = -2;
+          s.x = Math.random() * canvas.width;
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener("resize", resize);
+    resize();
+    animate();
+  </script>
+</body>
+</html>
