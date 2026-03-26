@@ -1,0 +1,1665 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capítulo 10 | El Precio del Silencio</title>
+  <meta
+    name="description"
+    content="Capítulo 10 de El Precio del Silencio: Zona de sacrificio."
+  />
+
+  <style>
+    :root{
+      --bg:#05080f;
+      --bg2:#0b1220;
+      --card:rgba(12,18,32,0.82);
+      --line:rgba(255,255,255,0.08);
+      --line-strong:rgba(73,182,255,.24);
+      --text:#f5f8ff;
+      --muted:#aebad1;
+      --muted-2:#7f90ae;
+      --blue:#0A6CFF;
+      --blue2:#49b6ff;
+      --blue-soft:rgba(73,182,255,.14);
+      --shadow:0 24px 60px rgba(0,0,0,.45);
+      --radius:22px;
+      --max:860px;
+    }
+
+    *{
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      color:var(--text);
+      background:#04070d;
+      line-height:1.8;
+      position:relative;
+      overflow-x:hidden;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    #stars{
+      position:fixed;
+      inset:0;
+      width:100%;
+      height:100%;
+      z-index:0;
+      background:
+        radial-gradient(circle at top left, rgba(10,108,255,.12), transparent 24%),
+        radial-gradient(circle at top right, rgba(73,182,255,.08), transparent 20%),
+        linear-gradient(180deg, #04070d 0%, #08101c 45%, #05080f 100%);
+    }
+
+    .page{
+      min-height:100vh;
+      position:relative;
+      z-index:1;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:30;
+      backdrop-filter:blur(14px);
+      background:rgba(5,8,15,.72);
+      border-bottom:1px solid var(--line);
+    }
+
+    .topbar-inner{
+      max-width:1100px;
+      margin:0 auto;
+      padding:16px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .brand-badge{
+      width:38px;
+      height:38px;
+      border-radius:12px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg, rgba(10,108,255,.22), rgba(73,182,255,.08));
+      border:1px solid var(--line-strong);
+      box-shadow:0 0 24px rgba(10,108,255,.12);
+      font-weight:700;
+      color:var(--blue2);
+      flex:0 0 auto;
+    }
+
+    .brand-title{
+      font-size:14px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:#dfe9ff;
+      margin:0 0 2px;
+    }
+
+    .brand-sub{
+      font-size:12px;
+      color:var(--muted-2);
+      margin:0;
+    }
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height:44px;
+      padding:0 18px;
+      border-radius:12px;
+      font-size:14px;
+      font-weight:700;
+      transition:transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+      border:1px solid transparent;
+      cursor:pointer;
+    }
+
+    .btn:hover{
+      transform:translateY(-1px);
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg, var(--blue) 0%, #0d7eff 100%);
+      color:white;
+      box-shadow:0 12px 28px rgba(10,108,255,.28);
+    }
+
+    .btn-primary:hover{
+      background:linear-gradient(135deg, #0c62e0 0%, #0a6cef 100%);
+    }
+
+    .btn-ghost{
+      background:rgba(255,255,255,.03);
+      border-color:var(--line);
+      color:#dbe8ff;
+    }
+
+    .btn-ghost:hover{
+      background:rgba(255,255,255,.06);
+      border-color:var(--line-strong);
+    }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      border-bottom:1px solid rgba(255,255,255,.04);
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(180deg, rgba(5,8,15,.58) 0%, rgba(5,8,15,.86) 80%, rgba(5,8,15,1) 100%),
+        url("../assets/temporada1.jpg");
+      background-size:cover;
+      background-position:center;
+      opacity:.28;
+      filter:saturate(.9) contrast(1.03);
+    }
+
+    .hero-inner{
+      position:relative;
+      z-index:1;
+      max-width:1100px;
+      margin:0 auto;
+      padding:56px 20px 34px;
+    }
+
+    .crumb{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.06);
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:18px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:28px;
+      align-items:end;
+    }
+
+    .hero-copy h1{
+      margin:0 0 12px;
+      font-size:clamp(34px, 6vw, 64px);
+      line-height:1.02;
+      letter-spacing:.02em;
+      color:white;
+      text-shadow:0 0 22px rgba(10,108,255,.18);
+    }
+
+    .eyebrow{
+      margin:0 0 14px;
+      color:var(--blue2);
+      font-weight:700;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      font-size:12px;
+    }
+
+    .hero-copy p{
+      margin:0;
+      max-width:700px;
+      color:#d4def3;
+      font-size:18px;
+      line-height:1.75;
+    }
+
+    .hero-side{
+      display:flex;
+      justify-content:flex-end;
+    }
+
+    .chapter-card{
+      width:min(100%, 360px);
+      background:linear-gradient(180deg, rgba(12,18,32,.75), rgba(9,13,24,.88));
+      border:1px solid rgba(73,182,255,.18);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:22px;
+      backdrop-filter:blur(16px);
+    }
+
+    .chapter-label{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 12px;
+      border-radius:999px;
+      background:var(--blue-soft);
+      border:1px solid rgba(73,182,255,.18);
+      color:var(--blue2);
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:14px;
+    }
+
+    .chapter-card h2{
+      margin:0 0 10px;
+      font-size:24px;
+      line-height:1.15;
+      color:white;
+    }
+
+    .chapter-card p{
+      margin:0 0 18px;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.7;
+    }
+
+    .meta{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .meta-item{
+      padding:12px;
+      border-radius:14px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.05);
+    }
+
+    .meta-k{
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--muted-2);
+      margin:0 0 6px;
+    }
+
+    .meta-v{
+      margin:0;
+      font-size:13px;
+      color:#e7efff;
+      font-weight:700;
+    }
+
+    .content-wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:28px 20px 80px;
+    }
+
+    .reader{
+      position:relative;
+      background:linear-gradient(180deg, rgba(11,18,32,.58), rgba(8,13,24,.72));
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:22px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      backdrop-filter:blur(4px);
+    }
+
+    .reader-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:18px 22px;
+      border-bottom:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+    }
+
+    .reader-top-left h3{
+      margin:0 0 4px;
+      font-size:18px;
+      color:#edf3ff;
+    }
+
+    .reader-top-left p{
+      margin:0;
+      color:var(--muted-2);
+      font-size:13px;
+    }
+
+    .reader-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:34px;
+      padding:0 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.06);
+      color:#cfe0ff;
+      font-size:12px;
+      font-weight:700;
+      white-space:nowrap;
+    }
+
+    .reader-body{
+      padding:34px 26px 18px;
+      position:relative;
+    }
+
+    .story{
+      max-width:720px;
+      margin:0 auto;
+      position:relative;
+      z-index:2;
+    }
+
+    .lead{
+      font-size:19px;
+      line-height:1.9;
+      color:#ecf3ff;
+      margin:0 0 26px;
+      padding:18px 18px 18px 20px;
+      border-left:3px solid rgba(73,182,255,.44);
+      background:rgba(9,18,35,.68);
+      border-radius:0 14px 14px 0;
+      backdrop-filter:blur(4px);
+    }
+
+    .story p{
+      margin:0 0 22px;
+      color:#e4ecfb;
+      font-size:18px;
+      line-height:1.95;
+      letter-spacing:.01em;
+      text-shadow:0 1px 2px rgba(0,0,0,.4);
+    }
+
+    .story p strong{
+      color:#ffffff;
+      font-weight:700;
+    }
+
+    .story .quote{
+      margin:34px 0;
+      padding:20px 22px;
+      border-radius:18px;
+      background:linear-gradient(180deg, rgba(10,108,255,.12), rgba(73,182,255,.06));
+      border:1px solid rgba(73,182,255,.14);
+      color:#edf5ff;
+      font-size:19px;
+      line-height:1.7;
+      text-align:center;
+      box-shadow:0 12px 30px rgba(0,0,0,.18);
+      backdrop-filter:blur(4px);
+    }
+
+    .story .divider{
+      width:86px;
+      height:1px;
+      background:linear-gradient(90deg, transparent, rgba(73,182,255,.6), transparent);
+      margin:34px auto;
+    }
+
+    .reader-bottom{
+      padding:24px 26px 28px;
+      border-top:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .reader-note{
+      color:var(--muted-2);
+      font-size:13px;
+      margin:0;
+    }
+
+    .nav-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    @media (max-width: 900px){
+      .hero-grid{
+        grid-template-columns:1fr;
+      }
+
+      .hero-side{
+        justify-content:flex-start;
+      }
+
+      .chapter-card{
+        width:100%;
+        max-width:unset;
+      }
+    }
+
+    @media (max-width: 640px){
+      .topbar-inner{
+        padding:14px 14px;
+      }
+
+      .hero-inner{
+        padding:34px 14px 22px;
+      }
+
+      .content-wrap{
+        padding:20px 14px 60px;
+      }
+
+      .reader-top,
+      .reader-body,
+      .reader-bottom{
+        padding-left:16px;
+        padding-right:16px;
+      }
+
+      .reader-body{
+        padding-top:24px;
+      }
+
+      .hero-copy p,
+      .story p,
+      .lead{
+        font-size:16px;
+      }
+
+      .meta{
+        grid-template-columns:1fr;
+      }
+
+      .top-actions{
+        width:100%;
+      }
+
+      .btn{
+        width:100%;
+      }
+
+      .nav-actions{
+        width:100%;
+      }
+
+      .nav-actions .btn{
+        flex:1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="stars"></canvas>
+
+  <div class="page">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <div class="brand-badge">N</div>
+          <div>
+            <p class="brand-title">El Precio del Silencio</p>
+            <p class="brand-sub">Thriller político y empresarial</p>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <a href="capitulo9.html" onclick="goBack(event, 'capitulo9.html')" class="btn btn-ghost">← Capítulo anterior</a>
+          <a href="capitulo11.html" class="btn btn-primary">Siguiente capítulo →</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="crumb">Inicio / Capítulos / Capítulo 10</div>
+
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Capítulo 10</p>
+            <h1>Zona de sacrificio</h1>
+            <p>
+              El foro de innovación ya tiene dirección, fachada y acceso interno. Pero antes de entrar al corazón del comité,
+              Tomás descubre que toda red grande necesita algo más que obedientes: necesita una zona de sacrificio, un lugar y una persona a la que culpar cuando la presión se vuelve demasiado visible.
+            </p>
+          </div>
+
+          <div class="hero-side">
+            <aside class="chapter-card">
+              <div class="chapter-label">La maquinaria se prepara</div>
+              <h2>Si el jueves explota, alguien ya fue elegido para caer</h2>
+              <p>
+                Mientras el reloj avanza hacia el comité del jueves, Tomás sigue la pista del evento fachada
+                y encuentra una operación paralela todavía más inquietante: la red ya tiene listo a quién entregar
+                si algo sale mal.
+              </p>
+
+              <div class="meta">
+                <div class="meta-item">
+                  <p class="meta-k">Estado</p>
+                  <p class="meta-v">Gratis</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Género</p>
+                  <p class="meta-v">Suspenso</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Temporada</p>
+                  <p class="meta-v">10 de 17</p>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="content-wrap">
+      <article class="reader">
+        <div class="reader-top">
+          <div class="reader-top-left">
+            <h3>Capítulo 10: Zona de sacrificio</h3>
+            <p>Lectura gratuita · El sistema ya eligió a quién culpar</p>
+          </div>
+          <div class="reader-badge">Acceso abierto</div>
+        </div>
+
+        <div class="reader-body">
+          <div class="story">
+            <p class="lead">
+              Tomás no sintió triunfo cuando encontró la dirección del foro y el acceso interno CN-7. Sintió otra cosa:
+              una presión sorda, mineral, como si cada dato nuevo no aclarara el mapa sino que lo volviera más peligroso.
+              Había pasado días imaginando que la parte más difícil sería demostrar que el comité existía. Ahora sabía que existía.
+              Sabía dónde. Sabía cuándo. Y sin embargo, lejos de acercarlo a una salida, ese conocimiento lo metía en un problema mayor:
+              toda estructura que lleva años operando así no solo sabe cómo reunirse. Sabe también cómo sobrevivir cuando alguien la ve.
+            </p>
+
+            <p>
+              Cerró el notebook y guardó el pendrive en el bolsillo interior.
+            </p>
+
+            <p>
+              Ya no le bastaba con tener pruebas.
+            </p>
+
+            <p>
+              Necesitaba entender el siguiente movimiento de la red.
+            </p>
+
+            <p>
+              No cómo se organizaba cuando todo funcionaba.
+            </p>
+
+            <p>
+              Sino cómo se defendía cuando algo amenazaba con romperla.
+            </p>
+
+            <p><strong>Necesitaba estudiar su instinto de supervivencia.</strong></p>
+
+            <div class="quote">Los sistemas verdaderamente peligrosos no se definen por lo que hacen cuando mandan. Se definen por lo que hacen cuando sienten miedo.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Pasó la tarde moviéndose sin ruta fija entre dos objetivos:
+              no volver a su departamento
+              y no desaparecer por completo de la superficie.
+            </p>
+
+            <p>
+              Sabía que esconderse demasiado rápido también podía delatar pánico.
+            </p>
+
+            <p>
+              Así que eligió una estrategia intermedia:
+              ruido, traslados cortos, lugares visibles, tiempo fragmentado.
+            </p>
+
+            <p>
+              Un mall.
+            </p>
+
+            <p>
+              Una librería.
+            </p>
+
+            <p>
+              Un local de comida donde fingió revisar correos de trabajo.
+            </p>
+
+            <p>
+              Cada tanto abría el celular, no para contestar, sino para comprobar si Nicolás volvía a escribir.
+            </p>
+
+            <p>
+              No lo hizo.
+            </p>
+
+            <p>
+              Eso, en vez de aliviarlo, le confirmó algo:
+              el hombre de la llamada decía solo lo necesario para empujarlo a la siguiente pieza.
+            </p>
+
+            <p>
+              Ni más.
+            </p>
+
+            <p>
+              Ni menos.
+            </p>
+
+            <p>
+              Como alguien que conoce la estructura desde dentro y sabe cuánta información mata si se entrega en el momento equivocado.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              Recién al anochecer encontró un lugar donde revisar el archivo con más calma.
+            </p>
+
+            <p>
+              Un cowork casi vacío, abierto para usuarios con acceso nocturno,
+              donde alguna vez había ido a una charla de datos y sabía que nadie hacía demasiadas preguntas
+              si uno parecía tener cara de proyecto o insomnio.
+            </p>
+
+            <p>
+              Se instaló en una mesa del fondo, junto a un vidrio que reflejaba más de lo que mostraba.
+            </p>
+
+            <p>
+              Reabrió el pendrive.
+            </p>
+
+            <p>
+              Esta vez no fue a “NO_FIRMADO”.
+            </p>
+
+            <p>
+              Ni a “COSTOS”.
+            </p>
+
+            <p>
+              Entró a una subcarpeta que había pasado por alto dentro de “REV_DOM_3”:
+              <strong>RESPALDOS_EXTERNOS</strong>.
+            </p>
+
+            <p>
+              El nombre parecía aburrido.
+            </p>
+
+            <p>
+              Contable.
+            </p>
+
+            <p>
+              Perfecto para ocultar algo delicado.
+            </p>
+
+            <p>
+              Tenía doce archivos PDF y tres imágenes escaneadas.
+            </p>
+
+            <p>
+              Uno de los PDFs llamó su atención de inmediato:
+              <strong>escenario_q4_contingencia.pdf</strong>.
+            </p>
+
+            <p>
+              Lo abrió.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              La primera página parecía una minuta ejecutiva de manejo de crisis.
+            </p>
+
+            <p>
+              Lenguaje neutro.
+            </p>
+
+            <p>
+              Párrafos breves.
+            </p>
+
+            <p>
+              Tablas con opciones.
+            </p>
+
+            <p>
+              Nada demasiado explícito.
+            </p>
+
+            <p>
+              Hasta que leyó el encabezado completo:
+            </p>
+
+            <div class="quote">Plan de exposición controlada ante filtración de coordinación transversal</div>
+
+            <p>
+              Coordinación transversal.
+            </p>
+
+            <p>
+              Otra vez el eufemismo.
+            </p>
+
+            <p>
+              Nunca decían colusión.
+            </p>
+
+            <p>
+              Nunca red.
+            </p>
+
+            <p>
+              Nunca pagos.
+            </p>
+
+            <p>
+              La verdad, dentro del sistema, se nombraba siempre con palabras blandas.
+            </p>
+
+            <p>
+              Y sin embargo, lo que seguía era brutalmente claro.
+            </p>
+
+            <p>
+              La minuta distinguía tres escenarios:
+            </p>
+
+            <p>
+              filtración menor,
+            </p>
+
+            <p>
+              filtración narrativa,
+            </p>
+
+            <p>
+              filtración estructural.
+            </p>
+
+            <p>
+              La primera se absorbía con vocerías y análisis externos.
+            </p>
+
+            <p>
+              La segunda con desacreditación selectiva y saturación mediática.
+            </p>
+
+            <p>
+              La tercera —la verdaderamente grave— exigía una medida adicional:
+            </p>
+
+            <div class="quote">Activación de zona de sacrificio.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Tomás se quedó inmóvil.
+            </p>
+
+            <p>
+              Ahí estaba.
+            </p>
+
+            <p>
+              La lógica completa.
+            </p>
+
+            <p>
+              La red no solo administraba silencios.
+            </p>
+
+            <p>
+              Administraba también culpas de emergencia.
+            </p>
+
+            <p>
+              Cuando el daño potencial se acercaba demasiado al centro,
+              la estructura desplazaba el foco hacia una pieza diseñada para parecer responsable,
+              pero incapaz de comprometer la arquitectura real.
+            </p>
+
+            <p>
+              Lo leyó dos veces para asegurarse de que no era interpretación.
+            </p>
+
+            <p>
+              No lo era.
+            </p>
+
+            <p>
+              El documento incluso definía características deseables:
+            </p>
+
+            <p>
+              visibilidad suficiente,
+            </p>
+
+            <p>
+              acceso parcial,
+            </p>
+
+            <p>
+              historial dudoso o administrable,
+            </p>
+
+            <p>
+              capacidad de absorber narrativa sin escalar a niveles superiores.
+            </p>
+
+            <p><strong>Un culpable útil.</strong></p>
+
+            <div class="quote">No buscaban inocentes para destruir. Buscaban piezas ambiguas para ofrecerlas como verdad completa.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Tomás siguió avanzando por el documento.
+            </p>
+
+            <p>
+              La siguiente página incluía ejemplos históricos.
+            </p>
+
+            <p>
+              No con nombres completos, pero sí con suficiente detalle como para entender el mecanismo:
+            </p>
+
+            <p>
+              “asesor externo expuesto para contener vínculo ministerial”,
+            </p>
+
+            <p>
+              “gerencia regional absorbió narrativa de coordinación sectorial”,
+            </p>
+
+            <p>
+              “consultora intermedia entregada para proteger articulación legislativa”.
+            </p>
+
+            <p>
+              Cada caso terminaba con una nota de evaluación:
+              <strong>funcionó</strong>,
+              <strong>coste aceptable</strong>,
+              <strong>aprendizaje replicable</strong>.
+            </p>
+
+            <p>
+              Aprendizaje replicable.
+            </p>
+
+            <p>
+              La frase le produjo una rabia casi física.
+            </p>
+
+            <p>
+              La red analizaba personas quemadas como una empresa analiza campañas publicitarias.
+            </p>
+
+            <p>
+              Qué tan útil fue el daño.
+            </p>
+
+            <p>
+              Qué tan bien contuvo al centro.
+            </p>
+
+            <p>
+              Qué tan replicable era el sacrificio.
+            </p>
+
+            <div class="quote">La crueldad se vuelve más estable cuando entra a Excel.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Pasó a la última página.
+            </p>
+
+            <p>
+              Ahí aparecía una tabla breve, más reciente, sin cierre final.
+            </p>
+
+            <p>
+              Encabezado:
+              <strong>Q4 / caso activo / evaluación previa jueves</strong>.
+            </p>
+
+            <p>
+              Debajo, cuatro columnas:
+            </p>
+
+            <p>
+              <strong>centro a proteger</strong>,
+              <strong>narrativa posible</strong>,
+              <strong>zona de sacrificio</strong>,
+              <strong>estado</strong>.
+            </p>
+
+            <p>
+              En “centro a proteger” se leía:
+              <strong>coordinación legislativa + evento fachada</strong>.
+            </p>
+
+            <p>
+              En “narrativa posible”:
+              <strong>consultoría excesiva / abuso de intermediación / proveedor desalineado</strong>.
+            </p>
+
+            <p>
+              Y en “zona de sacrificio” había un nombre parcial:
+            </p>
+
+            <p><strong>R. Cárdenas</strong></p>
+
+            <p>
+              Estado:
+              <strong>listo para activación si existe exposición directa de CN-7</strong>.
+            </p>
+
+            <div class="quote">Tomás leyó la línea una vez más, con una lentitud helada. Si existe exposición directa de CN-7.</div>
+
+            <p>
+              O sea:
+            </p>
+
+            <p>
+              si alguien lograba unir el acceso interno con el comité,
+              la red ya tenía una persona diseñada para caer.
+            </p>
+
+            <p>
+              No improvisarían.
+            </p>
+
+            <p>
+              No entrarían en pánico.
+            </p>
+
+            <p>
+              Activarían el protocolo.
+            </p>
+
+            <p>
+              Sacrificarían a R. Cárdenas.
+            </p>
+
+            <p>
+              El resto seguiría intacto.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              Tomás abrió los otros PDFs buscando coincidencias.
+            </p>
+
+            <p>
+              En uno encontró órdenes de servicio asociadas a eventos corporativos.
+            </p>
+
+            <p>
+              En otro, pagos fraccionados a una empresa de producción menor.
+            </p>
+
+            <p>
+              En una imagen escaneada, por fin apareció un nombre casi completo junto a una firma borrosa:
+              <strong>Ricardo Cárdenas</strong>.
+            </p>
+
+            <p>
+              Debajo, un cargo administrativo anodino:
+              <strong>coordinador externo de logística institucional</strong>.
+            </p>
+
+            <p>
+              Nada glamoroso.
+            </p>
+
+            <p>
+              Nada central.
+            </p>
+
+            <p>
+              Exactamente el tipo de figura que podía caer en televisión como “operador aislado”
+              sin que la gente sospechara que detrás existía una arquitectura mayor.
+            </p>
+
+            <p>
+              Un nombre gris.
+            </p>
+
+            <p>
+              Lo bastante cercano a la operación para sonar creíble.
+            </p>
+
+            <p>
+              Lo bastante periférico para no tocar el núcleo.
+            </p>
+
+            <div class="quote">La zona de sacrificio no se elige por culpa. Se elige por utilidad narrativa.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              En ese momento sonó el celular otra vez.
+            </p>
+
+            <p>
+              Esta vez no fue número desconocido.
+            </p>
+
+            <p>
+              Fue Laura.
+            </p>
+
+            <p>
+              Tomás contestó de inmediato.
+            </p>
+
+            <p>
+              —¿Dónde estás?
+            </p>
+
+            <p>
+              La voz del otro lado llegó más cansada que asustada.
+            </p>
+
+            <p>
+              —No preguntes eso por teléfono.
+            </p>
+
+            <p>
+              —¿Estás bien?
+            </p>
+
+            <p>
+              —Estoy moviéndome.
+            </p>
+
+            <p>
+              Hubo un silencio breve, respirado.
+            </p>
+
+            <p>
+              —Nicolás habló contigo, ¿cierto?
+            </p>
+
+            <p>
+              Tomás no respondió enseguida.
+            </p>
+
+            <p>
+              Laura soltó una exhalación apenas audible.
+            </p>
+
+            <p>
+              —Eso pensé.
+            </p>
+
+            <p>
+              —¿Lo sabías?
+            </p>
+
+            <p>
+              —Sabía que iba a intentar aparecer cuando entendiera que el jueves podía salirse del libreto.
+            </p>
+
+            <p>
+              Tomás miró la pantalla del notebook.
+            </p>
+
+            <p>
+              El nombre de Ricardo Cárdenas seguía ahí.
+            </p>
+
+            <p>
+              —Laura, tienen una zona de sacrificio lista.
+            </p>
+
+            <p>
+              Ella no se sorprendió.
+            </p>
+
+            <p>
+              Eso fue lo peor.
+            </p>
+
+            <p>
+              —¿Quién?
+            </p>
+
+            <p>
+              —Ricardo Cárdenas.
+            </p>
+
+            <p>
+              Esta vez sí hubo silencio real.
+            </p>
+
+            <p>
+              Largo.
+            </p>
+
+            <p>
+              Cortante.
+            </p>
+
+            <p>
+              Después Laura habló más bajo.
+            </p>
+
+            <div class="quote">—Entonces ya no estamos a tiempo de mirar el jueves. Estamos a tiempo de impedir que lo limpien.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              La frase reordenó todo.
+            </p>
+
+            <p>
+              Hasta ese momento Tomás había pensado el comité como una cita para observar y probar.
+            </p>
+
+            <p>
+              Ahora entendía que no bastaba con verlo.
+            </p>
+
+            <p>
+              Si la red detectaba exposición directa de CN-7, activaría a Cárdenas como culpable, desviaría la historia
+              y enterraría otra vez el núcleo bajo una capa de escándalo dosificado.
+            </p>
+
+            <p>
+              La portada sería:
+              <em>“Operador logístico vinculado a irregularidades en evento institucional”.</em>
+            </p>
+
+            <p>
+              Habría paneles.
+            </p>
+
+            <p>
+              Declaraciones graves.
+            </p>
+
+            <p>
+              Algún gesto de limpieza.
+            </p>
+
+            <p>
+              Y detrás de todo eso, el comité seguiría intacto.
+            </p>
+
+            <div class="quote">La red no le temía al escándalo. Le temía solo al escándalo correcto.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              —Necesito saber quién es Cárdenas para ustedes —dijo Tomás.
+            </p>
+
+            <p>
+              Laura tardó en responder.
+            </p>
+
+            <p>
+              —No era de los grandes. Nunca estuvo en primera línea. Era uno de esos hombres que hacen que los demás lleguen,
+              entren, firmen, salgan y no dejen rastro físico. Logística, accesos, proveedores, cajas, acreditaciones. El tipo perfecto
+              para cargarle una red encima si la historia explota.
+            </p>
+
+            <p>
+              —¿Lo conoces?
+            </p>
+
+            <p>
+              —Lo vi dos veces. Siempre parecía cansado. Como si supiera que trabajaba demasiado cerca del fuego.
+            </p>
+
+            <p>
+              Tomás miró otra vez la tabla de contingencia.
+            </p>
+
+            <p>
+              Cansado.
+            </p>
+
+            <p>
+              Desalineado.
+            </p>
+
+            <p>
+              Listo para activación.
+            </p>
+
+            <p>
+              Todo apuntaba a lo mismo:
+              Cárdenas probablemente ni siquiera sabía que ya estaba elegido para caer.
+            </p>
+
+            <div class="quote">En las redes maduras, la zona de sacrificio suele enterarse de que era sacrificable el mismo día en que la exponen.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              —Escucha —dijo Laura—. Si el jueves vamos a entrar, no basta con mirar quién se reúne.
+              Necesitamos identificar el punto exacto donde van a intentar soltar a Cárdenas.
+            </p>
+
+            <p>
+              —¿Para qué?
+            </p>
+
+            <p>
+              —Porque si conseguimos la estructura completa y también demostramos que la red ya tenía preparado un culpable pantalla,
+              les rompemos el mecanismo de contención.
+            </p>
+
+            <p>
+              Tomás se quedó pensando en esa palabra:
+              mecanismo.
+            </p>
+
+            <p>
+              Ya no estaban investigando delitos aislados.
+            </p>
+
+            <p>
+              Estaban cartografiando reflejos automáticos del poder.
+            </p>
+
+            <p>
+              Cómo se ordena.
+            </p>
+
+            <p>
+              Cómo paga.
+            </p>
+
+            <p>
+              Cómo calla.
+            </p>
+
+            <p>
+              Cómo sacrifica.
+            </p>
+
+            <p>
+              Si lograban mostrar todo eso junto, entonces quizá por primera vez la red no tendría tiempo
+              para reemplazar la verdad con una versión administrable.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              —¿Dónde nos vemos? —preguntó.
+            </p>
+
+            <p>
+              Laura respiró del otro lado.
+            </p>
+
+            <p>
+              —No hoy.
+            </p>
+
+            <p>
+              —Laura—
+            </p>
+
+            <p>
+              —Escúchame. Si ya encontraron el archivo y Nicolás volvió a moverse, significa que el jueves se adelantó mentalmente para todos.
+              Desde ahora cualquier cruce mal hecho sirve para mapearnos juntos. Y si nos mapean juntos antes de entrar, no llegamos.
+            </p>
+
+            <p>
+              Tomás quiso discutir.
+            </p>
+
+            <p>
+              No pudo.
+            </p>
+
+            <p>
+              Laura tenía razón.
+            </p>
+
+            <p>
+              El jueves no era solo una infiltración física.
+            </p>
+
+            <p>
+              Era una carrera contra el modelo predictivo de la red.
+            </p>
+
+            <p>
+              Una red que ya clasificaba personas, evaluaba resistencias, presupuestaba daños
+              y elegía zonas de sacrificio.
+            </p>
+
+            <p><strong>Una red así también sabía detectar alianzas.</strong></p>
+
+            <div class="quote">A veces sobrevivir dos días más consiste en no darle al sistema el dibujo correcto de tus vínculos.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              —Te voy a mandar algo por otro canal —dijo Laura—. No lo abras donde estás.
+            </p>
+
+            <p>
+              —¿Qué es?
+            </p>
+
+            <p>
+              —El programa oficial del foro.
+            </p>
+
+            <p>
+              —Ya lo tengo.
+            </p>
+
+            <p>
+              —No. Tú tienes el de fachada.
+            </p>
+
+            <p>
+              Tomás sintió que la atención se le afilaba de nuevo.
+            </p>
+
+            <p>
+              —¿Y tú qué tienes?
+            </p>
+
+            <p>
+              Laura tardó un segundo.
+            </p>
+
+            <p>
+              —El cronograma de los espacios sin público.
+            </p>
+
+            <p>
+              La llamada se cortó antes de que él pudiera responder.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              Tomás se quedó solo con el zumbido tenue del cowork nocturno.
+            </p>
+
+            <p>
+              Al fondo alguien tipeaba.
+            </p>
+
+            <p>
+              Cerca de la entrada una impresora expulsó tres hojas.
+            </p>
+
+            <p>
+              Un televisor colgado, sin audio, repetía noticias financieras.
+            </p>
+
+            <p>
+              Nadie parecía entender que en esa mesa un capítulo entero del país acababa de inclinarse.
+            </p>
+
+            <p>
+              Miró otra vez la ficha de Ricardo Cárdenas.
+            </p>
+
+            <p>
+              Después la tabla de contingencia.
+            </p>
+
+            <p>
+              Después el nombre del archivo.
+            </p>
+
+            <p>
+              Zona de sacrificio.
+            </p>
+
+            <p>
+              En ese instante entendió algo que hasta ahora había esquivado por puro instinto de autopreservación:
+            </p>
+
+            <p>
+              si el jueves salía mal, no solo podían sacrificar a Cárdenas.
+            </p>
+
+            <p>
+              También podían intentar convertirlo a él en una extensión de esa narrativa.
+            </p>
+
+            <p>
+              Un analista obsesivo.
+            </p>
+
+            <p>
+              Desvinculado.
+            </p>
+
+            <p>
+              Inestable.
+            </p>
+
+            <p>
+              Con acceso irregular a documentos.
+            </p>
+
+            <p>
+              Lo bastante útil como para absorber parte del ruido, si lo armaban bien.
+            </p>
+
+            <div class="quote">La zona de sacrificio nunca está realmente cerrada. Siempre admite un nombre más si el relato lo necesita.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Entonces tomó una decisión.
+            </p>
+
+            <p>
+              Ya no podía limitarse a entrar al comité como observador improvisado.
+            </p>
+
+            <p>
+              Tenía que ir con una hipótesis completa:
+            </p>
+
+            <p>
+              el acceso,
+            </p>
+
+            <p>
+              la fachada,
+            </p>
+
+            <p>
+              la agenda oculta,
+            </p>
+
+            <p>
+              y el sacrificio ya preparado.
+            </p>
+
+            <p>
+              Solo así, si algo se quebraba, habría una posibilidad de mostrar que el escándalo aparente era justamente la maniobra de contención.
+            </p>
+
+            <p>
+              Solo así podrían ganarle a la red en su propia especialidad:
+              llegar antes al relato final.
+            </p>
+
+            <div class="quote">No bastaba con encontrar la verdad. Había que encontrar también la mentira que iban a usar para enterrarla.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Guardó el pendrive.
+            </p>
+
+            <p>
+              Apagó el notebook.
+            </p>
+
+            <p>
+              Miró la hora.
+            </p>
+
+            <p>
+              Miércoles, 22:41.
+            </p>
+
+            <p>
+              Quedaba menos de un día.
+            </p>
+
+            <p>
+              Menos de un día para llegar a un foro que no era foro,
+              a un acceso interno que no era técnico
+              y a un comité que, si se sentía visto, ya sabía exactamente a quién empujar al abismo.
+            </p>
+
+            <p>
+              Tomás se puso de pie.
+            </p>
+
+            <p>
+              Sintió cansancio.
+            </p>
+
+            <p>
+              Sí.
+            </p>
+
+            <p>
+              Miedo.
+            </p>
+
+            <p>
+              Mucho.
+            </p>
+
+            <p>
+              Pero por encima de ambos empezaba a instalarse una claridad feroz:
+            </p>
+
+            <p><strong>el jueves no iba a ser solo una entrada al corazón de la red. Iba a ser también la última oportunidad de impedir que otro nombre más terminara archivado como sacrificio útil.</strong></p>
+          </div>
+        </div>
+
+        <div class="reader-bottom">
+          <p class="reader-note">
+            Continúa la historia para descubrir cómo luce el cronograma sin público del foro… y por qué uno de esos espacios lleva el mismo código que apareció en los documentos borrados.
+          </p>
+
+          <div class="nav-actions">
+            <a href="capitulo9.html" onclick="goBack(event, 'capitulo9.html')" class="btn btn-ghost">← Capítulo 9</a>
+            <a href="capitulo11.html" class="btn btn-primary">Leer capítulo 11 →</a>
+          </div>
+        </div>
+      </article>
+    </main>
+  </div>
+
+  <script>
+    function goBack(event, fallbackUrl){
+      event.preventDefault();
+
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.location.href = fallbackUrl;
+      }
+    }
+
+    const canvas = document.getElementById("stars");
+    const ctx = canvas.getContext("2d");
+    let stars = [];
+
+    function resize(){
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      createStars();
+    }
+
+    function createStars(){
+      stars = [];
+      const amount = Math.floor((canvas.width * canvas.height) / 14000);
+      for(let i = 0; i < amount; i++){
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.6 + 0.3,
+          speed: Math.random() * 0.35 + 0.08,
+          alpha: Math.random() * 0.7 + 0.2
+        });
+      }
+    }
+
+    function animate(){
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for(const s of stars){
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        s.y += s.speed;
+
+        if(s.y > canvas.height){
+          s.y = -2;
+          s.x = Math.random() * canvas.width;
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener("resize", resize);
+    resize();
+    animate();
+  </script>
+</body>
+</html>
