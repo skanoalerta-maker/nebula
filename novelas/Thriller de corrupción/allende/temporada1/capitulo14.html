@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capítulo 14 | La Vía y la Ruptura</title>
+  <meta
+    name="description"
+    content="Capítulo 14 de La Vía y la Ruptura: el miedo deja de ser atmósfera y se convierte en sistema. Chile entra en la fase más dura de la represión, donde el terror ya no amenaza: administra."
+  />
+
+  <style>
+    :root{
+      --bg:#05080f;
+      --bg2:#0b1220;
+      --card:rgba(12,18,32,0.82);
+      --line:rgba(255,255,255,0.08);
+      --line-strong:rgba(73,182,255,.24);
+      --text:#f5f8ff;
+      --muted:#aebad1;
+      --muted-2:#7f90ae;
+      --blue:#0A6CFF;
+      --blue2:#49b6ff;
+      --blue-soft:rgba(73,182,255,.14);
+      --shadow:0 24px 60px rgba(0,0,0,.45);
+      --radius:22px;
+      --max:860px;
+    }
+
+    *{
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      color:var(--text);
+      background:#04070d;
+      line-height:1.8;
+      position:relative;
+      overflow-x:hidden;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    #stars{
+      position:fixed;
+      inset:0;
+      width:100%;
+      height:100%;
+      z-index:0;
+      background:
+        radial-gradient(circle at top left, rgba(10,108,255,.12), transparent 24%),
+        radial-gradient(circle at top right, rgba(73,182,255,.08), transparent 20%),
+        linear-gradient(180deg, #04070d 0%, #08101c 45%, #05080f 100%);
+    }
+
+    .page{
+      min-height:100vh;
+      position:relative;
+      z-index:1;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:30;
+      backdrop-filter:blur(14px);
+      background:rgba(5,8,15,.72);
+      border-bottom:1px solid var(--line);
+    }
+
+    .topbar-inner{
+      max-width:1100px;
+      margin:0 auto;
+      padding:16px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .brand-badge{
+      width:38px;
+      height:38px;
+      border-radius:12px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg, rgba(10,108,255,.22), rgba(73,182,255,.08));
+      border:1px solid var(--line-strong);
+      box-shadow:0 0 24px rgba(10,108,255,.12);
+      font-weight:700;
+      color:var(--blue2);
+      flex:0 0 auto;
+    }
+
+    .brand-title{
+      font-size:14px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:#dfe9ff;
+      margin:0 0 2px;
+    }
+
+    .brand-sub{
+      font-size:12px;
+      color:var(--muted-2);
+      margin:0;
+    }
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height:44px;
+      padding:0 18px;
+      border-radius:12px;
+      font-size:14px;
+      font-weight:700;
+      transition:transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+      border:1px solid transparent;
+      cursor:pointer;
+    }
+
+    .btn:hover{
+      transform:translateY(-1px);
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg, var(--blue) 0%, #0d7eff 100%);
+      color:white;
+      box-shadow:0 12px 28px rgba(10,108,255,.28);
+    }
+
+    .btn-primary:hover{
+      background:linear-gradient(135deg, #0c62e0 0%, #0a6cef 100%);
+    }
+
+    .btn-ghost{
+      background:rgba(255,255,255,.03);
+      border-color:var(--line);
+      color:#dbe8ff;
+    }
+
+    .btn-ghost:hover{
+      background:rgba(255,255,255,.06);
+      border-color:var(--line-strong);
+    }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      border-bottom:1px solid rgba(255,255,255,.04);
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(180deg, rgba(5,8,15,.58) 0%, rgba(5,8,15,.86) 80%, rgba(5,8,15,1) 100%),
+        url("../assets/allende-portada.jpg");
+      background-size:cover;
+      background-position:center;
+      opacity:.28;
+      filter:saturate(.9) contrast(1.03);
+    }
+
+    .hero-inner{
+      position:relative;
+      z-index:1;
+      max-width:1100px;
+      margin:0 auto;
+      padding:56px 20px 34px;
+    }
+
+    .crumb{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.06);
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:18px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:28px;
+      align-items:end;
+    }
+
+    .hero-copy h1{
+      margin:0 0 12px;
+      font-size:clamp(34px, 6vw, 64px);
+      line-height:1.02;
+      letter-spacing:.02em;
+      color:white;
+      text-shadow:0 0 22px rgba(10,108,255,.18);
+    }
+
+    .eyebrow{
+      margin:0 0 14px;
+      color:var(--blue2);
+      font-weight:700;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      font-size:12px;
+    }
+
+    .hero-copy p{
+      margin:0;
+      max-width:700px;
+      color:#d4def3;
+      font-size:18px;
+      line-height:1.75;
+    }
+
+    .hero-side{
+      display:flex;
+      justify-content:flex-end;
+    }
+
+    .chapter-card{
+      width:min(100%, 360px);
+      background:linear-gradient(180deg, rgba(12,18,32,.75), rgba(9,13,24,.88));
+      border:1px solid rgba(73,182,255,.18);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:22px;
+      backdrop-filter:blur(16px);
+    }
+
+    .chapter-label{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 12px;
+      border-radius:999px;
+      background:var(--blue-soft);
+      border:1px solid rgba(73,182,255,.18);
+      color:var(--blue2);
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:14px;
+    }
+
+    .chapter-card h2{
+      margin:0 0 10px;
+      font-size:24px;
+      line-height:1.15;
+      color:white;
+    }
+
+    .chapter-card p{
+      margin:0 0 18px;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.7;
+    }
+
+    .meta{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .meta-item{
+      padding:12px;
+      border-radius:14px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.05);
+    }
+
+    .meta-k{
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--muted-2);
+      margin:0 0 6px;
+    }
+
+    .meta-v{
+      margin:0;
+      font-size:13px;
+      color:#e7efff;
+      font-weight:700;
+    }
+
+    .content-wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:28px 20px 80px;
+    }
+
+    .reader{
+      position:relative;
+      background:linear-gradient(180deg, rgba(11,18,32,.58), rgba(8,13,24,.72));
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:22px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      backdrop-filter:blur(4px);
+    }
+
+    .reader-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:18px 22px;
+      border-bottom:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+    }
+
+    .reader-top-left h3{
+      margin:0 0 4px;
+      font-size:18px;
+      color:#edf3ff;
+    }
+
+    .reader-top-left p{
+      margin:0;
+      color:var(--muted-2);
+      font-size:13px;
+    }
+
+    .reader-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:34px;
+      padding:0 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.06);
+      color:#cfe0ff;
+      font-size:12px;
+      font-weight:700;
+      white-space:nowrap;
+    }
+
+    .reader-body{
+      padding:34px 26px 18px;
+      position:relative;
+    }
+
+    .story{
+      max-width:720px;
+      margin:0 auto;
+      position:relative;
+      z-index:2;
+    }
+
+    .lead{
+      font-size:19px;
+      line-height:1.9;
+      color:#ecf3ff;
+      margin:0 0 26px;
+      padding:18px 18px 18px 20px;
+      border-left:3px solid rgba(73,182,255,.44);
+      background:rgba(9,18,35,.68);
+      border-radius:0 14px 14px 0;
+      backdrop-filter:blur(4px);
+    }
+
+    .story p{
+      margin:0 0 22px;
+      color:#e4ecfb;
+      font-size:18px;
+      line-height:1.95;
+      letter-spacing:.01em;
+      text-shadow:0 1px 2px rgba(0,0,0,.4);
+    }
+
+    .story p strong{
+      color:#ffffff;
+      font-weight:700;
+    }
+
+    .story .quote{
+      margin:34px 0;
+      padding:20px 22px;
+      border-radius:18px;
+      background:linear-gradient(180deg, rgba(10,108,255,.12), rgba(73,182,255,.06));
+      border:1px solid rgba(73,182,255,.14);
+      color:#edf5ff;
+      font-size:19px;
+      line-height:1.7;
+      text-align:center;
+      box-shadow:0 12px 30px rgba(0,0,0,.18);
+      backdrop-filter:blur(4px);
+    }
+
+    .story .divider{
+      width:86px;
+      height:1px;
+      background:linear-gradient(90deg, transparent, rgba(73,182,255,.6), transparent);
+      margin:34px auto;
+    }
+
+    .reader-bottom{
+      padding:24px 26px 28px;
+      border-top:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .reader-note{
+      color:var(--muted-2);
+      font-size:13px;
+      margin:0;
+    }
+
+    .nav-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    @media (max-width: 900px){
+      .hero-grid{
+        grid-template-columns:1fr;
+      }
+
+      .hero-side{
+        justify-content:flex-start;
+      }
+
+      .chapter-card{
+        width:100%;
+        max-width:unset;
+      }
+    }
+
+    @media (max-width: 640px){
+      .topbar-inner{
+        padding:14px 14px;
+      }
+
+      .hero-inner{
+        padding:34px 14px 22px;
+      }
+
+      .content-wrap{
+        padding:20px 14px 60px;
+      }
+
+      .reader-top,
+      .reader-body,
+      .reader-bottom{
+        padding-left:16px;
+        padding-right:16px;
+      }
+
+      .reader-body{
+        padding-top:24px;
+      }
+
+      .hero-copy p,
+      .story p,
+      .lead{
+        font-size:16px;
+      }
+
+      .meta{
+        grid-template-columns:1fr;
+      }
+
+      .top-actions{
+        width:100%;
+      }
+
+      .btn{
+        width:100%;
+      }
+
+      .nav-actions{
+        width:100%;
+      }
+
+      .nav-actions .btn{
+        flex:1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="stars"></canvas>
+
+  <div class="page">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <div class="brand-badge">N</div>
+          <div>
+            <p class="brand-title">La Vía y la Ruptura</p>
+            <p class="brand-sub">Drama histórico chileno</p>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <a href="capitulo13.html" class="btn btn-ghost">← Capítulo anterior</a>
+          <a href="capitulo15.html" class="btn btn-primary">Siguiente capítulo →</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="crumb">Inicio / Corrupción y poder / Capítulo 14</div>
+
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Capítulo 14</p>
+            <h1>La máquina del miedo</h1>
+            <p>
+              El terror deja de ser advertencia y se vuelve estructura. Chile entra en la etapa más oscura: aquella donde el miedo ya no solo ronda las calles, sino que administra la vida, la espera y la desaparición.
+            </p>
+          </div>
+
+          <div class="hero-side">
+            <aside class="chapter-card">
+              <div class="chapter-label">El sistema se cierra</div>
+              <h2>Cuando el terror deja de parecer excepción</h2>
+              <p>
+                Las detenciones se multiplican, el silencio se vuelve hábito y el país aprende que ya no vive bajo una amenaza pasajera, sino dentro de una maquinaria diseñada para producir obediencia a través del espanto.
+              </p>
+
+              <div class="meta">
+                <div class="meta-item">
+                  <p class="meta-k">Estado</p>
+                  <p class="meta-v">Gratis</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Género</p>
+                  <p class="meta-v">Histórico</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Temporada</p>
+                  <p class="meta-v">14 de 17</p>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="content-wrap">
+      <article class="reader">
+        <div class="reader-top">
+          <div class="reader-top-left">
+            <h3>Capítulo 14: La máquina del miedo</h3>
+            <p>Lectura gratuita · El instante en que el terror deja de ser ambiente y se convierte en sistema</p>
+          </div>
+          <div class="reader-badge">Acceso abierto</div>
+        </div>
+
+        <div class="reader-body">
+          <div class="story">
+            <p class="lead">
+              El miedo ya no era una atmósfera.
+              Ya no era el eco del bombardeo,
+              la impresión todavía viva del golpe,
+              la incertidumbre de las primeras horas.
+              Ahora tenía forma.
+              Tenía rutina.
+              Tenía procedimientos.
+              Chile comenzó a entender que lo que había caído sobre él no era solo una dictadura:
+              era una maquinaria.
+              Y esa maquinaria no estaba improvisando.
+              Estaba aprendiendo a funcionar con precisión.
+            </p>
+
+            <p>
+              Las detenciones dejaron de parecer hechos aislados.
+            </p>
+
+            <p>
+              Comenzaron a repetirse con una lógica demasiado reconocible como para seguir llamándolas excesos.
+            </p>
+
+            <p>
+              La noche.
+            </p>
+
+            <p>
+              Los vehículos.
+            </p>
+
+            <p>
+              Los nombres pronunciados en la puerta.
+            </p>
+
+            <p>
+              El tiempo breve para vestirse.
+            </p>
+
+            <p>
+              La ausencia de explicaciones.
+            </p>
+
+            <p>
+              El silencio posterior.
+            </p>
+
+            <p><strong>Lo que aterraba no era solo que sucediera. Era que comenzaba a suceder de manera reconocible.</strong></p>
+
+            <div class="quote">El terror se vuelve sistema cuando las personas empiezan a identificar sus pasos antes incluso de que llegue a tocar la puerta.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Muchas familias entraron entonces en una nueva forma de vida:
+              la espera.
+            </p>
+
+            <p>
+              Esperar noticias.
+            </p>
+
+            <p>
+              Esperar un dato.
+            </p>
+
+            <p>
+              Esperar que alguien conociera a alguien.
+            </p>
+
+            <p>
+              Esperar una llamada,
+              una lista,
+              una confirmación,
+              una negación.
+            </p>
+
+            <p>
+              El problema era que el nuevo poder no solo secuestraba cuerpos.
+            </p>
+
+            <p>
+              También secuestraba información.
+            </p>
+
+            <p>
+              Y con ella secuestraba el tiempo interior de las familias.
+            </p>
+
+            <p>
+              Porque no saber es una de las formas más devastadoras del tormento.
+            </p>
+
+            <p>
+              La ausencia total aún duele.
+            </p>
+
+            <p>
+              Pero la incertidumbre interminable destruye a plazos.
+            </p>
+
+            <div class="quote">No todos los tormentos dejan sangre visible. Algunos se sientan en la mesa, comen con la familia y se llaman espera.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Chile empezó a poblarse de preguntas sin respuesta.
+            </p>
+
+            <p>
+              ¿Dónde está?
+            </p>
+
+            <p>
+              ¿Lo vieron?
+            </p>
+
+            <p>
+              ¿Lo tienen?
+            </p>
+
+            <p>
+              ¿Volverá?
+            </p>
+
+            <p>
+              ¿Está vivo?
+            </p>
+
+            <p>
+              Y detrás de cada pregunta,
+              algo todavía más terrible:
+              la intuición de que el sistema ya estaba diseñado precisamente para impedir la respuesta.
+            </p>
+
+            <p>
+              La desaparición no era solo una práctica.
+            </p>
+
+            <p>
+              Era una tecnología del miedo.
+            </p>
+
+            <p>
+              Permitía castigar al cuerpo,
+              quebrar a la familia
+              y disciplinar al barrio completo con una sola ausencia.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              Las calles se volvieron más silenciosas.
+            </p>
+
+            <p>
+              No porque la vida hubiera desaparecido.
+            </p>
+
+            <p>
+              Sino porque cada vida empezó a moverse con más cálculo.
+            </p>
+
+            <p>
+              La gente dejó de quedarse más tiempo del necesario.
+            </p>
+
+            <p>
+              Dejó de preguntar demasiado.
+            </p>
+
+            <p>
+              Dejó de mirar de frente ciertos movimientos.
+            </p>
+
+            <p>
+              El espacio público se volvió un lugar de tránsito, no de permanencia.
+            </p>
+
+            <p>
+              Y eso modificó profundamente la experiencia del país.
+            </p>
+
+            <p>
+              Una nación no cambia solo cuando se modifica su gobierno.
+            </p>
+
+            <p>
+              Cambia cuando sus calles dejan de pertenecer a la ciudadanía y pasan a pertenecer al miedo.
+            </p>
+
+            <div class="quote">Una plaza ocupada por el terror ya no reúne. Dispersa. Y en esa dispersión se empieza a romper el tejido más íntimo de una sociedad.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              El nuevo régimen comprendió muy rápido que gobernar no bastaba.
+            </p>
+
+            <p>
+              Había que reordenar.
+            </p>
+
+            <p>
+              Clasificar.
+            </p>
+
+            <p>
+              Marcar.
+            </p>
+
+            <p>
+              Hacer sentir a cada uno que podía estar siendo observado, recordado, ubicado en cualquier momento.
+            </p>
+
+            <p>
+              Esa sensación es una de las bases más estables del autoritarismo.
+            </p>
+
+            <p>
+              No necesita una vigilancia total real.
+            </p>
+
+            <p>
+              Le basta con producir la percepción de que esa vigilancia es posible.
+            </p>
+
+            <p>
+              Entonces la sociedad empieza a administrarse sola.
+            </p>
+
+            <p>
+              La autocensura florece.
+            </p>
+
+            <p>
+              La prudencia se vuelve reflejo.
+            </p>
+
+            <p>
+              El terror ya no tiene que estar en todas partes.
+            </p>
+
+            <p>
+              Porque logra instalar un pedazo de sí en cada conciencia.
+            </p>
+
+            <p><strong>Ese fue uno de los grandes triunfos iniciales del régimen: hacer que el miedo empezara a trabajar incluso en ausencia del uniformado.</strong></p>
+
+            <div class="divider"></div>
+
+            <p>
+              Pero la represión no solo disciplinaba.
+            </p>
+
+            <p>
+              También producía una pedagogía del ejemplo.
+            </p>
+
+            <p>
+              Cada detención.
+            </p>
+
+            <p>
+              Cada desaparición.
+            </p>
+
+            <p>
+              Cada casa intervenida.
+            </p>
+
+            <p>
+              Cada nombre que dejaba de pronunciarse en público.
+            </p>
+
+            <p>
+              Todo eso enseñaba.
+            </p>
+
+            <p>
+              Enseñaba qué podía pasar.
+            </p>
+
+            <p>
+              Enseñaba qué no debía decirse.
+            </p>
+
+            <p>
+              Enseñaba que el nuevo poder no buscaba solo obediencia exterior,
+              sino reconfiguración interior.
+            </p>
+
+            <p>
+              Chile estaba siendo educado por el miedo.
+            </p>
+
+            <p>
+              No en escuelas.
+            </p>
+
+            <p>
+              En esquinas,
+              casas,
+              cuarteles
+              y silencios.
+            </p>
+
+            <div class="quote">El autoritarismo no solo manda. También enseña. Y casi siempre enseña con dolor ajeno.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Hubo quienes comenzaron a comprender que la represión no buscaba únicamente castigar a los más visibles.
+            </p>
+
+            <p>
+              Buscaba algo más amplio:
+              que toda la sociedad entendiera cuál sería el precio de sostener una memoria disidente.
+            </p>
+
+            <p>
+              Por eso la violencia era ejemplar.
+            </p>
+
+            <p>
+              Por eso el miedo necesitaba circular.
+            </p>
+
+            <p>
+              Por eso el rumor era funcional al sistema,
+              incluso cuando no se conocía toda la verdad.
+            </p>
+
+            <p>
+              Un barrio no necesitaba ver todo para quedar disciplinado.
+            </p>
+
+            <p>
+              A veces bastaba una ausencia.
+            </p>
+
+            <p>
+              A veces bastaba un nombre borrado.
+            </p>
+
+            <p>
+              A veces bastaba un comentario dicho a media voz:
+              “vinieron de noche”.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              En esa etapa,
+              la dictadura empezó a mostrar uno de sus rasgos más devastadores:
+              la capacidad de convertir el dolor privado en mecanismo público de control.
+            </p>
+
+            <p>
+              El sufrimiento de una familia ya no pertenecía solo a esa familia.
+            </p>
+
+            <p>
+              Era un mensaje para todos.
+            </p>
+
+            <p>
+              Una advertencia.
+            </p>
+
+            <p>
+              Una exhibición lateral de poder.
+            </p>
+
+            <p>
+              Así se consolidan las máquinas del miedo:
+              cuando descubren que no necesitan castigar a todos,
+              sino hacer sentir a todos que podrían ser castigados.
+            </p>
+
+            <p>
+              Chile estaba entrando por completo en esa lógica.
+            </p>
+
+            <p><strong>El terror ya no perseguía solo personas. Empezaba a gobernar la imaginación colectiva.</strong></p>
+
+            <div class="quote">La represión es más eficiente cuando cada ciudadano comienza a completar con su propio miedo lo que el poder no necesita mostrar entero.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Y, sin embargo,
+              incluso en medio de esa oscuridad,
+              algo persistía.
+            </p>
+
+            <p>
+              La memoria.
+            </p>
+
+            <p>
+              El nombre guardado.
+            </p>
+
+            <p>
+              El papel escondido.
+            </p>
+
+            <p>
+              La dirección anotada.
+            </p>
+
+            <p>
+              La vecina que avisaba.
+            </p>
+
+            <p>
+              El amigo que recibía a alguien una noche.
+            </p>
+
+            <p>
+              La familia que seguía preguntando aunque le cerraran todas las puertas.
+            </p>
+
+            <p>
+              Esa resistencia todavía era mínima,
+              casi invisible,
+              pero ya estaba ahí.
+            </p>
+
+            <p>
+              Porque el terror puede imponer silencio,
+              pero nunca controla por completo la obstinación humana de recordar.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              Chile comenzaba a descubrir eso también:
+              que vivir bajo dictadura significaría no solo soportar el miedo,
+              sino decidir todos los días qué parte de la verdad se podía salvar del hundimiento.
+            </p>
+
+            <p>
+              A veces salvarla en una libreta.
+            </p>
+
+            <p>
+              A veces en la memoria.
+            </p>
+
+            <p>
+              A veces en el gesto simple de no olvidar el nombre del que faltaba.
+            </p>
+
+            <p>
+              Pero mientras esa resistencia subterránea apenas nacía,
+              la máquina seguía ampliando su sombra.
+            </p>
+
+            <p>
+              Y el país comprendió,
+              con una claridad cada vez más insoportable,
+              que ya no estaba frente a un episodio,
+              sino frente a un régimen dispuesto a convertir el miedo en su principal lenguaje de gobierno.
+            </p>
+
+            <div class="quote">Las dictaduras duran cuando consiguen administrar el tiempo. Y la primera forma de administrarlo es obligar a la gente a vivir esperando el próximo golpe sobre alguien más.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Esa noche,
+              en una casa,
+              una madre siguió esperando un regreso que no llegó.
+            </p>
+
+            <p>
+              En otra,
+              una familia decidió esconder unas fotografías y unos documentos en una pared falsa.
+            </p>
+
+            <p>
+              En una calle,
+              alguien bajó la voz apenas escuchó un motor detenerse demasiado cerca.
+            </p>
+
+            <p>
+              Y en la conciencia del país empezó a dibujarse la verdad más dura de todas:
+              que el miedo ya no era una reacción.
+            </p>
+
+            <p>
+              Era una política.
+            </p>
+
+            <p>
+              Era una estructura.
+            </p>
+
+            <p>
+              Era un sistema aprendiendo a perfeccionarse.
+            </p>
+
+            <p><strong>Chile había entrado en la fase en que la dictadura ya no solo mandaba. Empezaba a administrar el espanto como forma cotidiana de gobierno.</strong></p>
+          </div>
+        </div>
+
+        <div class="reader-bottom">
+          <p class="reader-note">
+            Continúa al capítulo 15 para entrar en la herida más humana: las familias quebradas, la memoria que se niega a desaparecer y la resistencia silenciosa que comienza a formarse bajo la noche.
+          </p>
+
+          <div class="nav-actions">
+            <a href="capitulo13.html" class="btn btn-ghost">← Capítulo 13</a>
+            <a href="capitulo15.html" class="btn btn-primary">Leer capítulo 15 →</a>
+          </div>
+        </div>
+      </article>
+    </main>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("stars");
+    const ctx = canvas.getContext("2d");
+    let stars = [];
+
+    function resize(){
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      createStars();
+    }
+
+    function createStars(){
+      stars = [];
+      const amount = Math.floor((canvas.width * canvas.height) / 14000);
+      for(let i = 0; i < amount; i++){
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.6 + 0.3,
+          speed: Math.random() * 0.35 + 0.08,
+          alpha: Math.random() * 0.7 + 0.2
+        });
+      }
+    }
+
+    function animate(){
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for(const s of stars){
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        s.y += s.speed;
+
+        if(s.y > canvas.height){
+          s.y = -2;
+          s.x = Math.random() * canvas.width;
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener("resize", resize);
+    resize();
+    animate();
+  </script>
+</body>
+</html>
