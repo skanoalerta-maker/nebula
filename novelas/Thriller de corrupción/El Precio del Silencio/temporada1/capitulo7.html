@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capítulo 7 | El Precio del Silencio</title>
+  <meta
+    name="description"
+    content="Capítulo 7 de El Precio del Silencio: La lista de los obedientes."
+  />
+
+  <style>
+    :root{
+      --bg:#05080f;
+      --bg2:#0b1220;
+      --card:rgba(12,18,32,0.82);
+      --line:rgba(255,255,255,0.08);
+      --line-strong:rgba(73,182,255,.24);
+      --text:#f5f8ff;
+      --muted:#aebad1;
+      --muted-2:#7f90ae;
+      --blue:#0A6CFF;
+      --blue2:#49b6ff;
+      --blue-soft:rgba(73,182,255,.14);
+      --shadow:0 24px 60px rgba(0,0,0,.45);
+      --radius:22px;
+      --max:860px;
+    }
+
+    *{
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      color:var(--text);
+      background:#04070d;
+      line-height:1.8;
+      position:relative;
+      overflow-x:hidden;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    #stars{
+      position:fixed;
+      inset:0;
+      width:100%;
+      height:100%;
+      z-index:0;
+      background:
+        radial-gradient(circle at top left, rgba(10,108,255,.12), transparent 24%),
+        radial-gradient(circle at top right, rgba(73,182,255,.08), transparent 20%),
+        linear-gradient(180deg, #04070d 0%, #08101c 45%, #05080f 100%);
+    }
+
+    .page{
+      min-height:100vh;
+      position:relative;
+      z-index:1;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:30;
+      backdrop-filter:blur(14px);
+      background:rgba(5,8,15,.72);
+      border-bottom:1px solid var(--line);
+    }
+
+    .topbar-inner{
+      max-width:1100px;
+      margin:0 auto;
+      padding:16px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .brand-badge{
+      width:38px;
+      height:38px;
+      border-radius:12px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg, rgba(10,108,255,.22), rgba(73,182,255,.08));
+      border:1px solid var(--line-strong);
+      box-shadow:0 0 24px rgba(10,108,255,.12);
+      font-weight:700;
+      color:var(--blue2);
+      flex:0 0 auto;
+    }
+
+    .brand-title{
+      font-size:14px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:#dfe9ff;
+      margin:0 0 2px;
+    }
+
+    .brand-sub{
+      font-size:12px;
+      color:var(--muted-2);
+      margin:0;
+    }
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height:44px;
+      padding:0 18px;
+      border-radius:12px;
+      font-size:14px;
+      font-weight:700;
+      transition:transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+      border:1px solid transparent;
+      cursor:pointer;
+    }
+
+    .btn:hover{
+      transform:translateY(-1px);
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg, var(--blue) 0%, #0d7eff 100%);
+      color:white;
+      box-shadow:0 12px 28px rgba(10,108,255,.28);
+    }
+
+    .btn-primary:hover{
+      background:linear-gradient(135deg, #0c62e0 0%, #0a6cef 100%);
+    }
+
+    .btn-ghost{
+      background:rgba(255,255,255,.03);
+      border-color:var(--line);
+      color:#dbe8ff;
+    }
+
+    .btn-ghost:hover{
+      background:rgba(255,255,255,.06);
+      border-color:var(--line-strong);
+    }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      border-bottom:1px solid rgba(255,255,255,.04);
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(180deg, rgba(5,8,15,.58) 0%, rgba(5,8,15,.86) 80%, rgba(5,8,15,1) 100%),
+        url("../assets/temporada1.jpg");
+      background-size:cover;
+      background-position:center;
+      opacity:.28;
+      filter:saturate(.9) contrast(1.03);
+    }
+
+    .hero-inner{
+      position:relative;
+      z-index:1;
+      max-width:1100px;
+      margin:0 auto;
+      padding:56px 20px 34px;
+    }
+
+    .crumb{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.06);
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:18px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:28px;
+      align-items:end;
+    }
+
+    .hero-copy h1{
+      margin:0 0 12px;
+      font-size:clamp(34px, 6vw, 64px);
+      line-height:1.02;
+      letter-spacing:.02em;
+      color:white;
+      text-shadow:0 0 22px rgba(10,108,255,.18);
+    }
+
+    .eyebrow{
+      margin:0 0 14px;
+      color:var(--blue2);
+      font-weight:700;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      font-size:12px;
+    }
+
+    .hero-copy p{
+      margin:0;
+      max-width:700px;
+      color:#d4def3;
+      font-size:18px;
+      line-height:1.75;
+    }
+
+    .hero-side{
+      display:flex;
+      justify-content:flex-end;
+    }
+
+    .chapter-card{
+      width:min(100%, 360px);
+      background:linear-gradient(180deg, rgba(12,18,32,.75), rgba(9,13,24,.88));
+      border:1px solid rgba(73,182,255,.18);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:22px;
+      backdrop-filter:blur(16px);
+    }
+
+    .chapter-label{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 12px;
+      border-radius:999px;
+      background:var(--blue-soft);
+      border:1px solid rgba(73,182,255,.18);
+      color:var(--blue2);
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:14px;
+    }
+
+    .chapter-card h2{
+      margin:0 0 10px;
+      font-size:24px;
+      line-height:1.15;
+      color:white;
+    }
+
+    .chapter-card p{
+      margin:0 0 18px;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.7;
+    }
+
+    .meta{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .meta-item{
+      padding:12px;
+      border-radius:14px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.05);
+    }
+
+    .meta-k{
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--muted-2);
+      margin:0 0 6px;
+    }
+
+    .meta-v{
+      margin:0;
+      font-size:13px;
+      color:#e7efff;
+      font-weight:700;
+    }
+
+    .content-wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:28px 20px 80px;
+    }
+
+    .reader{
+      position:relative;
+      background:linear-gradient(180deg, rgba(11,18,32,.58), rgba(8,13,24,.72));
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:22px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      backdrop-filter:blur(4px);
+    }
+
+    .reader-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:18px 22px;
+      border-bottom:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+    }
+
+    .reader-top-left h3{
+      margin:0 0 4px;
+      font-size:18px;
+      color:#edf3ff;
+    }
+
+    .reader-top-left p{
+      margin:0;
+      color:var(--muted-2);
+      font-size:13px;
+    }
+
+    .reader-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:34px;
+      padding:0 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.06);
+      color:#cfe0ff;
+      font-size:12px;
+      font-weight:700;
+      white-space:nowrap;
+    }
+
+    .reader-body{
+      padding:34px 26px 18px;
+      position:relative;
+    }
+
+    .story{
+      max-width:720px;
+      margin:0 auto;
+      position:relative;
+      z-index:2;
+    }
+
+    .lead{
+      font-size:19px;
+      line-height:1.9;
+      color:#ecf3ff;
+      margin:0 0 26px;
+      padding:18px 18px 18px 20px;
+      border-left:3px solid rgba(73,182,255,.44);
+      background:rgba(9,18,35,.68);
+      border-radius:0 14px 14px 0;
+      backdrop-filter:blur(4px);
+    }
+
+    .story p{
+      margin:0 0 22px;
+      color:#e4ecfb;
+      font-size:18px;
+      line-height:1.95;
+      letter-spacing:.01em;
+      text-shadow:0 1px 2px rgba(0,0,0,.4);
+    }
+
+    .story p strong{
+      color:#ffffff;
+      font-weight:700;
+    }
+
+    .story .quote{
+      margin:34px 0;
+      padding:20px 22px;
+      border-radius:18px;
+      background:linear-gradient(180deg, rgba(10,108,255,.12), rgba(73,182,255,.06));
+      border:1px solid rgba(73,182,255,.14);
+      color:#edf5ff;
+      font-size:19px;
+      line-height:1.7;
+      text-align:center;
+      box-shadow:0 12px 30px rgba(0,0,0,.18);
+      backdrop-filter:blur(4px);
+    }
+
+    .story .divider{
+      width:86px;
+      height:1px;
+      background:linear-gradient(90deg, transparent, rgba(73,182,255,.6), transparent);
+      margin:34px auto;
+    }
+
+    .reader-bottom{
+      padding:24px 26px 28px;
+      border-top:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .reader-note{
+      color:var(--muted-2);
+      font-size:13px;
+      margin:0;
+    }
+
+    .nav-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    @media (max-width: 900px){
+      .hero-grid{
+        grid-template-columns:1fr;
+      }
+
+      .hero-side{
+        justify-content:flex-start;
+      }
+
+      .chapter-card{
+        width:100%;
+        max-width:unset;
+      }
+    }
+
+    @media (max-width: 640px){
+      .topbar-inner{
+        padding:14px 14px;
+      }
+
+      .hero-inner{
+        padding:34px 14px 22px;
+      }
+
+      .content-wrap{
+        padding:20px 14px 60px;
+      }
+
+      .reader-top,
+      .reader-body,
+      .reader-bottom{
+        padding-left:16px;
+        padding-right:16px;
+      }
+
+      .reader-body{
+        padding-top:24px;
+      }
+
+      .hero-copy p,
+      .story p,
+      .lead{
+        font-size:16px;
+      }
+
+      .meta{
+        grid-template-columns:1fr;
+      }
+
+      .top-actions{
+        width:100%;
+      }
+
+      .btn{
+        width:100%;
+      }
+
+      .nav-actions{
+        width:100%;
+      }
+
+      .nav-actions .btn{
+        flex:1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="stars"></canvas>
+
+  <div class="page">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <div class="brand-badge">N</div>
+          <div>
+            <p class="brand-title">El Precio del Silencio</p>
+            <p class="brand-sub">Thriller político y empresarial</p>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <a href="capitulo6.html" onclick="goBack(event, 'capitulo6.html')" class="btn btn-ghost">← Capítulo anterior</a>
+          <a href="capitulo8.html" class="btn btn-primary">Siguiente capítulo →</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="crumb">Inicio / Capítulos / Capítulo 7</div>
+
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Capítulo 7</p>
+            <h1>La lista de los obedientes</h1>
+            <p>
+              La salida secreta del archivo ya no es una vía de escape. Es una prueba de infiltración.
+              Y detrás de esa puerta no hay solo una amenaza: hay una lista que revela cuántos nombres, medios y oficinas ya obedecen a la red.
+            </p>
+          </div>
+
+          <div class="hero-side">
+            <aside class="chapter-card">
+              <div class="chapter-label">La red se vuelve visible</div>
+              <h2>No eran casos aislados. Era un sistema humano completo.</h2>
+              <p>
+                Mientras alguien intenta entrar por la salida interior, Tomás y Laura descubren un archivo oculto
+                con la estructura más peligrosa hasta ahora: una nómina viva de personas clasificadas según utilidad, lealtad y riesgo.
+              </p>
+
+              <div class="meta">
+                <div class="meta-item">
+                  <p class="meta-k">Estado</p>
+                  <p class="meta-v">Gratis</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Género</p>
+                  <p class="meta-v">Suspenso</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Temporada</p>
+                  <p class="meta-v">7 de 17</p>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="content-wrap">
+      <article class="reader">
+        <div class="reader-top">
+          <div class="reader-top-left">
+            <h3>Capítulo 7: La lista de los obedientes</h3>
+            <p>Lectura gratuita · La red ya tiene nombres propios</p>
+          </div>
+          <div class="reader-badge">Acceso abierto</div>
+        </div>
+
+        <div class="reader-body">
+          <div class="story">
+            <p class="lead">
+              El golpe metálico volvió a sonar desde la puerta interior. Esta vez más claro. No era un accidente,
+              ni una tubería, ni madera dilatándose. Era una llave entrando donde no debía, probando una cerradura
+              que en teoría solo Laura conocía. Tomás giró despacio hacia el fondo del archivo y entendió algo peor
+              que una emboscada: la salida secreta no estaba comprometida desde hoy. Llevaba tiempo dejándole pasar gente a la red.
+            </p>
+
+            <p>
+              Laura reaccionó antes que él.
+            </p>
+
+            <p>
+              Apagó la lámpara auxiliar de la mesa.
+            </p>
+
+            <p>
+              Guardó de golpe la tarjeta plastificada de CN-7 bajo una carpeta vacía.
+            </p>
+
+            <p>
+              Y caminó hasta la repisa lateral con una precisión que no era improvisación.
+            </p>
+
+            <p>
+              —No hables —dijo apenas.
+            </p>
+
+            <p>
+              Tomás sintió un pulso violento en el cuello.
+            </p>
+
+            <p>
+              El sonido de la llave equivocada volvió una tercera vez.
+            </p>
+
+            <p>
+              Después, silencio.
+            </p>
+
+            <p>
+              Un silencio distinto al anterior.
+            </p>
+
+            <p>
+              Más atento.
+            </p>
+
+            <p>
+              Como si quien estuviera al otro lado hubiera comprendido que ya no necesitaba insistir.
+            </p>
+
+            <div class="quote">Cuando alguien deja de forzar una puerta, no siempre significa que se rindió. A veces significa que encontró otra manera de entrar.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Laura deslizó una de las cajas inferiores de la estantería y reveló una tapa de metal cuadrada,
+              embutida en el piso, casi invisible bajo el polvo y el desorden calculado del archivo.
+            </p>
+
+            <p>
+              Tomás parpadeó.
+            </p>
+
+            <p>
+              —¿Qué es eso?
+            </p>
+
+            <p>
+              Laura no lo miró.
+            </p>
+
+            <p>
+              —La razón por la que esta oficina nunca fue solo una oficina.
+            </p>
+
+            <p>
+              Levantó la tapa con esfuerzo mínimo.
+            </p>
+
+            <p>
+              Debajo había un compartimento poco profundo, del tamaño de una maleta pequeña.
+            </p>
+
+            <p>
+              No estaba lleno de dinero.
+            </p>
+
+            <p>
+              No había discos duros apilados ni armas ni pasaportes falsos.
+            </p>
+
+            <p>
+              Había tres carpetas negras, una libreta roja y un pendrive plateado envuelto en bolsa antiestática.
+            </p>
+
+            <p>
+              Laura tomó las carpetas sin vacilar.
+            </p>
+
+            <p>
+              —Si esa puerta está comprometida, esto ya no puede quedarse aquí.
+            </p>
+
+            <p>
+              Tomás sintió el peso de la frase antes de entender el objeto.
+            </p>
+
+            <p>
+              —¿Qué son?
+            </p>
+
+            <p>
+              Laura lo miró por fin.
+            </p>
+
+            <p>
+              —Lo que nunca publiqué. Y algo que nunca pensé mostrarle a nadie.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              En la puerta principal se escuchó un roce breve, como una mano apoyándose apenas en la madera.
+            </p>
+
+            <p>
+              El hombre del café seguía afuera.
+            </p>
+
+            <p>
+              Del otro lado, quien estuviera en la salida interior seguía sin volver a intentar entrar.
+            </p>
+
+            <p>
+              Dos bordes cerrados.
+            </p>
+
+            <p>
+              Dos presencias.
+            </p>
+
+            <p>
+              Y ellos en medio.
+            </p>
+
+            <p>
+              Laura llevó las carpetas a la mesa y abrió la primera.
+            </p>
+
+            <p>
+              El documento superior no parecía importante al primer vistazo.
+            </p>
+
+            <p>
+              Una tabla.
+            </p>
+
+            <p>
+              Columnas.
+            </p>
+
+            <p>
+              Iniciales.
+            </p>
+
+            <p>
+              Códigos de color.
+            </p>
+
+            <p>
+              Observaciones breves.
+            </p>
+
+            <p>
+              Pero el título, centrado arriba, le heló la sangre a Tomás:
+            </p>
+
+            <div class="quote">Matriz de interlocutores / clasificación operativa</div>
+
+            <p>
+              Laura dejó que él la leyera sin interrumpirlo.
+            </p>
+
+            <p>
+              Había entradas por rubro:
+            </p>
+
+            <p>
+              prensa,
+            </p>
+
+            <p>
+              legislativo,
+            </p>
+
+            <p>
+              gremial,
+            </p>
+
+            <p>
+              académico,
+            </p>
+
+            <p>
+              judicial,
+            </p>
+
+            <p>
+              regulatorio.
+            </p>
+
+            <p>
+              Cada nombre o inicial estaba acompañado por un estado:
+              <strong>alineado</strong>, <strong>gestionable</strong>,
+              <strong>ruidoso</strong>, <strong>neutralizable</strong>.
+            </p>
+
+            <p>
+              Tomás no necesitó más de diez segundos para comprender qué estaba viendo.
+            </p>
+
+            <p>
+              No era un simple listado de contactos.
+            </p>
+
+            <p><strong>Era un mapa humano del poder útil.</strong></p>
+
+            <div class="quote">No clasificaban personas por cargo. Las clasificaban por obediencia.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Tomás avanzó la página con la punta de los dedos.
+            </p>
+
+            <p>
+              Algunos nombres estaban completos.
+            </p>
+
+            <p>
+              Otros reducidos a iniciales, pero con contexto suficiente para adivinarlos.
+            </p>
+
+            <p>
+              Había periodistas marcados como “útiles en encuadre”.
+            </p>
+
+            <p>
+              Editores “resistentes, pero dependientes del avisaje”.
+            </p>
+
+            <p>
+              Asesores parlamentarios “consolidables”.
+            </p>
+
+            <p>
+              Economistas “citables si se instala escasez”.
+            </p>
+
+            <p>
+              Y en la columna final, una categoría que le produjo una náusea exacta:
+              <strong>obediencia por exposición</strong>.
+            </p>
+
+            <p>
+              —¿Qué significa eso? —preguntó.
+            </p>
+
+            <p>
+              Laura no dudó.
+            </p>
+
+            <p>
+              —Que no obedecen por plata. Obedecen porque saben que algo suyo puede salir.
+            </p>
+
+            <p>
+              Tomás siguió leyendo.
+            </p>
+
+            <p>
+              Una ministra en retiro.
+            </p>
+
+            <p>
+              Un director regional.
+            </p>
+
+            <p>
+              Un conductor de televisión.
+            </p>
+
+            <p>
+              Un decano de facultad.
+            </p>
+
+            <p>
+              Nombres que, fuera de ese papel, parecían piezas inconexas.
+            </p>
+
+            <p>
+              Ahí adentro, en cambio, eran nodos del mismo tablero.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              Laura abrió la segunda carpeta.
+            </p>
+
+            <p>
+              —Esto lo encontré dos meses después de que bajaran mi reportaje —dijo—.
+              Llegó por un sobre sin remitente y sin ninguna nota. Al principio pensé que era una trampa.
+              Después entendí que probablemente lo era, pero de otro tipo: alguien de adentro estaba filtrando migas
+              sin atreverse a cruzar el umbral completo.
+            </p>
+
+            <p>
+              Tomás ya no sabía si eso era alivio o terror.
+            </p>
+
+            <p>
+              Porque si dentro del sistema existía alguien filtrando, también significaba que la red
+              llevaba tiempo siendo observada desde adentro por personas que sabían que podían morir
+              —o ser borradas— si daban un paso más.
+            </p>
+
+            <p>
+              —¿Por qué no me mostraste esto antes?
+            </p>
+
+            <p>
+              Laura apoyó la mano sobre la carpeta abierta.
+            </p>
+
+            <p>
+              —Porque una cosa es demostrar corrupción. Otra muy distinta es entender que tienen una nómina viva
+              para administrar a quién premian, a quién asustan y a quién destruyen.
+            </p>
+
+            <p>
+              Lo miró fijo.
+            </p>
+
+            <p>
+              —Esto cambia el tipo de enemigo.
+            </p>
+
+            <div class="quote">Ya no peleaban contra gente protegiendo negocios. Peleaban contra gente administrando conductas.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Tomás pasó a la tercera página.
+            </p>
+
+            <p>
+              Y entonces lo vio.
+            </p>
+
+            <p>
+              Un nombre subrayado con marcador gris, acompañado por una nota al margen:
+              <strong>L. Sanz / exposición controlada / firmó no publicado / mantener en observación pasiva.</strong>
+            </p>
+
+            <p>
+              El aire se le trabó en el pecho.
+            </p>
+
+            <p>
+              Levantó la vista lentamente hacia Laura.
+            </p>
+
+            <p>
+              Ella ya sabía lo que él estaba viendo.
+            </p>
+
+            <p>
+              No apartó la mirada.
+            </p>
+
+            <p>
+              —Sí —dijo—. Estoy en la lista.
+            </p>
+
+            <p>
+              Tomás volvió al papel.
+            </p>
+
+            <p>
+              “Firmó no publicado.”
+            </p>
+
+            <p>
+              Ni siquiera necesitaban que el artículo saliera.
+            </p>
+
+            <p>
+              Les bastaba con saber que ella estuvo a punto de poner la firma.
+            </p>
+
+            <p>
+              No eran burócratas del control.
+            </p>
+
+            <p>
+              Eran contadores de lealtades fallidas.
+            </p>
+
+            <div class="quote">La red no olvida a los que dudan. Los archiva.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Del pasillo llegó otro sonido.
+            </p>
+
+            <p>
+              Esta vez no en la puerta.
+            </p>
+
+            <p>
+              Más atrás.
+            </p>
+
+            <p>
+              Como si el ascensor se hubiera abierto y alguien hubiese decidido no caminar todavía.
+            </p>
+
+            <p>
+              Laura cerró la carpeta de golpe.
+            </p>
+
+            <p>
+              —Tenemos que sacar esto ahora.
+            </p>
+
+            <p>
+              Tomás miró la tapa metálica abierta en el piso.
+            </p>
+
+            <p>
+              —¿Y por dónde salimos?
+            </p>
+
+            <p>
+              Laura señaló el fondo del archivo.
+            </p>
+
+            <p>
+              —No por la salida secreta. Si la conocen, ya no es salida.
+            </p>
+
+            <p>
+              Caminó hasta una pared lateral cubierta por archivadores viejos y empujó un módulo completo.
+            </p>
+
+            <p>
+              Detrás apareció una puerta angosta, casi pegada al muro, pintada del mismo color.
+            </p>
+
+            <p>
+              —¿Cuántas puertas escondidas tienes aquí?
+            </p>
+
+            <p>
+              Laura no sonrió.
+            </p>
+
+            <p>
+              —Las suficientes como para haber durado cuatro años más de lo que debía.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              Antes de salir, Tomás alcanzó a mirar de nuevo la matriz operativa.
+            </p>
+
+            <p>
+              Había una hoja adicional al fondo de la carpeta, separada con una pestaña azul.
+            </p>
+
+            <p>
+              La sacó apenas.
+            </p>
+
+            <p>
+              Esta no era una tabla de nombres por rubro.
+            </p>
+
+            <p>
+              Era una lista corta.
+            </p>
+
+            <p>
+              Once entradas.
+            </p>
+
+            <p>
+              Todas marcadas con prioridad alta.
+            </p>
+
+            <p>
+              Arriba, una línea impresa:
+            </p>
+
+            <div class="quote">Sujetos con resistencia persistente / definir contención antes de Q3</div>
+
+            <p>
+              Tomás recorrió los nombres con el corazón golpeándole las costillas.
+            </p>
+
+            <p>
+              Dos periodistas.
+            </p>
+
+            <p>
+              Un académico.
+            </p>
+
+            <p>
+              Tres abogados.
+            </p>
+
+            <p>
+              Un fiscal adjunto.
+            </p>
+
+            <p>
+              Gabriel Mena.
+            </p>
+
+            <p>
+              Laura Sanz.
+            </p>
+
+            <p>
+              Y al final, agregado en una tipografía distinta, evidentemente más reciente:
+            </p>
+
+            <p><strong>T. Rivas / validación en curso.</strong></p>
+
+            <div class="quote">Tomás sintió un frío puro, instantáneo. Ya no lo estaban buscando para ubicarlo. Ya lo estaban clasificando.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              No alcanzó a decir nada.
+            </p>
+
+            <p>
+              Desde el pasillo llegó un golpe en la puerta principal.
+            </p>
+
+            <p>
+              Esta vez sí.
+            </p>
+
+            <p>
+              Corto.
+            </p>
+
+            <p>
+              Formal.
+            </p>
+
+            <p>
+              Una cortesía que solo empeoraba el peligro.
+            </p>
+
+            <p>
+              —Laura —dijo una voz masculina desde afuera, nítida, tranquila—. No hagamos esto más incómodo de lo necesario.
+            </p>
+
+            <p>
+              Tomás no reconoció la voz por haberla escuchado antes.
+            </p>
+
+            <p>
+              La reconoció por el efecto que produjo.
+            </p>
+
+            <p>
+              Laura cerró los ojos un segundo, apenas.
+            </p>
+
+            <p>
+              Eso bastó para confirmar que no era un mensajero cualquiera.
+            </p>
+
+            <p><strong>Era alguien con pasado dentro de su vida.</strong></p>
+
+            <div class="divider"></div>
+
+            <p>
+              —Lleva la lista —dijo ella.
+            </p>
+
+            <p>
+              —No puedo dejarte aquí.
+            </p>
+
+            <p>
+              —No te estoy pidiendo permiso.
+            </p>
+
+            <p>
+              Tomás apretó la hoja entre los dedos.
+            </p>
+
+            <p>
+              —¿Quién es?
+            </p>
+
+            <p>
+              Laura abrió la puerta angosta oculta en la pared.
+            </p>
+
+            <p>
+              Detrás había una escalera de servicio estrecha, de concreto mal pintado, bajando hacia los patios traseros del edificio.
+            </p>
+
+            <p>
+              Antes de empujarlo hacia ahí, respondió:
+            </p>
+
+            <div class="quote">—Es el hombre que me convenció hace años de que todavía existían límites. Después descubrí que trabajaba precisamente para los que los borraban.</div>
+
+            <p>
+              Tomás la miró, aturdido.
+            </p>
+
+            <p>
+              —¿Tu fuente?
+            </p>
+
+            <p>
+              Laura negó.
+            </p>
+
+            <p>
+              —Peor.
+            </p>
+
+            <p>
+              Hubo un segundo golpe en la puerta principal.
+            </p>
+
+            <p>
+              La voz volvió:
+            </p>
+
+            <p>
+              —Laura. Ya basta.
+            </p>
+
+            <p>
+              Ella bajó la voz.
+            </p>
+
+            <p>
+              —Fue mi pareja.
+            </p>
+
+            <div class="quote">Y por primera vez, Tomás entendió que el archivo de Laura no era solo periodístico. También era íntimo.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              No hubo tiempo para más.
+            </p>
+
+            <p>
+              Laura le metió en la mano la hoja de “resistencia persistente”, el pendrive plateado
+              y la tarjeta de CN-7.
+            </p>
+
+            <p>
+              —Baja dos pisos. Cruza por el patio técnico. Sales a la galería interior. No mires atrás hasta la calle.
+            </p>
+
+            <p>
+              —Laura—
+            </p>
+
+            <p>
+              —¡Anda, Tomás!
+            </p>
+
+            <p>
+              El tercer golpe en la puerta ya no fue cortés.
+            </p>
+
+            <p>
+              La madera vibró.
+            </p>
+
+            <p>
+              Tomás dio un paso hacia la escalera.
+            </p>
+
+            <p>
+              Luego otro.
+            </p>
+
+            <p>
+              Lo último que vio antes de que Laura cerrara la puerta oculta fue a ella girando hacia la entrada principal,
+              enderezando los hombros como quien sabe exactamente qué máscara ponerse para enfrentar a alguien que una vez conoció demasiado bien.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              La escalera olía a humedad vieja y cables calientes.
+            </p>
+
+            <p>
+              Tomás bajó casi sin sentir los peldaños.
+            </p>
+
+            <p>
+              En una mano llevaba la hoja con su nombre ya clasificado por la red.
+            </p>
+
+            <p>
+              En la otra, el pendrive envuelto en antiestática.
+            </p>
+
+            <p>
+              Cada paso lo hundía más en una comprensión insoportable:
+            </p>
+
+            <p>
+              el sistema no se sostenía solo por plata ni por amenaza.
+            </p>
+
+            <p>
+              Se sostenía porque había logrado entrar a las biografías.
+            </p>
+
+            <p>
+              A las parejas.
+            </p>
+
+            <p>
+              A los hijos.
+            </p>
+
+            <p>
+              A los afectos.
+            </p>
+
+            <p>
+              A las pequeñas rendijas donde una persona todavía cree que su vida privada no forma parte del poder.
+            </p>
+
+            <div class="quote">La lista de los obedientes no era una base de datos. Era un mapa de las debilidades humanas convertidas en estrategia.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Llegó al patio técnico.
+            </p>
+
+            <p>
+              Escuchó arriba un ruido seco.
+            </p>
+
+            <p>
+              No supo si era una silla, una puerta o una discusión empujada contra una pared.
+            </p>
+
+            <p>
+              Se obligó a seguir.
+            </p>
+
+            <p>
+              Cruzó la galería interior.
+            </p>
+
+            <p>
+              Salió a la calle por una reja lateral.
+            </p>
+
+            <p>
+              El sol de la tarde le golpeó la cara con una normalidad obscena.
+            </p>
+
+            <p>
+              Gente comprando pan.
+            </p>
+
+            <p>
+              Dos escolares peleando por un helado.
+            </p>
+
+            <p>
+              Una moto pasando demasiado rápido.
+            </p>
+
+            <p>
+              El mundo seguía entero.
+            </p>
+
+            <p>
+              Solo que ahora Tomás llevaba en el bolsillo la primera prueba de que la red no solo compraba decisiones.
+            </p>
+
+            <p>
+              También administraba personas una por una.
+            </p>
+
+            <p>
+              Y en esa administración ya había una línea dedicada a él.
+            </p>
+
+            <div class="quote">T. Rivas / validación en curso.</div>
+
+            <p>
+              Leyó la frase una vez más antes de guardar el papel.
+            </p>
+
+            <p>
+              Y entonces lo entendió con una claridad brutal:
+            </p>
+
+            <p><strong>si la red aún lo estaba validando, significaba que todavía no decidía si debía comprarlo, quebrarlo… o eliminarlo.</strong></p>
+          </div>
+        </div>
+
+        <div class="reader-bottom">
+          <p class="reader-note">
+            Continúa la historia para descubrir qué contiene el pendrive plateado y por qué el hombre del café dejó de seguirlos… para empezar a esperarlos.
+          </p>
+
+          <div class="nav-actions">
+            <a href="capitulo6.html" onclick="goBack(event, 'capitulo6.html')" class="btn btn-ghost">← Capítulo 6</a>
+            <a href="capitulo8.html" class="btn btn-primary">Leer capítulo 8 →</a>
+          </div>
+        </div>
+      </article>
+    </main>
+  </div>
+
+  <script>
+    function goBack(event, fallbackUrl){
+      event.preventDefault();
+
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.location.href = fallbackUrl;
+      }
+    }
+
+    const canvas = document.getElementById("stars");
+    const ctx = canvas.getContext("2d");
+    let stars = [];
+
+    function resize(){
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      createStars();
+    }
+
+    function createStars(){
+      stars = [];
+      const amount = Math.floor((canvas.width * canvas.height) / 14000);
+      for(let i = 0; i < amount; i++){
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.6 + 0.3,
+          speed: Math.random() * 0.35 + 0.08,
+          alpha: Math.random() * 0.7 + 0.2
+        });
+      }
+    }
+
+    function animate(){
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for(const s of stars){
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        s.y += s.speed;
+
+        if(s.y > canvas.height){
+          s.y = -2;
+          s.x = Math.random() * canvas.width;
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener("resize", resize);
+    resize();
+    animate();
+  </script>
+</body>
+</html>
