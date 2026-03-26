@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capítulo 2 | El orden como excusa</title>
+  <meta
+    name="description"
+    content="Capítulo 2 de la temporada 1 de Pinochet: cuando el discurso del orden empieza a justificar lo que antes parecía impensable."
+  />
+
+  <style>
+    :root{
+      --bg:#05080f;
+      --bg2:#0b1220;
+      --card:rgba(12,18,32,0.82);
+      --line:rgba(255,255,255,0.08);
+      --line-strong:rgba(255,80,80,.22);
+      --text:#f5f8ff;
+      --muted:#aebad1;
+      --muted-2:#7f90ae;
+      --red:#9d1111;
+      --red2:#ff5c5c;
+      --red-soft:rgba(255,92,92,.12);
+      --shadow:0 24px 60px rgba(0,0,0,.45);
+      --radius:22px;
+      --max:860px;
+    }
+
+    *{
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      color:var(--text);
+      background:#04070d;
+      line-height:1.8;
+      position:relative;
+      overflow-x:hidden;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    #stars{
+      position:fixed;
+      inset:0;
+      width:100%;
+      height:100%;
+      z-index:0;
+      background:
+        radial-gradient(circle at top left, rgba(157,17,17,.10), transparent 24%),
+        radial-gradient(circle at top right, rgba(255,92,92,.08), transparent 22%),
+        linear-gradient(180deg, #04070d 0%, #0a0d14 45%, #05080f 100%);
+    }
+
+    .page{
+      min-height:100vh;
+      position:relative;
+      z-index:1;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:30;
+      backdrop-filter:blur(14px);
+      background:rgba(5,8,15,.72);
+      border-bottom:1px solid var(--line);
+    }
+
+    .topbar-inner{
+      max-width:1100px;
+      margin:0 auto;
+      padding:16px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .brand-badge{
+      width:38px;
+      height:38px;
+      border-radius:12px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg, rgba(157,17,17,.24), rgba(255,92,92,.08));
+      border:1px solid var(--line-strong);
+      box-shadow:0 0 24px rgba(157,17,17,.14);
+      font-weight:700;
+      color:#ffd3d3;
+      flex:0 0 auto;
+    }
+
+    .brand-title{
+      font-size:14px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:#f0e9ea;
+      margin:0 0 2px;
+    }
+
+    .brand-sub{
+      font-size:12px;
+      color:var(--muted-2);
+      margin:0;
+    }
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height:44px;
+      padding:0 18px;
+      border-radius:12px;
+      font-size:14px;
+      font-weight:700;
+      transition:transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+      border:1px solid transparent;
+      cursor:pointer;
+    }
+
+    .btn:hover{
+      transform:translateY(-1px);
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg, var(--red) 0%, #c21818 100%);
+      color:white;
+      box-shadow:0 12px 28px rgba(157,17,17,.28);
+    }
+
+    .btn-primary:hover{
+      background:linear-gradient(135deg, #7f0f0f 0%, #b51515 100%);
+    }
+
+    .btn-ghost{
+      background:rgba(255,255,255,.03);
+      border-color:var(--line);
+      color:#f0dede;
+    }
+
+    .btn-ghost:hover{
+      background:rgba(255,255,255,.06);
+      border-color:var(--line-strong);
+    }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      border-bottom:1px solid rgba(255,255,255,.04);
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(180deg, rgba(5,8,15,.56) 0%, rgba(5,8,15,.88) 80%, rgba(5,8,15,1) 100%),
+        url("../assets/pinochet-portada.jpg");
+      background-size:cover;
+      background-position:center;
+      opacity:.26;
+      filter:saturate(.9) contrast(1.04);
+    }
+
+    .hero-inner{
+      position:relative;
+      z-index:1;
+      max-width:1100px;
+      margin:0 auto;
+      padding:56px 20px 34px;
+    }
+
+    .crumb{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.06);
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:18px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:28px;
+      align-items:end;
+    }
+
+    .hero-copy h1{
+      margin:0 0 12px;
+      font-size:clamp(34px, 6vw, 64px);
+      line-height:1.02;
+      letter-spacing:.02em;
+      color:white;
+      text-shadow:0 0 22px rgba(157,17,17,.18);
+    }
+
+    .eyebrow{
+      margin:0 0 14px;
+      color:var(--red2);
+      font-weight:700;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      font-size:12px;
+    }
+
+    .hero-copy p{
+      margin:0;
+      max-width:700px;
+      color:#e3d7d7;
+      font-size:18px;
+      line-height:1.75;
+    }
+
+    .hero-side{
+      display:flex;
+      justify-content:flex-end;
+    }
+
+    .chapter-card{
+      width:min(100%, 360px);
+      background:linear-gradient(180deg, rgba(18,14,18,.76), rgba(10,10,16,.90));
+      border:1px solid rgba(255,92,92,.16);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:22px;
+      backdrop-filter:blur(16px);
+    }
+
+    .chapter-label{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 12px;
+      border-radius:999px;
+      background:var(--red-soft);
+      border:1px solid rgba(255,92,92,.18);
+      color:#ffb3b3;
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:14px;
+    }
+
+    .chapter-card h2{
+      margin:0 0 10px;
+      font-size:24px;
+      line-height:1.15;
+      color:white;
+    }
+
+    .chapter-card p{
+      margin:0 0 18px;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.7;
+    }
+
+    .meta{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .meta-item{
+      padding:12px;
+      border-radius:14px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.05);
+    }
+
+    .meta-k{
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--muted-2);
+      margin:0 0 6px;
+    }
+
+    .meta-v{
+      margin:0;
+      font-size:13px;
+      color:#f7eaea;
+      font-weight:700;
+    }
+
+    .content-wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:28px 20px 80px;
+    }
+
+    .reader{
+      position:relative;
+      background:linear-gradient(180deg, rgba(14,12,16,.62), rgba(10,10,16,.74));
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:22px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      backdrop-filter:blur(4px);
+    }
+
+    .reader-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:18px 22px;
+      border-bottom:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+    }
+
+    .reader-top-left h3{
+      margin:0 0 4px;
+      font-size:18px;
+      color:#fff3f3;
+    }
+
+    .reader-top-left p{
+      margin:0;
+      color:var(--muted-2);
+      font-size:13px;
+    }
+
+    .reader-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:34px;
+      padding:0 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.06);
+      color:#ffdede;
+      font-size:12px;
+      font-weight:700;
+      white-space:nowrap;
+    }
+
+    .reader-body{
+      padding:34px 26px 18px;
+      position:relative;
+    }
+
+    .story{
+      max-width:720px;
+      margin:0 auto;
+      position:relative;
+      z-index:2;
+    }
+
+    .lead{
+      font-size:19px;
+      line-height:1.9;
+      color:#fff0f0;
+      margin:0 0 26px;
+      padding:18px 18px 18px 20px;
+      border-left:3px solid rgba(255,92,92,.42);
+      background:rgba(25,11,14,.58);
+      border-radius:0 14px 14px 0;
+      backdrop-filter:blur(4px);
+    }
+
+    .story p{
+      margin:0 0 22px;
+      color:#e9e6ec;
+      font-size:18px;
+      line-height:1.95;
+      letter-spacing:.01em;
+      text-shadow:0 1px 2px rgba(0,0,0,.4);
+    }
+
+    .story p strong{
+      color:#ffffff;
+      font-weight:700;
+    }
+
+    .story .quote{
+      margin:34px 0;
+      padding:20px 22px;
+      border-radius:18px;
+      background:linear-gradient(180deg, rgba(157,17,17,.14), rgba(255,92,92,.06));
+      border:1px solid rgba(255,92,92,.14);
+      color:#fff3f3;
+      font-size:19px;
+      line-height:1.7;
+      text-align:center;
+      box-shadow:0 12px 30px rgba(0,0,0,.18);
+      backdrop-filter:blur(4px);
+    }
+
+    .story .divider{
+      width:86px;
+      height:1px;
+      background:linear-gradient(90deg, transparent, rgba(255,92,92,.58), transparent);
+      margin:34px auto;
+    }
+
+    .reader-bottom{
+      padding:24px 26px 28px;
+      border-top:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .reader-note{
+      color:var(--muted-2);
+      font-size:13px;
+      margin:0;
+    }
+
+    .nav-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    @media (max-width: 900px){
+      .hero-grid{
+        grid-template-columns:1fr;
+      }
+
+      .hero-side{
+        justify-content:flex-start;
+      }
+
+      .chapter-card{
+        width:100%;
+        max-width:unset;
+      }
+    }
+
+    @media (max-width: 640px){
+      .topbar-inner{
+        padding:14px 14px;
+      }
+
+      .hero-inner{
+        padding:34px 14px 22px;
+      }
+
+      .content-wrap{
+        padding:20px 14px 60px;
+      }
+
+      .reader-top,
+      .reader-body,
+      .reader-bottom{
+        padding-left:16px;
+        padding-right:16px;
+      }
+
+      .reader-body{
+        padding-top:24px;
+      }
+
+      .hero-copy p,
+      .story p,
+      .lead{
+        font-size:16px;
+      }
+
+      .meta{
+        grid-template-columns:1fr;
+      }
+
+      .top-actions{
+        width:100%;
+      }
+
+      .btn{
+        width:100%;
+      }
+
+      .nav-actions{
+        width:100%;
+      }
+
+      .nav-actions .btn{
+        flex:1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="stars"></canvas>
+
+  <div class="page">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <div class="brand-badge">N</div>
+          <div>
+            <p class="brand-title">El uniforme y la sombra</p>
+            <p class="brand-sub">Drama histórico chileno</p>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <a href="capitulo1.html" class="btn btn-ghost">← Capítulo anterior</a>
+          <a href="capitulo3.html" class="btn btn-primary">Siguiente capítulo →</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="crumb">Inicio / Historia de Chile / Temporada 1 / Capítulo 2</div>
+
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Temporada 1 · Capítulo 2</p>
+            <h1>Cuando el orden empieza a justificarlo todo</h1>
+            <p>
+              El país no cae en una dictadura de un segundo a otro. Antes hay discursos, excusas,
+              miedo organizado y una idea que empieza a repetirse hasta parecer sentido común:
+              que la democracia ya no basta.
+            </p>
+          </div>
+
+          <div class="hero-side">
+            <aside class="chapter-card">
+              <div class="chapter-label">Miedo y legitimación</div>
+              <h2>La fuerza comienza a parecer solución</h2>
+              <p>
+                En este capítulo, la crisis deja de ser solo un conflicto político y empieza a convertirse
+                en una justificación moral para la intervención. El lenguaje cambia. El país también.
+              </p>
+
+              <div class="meta">
+                <div class="meta-item">
+                  <p class="meta-k">Estado</p>
+                  <p class="meta-v">Gratis</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Género</p>
+                  <p class="meta-v">Histórico</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Temporada</p>
+                  <p class="meta-v">2 de 12</p>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="content-wrap">
+      <article class="reader">
+        <div class="reader-top">
+          <div class="reader-top-left">
+            <h3>Capítulo 2: El orden como excusa</h3>
+            <p>Lectura gratuita · El momento en que la fuerza empieza a parecer aceptable</p>
+          </div>
+          <div class="reader-badge">Acceso abierto</div>
+        </div>
+
+        <div class="reader-body">
+          <div class="story">
+            <p class="lead">
+              A veces un país no cae primero por las armas.
+              Cae antes, en el lenguaje.
+              Cae cuando empieza a aceptar que el conflicto ya no puede resolverse con política,
+              que la negociación es debilidad, que la ley es un obstáculo
+              y que la fuerza, bien administrada, podría traer una paz más eficaz que la democracia.
+            </p>
+
+            <p>
+              Chile comenzó a acercarse peligrosamente a esa idea.
+            </p>
+
+            <p>
+              No porque todos la compartieran.
+            </p>
+
+            <p>
+              Sino porque empezó a instalarse en suficientes espacios como para dejar de sonar monstruosa.
+            </p>
+
+            <p>
+              En las conversaciones privadas, en ciertos editoriales, en reuniones discretas,
+              en análisis de escritorio y en discursos cada vez más cargados de urgencia,
+              apareció una premisa que iba creciendo en silencio:
+              que el país necesitaba ser corregido.
+            </p>
+
+            <div class="quote">La dictadura no entra primero por la puerta del terror. Entra por la puerta del cansancio, del miedo y del deseo de que alguien “ponga orden”.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              La crisis no era una invención completa.
+            </p>
+
+            <p>
+              Había tensión económica.
+            </p>
+
+            <p>
+              Había polarización.
+            </p>
+
+            <p>
+              Había escasez, desconfianza y un deterioro visible en la convivencia pública.
+            </p>
+
+            <p>
+              Pero una cosa es que exista una crisis y otra muy distinta es cómo esa crisis se usa.
+            </p>
+
+            <p>
+              Porque en medio del desgaste, hubo sectores que ya no querían resolver el conflicto.
+            </p>
+
+            <p>
+              Querían que el conflicto llegara al punto exacto en que la ruptura pareciera la única salida posible.
+            </p>
+
+            <p>
+              Para eso había que empujar.
+            </p>
+
+            <p>
+              Intensificar el miedo.
+            </p>
+
+            <p>
+              Repetir el caos.
+            </p>
+
+            <p>
+              Convertir la incertidumbre en un clima permanente.
+            </p>
+
+            <p><strong>No bastaba con que el país tuviera problemas. Había que convencerlo de que esos problemas solo podían terminar si alguien tomaba el control por la fuerza.</strong></p>
+
+            <div class="divider"></div>
+
+            <p>
+              En ese contexto, el uniforme empezó a adquirir un significado distinto.
+            </p>
+
+            <p>
+              Ya no era solo símbolo de institución.
+            </p>
+
+            <p>
+              Para muchos comenzó a representar reserva, contención, última barrera.
+            </p>
+
+            <p>
+              El ejército, o al menos una parte de su imagen pública, empezó a ser proyectado como
+              lo opuesto al desorden civil.
+            </p>
+
+            <p>
+              Como si la política ensuciara y la fuerza limpiara.
+            </p>
+
+            <p>
+              Como si la deliberación democrática fuera una enfermedad y la disciplina castrense, la cura.
+            </p>
+
+            <p>
+              Pinochet, que en el capítulo anterior aparecía todavía como figura en ascenso,
+              comienza aquí a ocupar un lugar más decisivo:
+              el de quien entiende que el poder no necesita solo armas, sino también una justificación narrativa.
+            </p>
+
+            <div class="quote">Toda fuerza que quiere durar necesita una historia que la absuelva antes de actuar.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              En los sectores más conservadores, la ansiedad se volvió argumento.
+            </p>
+
+            <p>
+              Se hablaba del país como si estuviera al borde de una disolución absoluta.
+            </p>
+
+            <p>
+              Se presentaba el conflicto político como una amenaza existencial.
+            </p>
+
+            <p>
+              La izquierda no era descrita solo como adversario.
+            </p>
+
+            <p>
+              Era descrita como peligro total.
+            </p>
+
+            <p>
+              Y cuando un adversario es transformado en peligro total,
+              desaparece la obligación de convivir con él.
+            </p>
+
+            <p>
+              Lo que aparece en su lugar es otra lógica:
+              la eliminación, la neutralización, la necesidad de impedir que siga existiendo como actor legítimo.
+            </p>
+
+            <p><strong>Ese fue uno de los cambios más brutales del periodo: parte de Chile dejó de discutir con la izquierda y empezó a pensar en borrarla del mapa político.</strong></p>
+
+            <div class="divider"></div>
+
+            <p>
+              Pinochet no necesitaba todavía hablar demasiado en público para que su figura creciera.
+            </p>
+
+            <p>
+              Le bastaba con habitar el clima correcto.
+            </p>
+
+            <p>
+              Le bastaba con que la institución militar fuera vista cada vez menos como subordinada
+              al orden democrático y cada vez más como posible reemplazo del mismo.
+            </p>
+
+            <p>
+              Había allí una mutación profunda.
+            </p>
+
+            <p>
+              Y toda mutación profunda necesita tiempo para volverse soportable.
+            </p>
+
+            <p>
+              Nadie instala de golpe una dictadura duradera sin antes modificar las expectativas de una parte importante de la sociedad.
+            </p>
+
+            <p>
+              Primero debe volver aceptable la excepcionalidad.
+            </p>
+
+            <p>
+              Después, necesario el castigo.
+            </p>
+
+            <p>
+              Por último, inevitable el miedo.
+            </p>
+
+            <div class="quote">La libertad rara vez se pierde de una sola vez. Se va entregando pedazo a pedazo, casi siempre en nombre de la seguridad.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              En las calles, la tensión seguía creciendo.
+            </p>
+
+            <p>
+              Las marchas eran más tensas.
+            </p>
+
+            <p>
+              Los paros, más simbólicos.
+            </p>
+
+            <p>
+              Las discusiones, más feroces.
+            </p>
+
+            <p>
+              Ya no se trataba solo de apoyo u oposición a un gobierno.
+            </p>
+
+            <p>
+              Se trataba de proyectos de país incompatibles entre sí.
+            </p>
+
+            <p>
+              Unos seguían viendo en el proceso la oportunidad de una transformación histórica.
+            </p>
+
+            <p>
+              Otros veían el comienzo del desastre.
+            </p>
+
+            <p>
+              Y en medio, una gran masa de personas cansadas,
+              golpeadas por la economía, por la incertidumbre y por la sensación de que el país se partía delante de sus ojos.
+            </p>
+
+            <p>
+              Ese cansancio se volvió un factor político decisivo.
+            </p>
+
+            <p>
+              Porque un pueblo agotado es más fácil de empujar hacia soluciones extremas.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              En despachos cerrados, la conversación se movía un paso más allá.
+            </p>
+
+            <p>
+              Allí ya no se discutía solo qué tan grave era la crisis.
+            </p>
+
+            <p>
+              Se discutía cuánto tiempo más convenía dejarla crecer.
+            </p>
+
+            <p>
+              Cuánto deterioro adicional haría falta para quebrar definitivamente la legitimidad del gobierno.
+            </p>
+
+            <p>
+              Cuánta desesperación debía acumularse para que una intervención militar ya no pareciera crimen,
+              sino rescate.
+            </p>
+
+            <p>
+              Esa es una de las verdades más duras de la historia:
+              muchas rupturas violentas no ocurren porque nadie las vio venir.
+            </p>
+
+            <p>
+              Ocurren porque hubo quienes trabajaron activamente para hacerlas deseables.
+            </p>
+
+            <div class="quote">El golpe no se prepara solo con armas. También se prepara fabricando el estado emocional de un país.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Pinochet empieza a aparecer en este escenario como una figura útil para esa nueva fase.
+            </p>
+
+            <p>
+              No como orador brillante.
+            </p>
+
+            <p>
+              No como ideólogo refinado.
+            </p>
+
+            <p>
+              Sino como ejecutor creíble de una salida dura.
+            </p>
+
+            <p>
+              La historia lo empuja, pero él también decide.
+            </p>
+
+            <p>
+              Esa combinación es importante.
+            </p>
+
+            <p>
+              Porque a veces se intenta contar el ascenso de los autoritarios como si solo fueran productos del contexto.
+            </p>
+
+            <p>
+              Y no.
+            </p>
+
+            <p>
+              El contexto abre puertas.
+            </p>
+
+            <p>
+              Pero alguien tiene que decidir cruzarlas.
+            </p>
+
+            <p><strong>Pinochet no fue únicamente la consecuencia de una crisis. También fue la elección concreta de transformarla en mando.</strong></p>
+
+            <div class="divider"></div>
+
+            <p>
+              La palabra “orden” empezó entonces a adquirir un brillo engañoso.
+            </p>
+
+            <p>
+              Orden sonaba a tranquilidad.
+            </p>
+
+            <p>
+              A recuperación.
+            </p>
+
+            <p>
+              A fin del conflicto.
+            </p>
+
+            <p>
+              Pero debajo de esa palabra cabían cosas muy distintas.
+            </p>
+
+            <p>
+              Cabía la censura.
+            </p>
+
+            <p>
+              Cabía la represión.
+            </p>
+
+            <p>
+              Cabía la persecución.
+            </p>
+
+            <p>
+              Cabía el silenciamiento del adversario.
+            </p>
+
+            <p>
+              Cabía, incluso, la violencia convertida en administración del país.
+            </p>
+
+            <p>
+              Y sin embargo, para una parte de la sociedad, el deseo de terminar con el caos empezó a pesar más que la necesidad de proteger la libertad.
+            </p>
+
+            <div class="quote">Cuando una sociedad empieza a valorar más la obediencia que la democracia, el autoritarismo ya no está afuera: ya está negociando su entrada.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              El gran problema es que las dictaduras rara vez se anuncian con honestidad.
+            </p>
+
+            <p>
+              No llegan diciendo:
+              “venimos a destruir derechos, a perseguir opositores, a sembrar miedo y a gobernar desde la violencia”.
+            </p>
+
+            <p>
+              Llegan prometiendo exactamente lo contrario.
+            </p>
+
+            <p>
+              Prometen paz.
+            </p>
+
+            <p>
+              Prometen normalidad.
+            </p>
+
+            <p>
+              Prometen reconstrucción.
+            </p>
+
+            <p>
+              Y durante un tiempo, incluso logran que muchos confundan el silencio con estabilidad.
+            </p>
+
+            <p>
+              Pero el silencio impuesto nunca es paz real.
+            </p>
+
+            <p>
+              Es otra cosa.
+            </p>
+
+            <p>
+              Es miedo administrado desde arriba.
+            </p>
+
+            <p>
+              Es un país obligado a bajar la voz para que el poder pueda presentarse como necesario.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              Mientras tanto, el gobierno constitucional seguía intentando sostenerse.
+            </p>
+
+            <p>
+              Aún había movilización.
+            </p>
+
+            <p>
+              Aún había lealtades profundas.
+            </p>
+
+            <p>
+              Aún había millones que no estaban dispuestos a aceptar que la democracia debía rendirse ante la presión.
+            </p>
+
+            <p>
+              Pero el terreno se iba estrechando.
+            </p>
+
+            <p>
+              Cada conflicto servía para endurecer el relato del orden.
+            </p>
+
+            <p>
+              Cada crisis material alimentaba la idea de intervención.
+            </p>
+
+            <p>
+              Cada jornada tensa volvía más imaginable aquello que antes habría parecido inaceptable.
+            </p>
+
+            <p>
+              Y ese es el punto donde la historia entra en zona de peligro real:
+              cuando lo impensable deja de ser impensable.
+            </p>
+
+            <div class="quote">Las democracias no solo mueren por ataque frontal. También mueren cuando demasiados empiezan a creer que defenderlas ya no vale el costo.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              En los barrios, en las casas, en las oficinas, el país seguía hablando.
+            </p>
+
+            <p>
+              Pero ya no hablaba igual.
+            </p>
+
+            <p>
+              Había menos escucha y más sospecha.
+            </p>
+
+            <p>
+              Menos diferencia y más enemistad.
+            </p>
+
+            <p>
+              Menos proyecto compartido y más intuición de choque final.
+            </p>
+
+            <p>
+              La fractura avanzaba.
+            </p>
+
+            <p>
+              Y Pinochet, aún sin haber ocupado por completo el centro del escenario,
+              ya caminaba hacia él con una ventaja decisiva:
+              un número creciente de personas estaba listo para aceptar que el país necesitaba mano dura.
+            </p>
+
+            <p>
+              No sabían todavía —o no querían saber— cuánto costaría esa elección.
+            </p>
+
+            <p><strong>Lo más peligroso no era solo que el golpe se acercara. Era que una parte del país ya estaba emocionalmente preparada para perdonarlo antes de que ocurriera.</strong></p>
+
+            <div class="divider"></div>
+
+            <p>
+              Esa noche, mientras algunos insistían en defender la legalidad y otros afinaban el lenguaje de la intervención,
+              Chile seguía avanzando hacia una frontera que todavía no había cruzado.
+            </p>
+
+            <p>
+              Pero el cambio más decisivo ya estaba en marcha.
+            </p>
+
+            <p>
+              El miedo se había vuelto argumento.
+            </p>
+
+            <p>
+              La ansiedad se había vuelto permiso.
+            </p>
+
+            <p>
+              Y el orden, esa palabra brillante y peligrosa,
+              comenzaba a servir de excusa para todo lo que vendría después.
+            </p>
+
+            <p><strong>El país aún no estaba bajo botas. Pero ya empezaba a ser convencido de que las botas podían salvarlo.</strong></p>
+          </div>
+        </div>
+
+        <div class="reader-bottom">
+          <p class="reader-note">
+            Continúa al capítulo 3 para entrar en la conspiración más abierta, el quiebre final y el momento en que la amenaza deja de insinuarse para comenzar a tomar forma concreta.
+          </p>
+
+          <div class="nav-actions">
+            <a href="capitulo1.html" class="btn btn-ghost">← Capítulo 1</a>
+            <a href="capitulo3.html" class="btn btn-primary">Leer capítulo 3 →</a>
+          </div>
+        </div>
+      </article>
+    </main>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("stars");
+    const ctx = canvas.getContext("2d");
+    let stars = [];
+
+    function resize(){
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      createStars();
+    }
+
+    function createStars(){
+      stars = [];
+      const amount = Math.floor((canvas.width * canvas.height) / 14000);
+      for(let i = 0; i < amount; i++){
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.6 + 0.3,
+          speed: Math.random() * 0.35 + 0.08,
+          alpha: Math.random() * 0.7 + 0.2
+        });
+      }
+    }
+
+    function animate(){
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for(const s of stars){
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        s.y += s.speed;
+
+        if(s.y > canvas.height){
+          s.y = -2;
+          s.x = Math.random() * canvas.width;
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener("resize", resize);
+    resize();
+    animate();
+  </script>
+</body>
+</html>
