@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capítulo 8 | El país bajo las botas</title>
+  <meta
+    name="description"
+    content="Capítulo 8 de la temporada 1 de Pinochet: el golpe se consolida, la ciudad cambia de rostro y Chile comienza a sentir el peso total de la nueva obediencia."
+  />
+
+  <style>
+    :root{
+      --bg:#05080f;
+      --bg2:#0b1220;
+      --card:rgba(12,18,32,0.82);
+      --line:rgba(255,255,255,0.08);
+      --line-strong:rgba(255,80,80,.22);
+      --text:#f5f8ff;
+      --muted:#aebad1;
+      --muted-2:#7f90ae;
+      --red:#9d1111;
+      --red2:#ff5c5c;
+      --red-soft:rgba(255,92,92,.12);
+      --shadow:0 24px 60px rgba(0,0,0,.45);
+      --radius:22px;
+      --max:860px;
+    }
+
+    *{
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      color:var(--text);
+      background:#04070d;
+      line-height:1.8;
+      position:relative;
+      overflow-x:hidden;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    #stars{
+      position:fixed;
+      inset:0;
+      width:100%;
+      height:100%;
+      z-index:0;
+      background:
+        radial-gradient(circle at top left, rgba(157,17,17,.10), transparent 24%),
+        radial-gradient(circle at top right, rgba(255,92,92,.08), transparent 22%),
+        linear-gradient(180deg, #04070d 0%, #0a0d14 45%, #05080f 100%);
+    }
+
+    .page{
+      min-height:100vh;
+      position:relative;
+      z-index:1;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:30;
+      backdrop-filter:blur(14px);
+      background:rgba(5,8,15,.72);
+      border-bottom:1px solid var(--line);
+    }
+
+    .topbar-inner{
+      max-width:1100px;
+      margin:0 auto;
+      padding:16px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .brand-badge{
+      width:38px;
+      height:38px;
+      border-radius:12px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg, rgba(157,17,17,.24), rgba(255,92,92,.08));
+      border:1px solid var(--line-strong);
+      box-shadow:0 0 24px rgba(157,17,17,.14);
+      font-weight:700;
+      color:#ffd3d3;
+      flex:0 0 auto;
+    }
+
+    .brand-title{
+      font-size:14px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:#f0e9ea;
+      margin:0 0 2px;
+    }
+
+    .brand-sub{
+      font-size:12px;
+      color:var(--muted-2);
+      margin:0;
+    }
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height:44px;
+      padding:0 18px;
+      border-radius:12px;
+      font-size:14px;
+      font-weight:700;
+      transition:transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+      border:1px solid transparent;
+      cursor:pointer;
+    }
+
+    .btn:hover{
+      transform:translateY(-1px);
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg, var(--red) 0%, #c21818 100%);
+      color:white;
+      box-shadow:0 12px 28px rgba(157,17,17,.28);
+    }
+
+    .btn-primary:hover{
+      background:linear-gradient(135deg, #7f0f0f 0%, #b51515 100%);
+    }
+
+    .btn-ghost{
+      background:rgba(255,255,255,.03);
+      border-color:var(--line);
+      color:#f0dede;
+    }
+
+    .btn-ghost:hover{
+      background:rgba(255,255,255,.06);
+      border-color:var(--line-strong);
+    }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      border-bottom:1px solid rgba(255,255,255,.04);
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(180deg, rgba(5,8,15,.48) 0%, rgba(5,8,15,.90) 82%, rgba(5,8,15,1) 100%),
+        url("../assets/pinochet-portada.jpg");
+      background-size:cover;
+      background-position:center;
+      opacity:.28;
+      filter:saturate(.95) contrast(1.06);
+    }
+
+    .hero-inner{
+      position:relative;
+      z-index:1;
+      max-width:1100px;
+      margin:0 auto;
+      padding:56px 20px 34px;
+    }
+
+    .crumb{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.06);
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:18px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:28px;
+      align-items:end;
+    }
+
+    .hero-copy h1{
+      margin:0 0 12px;
+      font-size:clamp(34px, 6vw, 64px);
+      line-height:1.02;
+      letter-spacing:.02em;
+      color:white;
+      text-shadow:0 0 22px rgba(157,17,17,.18);
+    }
+
+    .eyebrow{
+      margin:0 0 14px;
+      color:var(--red2);
+      font-weight:700;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      font-size:12px;
+    }
+
+    .hero-copy p{
+      margin:0;
+      max-width:700px;
+      color:#e3d7d7;
+      font-size:18px;
+      line-height:1.75;
+    }
+
+    .hero-side{
+      display:flex;
+      justify-content:flex-end;
+    }
+
+    .chapter-card{
+      width:min(100%, 360px);
+      background:linear-gradient(180deg, rgba(18,14,18,.76), rgba(10,10,16,.90));
+      border:1px solid rgba(255,92,92,.16);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:22px;
+      backdrop-filter:blur(16px);
+    }
+
+    .chapter-label{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 12px;
+      border-radius:999px;
+      background:var(--red-soft);
+      border:1px solid rgba(255,92,92,.18);
+      color:#ffb3b3;
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:14px;
+    }
+
+    .chapter-card h2{
+      margin:0 0 10px;
+      font-size:24px;
+      line-height:1.15;
+      color:white;
+    }
+
+    .chapter-card p{
+      margin:0 0 18px;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.7;
+    }
+
+    .meta{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .meta-item{
+      padding:12px;
+      border-radius:14px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.05);
+    }
+
+    .meta-k{
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--muted-2);
+      margin:0 0 6px;
+    }
+
+    .meta-v{
+      margin:0;
+      font-size:13px;
+      color:#f7eaea;
+      font-weight:700;
+    }
+
+    .content-wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:28px 20px 80px;
+    }
+
+    .reader{
+      position:relative;
+      background:linear-gradient(180deg, rgba(14,12,16,.62), rgba(10,10,16,.74));
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:22px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      backdrop-filter:blur(4px);
+    }
+
+    .reader-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:18px 22px;
+      border-bottom:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+    }
+
+    .reader-top-left h3{
+      margin:0 0 4px;
+      font-size:18px;
+      color:#fff3f3;
+    }
+
+    .reader-top-left p{
+      margin:0;
+      color:var(--muted-2);
+      font-size:13px;
+    }
+
+    .reader-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:34px;
+      padding:0 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.06);
+      color:#ffdede;
+      font-size:12px;
+      font-weight:700;
+      white-space:nowrap;
+    }
+
+    .reader-body{
+      padding:34px 26px 18px;
+      position:relative;
+    }
+
+    .story{
+      max-width:720px;
+      margin:0 auto;
+      position:relative;
+      z-index:2;
+    }
+
+    .lead{
+      font-size:19px;
+      line-height:1.9;
+      color:#fff0f0;
+      margin:0 0 26px;
+      padding:18px 18px 18px 20px;
+      border-left:3px solid rgba(255,92,92,.42);
+      background:rgba(25,11,14,.58);
+      border-radius:0 14px 14px 0;
+      backdrop-filter:blur(4px);
+    }
+
+    .story p{
+      margin:0 0 22px;
+      color:#e9e6ec;
+      font-size:18px;
+      line-height:1.95;
+      letter-spacing:.01em;
+      text-shadow:0 1px 2px rgba(0,0,0,.4);
+    }
+
+    .story p strong{
+      color:#ffffff;
+      font-weight:700;
+    }
+
+    .story .quote{
+      margin:34px 0;
+      padding:20px 22px;
+      border-radius:18px;
+      background:linear-gradient(180deg, rgba(157,17,17,.14), rgba(255,92,92,.06));
+      border:1px solid rgba(255,92,92,.14);
+      color:#fff3f3;
+      font-size:19px;
+      line-height:1.7;
+      text-align:center;
+      box-shadow:0 12px 30px rgba(0,0,0,.18);
+      backdrop-filter:blur(4px);
+    }
+
+    .story .divider{
+      width:86px;
+      height:1px;
+      background:linear-gradient(90deg, transparent, rgba(255,92,92,.58), transparent);
+      margin:34px auto;
+    }
+
+    .reader-bottom{
+      padding:24px 26px 28px;
+      border-top:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .reader-note{
+      color:var(--muted-2);
+      font-size:13px;
+      margin:0;
+    }
+
+    .nav-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    @media (max-width: 900px){
+      .hero-grid{
+        grid-template-columns:1fr;
+      }
+
+      .hero-side{
+        justify-content:flex-start;
+      }
+
+      .chapter-card{
+        width:100%;
+        max-width:unset;
+      }
+    }
+
+    @media (max-width: 640px){
+      .topbar-inner{
+        padding:14px 14px;
+      }
+
+      .hero-inner{
+        padding:34px 14px 22px;
+      }
+
+      .content-wrap{
+        padding:20px 14px 60px;
+      }
+
+      .reader-top,
+      .reader-body,
+      .reader-bottom{
+        padding-left:16px;
+        padding-right:16px;
+      }
+
+      .reader-body{
+        padding-top:24px;
+      }
+
+      .hero-copy p,
+      .story p,
+      .lead{
+        font-size:16px;
+      }
+
+      .meta{
+        grid-template-columns:1fr;
+      }
+
+      .top-actions{
+        width:100%;
+      }
+
+      .btn{
+        width:100%;
+      }
+
+      .nav-actions{
+        width:100%;
+      }
+
+      .nav-actions .btn{
+        flex:1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="stars"></canvas>
+
+  <div class="page">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <div class="brand-badge">N</div>
+          <div>
+            <p class="brand-title">El uniforme y la sombra</p>
+            <p class="brand-sub">Drama histórico chileno</p>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <a href="capitulo7.html" class="btn btn-ghost">← Capítulo anterior</a>
+          <a href="capitulo9.html" class="btn btn-primary">Siguiente capítulo →</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="crumb">Inicio / Historia de Chile / Temporada 1 / Capítulo 8</div>
+
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Temporada 1 · Capítulo 8</p>
+            <h1>El país bajo las botas</h1>
+            <p>
+              El golpe ya no es anuncio ni irrupción: es presencia total. La ciudad cambia de lenguaje,
+              el miedo empieza a organizar la vida y Chile descubre que la nueva obediencia
+              no viene a pedir respeto, sino a imponer silencio.
+            </p>
+          </div>
+
+          <div class="hero-side">
+            <aside class="chapter-card">
+              <div class="chapter-label">Poder consolidado</div>
+              <h2>La victoria muestra su verdadero precio</h2>
+              <p>
+                Este capítulo entra en el momento en que el nuevo poder deja de justificarse
+                y comienza a hacerse sentir con toda su gravedad. El golpe se consolida,
+                y el país despierta dentro de una disciplina que ya huele a régimen.
+              </p>
+
+              <div class="meta">
+                <div class="meta-item">
+                  <p class="meta-k">Estado</p>
+                  <p class="meta-v">Gratis</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Género</p>
+                  <p class="meta-v">Histórico</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Temporada</p>
+                  <p class="meta-v">8 de 12</p>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="content-wrap">
+      <article class="reader">
+        <div class="reader-top">
+          <div class="reader-top-left">
+            <h3>Capítulo 8: El país bajo las botas</h3>
+            <p>Lectura gratuita · La hora en que el nuevo poder empieza a mostrar su peso real</p>
+          </div>
+          <div class="reader-badge">Acceso abierto</div>
+        </div>
+
+        <div class="reader-body">
+          <div class="story">
+            <p class="lead">
+              Toda toma del poder tiene un segundo acto.
+              El primero es la irrupción.
+              El segundo, mucho más profundo y mucho más terrible,
+              es la instalación.
+              No basta con quebrar el orden anterior.
+              Hay que ocupar su lugar,
+              torcer la respiración del país,
+              enseñar a millones a vivir de otra manera
+              y hacerles sentir que la nueva realidad ya no es excepción,
+              sino mandato.
+            </p>
+
+            <p>
+              Chile entró en ese segundo acto.
+            </p>
+
+            <p>
+              El golpe ya había dejado atrás el momento del impacto.
+            </p>
+
+            <p>
+              Ahora comenzaba algo distinto.
+            </p>
+
+            <p>
+              Más frío.
+            </p>
+
+            <p>
+              Más sistemático.
+            </p>
+
+            <p>
+              Más duradero.
+            </p>
+
+            <p>
+              El país empezaba a sentir el peso de un poder que no solo quería imponerse,
+              sino quedarse.
+            </p>
+
+            <div class="quote">Las botas no solo pisan el suelo. También intentan pisar la memoria, la palabra y la costumbre de vivir sin miedo.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Las calles cambiaron de tono.
+            </p>
+
+            <p>
+              No eran simplemente las mismas calles con soldados en ellas.
+            </p>
+
+            <p>
+              Eran calles sometidas a otro principio.
+            </p>
+
+            <p>
+              Un principio donde la circulación dejaba de pertenecerle plenamente a los ciudadanos
+              y pasaba a ser administrada por la autoridad armada.
+            </p>
+
+            <p>
+              El espacio público se volvió advertencia.
+            </p>
+
+            <p>
+              El trayecto cotidiano se volvió cálculo.
+            </p>
+
+            <p>
+              La ciudad entera comenzó a hablar un idioma nuevo,
+              un idioma hecho de vigilancia, órdenes breves, rumores de detenciones
+              y esa sensación tan difícil de describir
+              en que la libertad no desaparece de golpe,
+              pero empieza a sentirse observada desde todas partes.
+            </p>
+
+            <p><strong>El golpe se consolidó cuando la población empezó a entender que ya no caminaba por la ciudad de antes, sino por una ciudad tomada.</strong></p>
+
+            <div class="divider"></div>
+
+            <p>
+              En las casas, el miedo encontró otra forma.
+            </p>
+
+            <p>
+              Ya no era solo la ansiedad de lo que podía pasar.
+            </p>
+
+            <p>
+              Era la necesidad urgente de medir cada palabra.
+            </p>
+
+            <p>
+              De hablar más bajo.
+            </p>
+
+            <p>
+              De preguntar menos.
+            </p>
+
+            <p>
+              De apagar la radio más pronto.
+            </p>
+
+            <p>
+              De mirar hacia la puerta cuando se escuchaba un motor detenerse afuera.
+            </p>
+
+            <p>
+              La violencia del nuevo poder no dependía únicamente de lo que hacía a plena luz.
+            </p>
+
+            <p>
+              Dependía también de la atmósfera que lograba instalar.
+            </p>
+
+            <p>
+              Ese clima donde nadie sabe del todo qué está permitido,
+              pero todos empiezan a actuar como si cualquier error pudiera costarlo todo.
+            </p>
+
+            <div class="quote">La obediencia más eficaz no siempre nace del golpe directo. A veces nace del miedo a no saber dónde empieza el castigo.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Pinochet avanzaba en ese escenario hacia su consolidación como rostro del nuevo orden.
+            </p>
+
+            <p>
+              Ya no bastaba con haber participado del quiebre.
+            </p>
+
+            <p>
+              Ahora debía encarnar su permanencia.
+            </p>
+
+            <p>
+              Esa transición es fundamental.
+            </p>
+
+            <p>
+              Porque el autoritarismo no se sostiene solo con fuerza inicial.
+            </p>
+
+            <p>
+              Necesita centralidad.
+            </p>
+
+            <p>
+              Necesita figura.
+            </p>
+
+            <p>
+              Necesita un mando capaz de transformar el golpe en estructura
+              y la estructura en rutina.
+            </p>
+
+            <p>
+              Pinochet empezaba justamente a ocupar ese lugar:
+              el del hombre que no solo encabeza una irrupción,
+              sino que comienza a modelar la nueva obediencia.
+            </p>
+
+            <p><strong>Una dictadura se vuelve real del todo cuando encuentra un rostro que la ordena, la disciplina y la convierte en sistema.</strong></p>
+
+            <div class="divider"></div>
+
+            <p>
+              El lenguaje público se endureció de inmediato.
+            </p>
+
+            <p>
+              Lo que antes se presentaba como rescate
+              comenzó a mostrarse como mandato.
+            </p>
+
+            <p>
+              La patria.
+            </p>
+
+            <p>
+              El orden.
+            </p>
+
+            <p>
+              La seguridad.
+            </p>
+
+            <p>
+              La reconstrucción.
+            </p>
+
+            <p>
+              Todas esas palabras empezaron a utilizarse como muralla moral,
+              como si nombrarlas bastara para justificar el precio humano del nuevo poder.
+            </p>
+
+            <p>
+              Esa es una de las operaciones más eficaces del autoritarismo:
+              envolver la violencia en vocabulario solemne
+              hasta hacer que la brutalidad parezca deber
+              y la sumisión parezca responsabilidad ciudadana.
+            </p>
+
+            <p>
+              Chile estaba entrando en esa trampa.
+            </p>
+
+            <p>
+              No todo el país la aceptaba.
+            </p>
+
+            <p>
+              Pero el nuevo poder no necesitaba unanimidad.
+            </p>
+
+            <p>
+              Le bastaba con imponer el lenguaje dominante del miedo.
+            </p>
+
+            <div class="quote">El régimen empieza a ganar de verdad cuando consigue que sus palabras suenen más inevitables que la propia libertad perdida.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Hubo quienes quisieron creer que todo sería breve.
+            </p>
+
+            <p>
+              Que la intervención sería temporal.
+            </p>
+
+            <p>
+              Que el nuevo mando devolvería pronto el país a alguna forma reconocible de normalidad.
+            </p>
+
+            <p>
+              Esa esperanza convivió con otra percepción mucho más lúcida:
+              la de quienes comprendieron desde el primer momento
+              que un poder nacido de la fuerza necesitaría más fuerza para afirmarse.
+            </p>
+
+            <p>
+              No hay golpe inocente.
+            </p>
+
+            <p>
+              No hay quiebre democrático que se vuelva benigno solo porque se lo nombre necesario.
+            </p>
+
+            <p>
+              Cuando las armas reemplazan al voto,
+              el resto de la historia ya viene envenenado desde el origen.
+            </p>
+
+            <p>
+              Chile comenzaba a descubrir precisamente eso:
+              que la victoria del golpe no cerraba la violencia.
+            </p>
+
+            <p>
+              La organizaba.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              La ciudad empezó a llenarse de una sensación más pesada que el simple miedo:
+              la sensación de inferioridad civil frente al mando armado.
+            </p>
+
+            <p>
+              Esa experiencia marca a las sociedades de forma profunda.
+            </p>
+
+            <p>
+              Porque no se trata solo de obedecer una orden momentánea.
+            </p>
+
+            <p>
+              Se trata de aprender, casi por reflejo, que el poder verdadero
+              ya no está donde antes lo ubicaba la democracia,
+              sino en quienes tienen la capacidad inmediata de castigar.
+            </p>
+
+            <p>
+              Los ciudadanos dejan entonces de sentirse sujetos políticos completos
+              y empiezan a comportarse como personas evaluando constantemente el riesgo de existir.
+            </p>
+
+            <p>
+              Ese es uno de los grandes éxitos del poder autoritario:
+              no solo controlar cuerpos,
+              sino reducir la imaginación cívica de un país entero.
+            </p>
+
+            <div class="quote">La derrota más profunda de una democracia ocurre cuando sus ciudadanos comienzan a pensar primero en sobrevivir y solo después en hablar.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Sin embargo, incluso bajo esa presión,
+              la dignidad no desapareció.
+            </p>
+
+            <p>
+              Se transformó.
+            </p>
+
+            <p>
+              Se volvió más silenciosa.
+            </p>
+
+            <p>
+              Más peligrosa.
+            </p>
+
+            <p>
+              Más íntima.
+            </p>
+
+            <p>
+              La dignidad empezó a vivir en quienes se negaban a aceptar el relato oficial,
+              en quienes seguían nombrando la ruptura como ruptura,
+              en quienes entendían que obedecer por miedo no equivalía a otorgar legitimidad.
+            </p>
+
+            <p>
+              Esa resistencia, aunque aún dispersa,
+              era una de las pocas cosas que impedían que el país entero fuera absorbido
+              por la versión militar de los hechos.
+            </p>
+
+            <p>
+              Porque un golpe no termina de triunfar el día que toma el poder.
+            </p>
+
+            <p>
+              Triunfa del todo solo si consigue borrar el juicio moral de quienes lo padecen.
+            </p>
+
+            <p><strong>Y en Chile seguía existiendo una parte del país que, aun bajo las botas, se negaba a llamar orden a la humillación.</strong></p>
+
+            <div class="divider"></div>
+
+            <p>
+              Pinochet,
+              ya mucho más visible en el centro del nuevo poder,
+              comenzaba a comprender la magnitud de lo que había ganado
+              y de lo que tendría que hacer para conservarlo.
+            </p>
+
+            <p>
+              Ahí nace la dimensión más dura de su figura histórica.
+            </p>
+
+            <p>
+              No solo en la decisión de participar del golpe,
+              sino en la decisión de habitar sin vacilar el sistema que el golpe requería para durar.
+            </p>
+
+            <p>
+              La represión no vendría después como accidente.
+            </p>
+
+            <p>
+              Estaba inscrita desde el principio.
+            </p>
+
+            <p>
+              Todo régimen nacido de la negación del voto
+              necesita producir obediencia profunda.
+            </p>
+
+            <p>
+              Y esa obediencia, tarde o temprano,
+              exige castigo ejemplar.
+            </p>
+
+            <p>
+              El nuevo poder ya comenzaba a oler a permanencia
+              precisamente porque empezaba a oler a disciplina sistemática.
+            </p>
+
+            <div class="quote">Cuando el golpe deja de justificarse y empieza a administrarse, la dictadura ya está echando raíces.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Las horas siguientes hicieron evidente una verdad que muchos quizá no querían mirar de frente:
+              el país no estaba atravesando una pausa dura para volver pronto a sí mismo.
+            </p>
+
+            <p>
+              Estaba ingresando en otra etapa histórica.
+            </p>
+
+            <p>
+              Una etapa donde la normalidad iba a ser reconstruida,
+              sí,
+              pero bajo condiciones nuevas,
+              bajo miedos nuevos,
+              bajo silencios nuevos.
+            </p>
+
+            <p>
+              El Chile que despertó bajo las botas
+              todavía no conocía toda la extensión del dolor que venía.
+            </p>
+
+            <p>
+              Pero ya conocía lo esencial:
+              que el poder ahora hablaba desde arriba,
+              armado,
+              convencido de su derecho
+              y dispuesto a reordenar la nación a cualquier costo.
+            </p>
+
+            <p>
+              Ese descubrimiento fue, en sí mismo, una forma de herida nacional.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              Y así,
+              mientras la ciudad seguía intentando reconocerse en medio del nuevo paisaje,
+              el golpe empezaba a mostrar su verdadero precio.
+            </p>
+
+            <p>
+              No solo el precio político.
+            </p>
+
+            <p>
+              No solo el institucional.
+            </p>
+
+            <p>
+              Sino el precio íntimo:
+              el de mirar a tu país
+              y sentir que el suelo sigue siendo el mismo,
+              pero que la libertad que lo hacía tuyo ha sido arrebatada.
+            </p>
+
+            <p>
+              Ese es el momento exacto donde el quiebre se vuelve total.
+            </p>
+
+            <p>
+              Cuando la violencia ya no se percibe solo como acto,
+              sino como atmósfera.
+            </p>
+
+            <p>
+              Como nueva ley del día.
+            </p>
+
+            <p>
+              Como presencia instalada.
+            </p>
+
+            <p><strong>Chile seguía en pie. Pero ya estaba aprendiendo, con dolor, lo que significa vivir bajo un poder que no vino a convencer a la nación, sino a someterla.</strong></p>
+          </div>
+        </div>
+
+        <div class="reader-bottom">
+          <p class="reader-note">
+            Continúa al capítulo 9 para entrar en la fase donde el nuevo régimen empieza a extender el miedo más allá de la calle y Chile comprende que el golpe no fue solo una toma del poder, sino el inicio de una transformación mucho más profunda y brutal.
+          </p>
+
+          <div class="nav-actions">
+            <a href="capitulo7.html" class="btn btn-ghost">← Capítulo 7</a>
+            <a href="capitulo9.html" class="btn btn-primary">Leer capítulo 9 →</a>
+          </div>
+        </div>
+      </article>
+    </main>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("stars");
+    const ctx = canvas.getContext("2d");
+    let stars = [];
+
+    function resize(){
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      createStars();
+    }
+
+    function createStars(){
+      stars = [];
+      const amount = Math.floor((canvas.width * canvas.height) / 14000);
+      for(let i = 0; i < amount; i++){
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.6 + 0.3,
+          speed: Math.random() * 0.35 + 0.08,
+          alpha: Math.random() * 0.7 + 0.2
+        });
+      }
+    }
+
+    function animate(){
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for(const s of stars){
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        s.y += s.speed;
+
+        if(s.y > canvas.height){
+          s.y = -2;
+          s.x = Math.random() * canvas.width;
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener("resize", resize);
+    resize();
+    animate();
+  </script>
+</body>
+</html>
