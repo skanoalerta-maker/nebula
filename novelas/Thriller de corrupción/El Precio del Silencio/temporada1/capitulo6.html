@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capítulo 6 | El Precio del Silencio</title>
+  <meta
+    name="description"
+    content="Capítulo 6 de El Precio del Silencio: Comité del jueves."
+  />
+
+  <style>
+    :root{
+      --bg:#05080f;
+      --bg2:#0b1220;
+      --card:rgba(12,18,32,0.82);
+      --line:rgba(255,255,255,0.08);
+      --line-strong:rgba(73,182,255,.24);
+      --text:#f5f8ff;
+      --muted:#aebad1;
+      --muted-2:#7f90ae;
+      --blue:#0A6CFF;
+      --blue2:#49b6ff;
+      --blue-soft:rgba(73,182,255,.14);
+      --shadow:0 24px 60px rgba(0,0,0,.45);
+      --radius:22px;
+      --max:860px;
+    }
+
+    *{
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      color:var(--text);
+      background:#04070d;
+      line-height:1.8;
+      position:relative;
+      overflow-x:hidden;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    #stars{
+      position:fixed;
+      inset:0;
+      width:100%;
+      height:100%;
+      z-index:0;
+      background:
+        radial-gradient(circle at top left, rgba(10,108,255,.12), transparent 24%),
+        radial-gradient(circle at top right, rgba(73,182,255,.08), transparent 20%),
+        linear-gradient(180deg, #04070d 0%, #08101c 45%, #05080f 100%);
+    }
+
+    .page{
+      min-height:100vh;
+      position:relative;
+      z-index:1;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:30;
+      backdrop-filter:blur(14px);
+      background:rgba(5,8,15,.72);
+      border-bottom:1px solid var(--line);
+    }
+
+    .topbar-inner{
+      max-width:1100px;
+      margin:0 auto;
+      padding:16px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .brand-badge{
+      width:38px;
+      height:38px;
+      border-radius:12px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg, rgba(10,108,255,.22), rgba(73,182,255,.08));
+      border:1px solid var(--line-strong);
+      box-shadow:0 0 24px rgba(10,108,255,.12);
+      font-weight:700;
+      color:var(--blue2);
+      flex:0 0 auto;
+    }
+
+    .brand-title{
+      font-size:14px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:#dfe9ff;
+      margin:0 0 2px;
+    }
+
+    .brand-sub{
+      font-size:12px;
+      color:var(--muted-2);
+      margin:0;
+    }
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height:44px;
+      padding:0 18px;
+      border-radius:12px;
+      font-size:14px;
+      font-weight:700;
+      transition:transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+      border:1px solid transparent;
+      cursor:pointer;
+    }
+
+    .btn:hover{
+      transform:translateY(-1px);
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg, var(--blue) 0%, #0d7eff 100%);
+      color:white;
+      box-shadow:0 12px 28px rgba(10,108,255,.28);
+    }
+
+    .btn-primary:hover{
+      background:linear-gradient(135deg, #0c62e0 0%, #0a6cef 100%);
+    }
+
+    .btn-ghost{
+      background:rgba(255,255,255,.03);
+      border-color:var(--line);
+      color:#dbe8ff;
+    }
+
+    .btn-ghost:hover{
+      background:rgba(255,255,255,.06);
+      border-color:var(--line-strong);
+    }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      border-bottom:1px solid rgba(255,255,255,.04);
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(180deg, rgba(5,8,15,.58) 0%, rgba(5,8,15,.86) 80%, rgba(5,8,15,1) 100%),
+        url("../assets/temporada1.jpg");
+      background-size:cover;
+      background-position:center;
+      opacity:.28;
+      filter:saturate(.9) contrast(1.03);
+    }
+
+    .hero-inner{
+      position:relative;
+      z-index:1;
+      max-width:1100px;
+      margin:0 auto;
+      padding:56px 20px 34px;
+    }
+
+    .crumb{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.06);
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:18px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:28px;
+      align-items:end;
+    }
+
+    .hero-copy h1{
+      margin:0 0 12px;
+      font-size:clamp(34px, 6vw, 64px);
+      line-height:1.02;
+      letter-spacing:.02em;
+      color:white;
+      text-shadow:0 0 22px rgba(10,108,255,.18);
+    }
+
+    .eyebrow{
+      margin:0 0 14px;
+      color:var(--blue2);
+      font-weight:700;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      font-size:12px;
+    }
+
+    .hero-copy p{
+      margin:0;
+      max-width:700px;
+      color:#d4def3;
+      font-size:18px;
+      line-height:1.75;
+    }
+
+    .hero-side{
+      display:flex;
+      justify-content:flex-end;
+    }
+
+    .chapter-card{
+      width:min(100%, 360px);
+      background:linear-gradient(180deg, rgba(12,18,32,.75), rgba(9,13,24,.88));
+      border:1px solid rgba(73,182,255,.18);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:22px;
+      backdrop-filter:blur(16px);
+    }
+
+    .chapter-label{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 12px;
+      border-radius:999px;
+      background:var(--blue-soft);
+      border:1px solid rgba(73,182,255,.18);
+      color:var(--blue2);
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:14px;
+    }
+
+    .chapter-card h2{
+      margin:0 0 10px;
+      font-size:24px;
+      line-height:1.15;
+      color:white;
+    }
+
+    .chapter-card p{
+      margin:0 0 18px;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.7;
+    }
+
+    .meta{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .meta-item{
+      padding:12px;
+      border-radius:14px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.05);
+    }
+
+    .meta-k{
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--muted-2);
+      margin:0 0 6px;
+    }
+
+    .meta-v{
+      margin:0;
+      font-size:13px;
+      color:#e7efff;
+      font-weight:700;
+    }
+
+    .content-wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:28px 20px 80px;
+    }
+
+    .reader{
+      position:relative;
+      background:linear-gradient(180deg, rgba(11,18,32,.58), rgba(8,13,24,.72));
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:22px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      backdrop-filter:blur(4px);
+    }
+
+    .reader-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:18px 22px;
+      border-bottom:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+    }
+
+    .reader-top-left h3{
+      margin:0 0 4px;
+      font-size:18px;
+      color:#edf3ff;
+    }
+
+    .reader-top-left p{
+      margin:0;
+      color:var(--muted-2);
+      font-size:13px;
+    }
+
+    .reader-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:34px;
+      padding:0 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.06);
+      color:#cfe0ff;
+      font-size:12px;
+      font-weight:700;
+      white-space:nowrap;
+    }
+
+    .reader-body{
+      padding:34px 26px 18px;
+      position:relative;
+    }
+
+    .story{
+      max-width:720px;
+      margin:0 auto;
+      position:relative;
+      z-index:2;
+    }
+
+    .lead{
+      font-size:19px;
+      line-height:1.9;
+      color:#ecf3ff;
+      margin:0 0 26px;
+      padding:18px 18px 18px 20px;
+      border-left:3px solid rgba(73,182,255,.44);
+      background:rgba(9,18,35,.68);
+      border-radius:0 14px 14px 0;
+      backdrop-filter:blur(4px);
+    }
+
+    .story p{
+      margin:0 0 22px;
+      color:#e4ecfb;
+      font-size:18px;
+      line-height:1.95;
+      letter-spacing:.01em;
+      text-shadow:0 1px 2px rgba(0,0,0,.4);
+    }
+
+    .story p strong{
+      color:#ffffff;
+      font-weight:700;
+    }
+
+    .story .quote{
+      margin:34px 0;
+      padding:20px 22px;
+      border-radius:18px;
+      background:linear-gradient(180deg, rgba(10,108,255,.12), rgba(73,182,255,.06));
+      border:1px solid rgba(73,182,255,.14);
+      color:#edf5ff;
+      font-size:19px;
+      line-height:1.7;
+      text-align:center;
+      box-shadow:0 12px 30px rgba(0,0,0,.18);
+      backdrop-filter:blur(4px);
+    }
+
+    .story .divider{
+      width:86px;
+      height:1px;
+      background:linear-gradient(90deg, transparent, rgba(73,182,255,.6), transparent);
+      margin:34px auto;
+    }
+
+    .reader-bottom{
+      padding:24px 26px 28px;
+      border-top:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .reader-note{
+      color:var(--muted-2);
+      font-size:13px;
+      margin:0;
+    }
+
+    .nav-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    @media (max-width: 900px){
+      .hero-grid{
+        grid-template-columns:1fr;
+      }
+
+      .hero-side{
+        justify-content:flex-start;
+      }
+
+      .chapter-card{
+        width:100%;
+        max-width:unset;
+      }
+    }
+
+    @media (max-width: 640px){
+      .topbar-inner{
+        padding:14px 14px;
+      }
+
+      .hero-inner{
+        padding:34px 14px 22px;
+      }
+
+      .content-wrap{
+        padding:20px 14px 60px;
+      }
+
+      .reader-top,
+      .reader-body,
+      .reader-bottom{
+        padding-left:16px;
+        padding-right:16px;
+      }
+
+      .reader-body{
+        padding-top:24px;
+      }
+
+      .hero-copy p,
+      .story p,
+      .lead{
+        font-size:16px;
+      }
+
+      .meta{
+        grid-template-columns:1fr;
+      }
+
+      .top-actions{
+        width:100%;
+      }
+
+      .btn{
+        width:100%;
+      }
+
+      .nav-actions{
+        width:100%;
+      }
+
+      .nav-actions .btn{
+        flex:1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="stars"></canvas>
+
+  <div class="page">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <div class="brand-badge">N</div>
+          <div>
+            <p class="brand-title">El Precio del Silencio</p>
+            <p class="brand-sub">Thriller político y empresarial</p>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <a href="capitulo5.html" onclick="goBack(event, 'capitulo5.html')" class="btn btn-ghost">← Capítulo anterior</a>
+          <a href="capitulo7.html" class="btn btn-primary">Siguiente capítulo →</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="crumb">Inicio / Capítulos / Capítulo 6</div>
+
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Capítulo 6</p>
+            <h1>Comité del jueves</h1>
+            <p>
+              El hombre del café no llega a amenazar. Llega a medirlos. Y por primera vez,
+              Tomás entiende que el comité no es una metáfora: existe, se reúne y decide mucho antes de que el país se entere.
+            </p>
+          </div>
+
+          <div class="hero-side">
+            <aside class="chapter-card">
+              <div class="chapter-label">La puerta se abre</div>
+              <h2>Ya no persiguen rumores. Persiguen una sala real.</h2>
+              <p>
+                Mientras Laura enfrenta una visita del pasado, Tomás queda a un paso de conocer cómo opera el verdadero centro de la red.
+                Lo que descubre sobre el comité del jueves convierte la investigación en algo irreversible.
+              </p>
+
+              <div class="meta">
+                <div class="meta-item">
+                  <p class="meta-k">Estado</p>
+                  <p class="meta-v">Gratis</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Género</p>
+                  <p class="meta-v">Suspenso</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Temporada</p>
+                  <p class="meta-v">6 de 17</p>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="content-wrap">
+      <article class="reader">
+        <div class="reader-top">
+          <div class="reader-top-left">
+            <h3>Capítulo 6: Comité del jueves</h3>
+            <p>Lectura gratuita · El centro empieza a tomar forma</p>
+          </div>
+          <div class="reader-badge">Acceso abierto</div>
+        </div>
+
+        <div class="reader-body">
+          <div class="story">
+            <p class="lead">
+              Tomás no sabía qué lo perturbaba más: que el hombre del café hubiera llegado hasta ahí,
+              o que Laura no pareciera sorprendida de verlo. Desde la mesa en penumbra solo alcanzaba a ver
+              el reflejo fragmentado en el vidrio lateral, pero eso bastaba. La postura del hombre no era la de alguien que viene a irrumpir.
+              Era la de alguien que viene a recordar que puede entrar cuando quiera.
+            </p>
+
+            <p>
+              Laura seguía junto a la puerta.
+            </p>
+
+            <p>
+              La voz masculina se filtraba baja, demasiado baja para distinguir palabras.
+            </p>
+
+            <p>
+              Tomás sintió el impulso de acercarse, pero no se movió.
+            </p>
+
+            <p>
+              Había aprendido suficiente en pocos días para entender que, en ciertos momentos,
+              la quietud también puede ser una forma de inteligencia.
+            </p>
+
+            <div class="quote">El miedo hace correr. La experiencia enseña cuándo quedarse inmóvil.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              La conversación en la puerta duró menos de un minuto.
+            </p>
+
+            <p>
+              Después Laura cerró con suavidad, giró la llave dos veces y se quedó unos segundos de espaldas,
+              apoyando la frente sobre la madera como si necesitara ordenar no lo que había pasado,
+              sino lo que estaba a punto de decir.
+            </p>
+
+            <p>
+              Cuando se dio vuelta, ya no tenía la expresión dura con la que lo había recibido antes.
+            </p>
+
+            <p>
+              Tenía algo peor.
+            </p>
+
+            <p><strong>Resignación exacta.</strong></p>
+
+            <p>
+              —Nos queda poco —dijo.
+            </p>
+
+            <p>
+              Tomás se puso de pie.
+            </p>
+
+            <p>
+              —¿Quién es?
+            </p>
+
+            <p>
+              Laura no respondió de inmediato.
+            </p>
+
+            <p>
+              Fue a la mesa, cerró la carpeta del senador, guardó dos hojas en una funda plástica
+              y recién entonces habló.
+            </p>
+
+            <p>
+              —Hace años trabajaba para una oficina parlamentaria. No como asesor político visible.
+              Era el tipo de hombre que no figura en la foto, pero ya estaba en la sala antes de que empezara la reunión.
+            </p>
+
+            <p>
+              —¿Para Valdés?
+            </p>
+
+            <p>
+              Laura sostuvo su mirada.
+            </p>
+
+            <p>
+              —Entre otros.
+            </p>
+
+            <p>
+              Esa respuesta fue suficiente para empeorar todo.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              Tomás avanzó un paso.
+            </p>
+
+            <p>
+              —¿Qué quería?
+            </p>
+
+            <p>
+              Laura soltó una risa seca, mínima, completamente vacía de humor.
+            </p>
+
+            <p>
+              —Lo mismo que siempre quiso la gente como él: ver cuánto sabemos antes de decidir cuánto nos cuesta seguir.
+            </p>
+
+            <p>
+              Tomás sintió una presión detrás del pecho.
+            </p>
+
+            <p>
+              —¿Te amenazó?
+            </p>
+
+            <p>
+              —No directamente. Ellos casi nunca hacen eso en la primera capa. Primero vienen a conversar.
+              A medir. A comprobar si todavía te pueden encerrar en una salida elegante.
+            </p>
+
+            <p>
+              —¿Y qué te dijo?
+            </p>
+
+            <p>
+              Laura respiró hondo.
+            </p>
+
+            <p>
+              —Que me estaba equivocando de nuevo al guardar papeles viejos. Que ciertas cosas solo sirven
+              mientras nadie les pone una historia encima. Y que tú todavía no entiendes dónde te metiste.
+            </p>
+
+            <p>
+              Tomás apretó la mandíbula.
+            </p>
+
+            <p>
+              —Entonces sí sabe quién soy.
+            </p>
+
+            <p>
+              Laura lo miró con una dureza casi compasiva.
+            </p>
+
+            <p>
+              —Tomás, ya sabían quién eras antes de que tú entendieras que esto era una red.
+            </p>
+
+            <div class="quote">La investigación no empieza cuando tú ves el sistema. Empieza cuando el sistema te ve a ti.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Afuera, el ruido del centro seguía filtrándose amortiguado por los vidrios.
+            </p>
+
+            <p>
+              Bocinas lejanas.
+            </p>
+
+            <p>
+              Un vendedor gritando una oferta incomprensible.
+            </p>
+
+            <p>
+              El traqueteo del ascensor.
+            </p>
+
+            <p>
+              Todo parecía seguir igual.
+            </p>
+
+            <p>
+              Pero dentro de la oficina, el aire ya se había vuelto otro.
+            </p>
+
+            <p>
+              Laura abrió un archivador distinto, uno sin rótulo visible, y sacó una hoja doblada en cuatro.
+            </p>
+
+            <p>
+              No se la entregó de inmediato.
+            </p>
+
+            <p>
+              La sostuvo entre los dedos como si ese papel marcara una frontera.
+            </p>
+
+            <p>
+              —Lo que te voy a mostrar no salió de una fuente periodística ni de una filtración digital.
+              Salió de un error humano.
+            </p>
+
+            <p>
+              Tomás esperó.
+            </p>
+
+            <p>
+              —Un chofer —dijo Laura—. Hace años uno de los choferes que movía gente para reuniones privadas
+              empezó a sospechar que siempre los jueves había trayectos que no quedaban bien registrados.
+              Misma zona. Mismos pasajeros entrando por accesos secundarios. Mismo protocolo para dejar teléfonos fuera.
+            </p>
+
+            <p>
+              Tomás sintió una descarga inmediata.
+            </p>
+
+            <p>
+              —¿El comité del jueves?
+            </p>
+
+            <p>
+              Laura desplegó la hoja y la extendió sobre la mesa.
+            </p>
+
+            <p>
+              Era una planilla simple, casi doméstica.
+            </p>
+
+            <p>
+              Fechas.
+            </p>
+
+            <p>
+              Horas.
+            </p>
+
+            <p>
+              Direcciones abreviadas.
+            </p>
+
+            <p>
+              Iniciales.
+            </p>
+
+            <p>
+              Y al margen, escrito con lápiz grafito:
+              <strong>JUE / 19:30 / comité</strong>.
+            </p>
+
+            <div class="quote">No era una metáfora. Era una agenda.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Tomás recorrió la hoja con los ojos.
+            </p>
+
+            <p>
+              Había cuatro jueves seguidos.
+            </p>
+
+            <p>
+              En tres aparecía la misma abreviatura de ubicación:
+              <strong>AVM</strong>.
+            </p>
+
+            <p>
+              En dos, otra:
+              <strong>CN-7</strong>.
+            </p>
+
+            <p>
+              Y en uno, subrayado dos veces:
+              <strong>cambio sala / por prensa</strong>.
+            </p>
+
+            <p>
+              —¿Qué significan? —preguntó.
+            </p>
+
+            <p>
+              Laura negó con la cabeza.
+            </p>
+
+            <p>
+              —No lo supe en ese momento. Creí que eran referencias internas de logística.
+              Pero Gabriel me dijo una vez algo que recién ahora empieza a hacer sentido:
+              la red nunca nombra lugares como lugares. Los nombra como funciones.
+            </p>
+
+            <p>
+              Tomás levantó la vista.
+            </p>
+
+            <p>
+              —¿Funciones?
+            </p>
+
+            <p>
+              —Claro. No “tal edificio”. No “tal oficina”. Sino “donde se valida”, “donde se demora”,
+              “donde se alinea”, “donde se cubre”. Si alguien cae con el papel, no parece gran cosa.
+              Solo siglas.
+            </p>
+
+            <p>
+              Tomás volvió a mirar la planilla.
+            </p>
+
+            <p>
+              Jueves.
+            </p>
+
+            <p>
+              19:30.
+            </p>
+
+            <p>
+              Comité.
+            </p>
+
+            <p>
+              La repetición ya era una prueba estructural.
+            </p>
+
+            <p>
+              No bastaba para publicarlo.
+            </p>
+
+            <p>
+              Pero bastaba para empezar a cazarlo.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              —¿Qué pasó con el chofer? —preguntó.
+            </p>
+
+            <p>
+              Laura no apartó la vista del papel.
+            </p>
+
+            <p>
+              —Dejó de manejar para ellos.
+            </p>
+
+            <p>
+              —¿Y eso es todo?
+            </p>
+
+            <p>
+              —Eso es lo que consta.
+            </p>
+
+            <p>
+              Esa respuesta fue peor que cualquier detalle.
+            </p>
+
+            <p>
+              Tomás empezaba a conocer ese tipo de frases:
+              las que no niegan nada,
+              pero tampoco dejan nada donde afirmarse.
+            </p>
+
+            <p><strong>La niebla también era una política de la red.</strong></p>
+
+            <div class="quote">No siempre mataban la historia. A veces la dejaban viva, pero sin borde.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Laura sacó entonces una segunda hoja.
+            </p>
+
+            <p>
+              Esta sí era distinta.
+            </p>
+
+            <p>
+              Parecía el fragmento de una minuta ejecutiva.
+            </p>
+
+            <p>
+              En el encabezado se leía parcialmente:
+              <strong>Coordinación previa / jueves / no circular</strong>.
+            </p>
+
+            <p>
+              Debajo había tres líneas tachadas y una que seguía visible:
+            </p>
+
+            <div class="quote">“Definir secuencia antes de comisión, prensa y ajustes minoristas.”</div>
+
+            <p>
+              Tomás apoyó ambas manos en la mesa.
+            </p>
+
+            <p>
+              Ahí estaba.
+            </p>
+
+            <p>
+              Todo junto.
+            </p>
+
+            <p>
+              Comisión.
+            </p>
+
+            <p>
+              Prensa.
+            </p>
+
+            <p>
+              Ajustes.
+            </p>
+
+            <p>
+              Lo político, lo mediático y lo económico coordinados como una sola maniobra.
+            </p>
+
+            <p>
+              —No están reaccionando a las noticias —dijo en voz baja—.
+              Las están preparando.
+            </p>
+
+            <p>
+              Laura lo observó sin pestañear.
+            </p>
+
+            <p>
+              —Exacto.
+            </p>
+
+            <p>
+              —El comité no resuelve una crisis. La diseña antes de que parezca crisis.
+            </p>
+
+            <p>
+              —Y después reparte el rol de cada uno.
+            </p>
+
+            <div class="quote">Ese fue el momento exacto en que la red dejó de parecer una corrupción grande. Empezó a parecer un gobierno paralelo.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Tomás dio un paso atrás.
+            </p>
+
+            <p>
+              Sintió, por primera vez desde el capítulo inicial, algo cercano al vértigo.
+            </p>
+
+            <p>
+              No el miedo de ser seguido.
+            </p>
+
+            <p>
+              No el miedo de perder el trabajo.
+            </p>
+
+            <p>
+              El vértigo de comprender escala.
+            </p>
+
+            <p>
+              Porque si esa mesa decidía secuencias entre legisladores, prensa y mercados,
+              entonces ya no estaban investigando una red de colusión.
+            </p>
+
+            <p>
+              Estaban investigando una infraestructura de mando.
+            </p>
+
+            <p>
+              Algo que funcionaba en las sombras,
+              pero con efectos completamente visibles sobre la vida de millones.
+            </p>
+
+            <p>
+              El precio del combustible.
+            </p>
+
+            <p>
+              El tono del titular.
+            </p>
+
+            <p>
+              La demora de una ley.
+            </p>
+
+            <p>
+              El debate que no llegaba al fondo.
+            </p>
+
+            <p>
+              Todo podía ser parte de la misma coreografía.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              —Necesito saber dónde se reúnen —dijo al fin.
+            </p>
+
+            <p>
+              Laura lo esperaba.
+            </p>
+
+            <p>
+              —No lo sé exacto.
+            </p>
+
+            <p>
+              —Pero tienes algo.
+            </p>
+
+            <p>
+              Laura asintió.
+            </p>
+
+            <p>
+              Fue hasta una caja baja, buscó entre sobres sin rotular
+              y sacó una tarjeta de estacionamiento plastificada, antigua, con un código QR medio borrado
+              y un membrete discreto en la esquina inferior:
+              <strong>Centro Norte / acceso interno 7</strong>.
+            </p>
+
+            <p>
+              Tomás levantó la vista de inmediato.
+            </p>
+
+            <p>
+              —CN-7.
+            </p>
+
+            <p>
+              Laura dejó la tarjeta sobre la mesa.
+            </p>
+
+            <p>
+              —La encontré en un sobre con los papeles del reportaje que nunca salió.
+              Nunca pude probar si el código correspondía a una torre, un edificio anexo o un estacionamiento subterráneo.
+              Pero apareció en fechas que coinciden con la agenda del chofer.
+            </p>
+
+            <p>
+              —¿Y AVM?
+            </p>
+
+            <p>
+              —No estoy segura. Podría ser una avenida. Podría ser un nombre interno.
+              Gabriel pensaba que era una sala satélite, un lugar de contingencia cuando el comité no podía reunirse
+              en el punto principal.
+            </p>
+
+            <p>
+              Tomás miró otra vez la tarjeta.
+            </p>
+
+            <p>
+              Un acceso.
+            </p>
+
+            <p>
+              No la reunión completa.
+            </p>
+
+            <p>
+              Pero sí un borde físico.
+            </p>
+
+            <p>
+              Algo que podía tocarse.
+            </p>
+
+            <p>
+              Algo que podía vigilarse.
+            </p>
+
+            <div class="quote">Toda estructura secreta empieza a romperse cuando deja un lugar donde estacionar.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              —No puedes ir solo —dijo Laura.
+            </p>
+
+            <p>
+              Tomás no respondió.
+            </p>
+
+            <p>
+              Lo pensó, sí.
+            </p>
+
+            <p>
+              Pero no respondió.
+            </p>
+
+            <p>
+              Laura lo leyó igual.
+            </p>
+
+            <p>
+              —No se trata de valentía. Si entras mal, no solo te pierdes tú.
+              Perdemos la pista.
+            </p>
+
+            <p>
+              Esa palabra —perdemos— no pasó inadvertida.
+            </p>
+
+            <p>
+              Por primera vez Laura se incluía de lleno en la acción que venía.
+            </p>
+
+            <p>
+              Ya no estaba solo entregando archivos del pasado.
+            </p>
+
+            <p>
+              Estaba volviendo a entrar.
+            </p>
+
+            <p><strong>Y eso, para Tomás, significaba una mezcla peligrosa de alivio y culpa.</strong></p>
+
+            <div class="divider"></div>
+
+            <p>
+              —¿Por qué ahora sí? —preguntó.
+            </p>
+
+            <p>
+              Laura demoró un segundo largo.
+            </p>
+
+            <p>
+              —Porque cuando vi a ese hombre en la puerta entendí algo.
+            </p>
+
+            <p>
+              —¿Qué cosa?
+            </p>
+
+            <p>
+              —Que no vino a detenerme a mí.
+            </p>
+
+            <p>
+              Tomás sostuvo su mirada.
+            </p>
+
+            <p>
+              Laura completó:
+            </p>
+
+            <div class="quote">—Vino a confirmar si tú ya estabas listo para llegar al comité.</div>
+
+            <p>
+              La frase cayó con un peso exacto.
+            </p>
+
+            <p>
+              No era solo persecución.
+            </p>
+
+            <p>
+              Era evaluación.
+            </p>
+
+            <p>
+              La red no se limitaba a apagar incendios.
+            </p>
+
+            <p>
+              También estudiaba a quienes los encontraban.
+            </p>
+
+            <p>
+              Medía resistencia.
+            </p>
+
+            <p>
+              Temor.
+            </p>
+
+            <p>
+              Obsesión.
+            </p>
+
+            <p>
+              Y ahora, al parecer, quería saber si Tomás tenía lo necesario para llegar demasiado lejos.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              Hubo un silencio denso.
+            </p>
+
+            <p>
+              Tomás volvió a la mesa y observó la tarjeta plastificada,
+              la agenda del chofer y la minuta fragmentaria.
+            </p>
+
+            <p>
+              Tres piezas.
+            </p>
+
+            <p>
+              Ninguna definitiva por sí sola.
+            </p>
+
+            <p>
+              Juntas, una dirección posible.
+            </p>
+
+            <p>
+              —¿Cuándo? —preguntó.
+            </p>
+
+            <p>
+              Laura miró el reloj.
+            </p>
+
+            <p>
+              —Hoy es martes.
+            </p>
+
+            <p>
+              —Lo sé.
+            </p>
+
+            <p>
+              —Entonces tienes dos días para entender a quién seguir, cómo entrar al radio del lugar
+              y cómo salir sin regalarte.
+            </p>
+
+            <p>
+              —O sea, este jueves.
+            </p>
+
+            <p>
+              —Si la agenda sigue viva, sí.
+            </p>
+
+            <p>
+              Tomás sintió una descarga nerviosa recorrerle el cuerpo completo.
+            </p>
+
+            <p>
+              El comité dejaba de ser una teoría a futuro.
+            </p>
+
+            <p>
+              Tenía día.
+            </p>
+
+            <p>
+              Posible acceso.
+            </p>
+
+            <p>
+              Y una ventana ridículamente corta.
+            </p>
+
+            <div class="quote">Dos días para llegar a la sala donde se ordenaba el país desde la sombra.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Laura empezó a guardar todo.
+            </p>
+
+            <p>
+              Demasiado rápido.
+            </p>
+
+            <p>
+              Tomás lo notó.
+            </p>
+
+            <p>
+              —¿Qué pasa?
+            </p>
+
+            <p>
+              Ella no dejó de moverse.
+            </p>
+
+            <p>
+              —Que el hombre de la puerta no viene nunca solo.
+            </p>
+
+            <p>
+              Tomás miró hacia el pasillo.
+            </p>
+
+            <p>
+              —No escuché a nadie más.
+            </p>
+
+            <p>
+              Laura cerró la carpeta y lo miró fijo.
+            </p>
+
+            <p>
+              —Ese es exactamente el problema.
+            </p>
+
+            <p>
+              La frase apenas terminó de caer cuando llegó el sonido.
+            </p>
+
+            <p>
+              No desde la puerta principal.
+            </p>
+
+            <p>
+              Desde el fondo del departamento.
+            </p>
+
+            <p>
+              Un golpe metálico corto.
+            </p>
+
+            <p>
+              Como si alguien hubiera intentado abrir, con llave equivocada, una puerta que no debía conocer.
+            </p>
+
+            <p>
+              Tomás giró de inmediato.
+            </p>
+
+            <p>
+              La puerta interior oculta entre estanterías.
+            </p>
+
+            <p>
+              La misma que Laura le había señalado para escapar.
+            </p>
+
+            <p><strong>Alguien estaba al otro lado.</strong></p>
+
+            <div class="quote">Y por primera vez, Tomás entendió que el comité del jueves no era el único lugar con acceso interno.</div>
+          </div>
+        </div>
+
+        <div class="reader-bottom">
+          <p class="reader-note">
+            Continúa la historia para descubrir quién conocía la salida secreta del archivo… y por qué eso cambia por completo la investigación.
+          </p>
+
+          <div class="nav-actions">
+            <a href="capitulo5.html" onclick="goBack(event, 'capitulo5.html')" class="btn btn-ghost">← Capítulo 5</a>
+            <a href="capitulo7.html" class="btn btn-primary">Leer capítulo 7 →</a>
+          </div>
+        </div>
+      </article>
+    </main>
+  </div>
+
+  <script>
+    function goBack(event, fallbackUrl){
+      event.preventDefault();
+
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.location.href = fallbackUrl;
+      }
+    }
+
+    const canvas = document.getElementById("stars");
+    const ctx = canvas.getContext("2d");
+    let stars = [];
+
+    function resize(){
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      createStars();
+    }
+
+    function createStars(){
+      stars = [];
+      const amount = Math.floor((canvas.width * canvas.height) / 14000);
+      for(let i = 0; i < amount; i++){
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.6 + 0.3,
+          speed: Math.random() * 0.35 + 0.08,
+          alpha: Math.random() * 0.7 + 0.2
+        });
+      }
+    }
+
+    function animate(){
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for(const s of stars){
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        s.y += s.speed;
+
+        if(s.y > canvas.height){
+          s.y = -2;
+          s.x = Math.random() * canvas.width;
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener("resize", resize);
+    resize();
+    animate();
+  </script>
+</body>
+</html>
