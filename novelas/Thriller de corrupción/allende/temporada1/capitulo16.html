@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capítulo 16 | La Vía y la Ruptura</title>
+  <meta
+    name="description"
+    content="Capítulo 16 de La Vía y la Ruptura: la resistencia moral comienza a levantarse. Bajo la noche, Chile empieza a descubrir que la memoria, el coraje y la dignidad también pueden organizarse."
+  />
+
+  <style>
+    :root{
+      --bg:#05080f;
+      --bg2:#0b1220;
+      --card:rgba(12,18,32,0.82);
+      --line:rgba(255,255,255,0.08);
+      --line-strong:rgba(73,182,255,.24);
+      --text:#f5f8ff;
+      --muted:#aebad1;
+      --muted-2:#7f90ae;
+      --blue:#0A6CFF;
+      --blue2:#49b6ff;
+      --blue-soft:rgba(73,182,255,.14);
+      --shadow:0 24px 60px rgba(0,0,0,.45);
+      --radius:22px;
+      --max:860px;
+    }
+
+    *{
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      color:var(--text);
+      background:#04070d;
+      line-height:1.8;
+      position:relative;
+      overflow-x:hidden;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    #stars{
+      position:fixed;
+      inset:0;
+      width:100%;
+      height:100%;
+      z-index:0;
+      background:
+        radial-gradient(circle at top left, rgba(10,108,255,.12), transparent 24%),
+        radial-gradient(circle at top right, rgba(73,182,255,.08), transparent 20%),
+        linear-gradient(180deg, #04070d 0%, #08101c 45%, #05080f 100%);
+    }
+
+    .page{
+      min-height:100vh;
+      position:relative;
+      z-index:1;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:30;
+      backdrop-filter:blur(14px);
+      background:rgba(5,8,15,.72);
+      border-bottom:1px solid var(--line);
+    }
+
+    .topbar-inner{
+      max-width:1100px;
+      margin:0 auto;
+      padding:16px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .brand-badge{
+      width:38px;
+      height:38px;
+      border-radius:12px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg, rgba(10,108,255,.22), rgba(73,182,255,.08));
+      border:1px solid var(--line-strong);
+      box-shadow:0 0 24px rgba(10,108,255,.12);
+      font-weight:700;
+      color:var(--blue2);
+      flex:0 0 auto;
+    }
+
+    .brand-title{
+      font-size:14px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:#dfe9ff;
+      margin:0 0 2px;
+    }
+
+    .brand-sub{
+      font-size:12px;
+      color:var(--muted-2);
+      margin:0;
+    }
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height:44px;
+      padding:0 18px;
+      border-radius:12px;
+      font-size:14px;
+      font-weight:700;
+      transition:transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+      border:1px solid transparent;
+      cursor:pointer;
+    }
+
+    .btn:hover{
+      transform:translateY(-1px);
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg, var(--blue) 0%, #0d7eff 100%);
+      color:white;
+      box-shadow:0 12px 28px rgba(10,108,255,.28);
+    }
+
+    .btn-primary:hover{
+      background:linear-gradient(135deg, #0c62e0 0%, #0a6cef 100%);
+    }
+
+    .btn-ghost{
+      background:rgba(255,255,255,.03);
+      border-color:var(--line);
+      color:#dbe8ff;
+    }
+
+    .btn-ghost:hover{
+      background:rgba(255,255,255,.06);
+      border-color:var(--line-strong);
+    }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      border-bottom:1px solid rgba(255,255,255,.04);
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(180deg, rgba(5,8,15,.58) 0%, rgba(5,8,15,.86) 80%, rgba(5,8,15,1) 100%),
+        url("../assets/allende-portada.jpg");
+      background-size:cover;
+      background-position:center;
+      opacity:.28;
+      filter:saturate(.9) contrast(1.03);
+    }
+
+    .hero-inner{
+      position:relative;
+      z-index:1;
+      max-width:1100px;
+      margin:0 auto;
+      padding:56px 20px 34px;
+    }
+
+    .crumb{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.06);
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:18px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:28px;
+      align-items:end;
+    }
+
+    .hero-copy h1{
+      margin:0 0 12px;
+      font-size:clamp(34px, 6vw, 64px);
+      line-height:1.02;
+      letter-spacing:.02em;
+      color:white;
+      text-shadow:0 0 22px rgba(10,108,255,.18);
+    }
+
+    .eyebrow{
+      margin:0 0 14px;
+      color:var(--blue2);
+      font-weight:700;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      font-size:12px;
+    }
+
+    .hero-copy p{
+      margin:0;
+      max-width:700px;
+      color:#d4def3;
+      font-size:18px;
+      line-height:1.75;
+    }
+
+    .hero-side{
+      display:flex;
+      justify-content:flex-end;
+    }
+
+    .chapter-card{
+      width:min(100%, 360px);
+      background:linear-gradient(180deg, rgba(12,18,32,.75), rgba(9,13,24,.88));
+      border:1px solid rgba(73,182,255,.18);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:22px;
+      backdrop-filter:blur(16px);
+    }
+
+    .chapter-label{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 12px;
+      border-radius:999px;
+      background:var(--blue-soft);
+      border:1px solid rgba(73,182,255,.18);
+      color:var(--blue2);
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:14px;
+    }
+
+    .chapter-card h2{
+      margin:0 0 10px;
+      font-size:24px;
+      line-height:1.15;
+      color:white;
+    }
+
+    .chapter-card p{
+      margin:0 0 18px;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.7;
+    }
+
+    .meta{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .meta-item{
+      padding:12px;
+      border-radius:14px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.05);
+    }
+
+    .meta-k{
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--muted-2);
+      margin:0 0 6px;
+    }
+
+    .meta-v{
+      margin:0;
+      font-size:13px;
+      color:#e7efff;
+      font-weight:700;
+    }
+
+    .content-wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:28px 20px 80px;
+    }
+
+    .reader{
+      position:relative;
+      background:linear-gradient(180deg, rgba(11,18,32,.58), rgba(8,13,24,.72));
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:22px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      backdrop-filter:blur(4px);
+    }
+
+    .reader-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:18px 22px;
+      border-bottom:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+    }
+
+    .reader-top-left h3{
+      margin:0 0 4px;
+      font-size:18px;
+      color:#edf3ff;
+    }
+
+    .reader-top-left p{
+      margin:0;
+      color:var(--muted-2);
+      font-size:13px;
+    }
+
+    .reader-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:34px;
+      padding:0 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.06);
+      color:#cfe0ff;
+      font-size:12px;
+      font-weight:700;
+      white-space:nowrap;
+    }
+
+    .reader-body{
+      padding:34px 26px 18px;
+      position:relative;
+    }
+
+    .story{
+      max-width:720px;
+      margin:0 auto;
+      position:relative;
+      z-index:2;
+    }
+
+    .lead{
+      font-size:19px;
+      line-height:1.9;
+      color:#ecf3ff;
+      margin:0 0 26px;
+      padding:18px 18px 18px 20px;
+      border-left:3px solid rgba(73,182,255,.44);
+      background:rgba(9,18,35,.68);
+      border-radius:0 14px 14px 0;
+      backdrop-filter:blur(4px);
+    }
+
+    .story p{
+      margin:0 0 22px;
+      color:#e4ecfb;
+      font-size:18px;
+      line-height:1.95;
+      letter-spacing:.01em;
+      text-shadow:0 1px 2px rgba(0,0,0,.4);
+    }
+
+    .story p strong{
+      color:#ffffff;
+      font-weight:700;
+    }
+
+    .story .quote{
+      margin:34px 0;
+      padding:20px 22px;
+      border-radius:18px;
+      background:linear-gradient(180deg, rgba(10,108,255,.12), rgba(73,182,255,.06));
+      border:1px solid rgba(73,182,255,.14);
+      color:#edf5ff;
+      font-size:19px;
+      line-height:1.7;
+      text-align:center;
+      box-shadow:0 12px 30px rgba(0,0,0,.18);
+      backdrop-filter:blur(4px);
+    }
+
+    .story .divider{
+      width:86px;
+      height:1px;
+      background:linear-gradient(90deg, transparent, rgba(73,182,255,.6), transparent);
+      margin:34px auto;
+    }
+
+    .reader-bottom{
+      padding:24px 26px 28px;
+      border-top:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .reader-note{
+      color:var(--muted-2);
+      font-size:13px;
+      margin:0;
+    }
+
+    .nav-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    @media (max-width: 900px){
+      .hero-grid{
+        grid-template-columns:1fr;
+      }
+
+      .hero-side{
+        justify-content:flex-start;
+      }
+
+      .chapter-card{
+        width:100%;
+        max-width:unset;
+      }
+    }
+
+    @media (max-width: 640px){
+      .topbar-inner{
+        padding:14px 14px;
+      }
+
+      .hero-inner{
+        padding:34px 14px 22px;
+      }
+
+      .content-wrap{
+        padding:20px 14px 60px;
+      }
+
+      .reader-top,
+      .reader-body,
+      .reader-bottom{
+        padding-left:16px;
+        padding-right:16px;
+      }
+
+      .reader-body{
+        padding-top:24px;
+      }
+
+      .hero-copy p,
+      .story p,
+      .lead{
+        font-size:16px;
+      }
+
+      .meta{
+        grid-template-columns:1fr;
+      }
+
+      .top-actions{
+        width:100%;
+      }
+
+      .btn{
+        width:100%;
+      }
+
+      .nav-actions{
+        width:100%;
+      }
+
+      .nav-actions .btn{
+        flex:1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="stars"></canvas>
+
+  <div class="page">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <div class="brand-badge">N</div>
+          <div>
+            <p class="brand-title">La Vía y la Ruptura</p>
+            <p class="brand-sub">Drama histórico chileno</p>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <a href="capitulo15.html" class="btn btn-ghost">← Capítulo anterior</a>
+          <a href="capitulo17.html" class="btn btn-primary">Siguiente capítulo →</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="crumb">Inicio / Corrupción y poder / Capítulo 16</div>
+
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Capítulo 16</p>
+            <h1>La memoria se organiza en la noche</h1>
+            <p>
+              El terror sigue mandando, pero ya no está solo. Bajo la oscuridad, Chile comienza a descubrir algo inesperado: que la dignidad puede volver a unirse, que la memoria puede convertirse en fuerza y que incluso una noche larga empieza a temerle a quienes se niegan a olvidar.
+            </p>
+          </div>
+
+          <div class="hero-side">
+            <aside class="chapter-card">
+              <div class="chapter-label">La otra fuerza</div>
+              <h2>Cuando el miedo deja de tener la última palabra</h2>
+              <p>
+                La resistencia no nace de golpe ni con épica visible. Nace en el nombre guardado, en la búsqueda obstinada, en la solidaridad secreta. Y justamente por eso empieza a volverse indestructible.
+              </p>
+
+              <div class="meta">
+                <div class="meta-item">
+                  <p class="meta-k">Estado</p>
+                  <p class="meta-v">Gratis</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Género</p>
+                  <p class="meta-v">Histórico</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Temporada</p>
+                  <p class="meta-v">16 de 17</p>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="content-wrap">
+      <article class="reader">
+        <div class="reader-top">
+          <div class="reader-top-left">
+            <h3>Capítulo 16: La memoria se organiza en la noche</h3>
+            <p>Lectura gratuita · El penúltimo umbral antes del gran cierre: cuando la oscuridad encuentra por fin su contraparte</p>
+          </div>
+          <div class="reader-badge">Acceso abierto</div>
+        </div>
+
+        <div class="reader-body">
+          <div class="story">
+            <p class="lead">
+              Toda dictadura cree, en algún momento, que ya ha vencido.
+              Que el miedo ha penetrado lo suficiente.
+              Que la obediencia ya no necesita ser discutida.
+              Que los cuerpos se han vuelto prudentes
+              y las almas, resignadas.
+              Pero hay algo que el terror nunca termina de calcular bien:
+              la lentitud con que la dignidad vuelve a levantarse.
+              No vuelve como discurso inmediato.
+              No vuelve con trompetas.
+              Vuelve por debajo.
+              En la memoria.
+              En la lealtad.
+              En la obstinación de quienes se niegan a aceptar que los ausentes queden solos en la oscuridad.
+            </p>
+
+            <p>
+              Así comenzó a organizarse la resistencia más profunda.
+            </p>
+
+            <p>
+              No la de los grandes gestos visibles todavía.
+            </p>
+
+            <p>
+              Sino la de las manos discretas.
+            </p>
+
+            <p>
+              La de las mujeres que se reconocen en una fila.
+            </p>
+
+            <p>
+              La del vecino que avisa.
+            </p>
+
+            <p>
+              La del amigo que guarda un nombre.
+            </p>
+
+            <p>
+              La del sacerdote que escucha.
+            </p>
+
+            <p>
+              La del abogado que anota.
+            </p>
+
+            <p>
+              La del familiar que vuelve al día siguiente aunque ayer lo hayan humillado.
+            </p>
+
+            <p><strong>Chile empezó a descubrir que incluso la noche más larga no puede gobernar para siempre un país que sigue recordando.</strong></p>
+
+            <div class="quote">La memoria no cayó del cielo. Se fue armando con pequeños actos de coraje que, separados, parecían mínimos, pero juntos comenzaban a parecerse a una fuerza histórica.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              El miedo seguía allí.
+            </p>
+
+            <p>
+              Seguía mandando.
+            </p>
+
+            <p>
+              Seguía ocupando las calles,
+              las casas,
+              los silencios,
+              los cuerpos.
+            </p>
+
+            <p>
+              Nadie sensato podía negar su potencia.
+            </p>
+
+            <p>
+              Pero ya no estaba solo.
+            </p>
+
+            <p>
+              Porque junto al miedo comenzó a crecer otra energía,
+              menos visible,
+              pero igual de real:
+              la de quienes entendieron que callar para sobrevivir no era lo mismo que olvidar para siempre.
+            </p>
+
+            <p>
+              Esa diferencia es decisiva.
+            </p>
+
+            <p>
+              Una dictadura puede imponer prudencia.
+            </p>
+
+            <p>
+              Le cuesta mucho más imponer amnesia.
+            </p>
+
+            <div class="quote">El terror controla la superficie. La memoria trabaja por debajo hasta que un día vuelve a levantar todo lo que parecía enterrado.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Las familias que buscaban empezaron a encontrarse.
+            </p>
+
+            <p>
+              Al principio en pasillos.
+            </p>
+
+            <p>
+              En oficinas.
+            </p>
+
+            <p>
+              En colas de espera.
+            </p>
+
+            <p>
+              En preguntas repetidas.
+            </p>
+
+            <p>
+              En miradas donde una reconocía en la otra el mismo tipo de herida.
+            </p>
+
+            <p>
+              Ese reconocimiento cambió mucho.
+            </p>
+
+            <p>
+              Porque el dolor aislado pesa de una manera.
+            </p>
+
+            <p>
+              Pero el dolor que encuentra otro dolor semejante empieza a volverse conciencia compartida.
+            </p>
+
+            <p>
+              Y cuando el sufrimiento deja de sentirse exclusivamente privado,
+              empieza a adquirir dimensión política,
+              aunque todavía no se lo nombre así.
+            </p>
+
+            <p>
+              Chile comenzó a vivir ese tránsito.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              También los nombres empezaron a resistir.
+            </p>
+
+            <p>
+              El régimen intentaba borrar.
+            </p>
+
+            <p>
+              Las familias insistían en nombrar.
+            </p>
+
+            <p>
+              El régimen administraba ausencia.
+            </p>
+
+            <p>
+              Las familias levantaban presencia simbólica.
+            </p>
+
+            <p>
+              Decir un nombre se volvió un acto cargado de sentido.
+            </p>
+
+            <p>
+              No era ya una simple identificación.
+            </p>
+
+            <p>
+              Era una negativa.
+            </p>
+
+            <p>
+              La negativa a aceptar que el desaparecido se volviera también inexistente en la conciencia nacional.
+            </p>
+
+            <p>
+              Esa ética del nombre fue una de las columnas más hondas de la resistencia chilena.
+            </p>
+
+            <p><strong>Nombrar a quien el poder quiso borrar fue una forma de volver a ponerlo en el mundo.</strong></p>
+
+            <div class="quote">Cada nombre repetido contra el olvido era una victoria mínima. Y las victorias mínimas, cuando perseveran, terminan cambiando la historia.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              El país seguía bajo control.
+            </p>
+
+            <p>
+              Eso no cambió de un día para otro.
+            </p>
+
+            <p>
+              Sería una mentira narrativa decir que la memoria derrotó de inmediato al miedo.
+            </p>
+
+            <p>
+              No fue así.
+            </p>
+
+            <p>
+              El miedo siguió siendo enorme.
+            </p>
+
+            <p>
+              Las desapariciones siguieron doliendo.
+            </p>
+
+            <p>
+              La vigilancia siguió ocupando la vida cotidiana.
+            </p>
+
+            <p>
+              Pero comenzó a abrirse una grieta en el corazón del terror:
+              la certeza de que no lograría clausurar del todo la verdad.
+            </p>
+
+            <p>
+              Y esa grieta es inmensa.
+            </p>
+
+            <p>
+              Porque los regímenes de espanto pueden tolerar la rabia.
+            </p>
+
+            <p>
+              Lo que temen de verdad es la memoria organizada.
+            </p>
+
+            <div class="quote">La rabia puede ser perseguida. La memoria, cuando empieza a multiplicarse en otros, se vuelve mucho más difícil de matar.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Hubo entonces una transformación silenciosa.
+            </p>
+
+            <p>
+              Las personas dejaron de sentirse únicamente víctimas dispersas.
+            </p>
+
+            <p>
+              Algunas comenzaron a sentirse parte de una misma insistencia.
+            </p>
+
+            <p>
+              Todavía frágil.
+            </p>
+
+            <p>
+              Todavía vulnerable.
+            </p>
+
+            <p>
+              Todavía obligada a vivir en voz baja.
+            </p>
+
+            <p>
+              Pero ya no enteramente sola.
+            </p>
+
+            <p>
+              Esa salida del aislamiento fue histórica.
+            </p>
+
+            <p>
+              Porque toda dictadura necesita ciudadanos desconectados,
+              dolores incomunicados,
+              miedos encapsulados.
+            </p>
+
+            <p>
+              Cuando esos dolores empiezan a tocarse entre sí,
+              el régimen pierde una parte de su control más íntimo.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              La memoria comenzó también a cambiar de escala.
+            </p>
+
+            <p>
+              Ya no era solo el cuaderno escondido.
+            </p>
+
+            <p>
+              Ya no era solo la foto guardada.
+            </p>
+
+            <p>
+              Seguía siendo eso,
+              sí,
+              pero empezaba a convertirse en algo más grande:
+              archivo moral del país.
+            </p>
+
+            <p>
+              No un archivo oficial.
+            </p>
+
+            <p>
+              Uno más fuerte.
+            </p>
+
+            <p>
+              El que se construye en las conciencias,
+              en los vínculos,
+              en las promesas íntimas de no dejar caer la verdad aunque pasen años.
+            </p>
+
+            <p>
+              En ese archivo no cabían solo los nombres.
+            </p>
+
+            <p>
+              Cabían también las formas del dolor,
+              las fechas,
+              los lugares,
+              los testigos,
+              las búsquedas.
+            </p>
+
+            <p>
+              Y sobre todo cabía una decisión:
+              un día esto tendrá que ser contado entero.
+            </p>
+
+            <div class="quote">El régimen podía controlar documentos. Le era mucho más difícil controlar el juramento silencioso de miles de personas que decidían, al mismo tiempo, no olvidar.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Esa fue quizá la primera gran victoria subterránea del país bajo dictadura:
+              descubrir que la memoria podía convertirse en refugio,
+              en red,
+              en deber
+              y, con el tiempo, en fuerza.
+            </p>
+
+            <p>
+              Allí empezó a nacer una resistencia moral mucho más extensa que cualquier organización puntual.
+            </p>
+
+            <p>
+              Una resistencia hecha de afectos,
+              de duelo,
+              de nombres,
+              de fidelidad a los ausentes.
+            </p>
+
+            <p>
+              El miedo seguía dominando la escena,
+              pero la dignidad comenzaba a construir su subsuelo.
+            </p>
+
+            <p>
+              Y no hay poder que duerma tranquilo cuando sabe que bajo el cemento del terror alguien está sembrando memoria.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              Chile empezó a cambiar de nuevo.
+            </p>
+
+            <p>
+              No hacia la libertad todavía.
+            </p>
+
+            <p>
+              Pero sí hacia algo que la hacía imaginable.
+            </p>
+
+            <p>
+              La convicción de que la noche no podía apropiarse completamente de la verdad.
+            </p>
+
+            <p>
+              Esa convicción no era todavía multitud.
+            </p>
+
+            <p>
+              Era latido.
+            </p>
+
+            <p>
+              Era persistencia.
+            </p>
+
+            <p>
+              Era gente muy concreta negándose a entregar al olvido lo que el régimen quería volver irrecuperable.
+            </p>
+
+            <p>
+              Ese es el tipo de fuerza que tarda en mostrarse,
+              pero cuando por fin emerge,
+              transforma por completo el sentido de una época.
+            </p>
+
+            <p><strong>La dictadura había conquistado el día. La memoria empezaba a conquistar el tiempo largo.</strong></p>
+
+            <div class="quote">Los regímenes del miedo gobiernan el presente. La memoria, cuando resiste, empieza a disputarles el futuro.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Esa noche,
+              una mujer volvió a escribir un nombre en un cuaderno que ya empezaba a llenarse de otros.
+            </p>
+
+            <p>
+              En otra parte,
+              alguien guardó una lista dentro de una costura del abrigo.
+            </p>
+
+            <p>
+              En una cocina,
+              dos personas hablaron por primera vez sin bajar tanto la voz al darse cuenta de que compartían la misma pérdida.
+            </p>
+
+            <p>
+              Y en la conciencia profunda del país comenzó a formarse algo que el régimen todavía no alcanzaba a medir del todo:
+              una comunidad de memoria.
+            </p>
+
+            <p>
+              No visible aún.
+            </p>
+
+            <p>
+              No victoriosa todavía.
+            </p>
+
+            <p>
+              Pero real.
+            </p>
+
+            <p>
+              Y por eso mismo peligrosa para el poder.
+            </p>
+
+            <p>
+              Porque toda dictadura puede administrar el miedo durante un tiempo.
+            </p>
+
+            <p>
+              Lo que no logra dominar para siempre es un país que empieza a organizarse alrededor de la verdad que se le quiso arrancar.
+            </p>
+
+            <p><strong>En ese momento, aunque casi nadie pudiera decirlo en voz alta, la noche chilena dejó de sentirse infinita. Porque en algún lugar, por debajo del terror, ya había empezado a crecer lo que un día la iba a juzgar.</strong></p>
+          </div>
+        </div>
+
+        <div class="reader-bottom">
+          <p class="reader-note">
+            Continúa al capítulo 17 para entrar en el cierre definitivo: la memoria frente a la historia, la noche frente al juicio del tiempo y el gran final de una herida que no pudo ser borrada.
+          </p>
+
+          <div class="nav-actions">
+            <a href="capitulo15.html" class="btn btn-ghost">← Capítulo 15</a>
+            <a href="capitulo17.html" class="btn btn-primary">Leer capítulo 17 →</a>
+          </div>
+        </div>
+      </article>
+    </main>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("stars");
+    const ctx = canvas.getContext("2d");
+    let stars = [];
+
+    function resize(){
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      createStars();
+    }
+
+    function createStars(){
+      stars = [];
+      const amount = Math.floor((canvas.width * canvas.height) / 14000);
+      for(let i = 0; i < amount; i++){
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.6 + 0.3,
+          speed: Math.random() * 0.35 + 0.08,
+          alpha: Math.random() * 0.7 + 0.2
+        });
+      }
+    }
+
+    function animate(){
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for(const s of stars){
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        s.y += s.speed;
+
+        if(s.y > canvas.height){
+          s.y = -2;
+          s.x = Math.random() * canvas.width;
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener("resize", resize);
+    resize();
+    animate();
+  </script>
+</body>
+</html>
