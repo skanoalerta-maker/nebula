@@ -490,12 +490,13 @@
       align-items:center;
       justify-content:center;
       overflow:hidden;
+      padding:12px;
     }
 
     .hero-cover{
       width:100%;
       height:100%;
-      object-fit:cover;
+      object-fit:contain;
       object-position:center;
       background:#050b1a;
     }
@@ -723,12 +724,13 @@
       align-items:center;
       justify-content:center;
       overflow:hidden;
+      padding:12px;
     }
 
     .story-cover{
       width:100%;
       height:100%;
-      object-fit:cover;
+      object-fit:contain;
       object-position:center;
       background:#050b1a;
     }
@@ -1605,6 +1607,20 @@
           "Una novela histórica intensa sobre poder, control, decisiones militares y el impacto humano de un periodo que marcó para siempre la historia de Chile.",
         ruta: "novelas/index.html?id=pinochet",
         carpeta: "pinochet",
+        temporada: "Temporada 1",
+        visitas: 0,
+        gratis: 3,
+        destacada: false
+      },
+      {
+        id: "allende",
+        titulo: "Allende",
+        genero: "historia",
+        portada: "assets/covers/allende_portada_nebula.png",
+        descripcion:
+          "Una historia política y humana sobre liderazgo, convicción y uno de los periodos más decisivos de la historia de Chile.",
+        ruta: "novelas/index.html?id=allende",
+        carpeta: "allende",
         temporada: "Temporada 1",
         visitas: 0,
         gratis: 3,
