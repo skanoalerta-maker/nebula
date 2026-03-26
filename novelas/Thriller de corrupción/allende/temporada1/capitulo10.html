@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capítulo 10 | La Vía y la Ruptura</title>
+  <meta
+    name="description"
+    content="Capítulo 10 de La Vía y la Ruptura: el amanecer decisivo. Chile deja de imaginar el quiebre y finalmente lo ve llegar con toda su fuerza."
+  />
+
+  <style>
+    :root{
+      --bg:#05080f;
+      --bg2:#0b1220;
+      --card:rgba(12,18,32,0.82);
+      --line:rgba(255,255,255,0.08);
+      --line-strong:rgba(73,182,255,.24);
+      --text:#f5f8ff;
+      --muted:#aebad1;
+      --muted-2:#7f90ae;
+      --blue:#0A6CFF;
+      --blue2:#49b6ff;
+      --blue-soft:rgba(73,182,255,.14);
+      --shadow:0 24px 60px rgba(0,0,0,.45);
+      --radius:22px;
+      --max:860px;
+    }
+
+    *{
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      color:var(--text);
+      background:#04070d;
+      line-height:1.8;
+      position:relative;
+      overflow-x:hidden;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    #stars{
+      position:fixed;
+      inset:0;
+      width:100%;
+      height:100%;
+      z-index:0;
+      background:
+        radial-gradient(circle at top left, rgba(10,108,255,.12), transparent 24%),
+        radial-gradient(circle at top right, rgba(73,182,255,.08), transparent 20%),
+        linear-gradient(180deg, #04070d 0%, #08101c 45%, #05080f 100%);
+    }
+
+    .page{
+      min-height:100vh;
+      position:relative;
+      z-index:1;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:30;
+      backdrop-filter:blur(14px);
+      background:rgba(5,8,15,.72);
+      border-bottom:1px solid var(--line);
+    }
+
+    .topbar-inner{
+      max-width:1100px;
+      margin:0 auto;
+      padding:16px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .brand-badge{
+      width:38px;
+      height:38px;
+      border-radius:12px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg, rgba(10,108,255,.22), rgba(73,182,255,.08));
+      border:1px solid var(--line-strong);
+      box-shadow:0 0 24px rgba(10,108,255,.12);
+      font-weight:700;
+      color:var(--blue2);
+      flex:0 0 auto;
+    }
+
+    .brand-title{
+      font-size:14px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:#dfe9ff;
+      margin:0 0 2px;
+    }
+
+    .brand-sub{
+      font-size:12px;
+      color:var(--muted-2);
+      margin:0;
+    }
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height:44px;
+      padding:0 18px;
+      border-radius:12px;
+      font-size:14px;
+      font-weight:700;
+      transition:transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+      border:1px solid transparent;
+      cursor:pointer;
+    }
+
+    .btn:hover{
+      transform:translateY(-1px);
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg, var(--blue) 0%, #0d7eff 100%);
+      color:white;
+      box-shadow:0 12px 28px rgba(10,108,255,.28);
+    }
+
+    .btn-primary:hover{
+      background:linear-gradient(135deg, #0c62e0 0%, #0a6cef 100%);
+    }
+
+    .btn-ghost{
+      background:rgba(255,255,255,.03);
+      border-color:var(--line);
+      color:#dbe8ff;
+    }
+
+    .btn-ghost:hover{
+      background:rgba(255,255,255,.06);
+      border-color:var(--line-strong);
+    }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      border-bottom:1px solid rgba(255,255,255,.04);
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(180deg, rgba(5,8,15,.58) 0%, rgba(5,8,15,.86) 80%, rgba(5,8,15,1) 100%),
+        url("../assets/allende-portada.jpg");
+      background-size:cover;
+      background-position:center;
+      opacity:.28;
+      filter:saturate(.9) contrast(1.03);
+    }
+
+    .hero-inner{
+      position:relative;
+      z-index:1;
+      max-width:1100px;
+      margin:0 auto;
+      padding:56px 20px 34px;
+    }
+
+    .crumb{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.06);
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:18px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:28px;
+      align-items:end;
+    }
+
+    .hero-copy h1{
+      margin:0 0 12px;
+      font-size:clamp(34px, 6vw, 64px);
+      line-height:1.02;
+      letter-spacing:.02em;
+      color:white;
+      text-shadow:0 0 22px rgba(10,108,255,.18);
+    }
+
+    .eyebrow{
+      margin:0 0 14px;
+      color:var(--blue2);
+      font-weight:700;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      font-size:12px;
+    }
+
+    .hero-copy p{
+      margin:0;
+      max-width:700px;
+      color:#d4def3;
+      font-size:18px;
+      line-height:1.75;
+    }
+
+    .hero-side{
+      display:flex;
+      justify-content:flex-end;
+    }
+
+    .chapter-card{
+      width:min(100%, 360px);
+      background:linear-gradient(180deg, rgba(12,18,32,.75), rgba(9,13,24,.88));
+      border:1px solid rgba(73,182,255,.18);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:22px;
+      backdrop-filter:blur(16px);
+    }
+
+    .chapter-label{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 12px;
+      border-radius:999px;
+      background:var(--blue-soft);
+      border:1px solid rgba(73,182,255,.18);
+      color:var(--blue2);
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:14px;
+    }
+
+    .chapter-card h2{
+      margin:0 0 10px;
+      font-size:24px;
+      line-height:1.15;
+      color:white;
+    }
+
+    .chapter-card p{
+      margin:0 0 18px;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.7;
+    }
+
+    .meta{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .meta-item{
+      padding:12px;
+      border-radius:14px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.05);
+    }
+
+    .meta-k{
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--muted-2);
+      margin:0 0 6px;
+    }
+
+    .meta-v{
+      margin:0;
+      font-size:13px;
+      color:#e7efff;
+      font-weight:700;
+    }
+
+    .content-wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:28px 20px 80px;
+    }
+
+    .reader{
+      position:relative;
+      background:linear-gradient(180deg, rgba(11,18,32,.58), rgba(8,13,24,.72));
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:22px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      backdrop-filter:blur(4px);
+    }
+
+    .reader-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:18px 22px;
+      border-bottom:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+    }
+
+    .reader-top-left h3{
+      margin:0 0 4px;
+      font-size:18px;
+      color:#edf3ff;
+    }
+
+    .reader-top-left p{
+      margin:0;
+      color:var(--muted-2);
+      font-size:13px;
+    }
+
+    .reader-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:34px;
+      padding:0 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.06);
+      color:#cfe0ff;
+      font-size:12px;
+      font-weight:700;
+      white-space:nowrap;
+    }
+
+    .reader-body{
+      padding:34px 26px 18px;
+      position:relative;
+    }
+
+    .story{
+      max-width:720px;
+      margin:0 auto;
+      position:relative;
+      z-index:2;
+    }
+
+    .lead{
+      font-size:19px;
+      line-height:1.9;
+      color:#ecf3ff;
+      margin:0 0 26px;
+      padding:18px 18px 18px 20px;
+      border-left:3px solid rgba(73,182,255,.44);
+      background:rgba(9,18,35,.68);
+      border-radius:0 14px 14px 0;
+      backdrop-filter:blur(4px);
+    }
+
+    .story p{
+      margin:0 0 22px;
+      color:#e4ecfb;
+      font-size:18px;
+      line-height:1.95;
+      letter-spacing:.01em;
+      text-shadow:0 1px 2px rgba(0,0,0,.4);
+    }
+
+    .story p strong{
+      color:#ffffff;
+      font-weight:700;
+    }
+
+    .story .quote{
+      margin:34px 0;
+      padding:20px 22px;
+      border-radius:18px;
+      background:linear-gradient(180deg, rgba(10,108,255,.12), rgba(73,182,255,.06));
+      border:1px solid rgba(73,182,255,.14);
+      color:#edf5ff;
+      font-size:19px;
+      line-height:1.7;
+      text-align:center;
+      box-shadow:0 12px 30px rgba(0,0,0,.18);
+      backdrop-filter:blur(4px);
+    }
+
+    .story .divider{
+      width:86px;
+      height:1px;
+      background:linear-gradient(90deg, transparent, rgba(73,182,255,.6), transparent);
+      margin:34px auto;
+    }
+
+    .reader-bottom{
+      padding:24px 26px 28px;
+      border-top:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .reader-note{
+      color:var(--muted-2);
+      font-size:13px;
+      margin:0;
+    }
+
+    .nav-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    @media (max-width: 900px){
+      .hero-grid{
+        grid-template-columns:1fr;
+      }
+
+      .hero-side{
+        justify-content:flex-start;
+      }
+
+      .chapter-card{
+        width:100%;
+        max-width:unset;
+      }
+    }
+
+    @media (max-width: 640px){
+      .topbar-inner{
+        padding:14px 14px;
+      }
+
+      .hero-inner{
+        padding:34px 14px 22px;
+      }
+
+      .content-wrap{
+        padding:20px 14px 60px;
+      }
+
+      .reader-top,
+      .reader-body,
+      .reader-bottom{
+        padding-left:16px;
+        padding-right:16px;
+      }
+
+      .reader-body{
+        padding-top:24px;
+      }
+
+      .hero-copy p,
+      .story p,
+      .lead{
+        font-size:16px;
+      }
+
+      .meta{
+        grid-template-columns:1fr;
+      }
+
+      .top-actions{
+        width:100%;
+      }
+
+      .btn{
+        width:100%;
+      }
+
+      .nav-actions{
+        width:100%;
+      }
+
+      .nav-actions .btn{
+        flex:1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="stars"></canvas>
+
+  <div class="page">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <div class="brand-badge">N</div>
+          <div>
+            <p class="brand-title">La Vía y la Ruptura</p>
+            <p class="brand-sub">Drama histórico chileno</p>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <a href="capitulo9.html" class="btn btn-ghost">← Capítulo anterior</a>
+          <a href="capitulo11.html" class="btn btn-primary">Siguiente capítulo →</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="crumb">Inicio / Corrupción y poder / Capítulo 10</div>
+
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Capítulo 10</p>
+            <h1>El amanecer del golpe</h1>
+            <p>
+              La espera termina. Chile deja de imaginar el quiebre y finalmente lo ve llegar con toda su fuerza. El país despierta dentro de una mañana que ya no pertenece a la normalidad, sino a la historia.
+            </p>
+          </div>
+
+          <div class="hero-side">
+            <aside class="chapter-card">
+              <div class="chapter-label">La hora cayó</div>
+              <h2>Cuando la historia entra por la puerta</h2>
+              <p>
+                Las radios cambian de tono, la ciudad se transforma y la República entera siente el impacto del momento que muchos temían y otros esperaban. El golpe ya no es rumor: es presencia total.
+              </p>
+
+              <div class="meta">
+                <div class="meta-item">
+                  <p class="meta-k">Estado</p>
+                  <p class="meta-v">Gratis</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Género</p>
+                  <p class="meta-v">Histórico</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Temporada</p>
+                  <p class="meta-v">10 de 17</p>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="content-wrap">
+      <article class="reader">
+        <div class="reader-top">
+          <div class="reader-top-left">
+            <h3>Capítulo 10: El amanecer del golpe</h3>
+            <p>Lectura gratuita · La mañana en que Chile dejó de ser el mismo</p>
+          </div>
+          <div class="reader-badge">Acceso abierto</div>
+        </div>
+
+        <div class="reader-body">
+          <div class="story">
+            <p class="lead">
+              Y entonces llegó la mañana.
+              No como llegan las mañanas comunes.
+              No con la lentitud tranquila de los días repetidos.
+              Llegó como una ruptura.
+              Como una puerta arrancada de sus goznes.
+              Como un sonido que cambia para siempre la forma en que un país recuerda la luz.
+              Chile despertó, pero ya no despertó dentro de la normalidad.
+              Despertó dentro del golpe.
+            </p>
+
+            <p>
+              La radio fue una de las primeras en saberlo.
+            </p>
+
+            <p>
+              O, más precisamente, en decirlo.
+            </p>
+
+            <p>
+              El tono cambió.
+            </p>
+
+            <p>
+              La respiración cambió.
+            </p>
+
+            <p>
+              La voz humana empezó a llegar con ese temblor que no siempre viene del miedo,
+              sino de la conciencia exacta de que se está entrando en una zona histórica de la que ya no se vuelve igual.
+            </p>
+
+            <p>
+              En miles de casas, el mismo gesto se repitió:
+              alguien subió el volumen.
+            </p>
+
+            <p>
+              Alguien dejó quieta la taza en la mesa.
+            </p>
+
+            <p>
+              Alguien miró a otro sin saber todavía qué frase usar.
+            </p>
+
+            <p><strong>El país entendió antes de comprender.</strong></p>
+
+            <div class="quote">Hay mañanas en que la historia no toca la puerta. La derriba.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Santiago dejó de parecer una ciudad corriente.
+            </p>
+
+            <p>
+              Sus calles seguían ahí.
+            </p>
+
+            <p>
+              Sus edificios también.
+            </p>
+
+            <p>
+              Pero el significado de todo había cambiado en cuestión de minutos.
+            </p>
+
+            <p>
+              Ya no se trataba de salir o no salir.
+            </p>
+
+            <p>
+              Ya no se trataba de una jornada difícil.
+            </p>
+
+            <p>
+              Se trataba de entender qué parte del país estaba cayendo en ese mismo instante,
+              incluso si todavía no se veía completa la forma de la caída.
+            </p>
+
+            <p>
+              Había gente que corrió a la radio.
+            </p>
+
+            <p>
+              Gente que llamó a familiares.
+            </p>
+
+            <p>
+              Gente que salió a la ventana buscando una señal visible.
+            </p>
+
+            <p>
+              Gente que entendió de inmediato que la señal visible ya no era necesaria.
+            </p>
+
+            <p>
+              Bastaba con el tono del aire.
+            </p>
+
+            <div class="quote">La ciudad seguía de pie, pero ya estaba tomada por una verdad distinta: la fuerza había entrado en la escena nacional sin pedir permiso.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Allende estaba allí.
+            </p>
+
+            <p>
+              Y esa sola idea sostuvo por unos minutos el eje moral de millones.
+            </p>
+
+            <p>
+              No importaba todavía el detalle exacto de cada movimiento.
+            </p>
+
+            <p>
+              Importaba que seguía allí.
+            </p>
+
+            <p>
+              En La Moneda.
+            </p>
+
+            <p>
+              En el centro mismo del país.
+            </p>
+
+            <p>
+              En el punto donde la historia chilena se preparaba para decidir si su último gran acto democrático sería una rendición o una dignidad.
+            </p>
+
+            <p>
+              El peso simbólico de ese momento era inmenso.
+            </p>
+
+            <p>
+              Ya no se trataba solo de un presidente defendiendo su cargo.
+            </p>
+
+            <p>
+              Era la República mirándose a sí misma a través de un hombre sitiado.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              En las casas populares, el miedo llegó con la misma velocidad que la claridad.
+            </p>
+
+            <p>
+              No hizo falta que nadie explicara demasiado.
+            </p>
+
+            <p>
+              Había una inteligencia del cuerpo colectivo que ya sabía leer el quiebre.
+            </p>
+
+            <p>
+              Algunas madres llamaron a sus hijos.
+            </p>
+
+            <p>
+              Algunos padres salieron y volvieron a entrar de inmediato.
+            </p>
+
+            <p>
+              Algunos jóvenes sintieron, con una lucidez insoportable, que estaban viviendo el tipo de día que después dividiría la vida en dos partes:
+              antes y después.
+            </p>
+
+            <p>
+              Ese es uno de los golpes más brutales de la historia:
+              cuando obliga a una generación a comprender de golpe que su país acaba de fracturarse delante de sus ojos.
+            </p>
+
+            <div class="quote">Hay mañanas que no solo cambian un gobierno. Reordenan para siempre la memoria de quienes las sobreviven.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Los sectores que habían esperado este momento también despertaron.
+            </p>
+
+            <p>
+              Para algunos fue alivio.
+            </p>
+
+            <p>
+              Para otros, confirmación.
+            </p>
+
+            <p>
+              Para otros, la sensación de que finalmente se estaba ejecutando aquello que durante tanto tiempo se había preparado, justificado y acercado con paciencia.
+            </p>
+
+            <p>
+              Pero incluso allí, entre quienes veían en el golpe una salida,
+              había algo monumental en el momento.
+            </p>
+
+            <p>
+              Porque el país entero entendía, de una forma o de otra, que la línea había sido cruzada.
+            </p>
+
+            <p>
+              Y una vez cruzada, ya no habría regreso simple.
+            </p>
+
+            <p><strong>El golpe no era solo una operación. Era una reescritura violenta del sentido nacional.</strong></p>
+
+            <div class="divider"></div>
+
+            <p>
+              Las radios, los comunicados, las órdenes, las voces quebradas y las frases secas empezaron a tejer la nueva atmósfera.
+            </p>
+
+            <p>
+              El lenguaje cambió.
+            </p>
+
+            <p>
+              Ya no hablaba la política de siempre.
+            </p>
+
+            <p>
+              Hablaba la fuerza.
+            </p>
+
+            <p>
+              Hablaba la imposición.
+            </p>
+
+            <p>
+              Hablaba ese idioma frío que intenta presentarse como necesidad histórica mientras en realidad comienza a romper, una por una, las garantías que sostenían a una sociedad.
+            </p>
+
+            <p>
+              El golpe trae también su gramática:
+              órdenes,
+              advertencias,
+              ultimátums,
+              silencios forzados.
+            </p>
+
+            <p>
+              Chile empezó a escucharla esa misma mañana.
+            </p>
+
+            <div class="quote">La democracia discute. El golpe ordena. Y en esa diferencia cabe todo el horror de una nación que deja de hablarse a sí misma para empezar a obedecerse por miedo.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              La Moneda se convirtió en el corazón trágico del país.
+            </p>
+
+            <p>
+              No solo por ser sede de gobierno.
+            </p>
+
+            <p>
+              Sino porque allí se concentró, como en un símbolo de piedra y fuego, la pregunta completa de Chile:
+              si el poder popular podía terminar de rodillas
+              o si al menos le quedaría el gesto de no entregarse dócilmente a quienes venían a clausurarlo por la fuerza.
+            </p>
+
+            <p>
+              Cada minuto adquiría densidad de leyenda.
+            </p>
+
+            <p>
+              Cada decisión parecía más grande que la vida individual de los presentes.
+            </p>
+
+            <p>
+              Eso es lo que ocurre cuando un edificio deja de ser edificio y se transforma en escenario moral de una nación.
+            </p>
+
+            <p>
+              La Moneda ya no era solo un lugar.
+            </p>
+
+            <p>
+              Era la última forma visible de un país que intentaba defenderse de su propia noche.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              Afuera, el pueblo escuchaba, imaginaba, temía.
+            </p>
+
+            <p>
+              Muchos no sabían aún todo lo que ocurría.
+            </p>
+
+            <p>
+              Pero entendían lo suficiente:
+              los militares habían tomado la escena.
+            </p>
+
+            <p>
+              El conflicto había salido del terreno de la crisis y había entrado al de la ruptura definitiva.
+            </p>
+
+            <p>
+              Ya no bastaba la prudencia.
+            </p>
+
+            <p>
+              Ya no bastaban los procedimientos.
+            </p>
+
+            <p>
+              Ya no bastaban los cálculos que durante semanas intentaron postergar el abismo.
+            </p>
+
+            <p>
+              El abismo estaba abierto.
+            </p>
+
+            <p>
+              Y el país entero había sido empujado a mirarlo.
+            </p>
+
+            <div class="quote">El golpe no solo destruye instituciones. Obliga a una sociedad entera a ver de pronto hasta dónde puede llegar el poder cuando decide dejar de disimular.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              La épica y la tragedia se abrazaron en esa mañana.
+            </p>
+
+            <p>
+              Porque había coraje.
+            </p>
+
+            <p>
+              Había lealtad.
+            </p>
+
+            <p>
+              Había una dignidad que no se dejó borrar del todo ni siquiera bajo la presión más brutal.
+            </p>
+
+            <p>
+              Pero también había superioridad de fuerza,
+              maquinaria,
+              planificación,
+              voluntad de aplastar.
+            </p>
+
+            <p>
+              Esa combinación hace de ciertos días algo insoportable de mirar y, sin embargo, imposible de olvidar.
+            </p>
+
+            <p>
+              No fue solo un golpe de Estado.
+            </p>
+
+            <p>
+              Fue la colisión entre una legitimidad popular y una decisión armada de terminar con ella.
+            </p>
+
+            <p>
+              Fue el momento en que Chile dejó de discutir su futuro
+              y empezó a verlo arrebatarse a sí mismo.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              En miles de personas quedó grabada para siempre la misma sensación:
+              la de haber escuchado cómo el país cambiaba de piel en tiempo real.
+            </p>
+
+            <p>
+              No por evolución.
+            </p>
+
+            <p>
+              Por violencia.
+            </p>
+
+            <p>
+              No por acuerdo.
+            </p>
+
+            <p>
+              Por imposición.
+            </p>
+
+            <p>
+              No porque todos hubiesen dejado de creer en la democracia,
+              sino porque una parte del poder decidió que la democracia solo valía mientras garantizara su dominio.
+            </p>
+
+            <p><strong>Ese fue el verdadero escándalo histórico de la mañana: no solo el uso de la fuerza, sino la decisión de declararla más legítima que la voluntad popular.</strong></p>
+
+            <div class="quote">Un golpe no cae del cielo. Pero cuando finalmente cae, lo hace con la violencia simbólica de una tormenta largamente fabricada.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              La mañana avanzó y con ella se fue cerrando un mundo.
+            </p>
+
+            <p>
+              La vieja República, con todos sus conflictos, sus límites y sus promesas, empezaba a ser arrinconada por otro orden.
+            </p>
+
+            <p>
+              Uno que hablaba de salvación mientras entraba destruyendo.
+            </p>
+
+            <p>
+              Uno que se presentaría como restauración mientras sembraba miedo.
+            </p>
+
+            <p>
+              Uno que buscaría legitimarse no en la voluntad, sino en la fuerza y en el relato posterior de la fuerza.
+            </p>
+
+            <p>
+              Chile no solo veía un golpe.
+            </p>
+
+            <p>
+              Veía nacer la larga sombra que caerá después sobre las décadas.
+            </p>
+
+            <p>
+              Una sombra hecha de muerte, silencio, miedo, censura y memoria herida.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              Esa mañana, una madre abrazó a sus hijos con una fuerza distinta.
+            </p>
+
+            <p>
+              Un trabajador se quedó inmóvil frente a la radio sin terminar de vestirse.
+            </p>
+
+            <p>
+              Un joven comprendió que la historia que leerían sus hijos no sería igual a la que él había imaginado.
+            </p>
+
+            <p>
+              Y un país entero, incluso dividido, supo en el fondo que estaba asistiendo a un corte que no se mediría en horas, sino en generaciones.
+            </p>
+
+            <p>
+              Porque hay días que no terminan cuando cae la noche.
+            </p>
+
+            <p>
+              Hay días que continúan viviendo durante décadas en la memoria de una nación.
+            </p>
+
+            <p>
+              El 11 de septiembre chileno fue uno de esos días.
+            </p>
+
+            <p><strong>El amanecer del golpe no solo trajo una jornada nueva. Trajo el principio de una larga oscuridad.</strong></p>
+          </div>
+        </div>
+
+        <div class="reader-bottom">
+          <p class="reader-note">
+            Continúa al capítulo 11 para entrar en la caída de La Moneda, la resistencia final y el instante en que la dignidad queda sola frente a la fuerza total.
+          </p>
+
+          <div class="nav-actions">
+            <a href="capitulo9.html" class="btn btn-ghost">← Capítulo 9</a>
+            <a href="capitulo11.html" class="btn btn-primary">Leer capítulo 11 →</a>
+          </div>
+        </div>
+      </article>
+    </main>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("stars");
+    const ctx = canvas.getContext("2d");
+    let stars = [];
+
+    function resize(){
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      createStars();
+    }
+
+    function createStars(){
+      stars = [];
+      const amount = Math.floor((canvas.width * canvas.height) / 14000);
+      for(let i = 0; i < amount; i++){
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.6 + 0.3,
+          speed: Math.random() * 0.35 + 0.08,
+          alpha: Math.random() * 0.7 + 0.2
+        });
+      }
+    }
+
+    function animate(){
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for(const s of stars){
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        s.y += s.speed;
+
+        if(s.y > canvas.height){
+          s.y = -2;
+          s.x = Math.random() * canvas.width;
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener("resize", resize);
+    resize();
+    animate();
+  </script>
+</body>
+</html>
