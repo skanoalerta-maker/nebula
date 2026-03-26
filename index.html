@@ -1472,162 +1472,148 @@
 
   <script>
     const fallbackNovelas = [
-      {
-        id: "codigo-nebula",
-        titulo: "Código Nébula",
-        genero: "futurista",
-        portada: "assets/covers/nebula.jpg",
-        descripcion:
-          "Una historia futurista donde nada es lo que parece y cada capítulo abre una nueva grieta en el sistema.",
-        ruta: "novelas/index.html?id=codigo-nebula",
-        carpeta: "codigo-nebula",
-        temporada: "Temporada 1",
-        visitas: 1542,
-        gratis: 3,
-        destacada: true
-      },
-      {
-        id: "codigo-nebula-t2",
-        titulo: "Código Nébula: Temporada 2",
-        genero: "futurista",
-        portada: "assets/covers/temporada2-cover.jpg",
-        descripcion:
-          "La historia continúa. El sistema ya no puede ocultar la verdad y cada capítulo empuja a sus protagonistas hacia un conflicto mucho mayor.",
-        ruta: "novelas/index.html?id=codigo-nebula",
-        carpeta: "codigo-nebula",
-        temporada: "Temporada 2",
-        visitas: 320,
-        gratis: 3,
-        destacada: false
-      },
-      {
-        id: "no-debi-enamorarme",
-        titulo: "No debí enamorarme de ti",
-        genero: "romance",
-        portada: "assets/covers/no-debi-enamorarme.jpg",
-        descripcion:
-          "Una historia intensa sobre deseo, decisiones equivocadas y emociones que arden demasiado.",
-        ruta: "novelas/index.html?id=no-debi-enamorarme",
-        carpeta: "no-debi-enamorarme",
-        temporada: "Temporada 1",
-        visitas: 2984,
-        gratis: 3,
-        destacada: false
-      },
-      {
-        id: "no-debi-enamorarme-t2",
-        titulo: "No debí enamorarme de ti: Temporada 2",
-        genero: "romance",
-        portada: "assets/covers/temporada2-cover.jpg",
-        descripcion:
-          "Después del beso, el problema ya no es lo que pasó, sino todo lo que Martín todavía no ha dicho. La segunda temporada empieza donde la ambigüedad deja de proteger.",
-        ruta: "novelas/index.html?id=no-debi-enamorarme",
-        carpeta: "no-debi-enamorarme",
-        temporada: "Temporada 2",
-        visitas: 0,
-        gratis: 3,
-        destacada: false
-      },
-      {
-        id: "despues-de-tu-adios",
-        titulo: "Después de tu adiós",
-        genero: "romance",
-        portada: "assets/covers/despues-de-tu-adios.jpg",
-        descripcion:
-          "Una novela emocional sobre recuerdos, ausencia y todo lo que sigue vivo después de una despedida.",
-        ruta: "novelas/index.html?id=despues-de-tu-adios",
-        carpeta: "despues-de-tu-adios",
-        temporada: "Temporada 1",
-        visitas: 1187,
-        gratis: 3,
-        destacada: false
-      },
-      {
-        id: "bajo-la-misma-lluvia",
-        titulo: "Bajo la misma lluvia",
-        genero: "romance",
-        portada: "assets/covers/bajo-la-misma-lluvia.jpg",
-        descripcion:
-          "Dos vidas marcadas por heridas distintas vuelven a cruzarse en el peor momento posible. Bajo la lluvia, lo que parecía casual empieza a sentirse inevitable.",
-        ruta: "novelas/index.html?id=bajo-la-misma-lluvia",
-        carpeta: "bajo-la-misma-lluvia",
-        temporada: "Temporada 1",
-        visitas: 0,
-        gratis: 3,
-        destacada: false
-      },
-      {
-        id: "la-ultima-conexion",
-        titulo: "La última conexión",
-        genero: "terror",
-        portada: "assets/covers/la-ultima-conexion.jpg",
-        descripcion:
-          "A las 02:17 de la madrugada, Daniel recibe mensajes desde su propio número. Lo peor no es quién escribe, sino que esos mensajes saben exactamente lo que está ocurriendo dentro de su habitación.",
-        ruta: "novelas/index.html?id=la-ultima-conexion",
-        carpeta: "la-ultima-conexion",
-        temporada: "Temporada 1",
-        visitas: 842,
-        gratis: 3,
-        destacada: false
-      },
-      {
-        id: "ya-habias-estado-ahi",
-        titulo: "Ya habías estado ahí",
-        genero: "terror",
-        portada: "assets/covers/ya-habias-estado-ahi.jpg",
-        descripcion:
-          "Volver a casa nunca volvió a sentirse normal. Un cajón abierto, una puerta distinta y objetos fuera de lugar son solo el principio.",
-        ruta: "novelas/index.html?id=ya-habias-estado-ahi",
-        carpeta: "ya-habias-estado-ahi",
-        temporada: "Temporada 1",
-        visitas: 0,
-        gratis: 3,
-        destacada: false
-      },
-      {
-        id: "golpe-de-estado",
-        titulo: "Golpe de Estado",
-        genero: "historia",
-        portada: "assets/covers/golpe_estado_nebula.png",
-        descripcion:
-          "Una historia política, social y humana sobre la fractura de un país. Poder, miedo, convicción y ruptura en un capítulo que cambia el destino de todos.",
-        ruta: "novelas/index.html?id=golpe-de-estado",
-        carpeta: "golpe-de-estado",
-        temporada: "Temporada 1",
-        visitas: 0,
-        gratis: 3,
-        destacada: false
-      },
-      {
-        id: "pinochet",
-        titulo: "Pinochet",
-        genero: "historia",
-        portada: "assets/covers/pinochet_nebula_portada.png",
-        descripcion:
-          "Una novela histórica intensa sobre poder, control, decisiones militares y el impacto humano de un periodo que marcó para siempre la historia de Chile.",
-        ruta: "novelas/index.html?id=pinochet",
-        carpeta: "pinochet",
-        temporada: "Temporada 1",
-        visitas: 0,
-        gratis: 3,
-        destacada: false
-      },
-      {
-        id: "allende",
-        titulo: "Allende",
-        genero: "historia",
-        portada: "assets/covers/allende_portada_nebula.png",
-        descripcion:
-          "Una historia política y humana sobre liderazgo, convicción y uno de los periodos más decisivos de la historia de Chile.",
-        ruta: "novelas/index.html?id=allende",
-        carpeta: "allende",
-        temporada: "Temporada 1",
-        visitas: 0,
-        gratis: 3,
-        destacada: false
-      }
-    ];
-
+      const fallbackNovelas = [
+  {
+    id: "codigo-nebula",
+    titulo: "Código Nébula",
+    genero: "futurista",
+    portada: "assets/covers/nebula.jpg",
+    descripcion:
+      "Una historia futurista donde nada es lo que parece y cada capítulo abre una nueva grieta en el sistema.",
+    ruta: "novelas/index.html?id=codigo-nebula",
+    carpeta: "codigo-nebula",
+    temporada: "Temporada 1",
+    visitas: 1542,
+    gratis: 3,
+    destacada: true
+  },
+  {
+    id: "codigo-nebula-t2",
+    titulo: "Código Nébula: Temporada 2",
+    genero: "futurista",
+    portada: "assets/covers/temporada2-cover.jpg",
+    descripcion:
+      "La historia continúa.",
+    ruta: "novelas/index.html?id=codigo-nebula",
+    carpeta: "codigo-nebula",
+    temporada: "Temporada 2",
+    visitas: 320,
+    gratis: 3,
+    destacada: false
+  },
+  {
+    id: "no-debi-enamorarme",
+    titulo: "No debí enamorarme de ti",
+    genero: "romance",
+    portada: "assets/covers/no-debi-enamorarme.jpg",
+    descripcion:
+      "Una historia intensa sobre deseo y decisiones equivocadas.",
+    ruta: "novelas/index.html?id=no-debi-enamorarme",
+    carpeta: "no-debi-enamorarme",
+    temporada: "Temporada 1",
+    visitas: 2984,
+    gratis: 3,
+    destacada: false
+  },
+  {
+    id: "no-debi-enamorarme-t2",
+    titulo: "No debí enamorarme de ti: Temporada 2",
+    genero: "romance",
+    portada: "assets/covers/temporada2-cover.jpg",
+    descripcion:
+      "La historia continúa con nuevas consecuencias.",
+    ruta: "novelas/index.html?id=no-debi-enamorarme",
+    carpeta: "no-debi-enamorarme",
+    temporada: "Temporada 2",
+    visitas: 0,
+    gratis: 3,
+    destacada: false
+  },
+  {
+    id: "despues-de-tu-adios",
+    titulo: "Después de tu adiós",
+    genero: "romance",
+    portada: "assets/covers/despues-de-tu-adios.jpg",
+    descripcion:
+      "Una novela emocional sobre recuerdos y ausencia.",
+    ruta: "novelas/index.html?id=despues-de-tu-adios",
+    carpeta: "despues-de-tu-adios",
+    temporada: "Temporada 1",
+    visitas: 1187,
+    gratis: 3,
+    destacada: false
+  },
+  {
+    id: "bajo-la-misma-lluvia",
+    titulo: "Bajo la misma lluvia",
+    genero: "romance",
+    portada: "assets/covers/bajo-la-misma-lluvia.jpg",
+    descripcion:
+      "Dos vidas vuelven a cruzarse en el peor momento.",
+    ruta: "novelas/index.html?id=bajo-la-misma-lluvia",
+    carpeta: "bajo-la-misma-lluvia",
+    temporada: "Temporada 1",
+    visitas: 0,
+    gratis: 3,
+    destacada: false
+  },
+  {
+    id: "la-ultima-conexion",
+    titulo: "La última conexión",
+    genero: "terror",
+    portada: "assets/covers/la-ultima-conexion.jpg",
+    descripcion:
+      "Mensajes desde su propio número a las 02:17.",
+    ruta: "novelas/index.html?id=la-ultima-conexion",
+    carpeta: "la-ultima-conexion",
+    temporada: "Temporada 1",
+    visitas: 842,
+    gratis: 3,
+    destacada: false
+  },
+  {
+    id: "ya-habias-estado-ahi",
+    titulo: "Ya habías estado ahí",
+    genero: "terror",
+    portada: "assets/covers/ya-habias-estado-ahi.jpg",
+    descripcion:
+      "Volver a casa nunca volvió a sentirse normal.",
+    ruta: "novelas/index.html?id=ya-habias-estado-ahi",
+    carpeta: "ya-habias-estado-ahi",
+    temporada: "Temporada 1",
+    visitas: 0,
+    gratis: 3,
+    destacada: false
+  },
+  {
+    id: "golpe-de-estado",
+    titulo: "Golpe de Estado",
+    genero: "historia",
+    portada: "assets/covers/golpe_estado_nebula.png",
+    descripcion:
+      "Una historia política sobre la fractura de un país.",
+    ruta: "novelas/index.html?id=golpe-de-estado",
+    carpeta: "golpe-de-estado",
+    temporada: "Temporada 1",
+    visitas: 0,
+    gratis: 3,
+    destacada: false
+  },
+  {
+    id: "pinochet",
+    titulo: "Pinochet",
+    genero: "historia",
+    portada: "assets/covers/pinochet_nebula_portada.png",
+    descripcion:
+      "Una novela histórica sobre poder y decisiones militares.",
+    ruta: "novelas/index.html?id=pinochet",
+    carpeta: "pinochet",
+    temporada: "Temporada 1",
+    visitas: 0,
+    gratis: 3,
+    destacada: false
+  }
+];
     let novelas = [];
     let filtradas = [];
 
