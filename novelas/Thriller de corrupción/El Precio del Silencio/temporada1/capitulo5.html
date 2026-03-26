@@ -1,0 +1,1720 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capítulo 5 | El Precio del Silencio</title>
+  <meta
+    name="description"
+    content="Capítulo 5 de El Precio del Silencio: La periodista que no firmó."
+  />
+
+  <style>
+    :root{
+      --bg:#05080f;
+      --bg2:#0b1220;
+      --card:rgba(12,18,32,0.82);
+      --line:rgba(255,255,255,0.08);
+      --line-strong:rgba(73,182,255,.24);
+      --text:#f5f8ff;
+      --muted:#aebad1;
+      --muted-2:#7f90ae;
+      --blue:#0A6CFF;
+      --blue2:#49b6ff;
+      --blue-soft:rgba(73,182,255,.14);
+      --shadow:0 24px 60px rgba(0,0,0,.45);
+      --radius:22px;
+      --max:860px;
+    }
+
+    *{
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      color:var(--text);
+      background:#04070d;
+      line-height:1.8;
+      position:relative;
+      overflow-x:hidden;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    #stars{
+      position:fixed;
+      inset:0;
+      width:100%;
+      height:100%;
+      z-index:0;
+      background:
+        radial-gradient(circle at top left, rgba(10,108,255,.12), transparent 24%),
+        radial-gradient(circle at top right, rgba(73,182,255,.08), transparent 20%),
+        linear-gradient(180deg, #04070d 0%, #08101c 45%, #05080f 100%);
+    }
+
+    .page{
+      min-height:100vh;
+      position:relative;
+      z-index:1;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:30;
+      backdrop-filter:blur(14px);
+      background:rgba(5,8,15,.72);
+      border-bottom:1px solid var(--line);
+    }
+
+    .topbar-inner{
+      max-width:1100px;
+      margin:0 auto;
+      padding:16px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .brand-badge{
+      width:38px;
+      height:38px;
+      border-radius:12px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg, rgba(10,108,255,.22), rgba(73,182,255,.08));
+      border:1px solid var(--line-strong);
+      box-shadow:0 0 24px rgba(10,108,255,.12);
+      font-weight:700;
+      color:var(--blue2);
+      flex:0 0 auto;
+    }
+
+    .brand-title{
+      font-size:14px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:#dfe9ff;
+      margin:0 0 2px;
+    }
+
+    .brand-sub{
+      font-size:12px;
+      color:var(--muted-2);
+      margin:0;
+    }
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height:44px;
+      padding:0 18px;
+      border-radius:12px;
+      font-size:14px;
+      font-weight:700;
+      transition:transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+      border:1px solid transparent;
+      cursor:pointer;
+    }
+
+    .btn:hover{
+      transform:translateY(-1px);
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg, var(--blue) 0%, #0d7eff 100%);
+      color:white;
+      box-shadow:0 12px 28px rgba(10,108,255,.28);
+    }
+
+    .btn-primary:hover{
+      background:linear-gradient(135deg, #0c62e0 0%, #0a6cef 100%);
+    }
+
+    .btn-ghost{
+      background:rgba(255,255,255,.03);
+      border-color:var(--line);
+      color:#dbe8ff;
+    }
+
+    .btn-ghost:hover{
+      background:rgba(255,255,255,.06);
+      border-color:var(--line-strong);
+    }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      border-bottom:1px solid rgba(255,255,255,.04);
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(180deg, rgba(5,8,15,.58) 0%, rgba(5,8,15,.86) 80%, rgba(5,8,15,1) 100%),
+        url("../assets/temporada1.jpg");
+      background-size:cover;
+      background-position:center;
+      opacity:.28;
+      filter:saturate(.9) contrast(1.03);
+    }
+
+    .hero-inner{
+      position:relative;
+      z-index:1;
+      max-width:1100px;
+      margin:0 auto;
+      padding:56px 20px 34px;
+    }
+
+    .crumb{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.06);
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:18px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:28px;
+      align-items:end;
+    }
+
+    .hero-copy h1{
+      margin:0 0 12px;
+      font-size:clamp(34px, 6vw, 64px);
+      line-height:1.02;
+      letter-spacing:.02em;
+      color:white;
+      text-shadow:0 0 22px rgba(10,108,255,.18);
+    }
+
+    .eyebrow{
+      margin:0 0 14px;
+      color:var(--blue2);
+      font-weight:700;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      font-size:12px;
+    }
+
+    .hero-copy p{
+      margin:0;
+      max-width:700px;
+      color:#d4def3;
+      font-size:18px;
+      line-height:1.75;
+    }
+
+    .hero-side{
+      display:flex;
+      justify-content:flex-end;
+    }
+
+    .chapter-card{
+      width:min(100%, 360px);
+      background:linear-gradient(180deg, rgba(12,18,32,.75), rgba(9,13,24,.88));
+      border:1px solid rgba(73,182,255,.18);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:22px;
+      backdrop-filter:blur(16px);
+    }
+
+    .chapter-label{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 12px;
+      border-radius:999px;
+      background:var(--blue-soft);
+      border:1px solid rgba(73,182,255,.18);
+      color:var(--blue2);
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:14px;
+    }
+
+    .chapter-card h2{
+      margin:0 0 10px;
+      font-size:24px;
+      line-height:1.15;
+      color:white;
+    }
+
+    .chapter-card p{
+      margin:0 0 18px;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.7;
+    }
+
+    .meta{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .meta-item{
+      padding:12px;
+      border-radius:14px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.05);
+    }
+
+    .meta-k{
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--muted-2);
+      margin:0 0 6px;
+    }
+
+    .meta-v{
+      margin:0;
+      font-size:13px;
+      color:#e7efff;
+      font-weight:700;
+    }
+
+    .content-wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:28px 20px 80px;
+    }
+
+    .reader{
+      position:relative;
+      background:linear-gradient(180deg, rgba(11,18,32,.58), rgba(8,13,24,.72));
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:22px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      backdrop-filter:blur(4px);
+    }
+
+    .reader-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:18px 22px;
+      border-bottom:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+    }
+
+    .reader-top-left h3{
+      margin:0 0 4px;
+      font-size:18px;
+      color:#edf3ff;
+    }
+
+    .reader-top-left p{
+      margin:0;
+      color:var(--muted-2);
+      font-size:13px;
+    }
+
+    .reader-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:34px;
+      padding:0 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.06);
+      color:#cfe0ff;
+      font-size:12px;
+      font-weight:700;
+      white-space:nowrap;
+    }
+
+    .reader-body{
+      padding:34px 26px 18px;
+      position:relative;
+    }
+
+    .story{
+      max-width:720px;
+      margin:0 auto;
+      position:relative;
+      z-index:2;
+    }
+
+    .lead{
+      font-size:19px;
+      line-height:1.9;
+      color:#ecf3ff;
+      margin:0 0 26px;
+      padding:18px 18px 18px 20px;
+      border-left:3px solid rgba(73,182,255,.44);
+      background:rgba(9,18,35,.68);
+      border-radius:0 14px 14px 0;
+      backdrop-filter:blur(4px);
+    }
+
+    .story p{
+      margin:0 0 22px;
+      color:#e4ecfb;
+      font-size:18px;
+      line-height:1.95;
+      letter-spacing:.01em;
+      text-shadow:0 1px 2px rgba(0,0,0,.4);
+    }
+
+    .story p strong{
+      color:#ffffff;
+      font-weight:700;
+    }
+
+    .story .quote{
+      margin:34px 0;
+      padding:20px 22px;
+      border-radius:18px;
+      background:linear-gradient(180deg, rgba(10,108,255,.12), rgba(73,182,255,.06));
+      border:1px solid rgba(73,182,255,.14);
+      color:#edf5ff;
+      font-size:19px;
+      line-height:1.7;
+      text-align:center;
+      box-shadow:0 12px 30px rgba(0,0,0,.18);
+      backdrop-filter:blur(4px);
+    }
+
+    .story .divider{
+      width:86px;
+      height:1px;
+      background:linear-gradient(90deg, transparent, rgba(73,182,255,.6), transparent);
+      margin:34px auto;
+    }
+
+    .reader-bottom{
+      padding:24px 26px 28px;
+      border-top:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .reader-note{
+      color:var(--muted-2);
+      font-size:13px;
+      margin:0;
+    }
+
+    .nav-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    @media (max-width: 900px){
+      .hero-grid{
+        grid-template-columns:1fr;
+      }
+
+      .hero-side{
+        justify-content:flex-start;
+      }
+
+      .chapter-card{
+        width:100%;
+        max-width:unset;
+      }
+    }
+
+    @media (max-width: 640px){
+      .topbar-inner{
+        padding:14px 14px;
+      }
+
+      .hero-inner{
+        padding:34px 14px 22px;
+      }
+
+      .content-wrap{
+        padding:20px 14px 60px;
+      }
+
+      .reader-top,
+      .reader-body,
+      .reader-bottom{
+        padding-left:16px;
+        padding-right:16px;
+      }
+
+      .reader-body{
+        padding-top:24px;
+      }
+
+      .hero-copy p,
+      .story p,
+      .lead{
+        font-size:16px;
+      }
+
+      .meta{
+        grid-template-columns:1fr;
+      }
+
+      .top-actions{
+        width:100%;
+      }
+
+      .btn{
+        width:100%;
+      }
+
+      .nav-actions{
+        width:100%;
+      }
+
+      .nav-actions .btn{
+        flex:1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="stars"></canvas>
+
+  <div class="page">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <div class="brand-badge">N</div>
+          <div>
+            <p class="brand-title">El Precio del Silencio</p>
+            <p class="brand-sub">Thriller político y empresarial</p>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <a href="capitulo4.html" onclick="goBack(event, 'capitulo4.html')" class="btn btn-ghost">← Capítulo anterior</a>
+          <a href="capitulo6.html" class="btn btn-primary">Siguiente capítulo →</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="crumb">Inicio / Capítulos / Capítulo 5</div>
+
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Capítulo 5</p>
+            <h1>La periodista que no firmó</h1>
+            <p>
+              Laura no abandonó la investigación por cobardía. La obligaron a retroceder.
+              Y el hombre que hoy sigue a Tomás tiene una relación más antigua con ella de lo que él imagina.
+            </p>
+          </div>
+
+          <div class="hero-side">
+            <aside class="chapter-card">
+              <div class="chapter-label">El pasado vuelve</div>
+              <h2>Las amenazas empezaron antes de Tomás</h2>
+              <p>
+                Después de descubrir la conexión con el senador, Tomás necesita saber por qué Laura se retiró del caso.
+                La respuesta abre una herida vieja: hubo un reportaje listo para publicarse… pero alguien logró que nunca llevara firma.
+              </p>
+
+              <div class="meta">
+                <div class="meta-item">
+                  <p class="meta-k">Estado</p>
+                  <p class="meta-v">Gratis</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Género</p>
+                  <p class="meta-v">Suspenso</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Temporada</p>
+                  <p class="meta-v">5 de 17</p>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="content-wrap">
+      <article class="reader">
+        <div class="reader-top">
+          <div class="reader-top-left">
+            <h3>Capítulo 5: La periodista que no firmó</h3>
+            <p>Lectura gratuita · La historia de Laura sale a la luz</p>
+          </div>
+          <div class="reader-badge">Acceso abierto</div>
+        </div>
+
+        <div class="reader-body">
+          <div class="story">
+            <p class="lead">
+              Tomás no siguió caminando al azar. Apenas salió del radio de la bodega, dobló dos veces,
+              cruzó una avenida sin mirar el semáforo y se metió en una botillería pequeña donde compró
+              una botella de agua que no quería. No necesitaba hidratarse. Necesitaba comprobar, por el reflejo
+              del refrigerador de vidrio, si el hombre de chaqueta liviana seguía detrás.
+            </p>
+
+            <p>
+              No estaba.
+            </p>
+
+            <p>
+              O al menos no a simple vista.
+            </p>
+
+            <p>
+              Eso no lo tranquilizó.
+            </p>
+
+            <p>
+              Solo le recordó lo poco que servía, a esas alturas, la tranquilidad.
+            </p>
+
+            <p>
+              Salió de nuevo a la calle y caminó hasta una plaza dura, mínima, encajada entre edificios viejos
+              y un strip center medio vacío. Se sentó en una banca de cemento a plena luz del día y por primera vez
+              desde que había entrado a la bodega se permitió revisar todo en orden.
+            </p>
+
+            <p>
+              Gabriel Mena no estaba loco.
+            </p>
+
+            <p>
+              El senador tenía nombre, cifra y función.
+            </p>
+
+            <p>
+              La demora legislativa era parte del negocio.
+            </p>
+
+            <p>
+              Y Laura no había aparecido por nostalgia ni casualidad.
+            </p>
+
+            <p><strong>Laura ya había pasado por una versión anterior del mismo infierno.</strong></p>
+
+            <div class="quote">Cuando el mismo nombre aparece en historias distintas, deja de ser coincidencia. Se vuelve método.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Encendió el teléfono por primera vez en horas.
+            </p>
+
+            <p>
+              Dos mensajes de trabajo.
+            </p>
+
+            <p>
+              Un correo de recursos humanos.
+            </p>
+
+            <p>
+              Un número desconocido que no dejó texto.
+            </p>
+
+            <p>
+              Y una ubicación enviada por Laura diez minutos antes.
+            </p>
+
+            <p>
+              Esta vez no era un café.
+            </p>
+
+            <p>
+              Era un edificio antiguo en el centro, de esos que alguna vez fueron elegantes
+              y ahora sobrevivían con oficinas de abogados, contadores, terapeutas y una peluquería en el segundo piso.
+            </p>
+
+            <p>
+              Debajo del pin venía una frase:
+            </p>
+
+            <div class="quote">Sube solo. Oficina 604. Y si ves a alguien esperándote abajo, no entres.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              El hall del edificio olía a cera vieja, humedad y ascensor cansado.
+            </p>
+
+            <p>
+              Tomás se quedó un segundo junto al tablero de nombres, leyendo placas doradas
+              con apellidos que parecían heredados más que elegidos.
+            </p>
+
+            <p>
+              En el sexto piso no figuraba Laura.
+            </p>
+
+            <p>
+              Solo “Archivo Editorial / Bodega temporal”.
+            </p>
+
+            <p>
+              Tocó el timbre.
+            </p>
+
+            <p>
+              La puerta se abrió al instante.
+            </p>
+
+            <p>
+              Laura lo hizo pasar sin saludar.
+            </p>
+
+            <p>
+              El lugar no era una oficina en el sentido formal. Era un departamento reconvertido,
+              con estanterías metálicas, cajas apiladas, carpetas rotuladas a mano, una mesa larga
+              llena de papeles y dos ventanales cubiertos por persianas medio bajas.
+            </p>
+
+            <p>
+              Había algo áspero, casi clandestino, en la forma en que el espacio estaba organizado.
+            </p>
+
+            <p>
+              No parecía un sitio de trabajo cotidiano.
+            </p>
+
+            <p>
+              Parecía un sitio donde se guarda lo que no se puede tener en otro lado.
+            </p>
+
+            <div class="quote">Los archivos no siempre se esconden en cajas fuertes. A veces se esconden en lugares que parecen demasiado tristes para ser importantes.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Laura cerró con llave.
+            </p>
+
+            <p>
+              Esa sola acción cambió la temperatura de la conversación antes de que empezara.
+            </p>
+
+            <p>
+              —¿Te siguieron? —preguntó.
+            </p>
+
+            <p>
+              —No estoy seguro.
+            </p>
+
+            <p>
+              —Mala respuesta.
+            </p>
+
+            <p>
+              Tomás respiró hondo.
+            </p>
+
+            <p>
+              —Vi a un tipo salir del café. Después a otro cerca de la bodega. Puede haber sido el mismo. No lo sé.
+            </p>
+
+            <p>
+              Laura asintió sin ironía, como si eso confirmara algo que ya esperaba.
+            </p>
+
+            <p>
+              —Entonces tenemos poco tiempo.
+            </p>
+
+            <p>
+              Tomás miró la mesa.
+            </p>
+
+            <p>
+              Había carpetas con stickers de medios nacionales, recortes de prensa,
+              hojas subrayadas, correos impresos y libretas antiguas.
+            </p>
+
+            <p>
+              En el centro, apartada del resto, había una carpeta gris con una palabra escrita en plumón:
+              <strong>VALDÉS</strong>.
+            </p>
+
+            <p>
+              No necesitó preguntar quién era.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              —Quiero saber por qué saliste de esto —dijo él de frente.
+            </p>
+
+            <p>
+              Laura apoyó ambas manos sobre la mesa y bajó la mirada un instante,
+              no como quien duda, sino como quien decide por fin dejar de administrar una versión parcial.
+            </p>
+
+            <p>
+              —Porque no salí —respondió—. Me sacaron.
+            </p>
+
+            <p>
+              Tomás se quedó quieto.
+            </p>
+
+            <p>
+              Laura tomó la carpeta gris, la abrió y fue separando documentos sin apuro.
+            </p>
+
+            <p>
+              —Hace cuatro años yo no estaba investigando precios —dijo—.
+              Estaba trabajando una serie sobre financiamiento cruzado entre asesorías, fundaciones,
+              pauta regional y lobby legislativo. No era una gran historia al principio.
+              Era de esas investigaciones que empiezan con boletas pequeñas y nombres repetidos.
+            </p>
+
+            <p>
+              Lo miró.
+            </p>
+
+            <p>
+              —El primer nombre político que apareció fue Valdés.
+            </p>
+
+            <p>
+              Tomás sintió el mismo pinchazo que en la bodega.
+            </p>
+
+            <p>
+              —¿El senador?
+            </p>
+
+            <p>
+              —Sí. Pero no apareció como “el senador”. Apareció como un intermediario elegante.
+              Un tipo que nunca ensuciaba las manos, que no recibía directamente, que no ordenaba abiertamente.
+              Solo abría espacios. Reunía gente. Frenaba comisiones. Instalaba dudas públicas cuando las reformas
+              avanzaban demasiado rápido.
+            </p>
+
+            <p>
+              Laura sacó una hoja de pauta editorial con correcciones manuscritas.
+            </p>
+
+            <p>
+              —Yo tenía listo un reportaje sobre eso.
+            </p>
+
+            <div class="quote">Listo para publicarse un domingo.</div>
+
+            <p>
+              Tomás no dijo nada.
+            </p>
+
+            <p>
+              Laura siguió:
+            </p>
+
+            <p>
+              —Tenía el texto, la estructura, las fuentes blindadas, el respaldo jurídico preliminar
+              y una edición de cierre reservada. No era un artículo suelto. Era portada.
+            </p>
+
+            <p>
+              —¿Y qué pasó?
+            </p>
+
+            <p>
+              Laura sonrió con una amargura seca.
+            </p>
+
+            <p>
+              —Pasó que el viernes, a dos días de publicarlo, alguien llamó a mi director.
+              Después llamó al gerente. Después apareció una reunión no agendada con abogados externos.
+              Después empezó a circular una versión interna de que yo estaba “apresurando hipótesis”.
+              El sábado en la noche me informaron que la publicación se posponía por chequeos editoriales.
+            </p>
+
+            <p>
+              Tomás frunció el ceño.
+            </p>
+
+            <p>
+              —Eso todavía pasa. Es censura blanda.
+            </p>
+
+            <p>
+              —No. Eso fue la primera capa.
+            </p>
+
+            <p>
+              Laura abrió otra carpeta más delgada y le mostró una hoja impresa.
+            </p>
+
+            <p>
+              Era una maqueta de portada.
+            </p>
+
+            <p>
+              Titular grande.
+            </p>
+
+            <p>
+              Bajada.
+            </p>
+
+            <p>
+              Dos fotografías en blanco y negro.
+            </p>
+
+            <p>
+              Y abajo, donde debería ir el crédito del reportaje, había un espacio vacío.
+            </p>
+
+            <p>
+              No tachado.
+            </p>
+
+            <p>
+              No corregido.
+            </p>
+
+            <p>
+              Vacío.
+            </p>
+
+            <div class="quote">La periodista que no firmó.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Tomás la miró en silencio.
+            </p>
+
+            <p>
+              Laura sostuvo la hoja entre los dedos.
+            </p>
+
+            <p>
+              —Cuando pregunté por qué mi nombre no estaba, me dijeron que era una “medida de protección”.
+              Que si finalmente publicábamos, convenía evaluar un crédito colectivo.
+              Que la historia era sensible. Que yo no debía exponerme innecesariamente.
+            </p>
+
+            <p>
+              Bajó la hoja sobre la mesa.
+            </p>
+
+            <p>
+              —Sonaba casi generoso.
+            </p>
+
+            <p>
+              Hizo una pausa.
+            </p>
+
+            <p>
+              —Hasta que esa misma noche encontré a mi hijo dormido con una fotografía pegada en la puerta del refrigerador.
+            </p>
+
+            <p>
+              Tomás sintió que se le vaciaba el pecho.
+            </p>
+
+            <p>
+              —¿Qué fotografía?
+            </p>
+
+            <p>
+              Laura no respondió con palabras.
+            </p>
+
+            <p>
+              Buscó otra funda plástica y sacó una imagen impresa.
+            </p>
+
+            <p>
+              Un niño entrando a un colegio.
+            </p>
+
+            <p>
+              Uniforme.
+            </p>
+
+            <p>
+              Mochila azul.
+            </p>
+
+            <p>
+              Tomada desde lejos.
+            </p>
+
+            <p>
+              Con zoom.
+            </p>
+
+            <p>
+              Perfecta.
+            </p>
+
+            <div class="quote">“Todavía estás a tiempo de cuidar lo que sí importa.”</div>
+
+            <div class="divider"></div>
+
+            <p>
+              La nota al reverso estaba escrita con la misma limpieza fría que Tomás había visto en su propio sobre.
+            </p>
+
+            <p>
+              El mismo tono.
+            </p>
+
+            <p>
+              La misma elegancia repugnante.
+            </p>
+
+            <p>
+              Ningún insulto.
+            </p>
+
+            <p>
+              Ningún grito.
+            </p>
+
+            <p>
+              Solo precisión emocional.
+            </p>
+
+            <p>
+              El tipo de amenaza diseñada por gente acostumbrada a que el miedo trabaje por ellos.
+            </p>
+
+            <p><strong>Tomás entendió entonces por qué Laura no había querido usar el teléfono.</strong></p>
+
+            <div class="divider"></div>
+
+            <p>
+              —¿Publicaste igual? —preguntó.
+            </p>
+
+            <p>
+              Laura negó con la cabeza.
+            </p>
+
+            <p>
+              —No.
+            </p>
+
+            <p>
+              —¿Por tu hijo?
+            </p>
+
+            <p>
+              —Por mi hijo, por mi trabajo, por la certeza de que estaba sola y por algo peor:
+              porque al día siguiente el texto seguía en el sistema… pero ya no era mío.
+            </p>
+
+            <p>
+              Tomás tardó en procesarlo.
+            </p>
+
+            <p>
+              —¿Cómo que ya no era tuyo?
+            </p>
+
+            <p>
+              —Lo habían reescrito.
+            </p>
+
+            <p>
+              Laura caminó hasta una repisa y volvió con dos versiones impresas del mismo artículo.
+            </p>
+
+            <p>
+              Puso una junto a la otra.
+            </p>
+
+            <p>
+              La primera tenía nombres, vínculos, estructura y dirección.
+            </p>
+
+            <p>
+              La segunda hablaba de “percepciones de opacidad”, “necesidad de modernizar estándares”
+              y “riesgos reputacionales de ciertas prácticas”.
+            </p>
+
+            <p>
+              Habían vaciado el texto sin matarlo.
+            </p>
+
+            <p>
+              Lo habían dejado vivo para que pareciera periodismo,
+              pero muerto para que no dañara a nadie.
+            </p>
+
+            <div class="quote">No censuraron el reportaje. Le sacaron los dientes.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              —Y entonces pasó algo todavía peor —dijo Laura.
+            </p>
+
+            <p>
+              Tomás ya no sabía qué podía ser peor.
+            </p>
+
+            <p>
+              —El lunes, cuando fui a buscar respaldo en el sistema, el archivo original no existía.
+              Mi usuario mostraba una última modificación a las 03:11 AM hecha desde mi propia cuenta.
+            </p>
+
+            <p>
+              —Pero no fuiste tú.
+            </p>
+
+            <p>
+              —Claro que no. Pero eso da lo mismo cuando el log ya quedó así.
+            </p>
+
+            <p>
+              Se cruzó de brazos.
+            </p>
+
+            <p>
+              —La discusión dejó de ser “qué había encontrado” y pasó a ser “por qué había manipulado el material”.
+              En menos de dos días me transformaron de periodista incómoda en reportera imprudente.
+            </p>
+
+            <p>
+              —Te quemaron.
+            </p>
+
+            <p>
+              —No completamente. Eso también fue parte del método. No me destruyeron. Me dejaron lo bastante viva
+              para que el resto viera lo que cuesta seguir.
+            </p>
+
+            <p>
+              Esa frase quedó flotando en el cuarto con un peso insoportable.
+            </p>
+
+            <p>
+              Tomás volvió a mirar la carpeta del senador.
+            </p>
+
+            <p>
+              —¿Y Valdés sabía?
+            </p>
+
+            <p>
+              Laura sostuvo su mirada.
+            </p>
+
+            <p>
+              —No sé si daba la orden directa. Pero su gente ya estaba orbitando mi historia antes de que cayera.
+            </p>
+
+            <p>
+              —¿Su gente?
+            </p>
+
+            <p>
+              Laura asintió despacio.
+            </p>
+
+            <p>
+              —El hombre del café.
+            </p>
+
+            <div class="quote">Tomás sintió el golpe antes de entenderlo del todo.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              —¿Lo conoces?
+            </p>
+
+            <p>
+              Laura fue hasta el ventanal, abrió apenas la persiana y miró hacia la calle sin exponerse.
+            </p>
+
+            <p>
+              —No de nombre. Lo vi por primera vez hace años, en una comisión del Senado. No estaba acreditado como asesor.
+              No figuraba en la minuta. Pero salía de reuniones donde solo entraba gente con acceso político o jurídico.
+            </p>
+
+            <p>
+              Se giró.
+            </p>
+
+            <p>
+              —Después lo vi dos veces más. Afuera del medio. Cerca del colegio de mi hijo. Y una última vez,
+              el día en que acepté que no podía firmar el reportaje.
+            </p>
+
+            <p>
+              Tomás sintió una rabia densa, más estable que el miedo.
+            </p>
+
+            <p>
+              —Entonces no es un simple seguidor.
+            </p>
+
+            <p>
+              —No.
+            </p>
+
+            <p>
+              —¿Qué es?
+            </p>
+
+            <p>
+              Laura demoró un segundo.
+            </p>
+
+            <p>
+              —Es alguien que aparece cuando la red deja de hablar bonito.
+            </p>
+
+            <div class="quote">La frase quedó clavada en el aire como una definición aprendida con dolor.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Laura volvió a la mesa y empujó hacia él una carpeta más pequeña.
+            </p>
+
+            <p>
+              En la portada decía: <strong>PORTADA DOMINGO / NO PUBLICADO</strong>.
+            </p>
+
+            <p>
+              Tomás la abrió.
+            </p>
+
+            <p>
+              Había estructura de reportaje, hilos de fuentes, notas al margen y una página final
+              con algo parecido a una hipótesis editorial. No era exactamente evidencia judicial.
+              Era algo más peligroso para la red: una narrativa entendible.
+            </p>
+
+            <p>
+              Allí estaba explicado cómo operaba el circuito:
+            </p>
+
+            <p>
+              empresas que financiaban operadores,
+            </p>
+
+            <p>
+              operadores que demoraban reformas,
+            </p>
+
+            <p>
+              medios que amortiguaban el costo reputacional,
+            </p>
+
+            <p>
+              consultoras que limpiaban la trazabilidad documental,
+            </p>
+
+            <p>
+              y estudios jurídicos que convertían la ilegalidad en discusión técnica.
+            </p>
+
+            <p>
+              Tomás levantó la vista.
+            </p>
+
+            <p>
+              —Esto no era un artículo. Era una radiografía.
+            </p>
+
+            <p>
+              Laura sonrió apenas, sin orgullo.
+            </p>
+
+            <p>
+              —Por eso no salió.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              Él siguió revisando papeles.
+            </p>
+
+            <p>
+              En una hoja anexada había una lista de reuniones privadas con fechas.
+            </p>
+
+            <p>
+              En otra, un esquema de vínculos entre asesores y fundaciones.
+            </p>
+
+            <p>
+              Y al fondo de la carpeta, casi como un agregado menor, una impresión borrosa de agenda.
+            </p>
+
+            <p>
+              Tres palabras estaban subrayadas:
+            </p>
+
+            <p><strong>Comité del jueves.</strong></p>
+
+            <p>
+              El mismo lenguaje que había visto Gabriel.
+            </p>
+
+            <p>
+              El mismo lenguaje que había aparecido en la caja de borradores.
+            </p>
+
+            <p>
+              La misma frase que llevaba capítulos siguiéndolos como un hilo subterráneo.
+            </p>
+
+            <p>
+              —Entonces el comité existe —dijo Tomás.
+            </p>
+
+            <p>
+              —Existe hace años.
+            </p>
+
+            <p>
+              —¿Quién va?
+            </p>
+
+            <p>
+              —Eso nunca lo supe completo.
+            </p>
+
+            <p>
+              Laura apoyó un dedo sobre la agenda impresa.
+            </p>
+
+            <p>
+              —Pero una de mis fuentes decía que no era una reunión periódica formal. Era un nombre interno.
+              Un modo elegante de referirse a la mesa donde se alineaban los intereses antes de que se volvieran decisiones.
+            </p>
+
+            <p>
+              Tomás sintió que todo volvía a cerrarse alrededor del mismo centro.
+            </p>
+
+            <p>
+              La caja de borradores.
+            </p>
+
+            <p>
+              Gabriel.
+            </p>
+
+            <p>
+              El senador.
+            </p>
+
+            <p>
+              Laura.
+            </p>
+
+            <p>
+              Y ahora esa agenda.
+            </p>
+
+            <div class="quote">No estaban persiguiendo documentos. Estaban persiguiendo la sala donde se decidía el país antes de que el país lo supiera.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              —¿Por qué me muestras todo esto ahora? —preguntó él.
+            </p>
+
+            <p>
+              Laura no respondió de inmediato.
+            </p>
+
+            <p>
+              Se quedó mirando la carpeta abierta entre ambos, como si la pregunta real no fuera
+              por qué ahora, sino por qué después de tanto tiempo todavía conservaba esos papeles.
+            </p>
+
+            <p>
+              —Porque hace años retrocedí cuando todavía tenía margen para hacerlo —dijo al fin—.
+              Tú ya no lo tienes.
+            </p>
+
+            <p>
+              Tomás abrió la boca para decir algo, pero ella levantó una mano.
+            </p>
+
+            <p>
+              —Escúchame bien. Si sigues, no puedes seguir como analista curioso.
+              Tienes que entender que esto no se va a defender con desmentidos. Se va a defender con desgaste,
+              con vigilancia, con versiones filtradas, con errores fabricados y con gente que aparecerá cerca tuyo
+              para hacerte creer que todavía eliges.
+            </p>
+
+            <p>
+              Él sintió el peso de cada palabra.
+            </p>
+
+            <p>
+              —¿Y tú?
+            </p>
+
+            <p>
+              Laura bajó la mirada apenas.
+            </p>
+
+            <p>
+              —Yo decidí conservar lo suficiente para cuando alguien llegara más lejos que yo.
+            </p>
+
+            <p>
+              Lo miró directo.
+            </p>
+
+            <p>
+              —Ese alguien eres tú.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              El silencio que siguió no fue cómodo ni íntimo.
+            </p>
+
+            <p>
+              Fue el silencio exacto que queda cuando alguien te entrega una carga que no pediste,
+              pero que ya no puedes dejar en la mesa.
+            </p>
+
+            <p>
+              Tomás cerró la carpeta lentamente.
+            </p>
+
+            <p>
+              —Necesito saber cuál era la fuente que te habló del comité.
+            </p>
+
+            <p>
+              Laura negó de inmediato.
+            </p>
+
+            <p>
+              —No.
+            </p>
+
+            <p>
+              —Si vamos a llegar a esa mesa, la necesito.
+            </p>
+
+            <p>
+              —No si quieres que siga viva.
+            </p>
+
+            <p>
+              Él apretó los dientes.
+            </p>
+
+            <p>
+              —Entonces estamos otra vez igual: viendo una parte.
+            </p>
+
+            <p>
+              Laura lo sostuvo con la mirada, sin ceder.
+            </p>
+
+            <p>
+              —No. Ahora estás viendo algo que yo no vi a tiempo:
+              la relación entre el senador, los borradores y la demora legislativa.
+              Esa pieza es nueva. Esa pieza es tuya.
+            </p>
+
+            <p>
+              Tomás quiso discutir.
+            </p>
+
+            <p>
+              Quiso exigir más.
+            </p>
+
+            <p>
+              Pero entendió que forzarla era repetir la lógica de la red desde el otro lado:
+              usar el miedo ajeno como herramienta.
+            </p>
+
+            <p>
+              Cerró la boca.
+            </p>
+
+            <p>
+              Laura asintió apenas, como si hubiera aprobado ese silencio.
+            </p>
+
+            <div class="quote">No toda verdad se entrega de una vez. A veces se gana demostrando que no vas a venderla por desesperación.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Entonces sonó algo en el pasillo.
+            </p>
+
+            <p>
+              No un golpe fuerte.
+            </p>
+
+            <p>
+              Un roce.
+            </p>
+
+            <p>
+              Como una suela girando apenas sobre el piso.
+            </p>
+
+            <p>
+              Laura quedó inmóvil.
+            </p>
+
+            <p>
+              Tomás también.
+            </p>
+
+            <p>
+              El sonido no se repitió de inmediato.
+            </p>
+
+            <p>
+              Ambos se miraron.
+            </p>
+
+            <p>
+              Laura caminó hasta el interruptor y apagó la luz principal.
+            </p>
+
+            <p>
+              El archivo quedó iluminado solo por la claridad gris que se filtraba entre las persianas.
+            </p>
+
+            <p>
+              Otro sonido.
+            </p>
+
+            <p>
+              Esta vez más claro.
+            </p>
+
+            <p>
+              Alguien estaba al otro lado de la puerta.
+            </p>
+
+            <p>
+              No golpeando.
+            </p>
+
+            <p>
+              No llamando.
+            </p>
+
+            <p><strong>Esperando.</strong></p>
+
+            <div class="quote">Tomás sintió el mismo vacío helado que la noche del auto. La red siempre llegaba antes de hacer ruido.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Laura abrió un cajón bajo la mesa y sacó una llave pequeña.
+            </p>
+
+            <p>
+              No era de la puerta principal.
+            </p>
+
+            <p>
+              Señaló una puerta interior al fondo del archivo, casi oculta entre estanterías.
+            </p>
+
+            <p>
+              —Si golpean tres veces, no abras. Si yo no vuelvo en dos minutos, te vas por ahí.
+            </p>
+
+            <p>
+              —¿Quién está afuera?
+            </p>
+
+            <p>
+              Laura no respondió.
+            </p>
+
+            <p>
+              Caminó hacia la puerta principal con una calma tan controlada que resultaba peor que el pánico.
+            </p>
+
+            <p>
+              Tomás se quedó de pie, con la carpeta de la portada sin firma todavía sobre la mesa.
+            </p>
+
+            <p>
+              Escuchó el sonido del seguro.
+            </p>
+
+            <p>
+              Luego la voz de Laura, tenue, imposible de distinguir.
+            </p>
+
+            <p>
+              Después otra voz.
+            </p>
+
+            <p>
+              Masculina.
+            </p>
+
+            <p>
+              Baja.
+            </p>
+
+            <p>
+              Familiar, incluso sin entender las palabras.
+            </p>
+
+            <p>
+              Tomás se acercó apenas, lo suficiente para ver el reflejo distorsionado en un vidrio lateral.
+            </p>
+
+            <p>
+              Afuera, de perfil, estaba el hombre del café.
+            </p>
+
+            <div class="quote">Y Laura no parecía sorprendida de verlo.</div>
+
+            <p>
+              En ese instante, Tomás entendió algo mucho peor que una persecución:
+            </p>
+
+            <p><strong>el pasado entre Laura y la red no estaba cerrado. Solo había estado esperando que él llegara para abrirse otra vez.</strong></p>
+          </div>
+        </div>
+
+        <div class="reader-bottom">
+          <p class="reader-note">
+            Continúa la historia para descubrir qué quiere realmente el hombre del café y por qué Laura lo reconoce antes de escucharlo hablar.
+          </p>
+
+          <div class="nav-actions">
+            <a href="capitulo4.html" onclick="goBack(event, 'capitulo4.html')" class="btn btn-ghost">← Capítulo 4</a>
+            <a href="capitulo6.html" class="btn btn-primary">Leer capítulo 6 →</a>
+          </div>
+        </div>
+      </article>
+    </main>
+  </div>
+
+  <script>
+    function goBack(event, fallbackUrl){
+      event.preventDefault();
+
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.location.href = fallbackUrl;
+      }
+    }
+
+    const canvas = document.getElementById("stars");
+    const ctx = canvas.getContext("2d");
+    let stars = [];
+
+    function resize(){
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      createStars();
+    }
+
+    function createStars(){
+      stars = [];
+      const amount = Math.floor((canvas.width * canvas.height) / 14000);
+      for(let i = 0; i < amount; i++){
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.6 + 0.3,
+          speed: Math.random() * 0.35 + 0.08,
+          alpha: Math.random() * 0.7 + 0.2
+        });
+      }
+    }
+
+    function animate(){
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for(const s of stars){
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        s.y += s.speed;
+
+        if(s.y > canvas.height){
+          s.y = -2;
+          s.x = Math.random() * canvas.width;
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener("resize", resize);
+    resize();
+    animate();
+  </script>
+</body>
+</html>
