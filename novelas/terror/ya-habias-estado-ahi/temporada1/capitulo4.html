@@ -1,0 +1,1663 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capítulo 4 | Ya habías estado ahí</title>
+  <meta
+    name="description"
+    content="Capítulo 4 de Ya habías estado ahí: La casa deja de ser refugio. Afuera ya no lo esperan para encontrarlo, sino para devolverlo a algo que una vez fue."
+  />
+
+  <style>
+    :root{
+      --bg:#05080f;
+      --bg2:#0b1220;
+      --card:rgba(12,18,32,0.82);
+      --line:rgba(255,255,255,0.08);
+      --line-strong:rgba(73,182,255,.24);
+      --text:#f5f8ff;
+      --muted:#aebad1;
+      --muted-2:#7f90ae;
+      --blue:#0A6CFF;
+      --blue2:#49b6ff;
+      --blue-soft:rgba(73,182,255,.14);
+      --shadow:0 24px 60px rgba(0,0,0,.45);
+      --radius:22px;
+      --max:860px;
+    }
+
+    *{
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      color:var(--text);
+      background:#04070d;
+      line-height:1.8;
+      position:relative;
+      overflow-x:hidden;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    #stars{
+      position:fixed;
+      inset:0;
+      width:100%;
+      height:100%;
+      z-index:0;
+      background:
+        radial-gradient(circle at top left, rgba(10,108,255,.12), transparent 24%),
+        radial-gradient(circle at top right, rgba(73,182,255,.08), transparent 20%),
+        linear-gradient(180deg, #04070d 0%, #08101c 45%, #05080f 100%);
+    }
+
+    .page{
+      min-height:100vh;
+      position:relative;
+      z-index:1;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:30;
+      backdrop-filter:blur(14px);
+      background:rgba(5,8,15,.72);
+      border-bottom:1px solid var(--line);
+    }
+
+    .topbar-inner{
+      max-width:1100px;
+      margin:0 auto;
+      padding:16px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .brand-badge{
+      width:38px;
+      height:38px;
+      border-radius:12px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg, rgba(10,108,255,.22), rgba(73,182,255,.08));
+      border:1px solid var(--line-strong);
+      box-shadow:0 0 24px rgba(10,108,255,.12);
+      font-weight:700;
+      color:var(--blue2);
+      flex:0 0 auto;
+    }
+
+    .brand-title{
+      font-size:14px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:#dfe9ff;
+      margin:0 0 2px;
+    }
+
+    .brand-sub{
+      font-size:12px;
+      color:var(--muted-2);
+      margin:0;
+    }
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height:44px;
+      padding:0 18px;
+      border-radius:12px;
+      font-size:14px;
+      font-weight:700;
+      transition:transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+      border:1px solid transparent;
+      cursor:pointer;
+    }
+
+    .btn:hover{
+      transform:translateY(-1px);
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg, var(--blue) 0%, #0d7eff 100%);
+      color:white;
+      box-shadow:0 12px 28px rgba(10,108,255,.28);
+    }
+
+    .btn-primary:hover{
+      background:linear-gradient(135deg, #0c62e0 0%, #0a6cef 100%);
+    }
+
+    .btn-ghost{
+      background:rgba(255,255,255,.03);
+      border-color:var(--line);
+      color:#dbe8ff;
+    }
+
+    .btn-ghost:hover{
+      background:rgba(255,255,255,.06);
+      border-color:var(--line-strong);
+    }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      border-bottom:1px solid rgba(255,255,255,.04);
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(180deg, rgba(5,8,15,.58) 0%, rgba(5,8,15,.86) 80%, rgba(5,8,15,1) 100%),
+        url("../assets/temporada1.jpg");
+      background-size:cover;
+      background-position:center;
+      opacity:.28;
+      filter:saturate(.9) contrast(1.03);
+    }
+
+    .hero-inner{
+      position:relative;
+      z-index:1;
+      max-width:1100px;
+      margin:0 auto;
+      padding:56px 20px 34px;
+    }
+
+    .crumb{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.06);
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:18px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:28px;
+      align-items:end;
+    }
+
+    .hero-copy h1{
+      margin:0 0 12px;
+      font-size:clamp(34px, 6vw, 64px);
+      line-height:1.02;
+      letter-spacing:.02em;
+      color:white;
+      text-shadow:0 0 22px rgba(10,108,255,.18);
+    }
+
+    .eyebrow{
+      margin:0 0 14px;
+      color:var(--blue2);
+      font-weight:700;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      font-size:12px;
+    }
+
+    .hero-copy p{
+      margin:0;
+      max-width:700px;
+      color:#d4def3;
+      font-size:18px;
+      line-height:1.75;
+    }
+
+    .hero-side{
+      display:flex;
+      justify-content:flex-end;
+    }
+
+    .chapter-card{
+      width:min(100%, 360px);
+      background:linear-gradient(180deg, rgba(12,18,32,.75), rgba(9,13,24,.88));
+      border:1px solid rgba(73,182,255,.18);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:22px;
+      backdrop-filter:blur(16px);
+    }
+
+    .chapter-label{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 12px;
+      border-radius:999px;
+      background:var(--blue-soft);
+      border:1px solid rgba(73,182,255,.18);
+      color:var(--blue2);
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:14px;
+    }
+
+    .chapter-card h2{
+      margin:0 0 10px;
+      font-size:24px;
+      line-height:1.15;
+      color:white;
+    }
+
+    .chapter-card p{
+      margin:0 0 18px;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.7;
+    }
+
+    .meta{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .meta-item{
+      padding:12px;
+      border-radius:14px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.05);
+    }
+
+    .meta-k{
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--muted-2);
+      margin:0 0 6px;
+    }
+
+    .meta-v{
+      margin:0;
+      font-size:13px;
+      color:#e7efff;
+      font-weight:700;
+    }
+
+    .content-wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:28px 20px 80px;
+    }
+
+    .reader{
+      position:relative;
+      background:linear-gradient(180deg, rgba(11,18,32,.58), rgba(8,13,24,.72));
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:22px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      backdrop-filter:blur(4px);
+    }
+
+    .reader-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:18px 22px;
+      border-bottom:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+    }
+
+    .reader-top-left h3{
+      margin:0 0 4px;
+      font-size:18px;
+      color:#edf3ff;
+    }
+
+    .reader-top-left p{
+      margin:0;
+      color:var(--muted-2);
+      font-size:13px;
+    }
+
+    .reader-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:34px;
+      padding:0 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.06);
+      color:#cfe0ff;
+      font-size:12px;
+      font-weight:700;
+      white-space:nowrap;
+    }
+
+    .reader-body{
+      padding:34px 26px 18px;
+      position:relative;
+    }
+
+    .story{
+      max-width:720px;
+      margin:0 auto;
+      position:relative;
+      z-index:2;
+    }
+
+    .lead{
+      font-size:19px;
+      line-height:1.9;
+      color:#ecf3ff;
+      margin:0 0 26px;
+      padding:18px 18px 18px 20px;
+      border-left:3px solid rgba(73,182,255,.44);
+      background:rgba(9,18,35,.68);
+      border-radius:0 14px 14px 0;
+      backdrop-filter:blur(4px);
+    }
+
+    .story p{
+      margin:0 0 22px;
+      color:#e4ecfb;
+      font-size:18px;
+      line-height:1.95;
+      letter-spacing:.01em;
+      text-shadow:0 1px 2px rgba(0,0,0,.4);
+    }
+
+    .story p strong{
+      color:#ffffff;
+      font-weight:700;
+    }
+
+    .story .quote{
+      margin:34px 0;
+      padding:20px 22px;
+      border-radius:18px;
+      background:linear-gradient(180deg, rgba(10,108,255,.12), rgba(73,182,255,.06));
+      border:1px solid rgba(73,182,255,.14);
+      color:#edf5ff;
+      font-size:19px;
+      line-height:1.7;
+      text-align:center;
+      box-shadow:0 12px 30px rgba(0,0,0,.18);
+      backdrop-filter:blur(4px);
+    }
+
+    .story .divider{
+      width:86px;
+      height:1px;
+      background:linear-gradient(90deg, transparent, rgba(73,182,255,.6), transparent);
+      margin:34px auto;
+    }
+
+    .reader-bottom{
+      padding:24px 26px 28px;
+      border-top:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .reader-note{
+      color:var(--muted-2);
+      font-size:13px;
+      margin:0;
+    }
+
+    .nav-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    @media (max-width: 900px){
+      .hero-grid{
+        grid-template-columns:1fr;
+      }
+
+      .hero-side{
+        justify-content:flex-start;
+      }
+
+      .chapter-card{
+        width:100%;
+        max-width:unset;
+      }
+    }
+
+    @media (max-width: 640px){
+      .topbar-inner{
+        padding:14px 14px;
+      }
+
+      .hero-inner{
+        padding:34px 14px 22px;
+      }
+
+      .content-wrap{
+        padding:20px 14px 60px;
+      }
+
+      .reader-top,
+      .reader-body,
+      .reader-bottom{
+        padding-left:16px;
+        padding-right:16px;
+      }
+
+      .reader-body{
+        padding-top:24px;
+      }
+
+      .hero-copy p,
+      .story p,
+      .lead{
+        font-size:16px;
+      }
+
+      .meta{
+        grid-template-columns:1fr;
+      }
+
+      .top-actions{
+        width:100%;
+      }
+
+      .btn{
+        width:100%;
+      }
+
+      .nav-actions{
+        width:100%;
+      }
+
+      .nav-actions .btn{
+        flex:1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="stars"></canvas>
+
+  <div class="page">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <div class="brand-badge">N</div>
+          <div>
+            <p class="brand-title">Ya habías estado ahí</p>
+            <p class="brand-sub">Thriller psicológico y misterio</p>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <a href="capitulo3.html" onclick="goBack(event, 'capitulo3.html')" class="btn btn-ghost">← Capítulo anterior</a>
+          <a href="capitulo5.html" class="btn btn-primary">Siguiente capítulo →</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="crumb">Inicio / Capítulos / Capítulo 4</div>
+
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Capítulo 4</p>
+            <h1>La puerta no era para entrar</h1>
+            <p>
+              Los golpes en la entrada no anuncian una visita. Anuncian una recuperación.
+              Y mientras Adrián intenta huir con una caja negra que no entiende, descubre que la casa no fue diseñada para esconderlo del mundo, sino para entregarlo en el momento correcto.
+            </p>
+          </div>
+
+          <div class="hero-side">
+            <aside class="chapter-card">
+              <div class="chapter-label">Ahora la casa toma partido</div>
+              <h2>Hay lugares que parecen refugio hasta que recuerdas para quién fueron construidos.</h2>
+              <p>
+                Con hombres esperando afuera, una grabación de su madre aún vibrando en la cabeza
+                y una caja que podría contener la parte más peligrosa de sí mismo, Adrián debe elegir
+                entre escapar sin entender nada o avanzar hacia un nivel del que quizá ya no vuelva siendo el mismo.
+              </p>
+
+              <div class="meta">
+                <div class="meta-item">
+                  <p class="meta-k">Estado</p>
+                  <p class="meta-v">Gratis</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Género</p>
+                  <p class="meta-v">Suspenso</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Temporada</p>
+                  <p class="meta-v">4 de 12</p>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="content-wrap">
+      <article class="reader">
+        <div class="reader-top">
+          <div class="reader-top-left">
+            <h3>Capítulo 4: La puerta no era para entrar</h3>
+            <p>Lectura gratuita · Algunos lugares no te encierran: te clasifican</p>
+          </div>
+          <div class="reader-badge">Acceso abierto</div>
+        </div>
+
+        <div class="reader-body">
+          <div class="story">
+            <p class="lead">
+              Adrián no discutió. No preguntó otra vez quién estaba afuera. No perdió el tiempo fingiendo que todavía existía una opción limpia.
+              La frase de Esteban había dejado el aire cortado en dos:
+              <strong>“Corre si quieres seguir siendo Adrián antes de recordar quién eras para ellos.”</strong>
+              Afuera, alguien sabía que había vuelto. Adentro, la casa acababa de revelar que no era un escenario del pasado,
+              sino una pieza activa de algo que seguía funcionando. Y en medio de ambos lados, él sostenía una caja negra cuya existencia
+              parecía suficiente para que unos quisieran protegerla y otros recuperarla antes de que fuera abierta.
+            </p>
+
+            <p>
+              Otro golpe en la puerta principal.
+            </p>
+
+            <p>
+              Esta vez no vino solo.
+            </p>
+
+            <p>
+              Hubo un segundo sonido,
+            </p>
+
+            <p>
+              metálico,
+            </p>
+
+            <p>
+              seco,
+            </p>
+
+            <p>
+              breve.
+            </p>
+
+            <p>
+              Como una herramienta apoyándose en una cerradura.
+            </p>
+
+            <p>
+              Adrián miró a Esteban.
+            </p>
+
+            <p>
+              —Van a entrar.
+            </p>
+
+            <p>
+              Esteban ya estaba moviéndose.
+            </p>
+
+            <p>
+              No hacia la puerta principal.
+            </p>
+
+            <p>
+              No hacia las ventanas.
+            </p>
+
+            <p>
+              Se dirigió al fondo del cuarto, a una pared donde no había nada salvo una biblioteca baja y un espejo angosto colgado demasiado alto.
+            </p>
+
+            <p>
+              La imagen golpeó algo dentro de Adrián.
+            </p>
+
+            <p>
+              No por el espejo.
+            </p>
+
+            <p>
+              Por el rechazo inmediato que sintió al verlo.
+            </p>
+
+            <p>
+              Una aversión instintiva.
+            </p>
+
+            <p>
+              Como si una parte de él supiera que ese espejo no debía estar ahí.
+            </p>
+
+            <div class="quote">La memoria no siempre avisa con claridad. A veces solo te enseña qué objeto odiar antes de decirte por qué.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Esteban metió la mano detrás del marco.
+            </p>
+
+            <p>
+              Se oyó un clic apenas perceptible.
+            </p>
+
+            <p>
+              La biblioteca baja vibró.
+            </p>
+
+            <p>
+              Luego retrocedió cinco centímetros sobre un riel oculto.
+            </p>
+
+            <p>
+              Adrián no se movió.
+            </p>
+
+            <p>
+              No por falta de voluntad.
+            </p>
+
+            <p>
+              Sino porque el cuerpo se le quedó suspendido en una clase distinta de terror:
+            </p>
+
+            <p>
+              el terror de ver que una locura ya había sido diseñada antes de que tú llegaras.
+            </p>
+
+            <p>
+              Detrás de la biblioteca apareció una puerta angosta.
+            </p>
+
+            <p>
+              Sin pomo.
+            </p>
+
+            <p>
+              Sin cerradura visible.
+            </p>
+
+            <p>
+              Pintada del mismo color de la pared.
+            </p>
+
+            <p>
+              Tan disimulada que solo podía ser hallada por alguien que supiera exactamente dónde buscarla.
+            </p>
+
+            <p>
+              Adrián bajó la vista hacia la llave marcada con el número 17.
+            </p>
+
+            <p>
+              La sintió más pesada de pronto.
+            </p>
+
+            <p>
+              Menos como un objeto y más como una instrucción.
+            </p>
+
+            <p>
+              —¿Eso es el nivel 17?
+            </p>
+
+            <p>
+              Esteban lo miró solo un segundo.
+            </p>
+
+            <p>
+              —No. Esa es la bajada.
+            </p>
+
+            <div class="quote">Hay lugares cuyo nombre verdadero no describe un piso. Describe una profundidad.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Afuera, la voz volvió.
+            </p>
+
+            <p>
+              Ya no tan amortiguada.
+            </p>
+
+            <p>
+              Ya no paciente.
+            </p>
+
+            <p>
+              —Esteban. Ábrela y sal solo.
+            </p>
+
+            <p>
+              Adrián sintió algo raro al oír ese nombre en boca ajena.
+            </p>
+
+            <p>
+              No miedo.
+            </p>
+
+            <p>
+              Jerarquía.
+            </p>
+
+            <p>
+              Como si quien hablaba no estuviera improvisando una negociación,
+              sino ejecutando un procedimiento que ya había ocurrido demasiadas veces.
+            </p>
+
+            <p>
+              Esteban no contestó.
+            </p>
+
+            <p>
+              Retrocedió la biblioteca por completo y se volvió hacia Adrián.
+            </p>
+
+            <p>
+              —Escúchame ahora porque no voy a repetirlo.
+            </p>
+
+            <p>
+              El tono ya no era cauteloso.
+            </p>
+
+            <p>
+              Era quirúrgico.
+            </p>
+
+            <p>
+              —Baja la escalera. Al final vas a encontrar una puerta de acero. No la abras con la caja en la mano.
+            </p>
+
+            <p>
+              —¿Por qué?
+            </p>
+
+            <p>
+              —Porque si la caja reconoce la cerradura antes que tú, activa la secuencia completa.
+            </p>
+
+            <p>
+              Adrián lo miró como si acabara de hablar en otro idioma.
+            </p>
+
+            <p>
+              —¿Secuencia de qué?
+            </p>
+
+            <p>
+              —De regreso.
+            </p>
+
+            <p>
+              El golpe siguiente en la puerta principal sonó más fuerte.
+            </p>
+
+            <p>
+              No por rabia.
+            </p>
+
+            <p>
+              Por precisión mecánica.
+            </p>
+
+            <p>
+              Como si ya hubieran dejado de llamar.
+            </p>
+
+            <p>
+              Como si estuvieran calibrando.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              Adrián apretó la caja negra contra el pecho.
+            </p>
+
+            <p>
+              —No voy a bajar a ciegas.
+            </p>
+
+            <p>
+              Esteban lo entendió de inmediato.
+            </p>
+
+            <p>
+              Asintió apenas.
+            </p>
+
+            <p>
+              —Bien.
+            </p>
+
+            <p>
+              Se acercó al escritorio,
+              abrió otro cajón
+              y sacó una linterna pequeña y un sobre marrón cerrado con cinta negra.
+            </p>
+
+            <p>
+              Se los entregó.
+            </p>
+
+            <p>
+              —Abre el sobre solo si escuchas tu propia voz.
+            </p>
+
+            <p>
+              Adrián casi soltó una risa amarga.
+            </p>
+
+            <p>
+              —¿Te estás escuchando?
+            </p>
+
+            <p>
+              —Más de lo que quisiera.
+            </p>
+
+            <p>
+              La respuesta fue tan seca que por un instante pareció verdad pura, no manipulación.
+            </p>
+
+            <p>
+              Eso era lo insoportable de Esteban:
+            </p>
+
+            <p>
+              no sonaba confiable.
+            </p>
+
+            <p>
+              Sonaba necesario.
+            </p>
+
+            <div class="quote">La gente más peligrosa no siempre es la que miente mejor. A veces es la que te obliga a seguirla aun cuando no puedes creerle del todo.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              La puerta principal crujió.
+            </p>
+
+            <p>
+              Adrián giró de golpe hacia el pasillo.
+            </p>
+
+            <p>
+              No podía verla desde ahí,
+              pero sí imaginarla:
+            </p>
+
+            <p>
+              la madera cediendo apenas,
+            </p>
+
+            <p>
+              la cerradura forzada,
+            </p>
+
+            <p>
+              hombres entrando con la calma profesional de quienes ya conocen el plano de la casa.
+            </p>
+
+            <p>
+              —¿Cuántos son? —preguntó.
+            </p>
+
+            <p>
+              Esteban se quedó quieto un segundo,
+              como si estuviera escuchando no el ruido, sino el estilo.
+            </p>
+
+            <p>
+              —Tres al frente.
+            </p>
+
+            <p>
+              Adrián lo miró.
+            </p>
+
+            <p>
+              —¿Y atrás?
+            </p>
+
+            <p>
+              Esteban no respondió.
+            </p>
+
+            <p>
+              No hacía falta.
+            </p>
+
+            <p>
+              Ambos entendieron lo mismo al mismo tiempo.
+            </p>
+
+            <p>
+              La casa no estaba rodeada para impedir una salida.
+            </p>
+
+            <p>
+              Estaba cerrada para impedir una elección.
+            </p>
+
+            <div class="quote">Eso ya no era un allanamiento. Era una recuperación de activo.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              —¿Qué soy para ellos? —preguntó Adrián.
+            </p>
+
+            <p>
+              La pregunta no salió temblando.
+            </p>
+
+            <p>
+              Salió con una extraña frialdad nueva.
+            </p>
+
+            <p>
+              Quizá porque el miedo, cuando sube demasiado, a veces se convierte en otra cosa:
+            </p>
+
+            <p>
+              una lucidez cruel.
+            </p>
+
+            <p>
+              Esteban lo miró de frente.
+            </p>
+
+            <p>
+              Esta vez no esquivó nada.
+            </p>
+
+            <div class="quote">—Una llave viva.</div>
+
+            <p>
+              El silencio posterior fue total.
+            </p>
+
+            <p>
+              Incluso la casa pareció detenerse un segundo,
+              como si esa definición tuviera su propio peso dentro de las paredes.
+            </p>
+
+            <p>
+              Adrián no respondió de inmediato.
+            </p>
+
+            <p>
+              Porque una parte de él ya había entendido antes que las palabras llegaran a completarse.
+            </p>
+
+            <p>
+              No lo querían muerto.
+            </p>
+
+            <p>
+              No todavía.
+            </p>
+
+            <p>
+              Lo querían funcional.
+            </p>
+
+            <p>
+              Legible.
+            </p>
+
+            <p>
+              Abierto.
+            </p>
+
+            <p>
+              —¿Para abrir qué?
+            </p>
+
+            <p>
+              Esteban bajó la vista a la caja negra.
+            </p>
+
+            <p>
+              Luego a la llave 17.
+            </p>
+
+            <p>
+              Luego a la puerta oculta tras la biblioteca.
+            </p>
+
+            <div class="quote">—Lo que tu madre consiguió cerrar antes de desaparecer.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Otra imagen.
+            </p>
+
+            <p>
+              Esta vez llegó sin aviso,
+              sin transición,
+              sin compasión.
+            </p>
+
+            <p>
+              Un corredor blanco.
+            </p>
+
+            <p>
+              Luz fría en el techo.
+            </p>
+
+            <p>
+              Una puerta metálica con un círculo rojo en el centro.
+            </p>
+
+            <p>
+              Su mano infantil tocando ese círculo.
+            </p>
+
+            <p>
+              Una voz de mujer,
+              urgente,
+              detrás de él:
+            </p>
+
+            <div class="quote">“No dejes que te usen cuando estés dormido.”</div>
+
+            <p>
+              Adrián retrocedió de golpe.
+            </p>
+
+            <p>
+              Chocó con el escritorio.
+            </p>
+
+            <p>
+              La grabadora cayó al suelo y rebotó una vez contra la madera.
+            </p>
+
+            <p>
+              Esteban no se movió hacia él.
+            </p>
+
+            <p>
+              Solo preguntó:
+            </p>
+
+            <p>
+              —¿Qué viste?
+            </p>
+
+            <p>
+              Adrián respiraba demasiado rápido.
+            </p>
+
+            <p>
+              —Una puerta.
+            </p>
+
+            <p>
+              —¿Qué más?
+            </p>
+
+            <p>
+              —Un círculo rojo.
+            </p>
+
+            <p>
+              El rostro de Esteban cambió apenas.
+            </p>
+
+            <p>
+              No fue sorpresa.
+            </p>
+
+            <p>
+              Fue confirmación.
+            </p>
+
+            <p>
+              —Entonces ya empezó.
+            </p>
+
+            <p>
+              —¿Qué empezó?
+            </p>
+
+            <p>
+              Esteban dio dos pasos hacia él.
+            </p>
+
+            <p>
+              Bajó la voz.
+            </p>
+
+            <p>
+              —La parte de ti que quedó encerrada abajo está reconociéndote.
+            </p>
+
+            <div class="quote">No era memoria regresando. Era memoria llamándolo desde adentro.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              La puerta principal cedió.
+            </p>
+
+            <p>
+              Esta vez no hubo duda.
+            </p>
+
+            <p>
+              Se oyó el golpe de la madera contra la pared del recibidor.
+            </p>
+
+            <p>
+              Luego pasos.
+            </p>
+
+            <p>
+              No apurados.
+            </p>
+
+            <p>
+              No torpes.
+            </p>
+
+            <p>
+              Pasos de hombres que no necesitaban correr porque el objetivo estaba donde debía estar.
+            </p>
+
+            <p>
+              Adrián sintió cómo la casa entera se reorganizaba alrededor del sonido.
+            </p>
+
+            <p>
+              Ya no parecía una vivienda.
+            </p>
+
+            <p>
+              Parecía un mecanismo activado.
+            </p>
+
+            <p>
+              —Baja ahora —dijo Esteban.
+            </p>
+
+            <p>
+              —¿Y tú?
+            </p>
+
+            <p>
+              Esteban miró hacia el pasillo.
+            </p>
+
+            <p>
+              —Yo soy el retraso.
+            </p>
+
+            <p>
+              Adrián no se movió.
+            </p>
+
+            <p>
+              No por cobardía.
+            </p>
+
+            <p>
+              Porque una parte de él todavía necesitaba saber si Esteban iba a venderlo en cuanto desapareciera escalera abajo.
+            </p>
+
+            <p>
+              Esteban lo entendió sin que se lo dijera.
+            </p>
+
+            <p>
+              —Si quisiera entregarte, te habría dejado escuchar la cinta completa.
+            </p>
+
+            <p>
+              La frase lo golpeó con precisión.
+            </p>
+
+            <p>
+              No resolvía nada.
+            </p>
+
+            <p>
+              Pero tenía el tipo de lógica que uno no puede ignorar cuando ya no le quedan opciones cómodas.
+            </p>
+
+            <div class="quote">No siempre eliges en quién confiar. A veces solo eliges quién te traiciona más tarde.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Pasos en el pasillo.
+            </p>
+
+            <p>
+              Ahora sí dentro de la casa.
+            </p>
+
+            <p>
+              Uno de ellos habló,
+              la voz más cercana,
+              más nítida:
+            </p>
+
+            <p>
+              —Adrián, no compliques esto.
+            </p>
+
+            <p>
+              La familiaridad del tono lo dejó helado.
+            </p>
+
+            <p>
+              No reconoció la voz.
+            </p>
+
+            <p>
+              Pero reconoció el estilo:
+            </p>
+
+            <p>
+              alguien que hablaba como si el vínculo ya existiera.
+            </p>
+
+            <p>
+              Como si no vinieran a capturarlo,
+              sino a corregir una desviación.
+            </p>
+
+            <p>
+              —Trajimos lo que pediste aquella vez —continuó la voz—.
+            </p>
+
+            <p>
+              La frase le partió el centro.
+            </p>
+
+            <p>
+              <strong>Aquella vez.</strong>
+            </p>
+
+            <p>
+              El lenguaje entero de la noche estaba hecho para afirmar lo mismo:
+            </p>
+
+            <p>
+              esto no empezaba ahora.
+            </p>
+
+            <p>
+              Esto regresaba.
+            </p>
+
+            <div class="quote">El horror ya no era que alguien supiera cosas sobre él. El horror era que hablaran como si hubieran negociado con él antes.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Esteban empujó la puerta oculta.
+            </p>
+
+            <p>
+              Se abrió hacia adentro.
+            </p>
+
+            <p>
+              Detrás, una escalera estrecha descendía en espiral.
+            </p>
+
+            <p>
+              Hormigón.
+            </p>
+
+            <p>
+              Metal.
+            </p>
+
+            <p>
+              Aire mucho más frío que el de la casa.
+            </p>
+
+            <p>
+              No olía a sótano.
+            </p>
+
+            <p>
+              Olía a lugar sellado con intención.
+            </p>
+
+            <p>
+              Adrián alumbró con la linterna.
+            </p>
+
+            <p>
+              La luz bajó unos pocos metros y luego se dobló con la curva.
+            </p>
+
+            <p>
+              No alcanzó a ver el final.
+            </p>
+
+            <p>
+              Sintió vértigo.
+            </p>
+
+            <p>
+              No por la profundidad.
+            </p>
+
+            <p>
+              Por el reconocimiento.
+            </p>
+
+            <p>
+              El cuerpo supo antes que la mente:
+            </p>
+
+            <p>
+              ya había bajado por ahí.
+            </p>
+
+            <p>
+              Y no una vez.
+            </p>
+
+            <p><strong>Muchas.</strong></p>
+
+            <div class="quote">Hay escaleras que se bajan con miedo. Otras se bajan con la repulsión de quien comprende que sus pies recuerdan el camino.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Adrián miró a Esteban una última vez.
+            </p>
+
+            <p>
+              —¿Qué hay abajo?
+            </p>
+
+            <p>
+              Esteban sostuvo su mirada con una gravedad extraña,
+              casi compasiva,
+              como si la única piedad posible fuera no mentirle ya.
+            </p>
+
+            <p>
+              —No hay “qué”.
+            </p>
+
+            <p>
+              Adrián esperó.
+            </p>
+
+            <p>
+              Esteban terminó la frase sin bajar la vista.
+            </p>
+
+            <div class="quote"><strong>—Hay quien.</strong></div>
+
+            <p>
+              Los pasos llegaron al umbral del cuarto.
+            </p>
+
+            <p>
+              Una sombra se proyectó sobre la pared del pasillo.
+            </p>
+
+            <p>
+              Adrián no pensó más.
+            </p>
+
+            <p>
+              Bajó el primer peldaño.
+            </p>
+
+            <p>
+              Luego el segundo.
+            </p>
+
+            <p>
+              Luego otro.
+            </p>
+
+            <p>
+              La puerta oculta empezó a cerrarse arriba.
+            </p>
+
+            <p>
+              Antes de que se sellara del todo,
+              oyó la voz del hombre del pasillo,
+              clara,
+              serena,
+              insoportablemente cercana:
+            </p>
+
+            <div class="quote">—No lo sigas llamando Adrián. Abajo ese nombre ya no abre nada.</div>
+
+            <p>
+              La puerta se cerró.
+            </p>
+
+            <p>
+              El sonido del mecanismo trabándose retumbó en la escalera como un latido metálico.
+            </p>
+
+            <p>
+              Adrián quedó solo con la linterna,
+              la caja negra,
+              la llave 17
+              y esa última frase clavada en la nuca.
+            </p>
+
+            <p>
+              Siguió bajando.
+            </p>
+
+            <p>
+              Una vuelta.
+            </p>
+
+            <p>
+              Dos.
+            </p>
+
+            <p>
+              Tres.
+            </p>
+
+            <p>
+              El aire se volvía más frío a cada metro.
+            </p>
+
+            <p>
+              Y, sin embargo,
+              una extraña calidez empezó a crecerle por dentro.
+            </p>
+
+            <p>
+              No consuelo.
+            </p>
+
+            <p>
+              Reconocimiento.
+            </p>
+
+            <p>
+              Una cercanía intolerable,
+              como si algo allá abajo no lo estuviera esperando con paciencia...
+            </p>
+
+            <p>
+              sino con hambre.
+            </p>
+
+            <p>
+              Cuando al fin vio la puerta de acero al final de la escalera,
+              sintió que el pecho le dejaba de pertenecer.
+            </p>
+
+            <p>
+              Era exactamente como en la imagen.
+            </p>
+
+            <p>
+              Placa gris.
+            </p>
+
+            <p>
+              Superficie lisa.
+            </p>
+
+            <p>
+              Y en el centro,
+              apenas visible bajo el polvo,
+              un círculo rojo.
+            </p>
+
+            <p>
+              Adrián levantó la linterna con la mano temblando.
+            </p>
+
+            <p>
+              Entonces vio algo escrito en la base de la puerta,
+              casi borrado,
+              como trazado por uñas o por una mano que ya no tenía tiempo:
+            </p>
+
+            <div class="quote"><strong>SI BAJAS SOLO, NO LE RESPONDAS CUANDO DIGA TU OTRO NOMBRE.</strong></div>
+          </div>
+        </div>
+
+        <div class="reader-bottom">
+          <p class="reader-note">
+            Continúa la historia para descubrir quién está detrás de la puerta de acero, cuál es el otro nombre de Adrián y por qué el nivel 17 parece guardar una identidad que fue escondida viva.
+          </p>
+
+          <div class="nav-actions">
+            <a href="capitulo3.html" onclick="goBack(event, 'capitulo3.html')" class="btn btn-ghost">← Capítulo 3</a>
+            <a href="capitulo5.html" class="btn btn-primary">Leer capítulo 5 →</a>
+          </div>
+        </div>
+      </article>
+    </main>
+  </div>
+
+  <script>
+    function goBack(event, fallbackUrl){
+      event.preventDefault();
+
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.location.href = fallbackUrl;
+      }
+    }
+
+    const canvas = document.getElementById("stars");
+    const ctx = canvas.getContext("2d");
+    let stars = [];
+
+    function resize(){
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      createStars();
+    }
+
+    function createStars(){
+      stars = [];
+      const amount = Math.floor((canvas.width * canvas.height) / 14000);
+      for(let i = 0; i < amount; i++){
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.6 + 0.3,
+          speed: Math.random() * 0.35 + 0.08,
+          alpha: Math.random() * 0.7 + 0.2
+        });
+      }
+    }
+
+    function animate(){
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for(const s of stars){
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        s.y += s.speed;
+
+        if(s.y > canvas.height){
+          s.y = -2;
+          s.x = Math.random() * canvas.width;
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener("resize", resize);
+    resize();
+    animate();
+  </script>
+</body>
+</html>
