@@ -588,6 +588,13 @@
       backdrop-filter:blur(10px);
     }
 
+    .payment-buttons{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      min-width:min(100%, 320px);
+    }
+
     .chapters-section{
       padding:10px 0 60px;
     }
@@ -937,6 +944,11 @@
         width:100%;
         justify-content:center;
       }
+
+      .payment-buttons{
+        min-width:100%;
+        width:100%;
+      }
     }
   </style>
 </head>
@@ -970,6 +982,8 @@
     const firebaseApp = initializeApp(firebaseConfig);
     const auth = getAuth(firebaseApp);
     const db = getFirestore(firebaseApp);
+
+    const API_BASE_URL = "PEGA_AQUI_TU_URL_DE_FUNCTIONS";
 
     const params = new URLSearchParams(window.location.search);
     const novelId = params.get("id");
@@ -1111,6 +1125,50 @@
         if (!localStorage.getItem(progressKey)) {
           localStorage.setItem(progressKey, getChapterPath(chapters[0]));
         }
+      }
+
+      async function createNovelPayment(currentUser) {
+        const response = await fetch(`${API_BASE_URL}/create-novel-payment`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            uid: currentUser.uid,
+            novelId: novel.id,
+            title: novel.title,
+            price: Number(novel.individualPrice || 1500)
+          })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.ok || !data.init_point) {
+          throw new Error(data.error || "No se pudo crear el pago de la novela.");
+        }
+
+        window.location.href = data.init_point;
+      }
+
+      async function createPremiumSubscription(currentUser) {
+        const response = await fetch(`${API_BASE_URL}/create-premium-subscription`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            uid: currentUser.uid,
+            email: currentUser.email
+          })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.ok || !data.init_point) {
+          throw new Error(data.error || "No se pudo crear la suscripción premium.");
+        }
+
+        window.location.href = data.init_point;
       }
 
       function chapterIsAccessible(index){
@@ -1328,14 +1386,14 @@
                   <div class="premium-details">
                     <span class="premium-pill">Premium mensual $6.990</span>
                     <span class="premium-pill">Pago con Mercado Pago</span>
-                    <span class="premium-pill">Más adelante: compra individual ${escapeHtml(novel.price || "$1.500 CLP")}</span>
+                    <span class="premium-pill">Compra individual ${escapeHtml(novel.individualPriceLabel || "$1.500 CLP")}</span>
                   </div>
 
                   <div class="premium-note">
-                    <strong>En este paso estamos bloqueando bien el contenido</strong>
+                    <strong>Ya estamos listos para conectar pagos reales</strong>
                     <span>
-                      Después conectaremos la compra individual por novela y el backend real de pago,
-                      pero desde ya la experiencia queda separada entre visitante, free y premium.
+                      Premium mensual desbloquea toda la plataforma y también podrás comprar
+                      esta novela de forma individual.
                     </span>
                   </div>
                 </div>
@@ -1343,7 +1401,12 @@
                 ${
                   accessState.isPremium
                     ? `<button class="btn btn-primary" type="button" disabled>${premiumBtnLabel}</button>`
-                    : `<a class="btn btn-primary" href="../login.html">${premiumBtnLabel}</a>`
+                    : `
+                      <div class="payment-buttons">
+                        <button class="btn btn-primary" type="button" id="premiumPayBtn">${premiumBtnLabel}</button>
+                        <button class="btn btn-secondary" type="button" id="novelPayBtn">Comprar esta novela ${escapeHtml(novel.individualPriceLabel || "$1.500 CLP")}</button>
+                      </div>
+                    `
                 }
               </div>
             </div>
@@ -1357,6 +1420,8 @@
 
       const continueBtn = document.getElementById("continueBtn");
       const startBtn = document.getElementById("startBtn");
+      const premiumPayBtn = document.getElementById("premiumPayBtn");
+      const novelPayBtn = document.getElementById("novelPayBtn");
 
       startBtn.addEventListener("click", () => {
         localStorage.setItem(progressKey, getChapterPath(chapters[0]));
@@ -1371,6 +1436,50 @@
           localStorage.setItem(progressKey, e.currentTarget.dataset.chapterPath);
         });
       });
+
+      if (premiumPayBtn) {
+        premiumPayBtn.addEventListener("click", async () => {
+          const currentUser = auth.currentUser;
+
+          if (!currentUser) {
+            window.location.href = "../login.html";
+            return;
+          }
+
+          try {
+            premiumPayBtn.disabled = true;
+            premiumPayBtn.textContent = "Redirigiendo a Mercado Pago...";
+            await createPremiumSubscription(currentUser);
+          } catch (error) {
+            console.error(error);
+            alert(error.message || "No se pudo iniciar el pago premium.");
+            premiumPayBtn.disabled = false;
+            premiumPayBtn.textContent = "Hazte Premium $6.990";
+          }
+        });
+      }
+
+      if (novelPayBtn) {
+        novelPayBtn.addEventListener("click", async () => {
+          const currentUser = auth.currentUser;
+
+          if (!currentUser) {
+            window.location.href = "../login.html";
+            return;
+          }
+
+          try {
+            novelPayBtn.disabled = true;
+            novelPayBtn.textContent = "Redirigiendo a Mercado Pago...";
+            await createNovelPayment(currentUser);
+          } catch (error) {
+            console.error(error);
+            alert(error.message || "No se pudo iniciar el pago de la novela.");
+            novelPayBtn.disabled = false;
+            novelPayBtn.textContent = `Comprar esta novela ${novel.individualPriceLabel || "$1.500 CLP"}`;
+          }
+        });
+      }
 
       document.title = `${novel.title} | Nébula`;
     }
