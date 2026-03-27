@@ -1,5 +1,21 @@
+window.NEBULA_BILLING = {
+  currency: "CLP",
+  premiumMonthlyPrice: 6990,
+  premiumMonthlyLabel: "$6.990 CLP",
+  individualNovelPrice: 1500,
+  individualNovelLabel: "$1.500 CLP",
+  premiumPlanId: "nebula-premium-monthly",
+  premiumName: "Nébula Premium Mensual"
+};
+
 window.NEBULA_NOVELS = {
   "codigo-nebula": {
+    id: "codigo-nebula",
+    productType: "single_novel",
+    allowIndividualPurchase: true,
+    premiumIncluded: true,
+    individualPrice: 1500,
+    individualPriceLabel: "$1.500 CLP",
     title: "Código Nébula",
     description: "Una historia futurista donde nada es lo que parece y cada capítulo abre una nueva grieta en el sistema. A medida que avanzas, descubres que la red no solo observa: también recuerda, manipula y espera.",
     cover: "../assets/covers/nebula.jpg",
@@ -37,6 +53,12 @@ window.NEBULA_NOVELS = {
   },
 
   "no-debi-enamorarme": {
+    id: "no-debi-enamorarme",
+    productType: "single_novel",
+    allowIndividualPurchase: true,
+    premiumIncluded: true,
+    individualPrice: 1500,
+    individualPriceLabel: "$1.500 CLP",
     title: "No debí enamorarme de ti",
     description: "Una historia intensa sobre deseo, decisiones equivocadas y emociones que arden demasiado. Cada capítulo aprieta más la tensión entre lo que se quiere y lo que no se debería sentir.",
     cover: "../assets/covers/no-debi-enamorarme.jpg",
@@ -76,6 +98,12 @@ window.NEBULA_NOVELS = {
   },
 
   "despues-de-tu-adios": {
+    id: "despues-de-tu-adios",
+    productType: "single_novel",
+    allowIndividualPurchase: true,
+    premiumIncluded: true,
+    individualPrice: 1500,
+    individualPriceLabel: "$1.500 CLP",
     title: "Después de tu adiós",
     description: "Una novela emocional sobre recuerdos, ausencia y todo lo que sigue vivo después de una despedida. Una historia marcada por la nostalgia, la pérdida y aquello que cuesta soltar.",
     cover: "../assets/covers/despues-de-tu-adios.jpg",
@@ -93,6 +121,12 @@ window.NEBULA_NOVELS = {
   },
 
   "la-ultima-conexion": {
+    id: "la-ultima-conexion",
+    productType: "single_novel",
+    allowIndividualPurchase: true,
+    premiumIncluded: true,
+    individualPrice: 1500,
+    individualPriceLabel: "$1.500 CLP",
     title: "La última conexión",
     description: "A las 02:17 de la madrugada, Daniel recibe mensajes desde su propio número. Lo peor no es quién escribe, sino que esos mensajes saben exactamente lo que está ocurriendo dentro de su habitación.",
     cover: "../assets/covers/la-ultima-conexion.jpg",
@@ -119,6 +153,12 @@ window.NEBULA_NOVELS = {
   },
 
   "ya-habias-estado-ahi": {
+    id: "ya-habias-estado-ahi",
+    productType: "single_novel",
+    allowIndividualPurchase: true,
+    premiumIncluded: true,
+    individualPrice: 1500,
+    individualPriceLabel: "$1.500 CLP",
     title: "Ya habías estado ahí",
     description: "Volver a casa nunca volvió a sentirse normal. Un cajón abierto, una puerta distinta, objetos fuera de lugar. Al principio parecen detalles mínimos, hasta que entiendes algo peor: alguien ya había estado ahí.",
     cover: "../assets/covers/ya-habias-estado-ahi.jpg",
@@ -143,6 +183,12 @@ window.NEBULA_NOVELS = {
   },
 
   "bajo-la-misma-lluvia": {
+    id: "bajo-la-misma-lluvia",
+    productType: "single_novel",
+    allowIndividualPurchase: true,
+    premiumIncluded: true,
+    individualPrice: 1500,
+    individualPriceLabel: "$1.500 CLP",
     title: "Bajo la misma lluvia",
     description: "Dos vidas marcadas por heridas distintas vuelven a cruzarse en el peor momento posible. Bajo la lluvia, lo que parecía casual empieza a sentirse inevitable.",
     cover: "../assets/covers/bajo-la-misma-lluvia.jpg",
@@ -160,6 +206,12 @@ window.NEBULA_NOVELS = {
   },
 
   "pinochet": {
+    id: "pinochet",
+    productType: "single_novel",
+    allowIndividualPurchase: true,
+    premiumIncluded: true,
+    individualPrice: 1500,
+    individualPriceLabel: "$1.500 CLP",
     title: "Pinochet",
     description: "Una novela histórica intensa sobre poder, control, decisiones militares y el impacto humano de un periodo que marcó para siempre la historia de Chile.",
     cover: "../assets/covers/pinochet_nebula_portada.png",
@@ -186,6 +238,12 @@ window.NEBULA_NOVELS = {
   },
 
   "allende": {
+    id: "allende",
+    productType: "single_novel",
+    allowIndividualPurchase: true,
+    premiumIncluded: true,
+    individualPrice: 1500,
+    individualPriceLabel: "$1.500 CLP",
     title: "Allende",
     description: "Una historia política y humana sobre liderazgo, convicción y uno de los periodos más decisivos de la historia de Chile.",
     cover: "../assets/covers/allende_portada_nebula.png",
@@ -215,6 +273,12 @@ window.NEBULA_NOVELS = {
   },
 
   "el-precio-del-silencio": {
+    id: "el-precio-del-silencio",
+    productType: "single_novel",
+    allowIndividualPurchase: true,
+    premiumIncluded: true,
+    individualPrice: 1500,
+    individualPriceLabel: "$1.500 CLP",
     title: "El Precio del Silencio",
     description: "Una historia de corrupción, secretos y una red de poder que empieza a quebrarse desde dentro.",
     cover: "../assets/covers/portada-nebula.jpg",
