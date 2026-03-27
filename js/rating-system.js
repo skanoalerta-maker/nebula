@@ -30,6 +30,9 @@
       --blue2:#66b8ff;
       --violet:#9a66ff;
       --cyan:#50dbff;
+      --gold:#ffd54a;
+      --gold-2:#ffbf1f;
+      --green:#4ee7a8;
       --shadow:0 24px 70px rgba(0,0,0,.34);
       --shadow-soft:0 18px 46px rgba(0,0,0,.24);
       --radius:26px;
@@ -216,7 +219,7 @@
     }
 
     .page-header{
-      padding:24px 0 14px;
+      padding:16px 0 14px;
       position:sticky;
       top:0;
       z-index:30;
@@ -229,7 +232,60 @@
       display:flex;
       align-items:center;
       justify-content:space-between;
+      gap:18px;
+      flex-wrap:wrap;
+    }
+
+    .brand-wrap{
+      display:flex;
+      align-items:center;
       gap:16px;
+      min-width:0;
+    }
+
+    .brand-link{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width:0;
+    }
+
+    .brand-logo{
+      width:142px;
+      height:auto;
+      object-fit:contain;
+      flex-shrink:0;
+      filter:
+        drop-shadow(0 0 18px rgba(118,160,255,.26))
+        drop-shadow(0 0 34px rgba(62,123,255,.20));
+    }
+
+    .brand-copy{
+      display:flex;
+      flex-direction:column;
+      min-width:0;
+    }
+
+    .brand-copy strong{
+      font-size:.74rem;
+      line-height:1;
+      letter-spacing:.14em;
+      white-space:nowrap;
+      opacity:.96;
+    }
+
+    .brand-copy span{
+      color:var(--muted);
+      font-size:.46rem;
+      margin-top:4px;
+      letter-spacing:.04em;
+      white-space:nowrap;
+    }
+
+    .header-actions{
+      display:flex;
+      align-items:center;
+      gap:12px;
       flex-wrap:wrap;
     }
 
@@ -259,8 +315,21 @@
       font-weight:700;
     }
 
+    .user-chip{
+      display:inline-flex;
+      align-items:center;
+      min-height:44px;
+      padding:0 16px;
+      border-radius:999px;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.08);
+      color:#edf4ff;
+      font-size:.92rem;
+      font-weight:800;
+    }
+
     .hero{
-      padding:32px 0 26px;
+      padding:32px 0 22px;
     }
 
     .hero-grid{
@@ -364,8 +433,103 @@
       line-height:1.3;
     }
 
+    .value-strip{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0, 1fr));
+      gap:14px;
+      margin-top:2px;
+    }
+
+    .value-card{
+      padding:16px 16px 14px;
+      border-radius:20px;
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
+      border:1px solid rgba(255,255,255,.07);
+    }
+
+    .value-card small{
+      display:block;
+      color:var(--muted-2);
+      font-size:.8rem;
+      margin-bottom:7px;
+      text-transform:uppercase;
+      letter-spacing:.05em;
+    }
+
+    .value-card strong{
+      display:block;
+      font-size:1rem;
+      line-height:1.35;
+      color:#fff;
+    }
+
+    .weekly-banner{
+      position:relative;
+      overflow:hidden;
+      padding:22px 22px 20px;
+      border-radius:24px;
+      background:
+        radial-gradient(circle at 12% 20%, rgba(82,140,255,.16), transparent 30%),
+        radial-gradient(circle at 86% 20%, rgba(154,102,255,.16), transparent 34%),
+        linear-gradient(135deg, rgba(12,22,52,.96), rgba(8,16,38,.94));
+      border:1px solid rgba(255,255,255,.08);
+      box-shadow:var(--shadow-soft);
+    }
+
+    .weekly-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:10px;
+    }
+
+    .weekly-chip{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      min-height:36px;
+      padding:0 14px;
+      border-radius:999px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.08);
+      color:#eaf3ff;
+      font-weight:800;
+      font-size:.84rem;
+      text-transform:uppercase;
+      letter-spacing:.05em;
+    }
+
+    .weekly-dot{
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      background:var(--green);
+      box-shadow:0 0 16px rgba(78,231,168,.72);
+      animation:pulseDot 1.7s ease-in-out infinite;
+      flex-shrink:0;
+    }
+
+    @keyframes pulseDot{
+      0%,100%{ transform:scale(1); opacity:1; }
+      50%{ transform:scale(1.35); opacity:.7; }
+    }
+
+    .weekly-banner h3{
+      font-size:1.28rem;
+      line-height:1.1;
+      margin-bottom:8px;
+    }
+
+    .weekly-banner p{
+      color:#d7e5fb;
+      line-height:1.72;
+      font-size:.98rem;
+    }
+
     .novel-rating-box{
-      margin-top:6px;
+      margin-top:4px;
       padding:20px;
       border-radius:22px;
       background:rgba(255,255,255,.04);
@@ -655,6 +819,47 @@
       max-width:720px;
     }
 
+    .premium-details{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .premium-pill{
+      display:inline-flex;
+      align-items:center;
+      min-height:38px;
+      padding:0 14px;
+      border-radius:999px;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.08);
+      color:#fff;
+      font-weight:800;
+      font-size:.9rem;
+    }
+
+    .premium-note{
+      margin-top:16px;
+      padding:18px;
+      border-radius:22px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.07);
+    }
+
+    .premium-note strong{
+      display:block;
+      margin-bottom:6px;
+      font-size:1rem;
+    }
+
+    .premium-note span{
+      display:block;
+      color:var(--muted);
+      line-height:1.7;
+      font-size:.96rem;
+    }
+
     .error-box{
       width:var(--container);
       margin:48px auto;
@@ -693,7 +898,8 @@
     }
 
     @media (max-width: 900px){
-      .hero-meta{
+      .hero-meta,
+      .value-strip{
         grid-template-columns:1fr;
       }
 
@@ -705,6 +911,22 @@
     @media (max-width: 680px){
       :root{
         --container:min(100% - 18px, 1000px);
+      }
+
+      .page-header-inner{
+        align-items:flex-start;
+      }
+
+      .brand-logo{
+        width:124px;
+      }
+
+      .brand-copy strong{
+        font-size:.64rem;
+      }
+
+      .brand-copy span{
+        font-size:.40rem;
       }
 
       .hero{
@@ -737,6 +959,16 @@
 
       .premium-box{
         padding:20px 18px;
+      }
+
+      .header-actions{
+        width:100%;
+      }
+
+      .back-link,
+      .user-chip{
+        width:100%;
+        justify-content:center;
       }
     }
   </style>
@@ -778,6 +1010,28 @@
         if (seasonDiff !== 0) return seasonDiff;
         return Number(a.num || 0) - Number(b.num || 0);
       });
+    }
+
+    function getLocalUserName(){
+      try{
+        const raw = localStorage.getItem("nebula-user-profile");
+        if (!raw) return "Mi espacio";
+        const parsed = JSON.parse(raw);
+        return parsed?.name || "Mi espacio";
+      }catch{
+        return "Mi espacio";
+      }
+    }
+
+    function getLocalUserIcon(){
+      try{
+        const raw = localStorage.getItem("nebula-user-profile");
+        if (!raw) return "🌌";
+        const parsed = JSON.parse(raw);
+        return parsed?.icon || "🌌";
+      }catch{
+        return "🌌";
+      }
     }
 
     if (!novelId || !window.NEBULA_NOVELS || !window.NEBULA_NOVELS[novelId]) {
@@ -873,8 +1127,21 @@
         app.innerHTML = `
           <header class="page-header">
             <div class="container page-header-inner">
-              <a class="back-link" href="../index.html">← Volver a Nébula</a>
-              <div class="mini-badge">Lectura por capítulos</div>
+              <div class="brand-wrap">
+                <a class="brand-link" href="../index.html" aria-label="Volver a Nébula">
+                  <img class="brand-logo" src="../assets/logo/nebula-logo.png" alt="Logo Nébula" />
+                  <div class="brand-copy">
+                    <strong>NÉBULA</strong>
+                    <span>Historias por capítulos</span>
+                  </div>
+                </a>
+              </div>
+
+              <div class="header-actions">
+                <a class="back-link" href="../index.html">← Volver a Nébula</a>
+                <div class="mini-badge">Lectura por capítulos</div>
+                <div class="user-chip">${escapeHtml(getLocalUserIcon())} ${escapeHtml(getLocalUserName())}</div>
+              </div>
             </div>
           </header>
 
@@ -917,6 +1184,44 @@
                       <strong id="accessState">${paid ? "Historia desbloqueada" : `Solo primeros ${freeChapters} capítulos`}</strong>
                     </div>
                   </div>
+
+                  <div class="value-strip">
+                    <div class="value-card">
+                      <small>Pago</small>
+                      <strong>Mercado Pago</strong>
+                    </div>
+
+                    <div class="value-card">
+                      <small>Acceso</small>
+                      <strong>Desbloqueo inmediato de capítulos premium</strong>
+                    </div>
+
+                    <div class="value-card">
+                      <small>Experiencia</small>
+                      <strong>Lectura optimizada para móvil, tablet y PC</strong>
+                    </div>
+                  </div>
+
+                  <section class="weekly-banner">
+                    <div class="weekly-top">
+                      <div class="weekly-chip">
+                        <span class="weekly-dot"></span>
+                        Plataforma activa
+                      </div>
+
+                      <div class="weekly-chip">
+                        Membresía con valor constante
+                      </div>
+                    </div>
+
+                    <h3>Todos los jueves se subirán 2 nuevas novelas</h3>
+
+                    <p>
+                      Nébula no se queda quieta. Tu acceso premium no solo desbloquea esta historia:
+                      también te conecta a una plataforma que seguirá creciendo cada semana con
+                      nuevas novelas para mantener viva la membresía.
+                    </p>
+                  </section>
 
                   <section class="novel-rating-box">
                     <h3>Valora esta novela</h3>
@@ -969,6 +1274,20 @@
                       Continúa leyendo sin restricciones y accede a todos los capítulos de
                       ${escapeHtml(novel.title)}.
                     </p>
+
+                    <div class="premium-details">
+                      <span class="premium-pill">Pago con Mercado Pago</span>
+                      <span class="premium-pill">${escapeHtml(novel.price || "$1.500 CLP")}</span>
+                      <span class="premium-pill">Acceso premium inmediato</span>
+                    </div>
+
+                    <div class="premium-note">
+                      <strong>Tu membresía debe sentirse viva</strong>
+                      <span>
+                        Además de desbloquear esta historia, Nébula seguirá incorporando contenido nuevo
+                        cada semana para que el usuario tenga razones reales para mantenerse dentro de la plataforma.
+                      </span>
+                    </div>
                   </div>
 
                   <button class="btn btn-primary" type="button" id="buyBtn">
