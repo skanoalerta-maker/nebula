@@ -338,6 +338,86 @@
       min-height:640px;
     }
 
+    .session-box{
+      display:none;
+      margin-bottom:18px;
+      padding:18px;
+      border-radius:22px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08);
+      box-shadow:var(--shadow-soft);
+    }
+
+    .session-box.show{
+      display:block;
+    }
+
+    .session-head{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      margin-bottom:14px;
+    }
+
+    .session-avatar{
+      width:58px;
+      height:58px;
+      border-radius:18px;
+      display:grid;
+      place-items:center;
+      font-size:1.8rem;
+      background:linear-gradient(135deg, rgba(42,130,255,.24), rgba(110,89,255,.24));
+      border:1px solid rgba(255,255,255,.10);
+    }
+
+    .session-meta strong{
+      display:block;
+      font-size:1rem;
+      line-height:1.2;
+    }
+
+    .session-meta span{
+      display:block;
+      color:var(--muted);
+      margin-top:4px;
+      font-size:.94rem;
+      word-break:break-word;
+    }
+
+    .session-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-bottom:14px;
+    }
+
+    .session-item{
+      padding:12px 14px;
+      border-radius:16px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.06);
+    }
+
+    .session-item small{
+      display:block;
+      color:var(--muted-2);
+      margin-bottom:6px;
+      font-size:.8rem;
+      text-transform:uppercase;
+      letter-spacing:.04em;
+    }
+
+    .session-item strong{
+      font-size:.98rem;
+      line-height:1.3;
+    }
+
+    .session-actions{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+    }
+
     .tabs{
       display:grid;
       grid-template-columns:1fr 1fr;
@@ -347,6 +427,10 @@
       border-radius:20px;
       border:1px solid rgba(255,255,255,.06);
       margin-bottom:24px;
+    }
+
+    .tabs.hide{
+      display:none;
     }
 
     .tab-btn{
@@ -364,6 +448,10 @@
       background:linear-gradient(135deg, #2a82ff 0%, #4aa7ff 100%);
       color:#fff;
       box-shadow:0 12px 24px rgba(38,121,255,.22);
+    }
+
+    .auth-forms.hide{
+      display:none;
     }
 
     .form-box{
@@ -412,6 +500,35 @@
 
     .field input::placeholder{
       color:#91a6c7;
+    }
+
+    .avatar-picker{
+      display:grid;
+      grid-template-columns:repeat(4, 1fr);
+      gap:10px;
+    }
+
+    .avatar-option input{
+      display:none;
+    }
+
+    .avatar-label{
+      min-height:62px;
+      border-radius:18px;
+      display:grid;
+      place-items:center;
+      font-size:1.55rem;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08);
+      cursor:pointer;
+      transition:.2s ease;
+    }
+
+    .avatar-option input:checked + .avatar-label{
+      background:linear-gradient(135deg, #2a82ff 0%, #4aa7ff 100%);
+      border-color:rgba(255,255,255,.20);
+      box-shadow:0 14px 30px rgba(38,121,255,.22);
+      transform:translateY(-1px);
     }
 
     .btn{
@@ -477,6 +594,7 @@
       color:#dce7f8;
       line-height:1.5;
       display:none;
+      margin-bottom:16px;
     }
 
     .status.show{
@@ -538,6 +656,15 @@
         font-size:1.4rem;
       }
 
+      .avatar-picker{
+        grid-template-columns:repeat(4, 1fr);
+      }
+
+      .session-grid,
+      .session-actions{
+        grid-template-columns:1fr;
+      }
+
       .btn,
       .back-link{
         width:100%;
@@ -595,86 +722,163 @@
       </section>
 
       <section class="auth-card">
-        <div class="tabs">
+        <div id="sessionBox" class="session-box">
+          <div class="session-head">
+            <div id="sessionAvatar" class="session-avatar">🌌</div>
+            <div class="session-meta">
+              <strong id="sessionName">Usuario Nébula</strong>
+              <span id="sessionEmail">correo@ejemplo.com</span>
+            </div>
+          </div>
+
+          <div class="session-grid">
+            <div class="session-item">
+              <small>Suscripción</small>
+              <strong id="sessionPlan">free</strong>
+            </div>
+            <div class="session-item">
+              <small>Capítulos leídos</small>
+              <strong id="sessionReadCount">0 capítulos</strong>
+            </div>
+          </div>
+
+          <div class="session-actions">
+            <a href="index.html" class="btn btn-primary">Ir a Nébula</a>
+            <button id="logoutBtn" class="btn btn-secondary" type="button">Cerrar sesión</button>
+          </div>
+        </div>
+
+        <div id="tabsBox" class="tabs">
           <button id="tabLogin" class="tab-btn active" type="button">Iniciar sesión</button>
           <button id="tabRegister" class="tab-btn" type="button">Crear cuenta</button>
         </div>
 
         <div id="statusBox" class="status"></div>
 
-        <form id="loginForm" class="form-box active">
-          <h2 class="form-title">Bienvenido de vuelta</h2>
-          <p class="form-note">
-            Inicia sesión para continuar con tu lectura.
-          </p>
+        <div id="authForms" class="auth-forms">
+          <form id="loginForm" class="form-box active">
+            <h2 class="form-title">Bienvenido de vuelta</h2>
+            <p class="form-note">
+              Inicia sesión para continuar con tu lectura.
+            </p>
 
-          <div class="field">
-            <label for="loginEmail">Correo electrónico</label>
-            <input
-              type="email"
-              id="loginEmail"
-              placeholder="tucorreo@ejemplo.com"
-              autocomplete="email"
-              required
-            />
-          </div>
+            <div class="field">
+              <label for="loginEmail">Correo electrónico</label>
+              <input
+                type="email"
+                id="loginEmail"
+                placeholder="tucorreo@ejemplo.com"
+                autocomplete="email"
+                required
+              />
+            </div>
 
-          <div class="field">
-            <label for="loginPassword">Contraseña</label>
-            <input
-              type="password"
-              id="loginPassword"
-              placeholder="Tu contraseña"
-              autocomplete="current-password"
-              required
-            />
-          </div>
+            <div class="field">
+              <label for="loginPassword">Contraseña</label>
+              <input
+                type="password"
+                id="loginPassword"
+                placeholder="Tu contraseña"
+                autocomplete="current-password"
+                required
+              />
+            </div>
 
-          <button class="btn btn-primary" type="submit">Entrar</button>
+            <button class="btn btn-primary" type="submit">Entrar</button>
 
-          <div class="divider">o</div>
+            <div class="divider">o</div>
 
-          <button id="googleLoginBtn" class="btn btn-secondary" type="button">
-            Entrar con Google
-          </button>
-        </form>
+            <button id="googleLoginBtn" class="btn btn-secondary" type="button">
+              Entrar con Google
+            </button>
+          </form>
 
-        <form id="registerForm" class="form-box">
-          <h2 class="form-title">Crea tu cuenta</h2>
-          <p class="form-note">
-            Regístrate para comenzar a guardar tu progreso de lectura.
-          </p>
+          <form id="registerForm" class="form-box">
+            <h2 class="form-title">Crea tu cuenta</h2>
+            <p class="form-note">
+              Regístrate para comenzar a guardar tu progreso de lectura.
+            </p>
 
-          <div class="field">
-            <label for="registerEmail">Correo electrónico</label>
-            <input
-              type="email"
-              id="registerEmail"
-              placeholder="tucorreo@ejemplo.com"
-              autocomplete="email"
-              required
-            />
-          </div>
+            <div class="field">
+              <label for="registerName">Tu nombre</label>
+              <input
+                type="text"
+                id="registerName"
+                placeholder="Tu nombre o apodo"
+                autocomplete="name"
+                required
+              />
+            </div>
 
-          <div class="field">
-            <label for="registerPassword">Contraseña</label>
-            <input
-              type="password"
-              id="registerPassword"
-              placeholder="Mínimo 6 caracteres"
-              autocomplete="new-password"
-              required
-            />
-          </div>
+            <div class="field">
+              <label>Elige un icono que te represente</label>
+              <div class="avatar-picker">
+                <label class="avatar-option">
+                  <input type="radio" name="avatar" value="🌌" checked />
+                  <span class="avatar-label">🌌</span>
+                </label>
+                <label class="avatar-option">
+                  <input type="radio" name="avatar" value="🚀" />
+                  <span class="avatar-label">🚀</span>
+                </label>
+                <label class="avatar-option">
+                  <input type="radio" name="avatar" value="📘" />
+                  <span class="avatar-label">📘</span>
+                </label>
+                <label class="avatar-option">
+                  <input type="radio" name="avatar" value="🧠" />
+                  <span class="avatar-label">🧠</span>
+                </label>
+                <label class="avatar-option">
+                  <input type="radio" name="avatar" value="✨" />
+                  <span class="avatar-label">✨</span>
+                </label>
+                <label class="avatar-option">
+                  <input type="radio" name="avatar" value="🌙" />
+                  <span class="avatar-label">🌙</span>
+                </label>
+                <label class="avatar-option">
+                  <input type="radio" name="avatar" value="🔥" />
+                  <span class="avatar-label">🔥</span>
+                </label>
+                <label class="avatar-option">
+                  <input type="radio" name="avatar" value="👁️" />
+                  <span class="avatar-label">👁️</span>
+                </label>
+              </div>
+            </div>
 
-          <button class="btn btn-primary" type="submit">Crear cuenta</button>
+            <div class="field">
+              <label for="registerEmail">Correo electrónico</label>
+              <input
+                type="email"
+                id="registerEmail"
+                placeholder="tucorreo@ejemplo.com"
+                autocomplete="email"
+                required
+              />
+            </div>
 
-          <div class="divider">o</div>
+            <div class="field">
+              <label for="registerPassword">Contraseña</label>
+              <input
+                type="password"
+                id="registerPassword"
+                placeholder="Mínimo 6 caracteres"
+                autocomplete="new-password"
+                required
+              />
+            </div>
 
-          <button id="googleRegisterBtn" class="btn btn-secondary" type="button">
-            Registrarme con Google
-          </button>
-        </form>
+            <button class="btn btn-primary" type="submit">Crear cuenta</button>
+
+            <div class="divider">o</div>
+
+            <button id="googleRegisterBtn" class="btn btn-secondary" type="button">
+              Registrarme con Google
+            </button>
+          </form>
+        </div>
 
         <p class="footer-help">
           Al continuar, tu cuenta quedará vinculada a Nébula para futuras funciones
@@ -688,13 +892,24 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
     import {
       getAuth,
+      setPersistence,
+      browserLocalPersistence,
       createUserWithEmailAndPassword,
       signInWithEmailAndPassword,
       signInWithPopup,
       GoogleAuthProvider,
-      onAuthStateChanged
+      onAuthStateChanged,
+      signOut,
+      updateProfile
     } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
-    import { getFirestore } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
+    import {
+      getFirestore,
+      doc,
+      getDoc,
+      setDoc,
+      serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyD0nB8uMQRC_d17zCf2r-nw0jb0eq4s45w",
@@ -710,13 +925,24 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
+    await setPersistence(auth, browserLocalPersistence);
+
     const tabLogin = document.getElementById("tabLogin");
     const tabRegister = document.getElementById("tabRegister");
     const loginFormBox = document.getElementById("loginForm");
     const registerFormBox = document.getElementById("registerForm");
+    const authForms = document.getElementById("authForms");
     const statusBox = document.getElementById("statusBox");
     const googleLoginBtn = document.getElementById("googleLoginBtn");
     const googleRegisterBtn = document.getElementById("googleRegisterBtn");
+    const sessionBox = document.getElementById("sessionBox");
+    const tabsBox = document.getElementById("tabsBox");
+    const sessionAvatar = document.getElementById("sessionAvatar");
+    const sessionName = document.getElementById("sessionName");
+    const sessionEmail = document.getElementById("sessionEmail");
+    const sessionPlan = document.getElementById("sessionPlan");
+    const sessionReadCount = document.getElementById("sessionReadCount");
+    const logoutBtn = document.getElementById("logoutBtn");
 
     function showStatus(message, type = "success") {
       statusBox.textContent = message;
@@ -744,6 +970,94 @@
       clearStatus();
     }
 
+    function getSelectedAvatar() {
+      const selected = document.querySelector('input[name="avatar"]:checked');
+      return selected ? selected.value : "🌌";
+    }
+
+    function getFriendlyError(error) {
+      const code = error?.code || "";
+
+      switch (code) {
+        case "auth/email-already-in-use":
+          return "Ese correo ya está registrado en Nébula.";
+        case "auth/invalid-email":
+          return "El correo no tiene un formato válido.";
+        case "auth/weak-password":
+          return "La contraseña debe tener al menos 6 caracteres.";
+        case "auth/user-not-found":
+        case "auth/wrong-password":
+        case "auth/invalid-credential":
+          return "Correo o contraseña incorrectos.";
+        case "auth/popup-closed-by-user":
+          return "Cerraste la ventana de Google antes de completar el acceso.";
+        default:
+          return error?.message || "Ocurrió un error inesperado.";
+      }
+    }
+
+    async function ensureUserDocument(user, extraData = {}) {
+      const userRef = doc(db, "users", user.uid);
+      const snap = await getDoc(userRef);
+
+      const baseData = {
+        uid: user.uid,
+        name: extraData.name || user.displayName || "Lector Nébula",
+        email: user.email || "",
+        avatar: extraData.avatar || "🌌",
+        subscription: extraData.subscription || "free",
+        plan: extraData.plan || "free",
+        readChapters: extraData.readChapters || [],
+        createdAt: snap.exists() ? (snap.data().createdAt || serverTimestamp()) : serverTimestamp(),
+        updatedAt: serverTimestamp()
+      };
+
+      if (!snap.exists()) {
+        await setDoc(userRef, baseData, { merge: true });
+      } else {
+        const current = snap.data();
+        await setDoc(userRef, {
+          uid: user.uid,
+          name: current.name || baseData.name,
+          email: current.email || baseData.email,
+          avatar: current.avatar || baseData.avatar,
+          subscription: current.subscription || current.plan || "free",
+          plan: current.plan || current.subscription || "free",
+          readChapters: Array.isArray(current.readChapters) ? current.readChapters : [],
+          updatedAt: serverTimestamp()
+        }, { merge: true });
+      }
+    }
+
+    async function loadUserProfile(user) {
+      const userRef = doc(db, "users", user.uid);
+      const snap = await getDoc(userRef);
+
+      if (!snap.exists()) {
+        await ensureUserDocument(user);
+        return await loadUserProfile(user);
+      }
+
+      const data = snap.data();
+      const readCount = Array.isArray(data.readChapters) ? data.readChapters.length : 0;
+
+      sessionAvatar.textContent = data.avatar || "🌌";
+      sessionName.textContent = data.name || user.displayName || "Lector Nébula";
+      sessionEmail.textContent = data.email || user.email || "";
+      sessionPlan.textContent = data.subscription || data.plan || "free";
+      sessionReadCount.textContent = `${readCount} capítulo${readCount === 1 ? "" : "s"}`;
+
+      sessionBox.classList.add("show");
+      tabsBox.classList.add("hide");
+      authForms.classList.add("hide");
+    }
+
+    function showAuthMode() {
+      sessionBox.classList.remove("show");
+      tabsBox.classList.remove("hide");
+      authForms.classList.remove("hide");
+    }
+
     tabLogin.addEventListener("click", showLogin);
     tabRegister.addEventListener("click", showRegister);
 
@@ -755,13 +1069,11 @@
       const password = document.getElementById("loginPassword").value;
 
       try {
-        await signInWithEmailAndPassword(auth, email, password);
-        showStatus("Sesión iniciada correctamente. Redirigiendo...", "success");
-        setTimeout(() => {
-          window.location.href = "index.html";
-        }, 900);
+        const cred = await signInWithEmailAndPassword(auth, email, password);
+        await ensureUserDocument(cred.user);
+        showStatus("Sesión iniciada correctamente.", "success");
       } catch (error) {
-        showStatus("No se pudo iniciar sesión: " + error.message, "error");
+        showStatus(getFriendlyError(error), "error");
       }
     });
 
@@ -769,43 +1081,76 @@
       e.preventDefault();
       clearStatus();
 
+      const name = document.getElementById("registerName").value.trim();
       const email = document.getElementById("registerEmail").value.trim();
       const password = document.getElementById("registerPassword").value;
+      const avatar = getSelectedAvatar();
 
       try {
-        await createUserWithEmailAndPassword(auth, email, password);
-        showStatus("Cuenta creada correctamente. Redirigiendo...", "success");
-        setTimeout(() => {
-          window.location.href = "index.html";
-        }, 900);
+        const cred = await createUserWithEmailAndPassword(auth, email, password);
+
+        await updateProfile(cred.user, {
+          displayName: name
+        });
+
+        await ensureUserDocument(cred.user, {
+          name,
+          avatar,
+          subscription: "free",
+          plan: "free",
+          readChapters: []
+        });
+
+        showStatus("Cuenta creada correctamente. Ya puedes entrar a tu universo Nébula.", "success");
       } catch (error) {
-        showStatus("No se pudo crear la cuenta: " + error.message, "error");
+        showStatus(getFriendlyError(error), "error");
       }
     });
 
     async function loginWithGoogle() {
       clearStatus();
+
       try {
         const provider = new GoogleAuthProvider();
-        await signInWithPopup(auth, provider);
-        showStatus("Acceso con Google completado. Redirigiendo...", "success");
-        setTimeout(() => {
-          window.location.href = "index.html";
-        }, 900);
+        const result = await signInWithPopup(auth, provider);
+
+        await ensureUserDocument(result.user, {
+          name: result.user.displayName || "Lector Nébula",
+          avatar: "🌌",
+          subscription: "free",
+          plan: "free",
+          readChapters: []
+        });
+
+        showStatus("Acceso con Google completado correctamente.", "success");
       } catch (error) {
-        showStatus("No se pudo acceder con Google: " + error.message, "error");
+        showStatus(getFriendlyError(error), "error");
       }
     }
 
     googleLoginBtn.addEventListener("click", loginWithGoogle);
     googleRegisterBtn.addEventListener("click", loginWithGoogle);
 
-    onAuthStateChanged(auth, (user) => {
+    logoutBtn.addEventListener("click", async () => {
+      try {
+        await signOut(auth);
+        showAuthMode();
+        showStatus("Sesión cerrada correctamente.", "success");
+      } catch (error) {
+        showStatus("No se pudo cerrar la sesión.", "error");
+      }
+    });
+
+    onAuthStateChanged(auth, async (user) => {
       if (user) {
-        showStatus(`Ya tienes sesión iniciada como ${user.email}. Redirigiendo...`, "success");
-        setTimeout(() => {
-          window.location.href = "index.html";
-        }, 900);
+        try {
+          await loadUserProfile(user);
+        } catch (error) {
+          console.error(error);
+          showStatus("Tu sesión está activa, pero hubo un problema cargando tu perfil.", "error");
+        }
+      } else {
+        showAuthMode();
       }
     });
 
