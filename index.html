@@ -2747,5 +2747,39 @@
       }
     });
   </script>
+  <!-- TODO tu contenido anterior -->
+
+<script>
+async function pagarNovela(novelId) {
+  try {
+    const res = await fetch("https://us-central1-dyh-nebula.cloudfunctions.net/api/create-preference", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        novelId: novelId,
+        title: "Acceso a novela",
+        price: 1500
+      })
+    });
+
+    const data = await res.json();
+
+    if (data.init_point) {
+      window.location.href = data.init_point;
+    } else {
+      alert("Error creando pago");
+    }
+
+  } catch (error) {
+    console.error(error);
+    alert("Error de conexión");
+  }
+}
+</script>
+
+</body>
+</html>
 </body>
 </html>
