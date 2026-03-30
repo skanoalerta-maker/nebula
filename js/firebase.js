@@ -3,12 +3,10 @@ import { getAuth } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-aut
 import { getFirestore } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyD0nB8uMQRC_d17zCf2r-nw0jb0eq4s45w",
+  apiKey: "...",
   authDomain: "nebula-1955f.firebaseapp.com",
   projectId: "nebula-1955f",
-  storageBucket: "nebula-1955f.firebasestorage.app",
-  messagingSenderId: "736722257829",
-  appId: "1:736722257829:web:605cab7fde553470454a4c"
+  ...
 };
 
 const app = initializeApp(firebaseConfig);
