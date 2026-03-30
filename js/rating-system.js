@@ -883,6 +883,30 @@
       margin-bottom:18px;
     }
 
+    .payment-status{
+      margin-top:14px;
+      padding:16px 18px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.08);
+      font-weight:700;
+      line-height:1.6;
+    }
+
+    .payment-status.success{
+      background:rgba(49,166,105,.14);
+      color:#c9ffdd;
+    }
+
+    .payment-status.pending{
+      background:rgba(255,213,74,.12);
+      color:#ffe9a2;
+    }
+
+    .payment-status.failure{
+      background:rgba(255,102,102,.12);
+      color:#ffd1d1;
+    }
+
     .footer-space{
       height:20px;
     }
@@ -986,8 +1010,11 @@
   <script src="./data.js"></script>
 
   <script>
+    const API_BASE_URL = "https://api-mvtstimkcq-uc.a.run.app";
+
     const params = new URLSearchParams(window.location.search);
     const novelId = params.get("id");
+    const paymentStatusParam = params.get("mp_status");
     const app = document.getElementById("app");
 
     function escapeHtml(text){
@@ -1032,6 +1059,36 @@
       }catch{
         return "🌌";
       }
+    }
+
+    function getPaymentStatusHtml(status){
+      if (status === "success") {
+        return `
+          <div class="payment-status success">
+            Pago iniciado correctamente. Si Mercado Pago aprobó la transacción,
+            en el siguiente paso conectaremos la validación automática para desbloquear la novela sin depender del navegador.
+          </div>
+        `;
+      }
+
+      if (status === "pending") {
+        return `
+          <div class="payment-status pending">
+            Tu pago quedó pendiente de confirmación. Cuando Mercado Pago lo confirme,
+            podremos validar y desbloquear el acceso.
+          </div>
+        `;
+      }
+
+      if (status === "failure") {
+        return `
+          <div class="payment-status failure">
+            El pago no se completó o fue cancelado. Puedes intentarlo nuevamente.
+          </div>
+        `;
+      }
+
+      return "";
     }
 
     if (!novelId || !window.NEBULA_NOVELS || !window.NEBULA_NOVELS[novelId]) {
@@ -1185,6 +1242,8 @@
                   <h1>${escapeHtml(novel.title)}</h1>
 
                   <p class="story-description">${escapeHtml(novel.description)}</p>
+
+                  ${getPaymentStatusHtml(paymentStatusParam)}
 
                   <div class="hero-meta">
                     <div class="meta-card">
@@ -1415,12 +1474,42 @@
           });
         });
 
-        buyBtn.addEventListener("click", () => {
+        buyBtn.addEventListener("click", async () => {
           if (localStorage.getItem(paidKey) === "true") return;
-          localStorage.setItem(paidKey, "true");
-          if (accessState) accessState.textContent = "Historia desbloqueada";
-          buyBtn.textContent = "Historia ya desbloqueada";
-          location.reload();
+
+          buyBtn.textContent = "Conectando con Mercado Pago...";
+          buyBtn.disabled = true;
+
+          try {
+            const response = await fetch(`${API_BASE_URL}/create-preference`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                title: novel.title,
+                price: Number(novel.individualPrice || 1500),
+                quantity: 1,
+                type: "single_novel",
+                novelId: novelId,
+                userId: "guest",
+                email: "cliente@nebula.cl"
+              })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok || !data.ok || !data.initPoint) {
+              throw new Error(data?.error || "No se pudo iniciar el pago.");
+            }
+
+            window.location.href = data.initPoint;
+          } catch (error) {
+            console.error("Error al iniciar pago:", error);
+            alert("No se pudo iniciar el pago con Mercado Pago. Intenta nuevamente.");
+            buyBtn.textContent = "Pagar con Mercado Pago";
+            buyBtn.disabled = false;
+          }
         });
 
         renderRating();
