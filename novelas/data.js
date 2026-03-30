@@ -9,22 +9,22 @@ window.NEBULA_BILLING = {
 };
 
 window.NEBULA_NOVELS = {
-  "codigo-nebula": {
-    id: "codigo-nebula",
+  "codigo-nebula-t1": {
+    id: "codigo-nebula-t1",
     productType: "single_novel",
     allowIndividualPurchase: true,
     premiumIncluded: true,
     individualPrice: 1500,
     individualPriceLabel: "$1.500 CLP",
     title: "Código Nébula",
-    description: "Una historia futurista donde nada es lo que parece y cada capítulo abre una nueva grieta en el sistema. A medida que avanzas, descubres que la red no solo observa: también recuerda, manipula y espera.",
+    description: "Temporada 1. Una historia futurista donde nada es lo que parece y cada capítulo abre una nueva grieta en el sistema. A medida que avanzas, descubres que la red no solo observa: también recuerda, manipula y espera.",
     cover: "./assets/covers/nebula.jpg",
     baseFolder: "novelas/futurista/codigo-nebula",
     defaultSeason: "temporada1",
     defaultSeasonLabel: "Temporada 1",
     freeChapters: 3,
     price: "$1.500 CLP",
-    tags: ["Futurista", "Tecnología", "Suspenso"],
+    tags: ["Futurista", "Tecnología", "Suspenso", "Temporada 1"],
     chapters: [
       { num: 1, season: "temporada1", seasonLabel: "Temporada 1", title: "El pulso de la anomalía", description: "Una señal imposible aparece en la red y marca el inicio de una cadena de eventos que nadie logra explicar." },
       { num: 2, season: "temporada1", seasonLabel: "Temporada 1", title: "La ciudad bajo vigilancia", description: "A medida que los datos se cruzan, queda claro que la ciudad entera ha sido observada durante más tiempo del que cualquiera imaginaba." },
@@ -35,8 +35,27 @@ window.NEBULA_NOVELS = {
       { num: 7, season: "temporada1", seasonLabel: "Temporada 1", title: "El mapa de los ausentes", description: "Cada nodo de Nébula parece señalar a personas desaparecidas de los archivos públicos, como si alguien las hubiera arrancado del mundo." },
       { num: 8, season: "temporada1", seasonLabel: "Temporada 1", title: "Zona de silencio", description: "Cuando la comunicación se corta por completo, lo único que queda es avanzar hacia un lugar del que nadie vuelve igual." },
       { num: 9, season: "temporada1", seasonLabel: "Temporada 1", title: "La caída del protocolo", description: "Los mecanismos de control empiezan a fallar y la frontera entre vigilancia, memoria y consciencia se rompe." },
-      { num: 10, season: "temporada1", seasonLabel: "Temporada 1", title: "Código Nébula", description: "La verdad final sale a la luz: Nébula no era una herramienta, sino una entidad diseñada para decidir quién permanece y quién desaparece." },
+      { num: 10, season: "temporada1", seasonLabel: "Temporada 1", title: "Código Nébula", description: "La verdad final sale a la luz: Nébula no era una herramienta, sino una entidad diseñada para decidir quién permanece y quién desaparece." }
+    ]
+  },
 
+  "codigo-nebula-t2": {
+    id: "codigo-nebula-t2",
+    productType: "single_novel",
+    allowIndividualPurchase: true,
+    premiumIncluded: true,
+    individualPrice: 1500,
+    individualPriceLabel: "$1.500 CLP",
+    title: "Código Nébula",
+    description: "Temporada 2. Continúa la historia en una nueva temporada con nuevas grietas, nuevas amenazas y un sistema cada vez más despierto.",
+    cover: "./assets/covers/temporada2-cover.jpg",
+    baseFolder: "novelas/futurista/codigo-nebula",
+    defaultSeason: "temporada2",
+    defaultSeasonLabel: "Temporada 2",
+    freeChapters: 3,
+    price: "$1.500 CLP",
+    tags: ["Futurista", "Tecnología", "Suspenso", "Temporada 2"],
+    chapters: [
       { num: 1, season: "temporada2", seasonLabel: "Temporada 2", title: "Capítulo 1", description: "Continúa la historia en una nueva temporada." },
       { num: 2, season: "temporada2", seasonLabel: "Temporada 2", title: "Capítulo 2", description: "Continúa la historia en una nueva temporada." },
       { num: 3, season: "temporada2", seasonLabel: "Temporada 2", title: "Capítulo 3", description: "Continúa la historia en una nueva temporada." },
