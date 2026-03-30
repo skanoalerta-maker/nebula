@@ -990,10 +990,10 @@
 
   <div id="app"></div>
 
-  <script src="./data.js"></script>
+  <script src="../data.js"></script>
 
   <script type="module">
-    import { db, auth } from "./js/firebase.js";
+    import { db, auth } from "../js/firebase.js";
     import {
       doc,
       getDoc,
@@ -1065,6 +1065,20 @@
       return Number(value || 0).toFixed(1);
     }
 
+    function normalizeBaseFolder(baseFolder){
+      return String(baseFolder || "")
+        .replace(/^\.?\//, "")
+        .replace(/^novelas\//, "")
+        .replace(/\/+$/, "");
+    }
+
+    function resolveAssetPath(path){
+      const clean = String(path || "")
+        .replace(/^\.?\//, "")
+        .replace(/^\/+/, "");
+      return `../${clean}`;
+    }
+
     if (!novelId || !window.NEBULA_NOVELS || !window.NEBULA_NOVELS[novelId]) {
       app.innerHTML = `
         <section class="error-box">
@@ -1073,7 +1087,7 @@
             No se encontró una novela asociada a este enlace. Revisa el parámetro
             <strong>id</strong> o vuelve al catálogo principal.
           </p>
-          <a class="btn btn-primary" href="./index.html">Volver al inicio</a>
+          <a class="btn btn-primary" href="../index.html">Volver al inicio</a>
         </section>
       `;
     } else {
@@ -1092,13 +1106,14 @@
               Esta novela existe, pero todavía no tiene capítulos cargados en
               <strong>data.js</strong>.
             </p>
-            <a class="btn btn-primary" href="./index.html">Volver al inicio</a>
+            <a class="btn btn-primary" href="../index.html">Volver al inicio</a>
           </section>
         `;
       } else {
         function getChapterPath(chapter){
           const seasonFolder = chapter.season || novel.defaultSeason || "temporada1";
-          return `./${novel.baseFolder}/${seasonFolder}/capitulo${chapter.num}.html`;
+          const baseFolder = normalizeBaseFolder(novel.baseFolder);
+          return `./${baseFolder}/${seasonFolder}/capitulo${chapter.num}.html`;
         }
 
         function getContinuePath(){
@@ -1159,8 +1174,8 @@
           <header class="page-header">
             <div class="container page-header-inner">
               <div class="brand-wrap">
-                <a class="brand-link" href="./index.html" aria-label="Volver a Nébula">
-                  <img class="brand-logo" src="./assets/logo/nebula-logo.png" alt="Logo Nébula" />
+                <a class="brand-link" href="../index.html" aria-label="Volver a Nébula">
+                  <img class="brand-logo" src="../assets/logo/nebula-logo.png" alt="Logo Nébula" />
                   <div class="brand-copy">
                     <strong>NÉBULA</strong>
                     <span>Historias por capítulos</span>
@@ -1169,7 +1184,7 @@
               </div>
 
               <div class="header-actions">
-                <a class="back-link" href="./index.html">← Volver a Nébula</a>
+                <a class="back-link" href="../index.html">← Volver a Nébula</a>
                 <div class="mini-badge">Lectura por capítulos</div>
                 <div class="user-chip">${escapeHtml(getLocalUserIcon())} ${escapeHtml(getLocalUserName())}</div>
               </div>
@@ -1183,7 +1198,7 @@
                   <div class="hero-cover-wrap">
                     <img
                       class="hero-cover"
-                      src="${escapeHtml(novel.cover)}"
+                      src="${escapeHtml(resolveAssetPath(novel.cover))}"
                       alt="${escapeHtml(novel.title)}"
                     />
                   </div>
