@@ -3,8 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Capítulo 1 | Salvador Allende</title>
-  <meta name="description" content="Capítulo 1: El inicio de un cambio en Chile." />
+  <title>Capítulo 1 | La Vía y la Ruptura</title>
+  <meta
+    name="description"
+    content="Capítulo 1 de La Vía y la Ruptura: El inicio de un cambio en Chile, cuando la esperanza y la tensión comienzan a convivir en el mismo país."
+  />
 
   <style>
     :root{
@@ -12,168 +15,966 @@
       --bg2:#0b1220;
       --card:rgba(12,18,32,0.82);
       --line:rgba(255,255,255,0.08);
+      --line-strong:rgba(73,182,255,.24);
       --text:#f5f8ff;
       --muted:#aebad1;
+      --muted-2:#7f90ae;
       --blue:#0A6CFF;
+      --blue2:#49b6ff;
+      --blue-soft:rgba(73,182,255,.14);
+      --shadow:0 24px 60px rgba(0,0,0,.45);
+      --radius:22px;
+      --max:860px;
     }
 
-    *{margin:0;padding:0;box-sizing:border-box;}
+    *{
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
 
     body{
-      background:linear-gradient(180deg,var(--bg),var(--bg2));
-      color:var(--text);
+      margin:0;
       font-family:Arial, sans-serif;
+      color:var(--text);
+      background:#04070d;
+      line-height:1.8;
+      position:relative;
+      overflow-x:hidden;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    #stars{
+      position:fixed;
+      inset:0;
+      width:100%;
+      height:100%;
+      z-index:0;
+      background:
+        radial-gradient(circle at top left, rgba(10,108,255,.12), transparent 24%),
+        radial-gradient(circle at top right, rgba(73,182,255,.08), transparent 20%),
+        linear-gradient(180deg, #04070d 0%, #08101c 45%, #05080f 100%);
+    }
+
+    .page{
+      min-height:100vh;
+      position:relative;
+      z-index:1;
     }
 
     .topbar{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:15px;
+      position:sticky;
+      top:0;
+      z-index:30;
+      backdrop-filter:blur(14px);
+      background:rgba(5,8,15,.72);
       border-bottom:1px solid var(--line);
     }
 
-    .back-btn{
-      background:none;
-      border:none;
-      color:var(--text);
-      font-size:16px;
+    .topbar-inner{
+      max-width:1100px;
+      margin:0 auto;
+      padding:16px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .brand-badge{
+      width:38px;
+      height:38px;
+      border-radius:12px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg, rgba(10,108,255,.22), rgba(73,182,255,.08));
+      border:1px solid var(--line-strong);
+      box-shadow:0 0 24px rgba(10,108,255,.12);
+      font-weight:700;
+      color:var(--blue2);
+      flex:0 0 auto;
+    }
+
+    .brand-title{
+      font-size:14px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:#dfe9ff;
+      margin:0 0 2px;
+    }
+
+    .brand-sub{
+      font-size:12px;
+      color:var(--muted-2);
+      margin:0;
+    }
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height:44px;
+      padding:0 18px;
+      border-radius:12px;
+      font-size:14px;
+      font-weight:700;
+      transition:transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+      border:1px solid transparent;
       cursor:pointer;
     }
 
-    .logo{
-      font-weight:bold;
-      font-size:18px;
+    .btn:hover{
+      transform:translateY(-1px);
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg, var(--blue) 0%, #0d7eff 100%);
+      color:white;
+      box-shadow:0 12px 28px rgba(10,108,255,.28);
+    }
+
+    .btn-primary:hover{
+      background:linear-gradient(135deg, #0c62e0 0%, #0a6cef 100%);
+    }
+
+    .btn-ghost{
+      background:rgba(255,255,255,.03);
+      border-color:var(--line);
+      color:#dbe8ff;
+    }
+
+    .btn-ghost:hover{
+      background:rgba(255,255,255,.06);
+      border-color:var(--line-strong);
     }
 
     .hero{
-      padding:20px;
-      text-align:center;
+      position:relative;
+      overflow:hidden;
+      border-bottom:1px solid rgba(255,255,255,.04);
     }
 
-    .hero img{
-      width:100%;
-      max-width:400px;
-      border-radius:12px;
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(180deg, rgba(5,8,15,.58) 0%, rgba(5,8,15,.86) 80%, rgba(5,8,15,1) 100%),
+        url("../assets/allende-portada.jpg");
+      background-size:cover;
+      background-position:center;
+      opacity:.28;
+      filter:saturate(.9) contrast(1.03);
+    }
+
+    .hero-inner{
+      position:relative;
+      z-index:1;
+      max-width:1100px;
+      margin:0 auto;
+      padding:56px 20px 34px;
+    }
+
+    .crumb{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.06);
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:18px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:28px;
+      align-items:end;
+    }
+
+    .hero-copy h1{
+      margin:0 0 12px;
+      font-size:clamp(34px, 6vw, 64px);
+      line-height:1.02;
+      letter-spacing:.02em;
+      color:white;
+      text-shadow:0 0 22px rgba(10,108,255,.18);
+    }
+
+    .eyebrow{
+      margin:0 0 14px;
+      color:var(--blue2);
+      font-weight:700;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      font-size:12px;
+    }
+
+    .hero-copy p{
+      margin:0;
+      max-width:700px;
+      color:#d4def3;
+      font-size:18px;
+      line-height:1.75;
+    }
+
+    .hero-side{
+      display:flex;
+      justify-content:flex-end;
     }
 
     .chapter-card{
-      padding:20px;
-      text-align:center;
+      width:min(100%, 360px);
+      background:linear-gradient(180deg, rgba(12,18,32,.75), rgba(9,13,24,.88));
+      border:1px solid rgba(73,182,255,.18);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:22px;
+      backdrop-filter:blur(16px);
+    }
+
+    .chapter-label{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 12px;
+      border-radius:999px;
+      background:var(--blue-soft);
+      border:1px solid rgba(73,182,255,.18);
+      color:var(--blue2);
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:14px;
+    }
+
+    .chapter-card h2{
+      margin:0 0 10px;
+      font-size:24px;
+      line-height:1.15;
+      color:white;
+    }
+
+    .chapter-card p{
+      margin:0 0 18px;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.7;
+    }
+
+    .meta{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .meta-item{
+      padding:12px;
+      border-radius:14px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.05);
+    }
+
+    .meta-k{
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--muted-2);
+      margin:0 0 6px;
+    }
+
+    .meta-v{
+      margin:0;
+      font-size:13px;
+      color:#e7efff;
+      font-weight:700;
+    }
+
+    .content-wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:28px 20px 80px;
     }
 
     .reader{
-      padding:20px;
-      line-height:1.6;
+      position:relative;
+      background:linear-gradient(180deg, rgba(11,18,32,.58), rgba(8,13,24,.72));
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:22px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      backdrop-filter:blur(4px);
+    }
+
+    .reader-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:18px 22px;
+      border-bottom:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+    }
+
+    .reader-top-left h3{
+      margin:0 0 4px;
+      font-size:18px;
+      color:#edf3ff;
+    }
+
+    .reader-top-left p{
+      margin:0;
+      color:var(--muted-2);
+      font-size:13px;
+    }
+
+    .reader-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:34px;
+      padding:0 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.06);
+      color:#cfe0ff;
+      font-size:12px;
+      font-weight:700;
+      white-space:nowrap;
+    }
+
+    .reader-body{
+      padding:34px 26px 18px;
+      position:relative;
     }
 
     .story{
-      max-width:700px;
-      margin:auto;
+      max-width:720px;
+      margin:0 auto;
+      position:relative;
+      z-index:2;
     }
 
-    .chapter-navigation{
+    .lead{
+      font-size:19px;
+      line-height:1.9;
+      color:#ecf3ff;
+      margin:0 0 26px;
+      padding:18px 18px 18px 20px;
+      border-left:3px solid rgba(73,182,255,.44);
+      background:rgba(9,18,35,.68);
+      border-radius:0 14px 14px 0;
+      backdrop-filter:blur(4px);
+    }
+
+    .story p{
+      margin:0 0 22px;
+      color:#e4ecfb;
+      font-size:18px;
+      line-height:1.95;
+      letter-spacing:.01em;
+      text-shadow:0 1px 2px rgba(0,0,0,.4);
+    }
+
+    .story p strong{
+      color:#ffffff;
+      font-weight:700;
+    }
+
+    .story .quote{
+      margin:34px 0;
+      padding:20px 22px;
+      border-radius:18px;
+      background:linear-gradient(180deg, rgba(10,108,255,.12), rgba(73,182,255,.06));
+      border:1px solid rgba(73,182,255,.14);
+      color:#edf5ff;
+      font-size:19px;
+      line-height:1.7;
+      text-align:center;
+      box-shadow:0 12px 30px rgba(0,0,0,.18);
+      backdrop-filter:blur(4px);
+    }
+
+    .story .divider{
+      width:86px;
+      height:1px;
+      background:linear-gradient(90deg, transparent, rgba(73,182,255,.6), transparent);
+      margin:34px auto;
+    }
+
+    .reader-bottom{
+      padding:24px 26px 28px;
+      border-top:1px solid var(--line);
       display:flex;
+      align-items:center;
       justify-content:space-between;
-      padding:20px;
+      gap:14px;
+      flex-wrap:wrap;
     }
 
-    button{
-      background:var(--blue);
-      border:none;
-      padding:10px 16px;
-      border-radius:8px;
-      color:white;
-      cursor:pointer;
+    .reader-note{
+      color:var(--muted-2);
+      font-size:13px;
+      margin:0;
+    }
+
+    .nav-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    @media (max-width: 900px){
+      .hero-grid{
+        grid-template-columns:1fr;
+      }
+
+      .hero-side{
+        justify-content:flex-start;
+      }
+
+      .chapter-card{
+        width:100%;
+        max-width:unset;
+      }
+    }
+
+    @media (max-width: 640px){
+      .topbar-inner{
+        padding:14px 14px;
+      }
+
+      .hero-inner{
+        padding:34px 14px 22px;
+      }
+
+      .content-wrap{
+        padding:20px 14px 60px;
+      }
+
+      .reader-top,
+      .reader-body,
+      .reader-bottom{
+        padding-left:16px;
+        padding-right:16px;
+      }
+
+      .reader-body{
+        padding-top:24px;
+      }
+
+      .hero-copy p,
+      .story p,
+      .lead{
+        font-size:16px;
+      }
+
+      .meta{
+        grid-template-columns:1fr;
+      }
+
+      .top-actions{
+        width:100%;
+      }
+
+      .btn{
+        width:100%;
+      }
+
+      .nav-actions{
+        width:100%;
+      }
+
+      .nav-actions .btn{
+        flex:1 1 100%;
+      }
     }
   </style>
 </head>
-
 <body>
+  <canvas id="stars"></canvas>
 
-  <!-- TOPBAR -->
-  <div class="topbar">
-    <button class="back-btn" onclick="goToChapter('INDEX')">← Atrás</button>
-    <div class="logo">NÉBULA</div>
+  <div class="page">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <div class="brand-badge">N</div>
+          <div>
+            <p class="brand-title">La Vía y la Ruptura</p>
+            <p class="brand-sub">Drama histórico chileno</p>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <a href="../../../../index.html" class="btn btn-ghost">← Volver al inicio</a>
+          <a href="capitulo2.html" class="btn btn-primary">Siguiente capítulo →</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="crumb">Inicio / Thriller de corrupción / Capítulo 1</div>
+
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Capítulo 1</p>
+            <h1>El inicio de un cambio</h1>
+            <p>
+              Chile entra en una etapa decisiva. La esperanza comienza a recorrer las calles,
+              pero junto a ella también aparece una tensión silenciosa que pronto marcará el destino del país.
+            </p>
+          </div>
+
+          <div class="hero-side">
+            <aside class="chapter-card">
+              <div class="chapter-label">Comienzo histórico</div>
+              <h2>Cuando la esperanza todavía podía verse en las calles</h2>
+              <p>
+                Un proyecto político inédito empieza a tomar forma por la vía democrática,
+                mientras fuerzas invisibles observan con atención todo lo que está por comenzar.
+              </p>
+
+              <div class="meta">
+                <div class="meta-item">
+                  <p class="meta-k">Estado</p>
+                  <p class="meta-v">Gratis</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Género</p>
+                  <p class="meta-v">Histórico</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Temporada</p>
+                  <p class="meta-v">1 de 17</p>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="content-wrap">
+      <article class="reader">
+        <div class="reader-top">
+          <div class="reader-top-left">
+            <h3>Capítulo 1: El inicio de un cambio</h3>
+            <p>Lectura gratuita · El comienzo de una promesa histórica</p>
+          </div>
+          <div class="reader-badge">Acceso abierto</div>
+        </div>
+
+        <div class="reader-body">
+          <div class="story">
+            <p class="lead">
+              Chile, 1970.
+              El país estaba dividido, pero también lleno de esperanza.
+              En las calles comenzaba a sentirse que algo distinto se estaba abriendo paso.
+              No era solo un cambio político.
+              Era la idea de que la historia podía tomar un rumbo nuevo sin romper la democracia en el intento.
+            </p>
+
+            <p>
+              En las conversaciones de barrio, en los sindicatos, en las universidades y en las casas,
+              la palabra cambio empezó a adquirir una densidad distinta.
+            </p>
+
+            <p>
+              Ya no sonaba solo como consigna.
+            </p>
+
+            <p>
+              Sonaba como posibilidad.
+            </p>
+
+            <p>
+              Como la oportunidad concreta de transformar la estructura del país desde dentro,
+              mediante votos, organización y convicción política.
+            </p>
+
+            <div class="quote">Por primera vez, una transformación profunda parecía querer avanzar no con fusiles, sino con urnas.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Salvador Allende no era un desconocido.
+            </p>
+
+            <p>
+              Había intentado llegar a la presidencia varias veces.
+            </p>
+
+            <p>
+              Había recorrido derrotas, campañas, discursos y años de insistencia.
+            </p>
+
+            <p>
+              Pero esta vez había algo distinto en el ambiente.
+            </p>
+
+            <p>
+              La llamada vía chilena al socialismo comenzaba a tomar forma con una fuerza inédita,
+              no como una idea abstracta, sino como una experiencia real que podía comenzar a gobernar.
+            </p>
+
+            <p>
+              Para muchos, eso representaba una esperanza histórica.
+            </p>
+
+            <p>
+              Para otros, un riesgo demasiado grande.
+            </p>
+
+            <p><strong>La posibilidad de un nuevo país despertaba entusiasmo y temor al mismo tiempo.</strong></p>
+
+            <div class="divider"></div>
+
+            <p>
+              A simple vista, todo parecía moverse dentro de la normalidad democrática.
+            </p>
+
+            <p>
+              Había discursos.
+            </p>
+
+            <p>
+              Había banderas.
+            </p>
+
+            <p>
+              Había plazas llenas y discusiones intensas.
+            </p>
+
+            <p>
+              Pero detrás de los aplausos, de los actos públicos y de la alegría visible,
+              ya comenzaban a activarse otras miradas.
+            </p>
+
+            <p>
+              Empresarios, políticos conservadores y actores internacionales observaban con atención lo que ocurría en Chile.
+            </p>
+
+            <p>
+              Algunos con preocupación sincera.
+            </p>
+
+            <p>
+              Otros con temor estratégico.
+            </p>
+
+            <p>
+              Otros, directamente, con la decisión de impedir que ese proceso prosperara.
+            </p>
+
+            <div class="quote">Los cambios históricos no solo despiertan esperanza. También despiertan intereses dispuestos a frenarlos.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Nadie lo decía todavía con total claridad,
+              pero el país empezaba a entrar en una tensión silenciosa.
+            </p>
+
+            <p>
+              No era una explosión inmediata.
+            </p>
+
+            <p>
+              Era algo más sutil.
+            </p>
+
+            <p>
+              Un endurecimiento del ambiente.
+            </p>
+
+            <p>
+              Una sensación de vigilancia.
+            </p>
+
+            <p>
+              La impresión de que cada palabra y cada decisión comenzarían a pesar más de lo normal.
+            </p>
+
+            <p>
+              Lo que para una parte del país era una apertura histórica,
+              para otra era una amenaza que no pensaba tolerar con pasividad.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              Aun así, el impulso inicial estaba lleno de energía.
+            </p>
+
+            <p>
+              Había un sentimiento extendido de dignidad.
+            </p>
+
+            <p>
+              La sensación de que por fin una parte importante de Chile podía verse representada en un proyecto propio,
+              construido desde sus necesidades, desde sus luchas y desde su idea de justicia social.
+            </p>
+
+            <p>
+              Esa emoción recorría la vida cotidiana.
+            </p>
+
+            <p>
+              Se sentía en la calle.
+            </p>
+
+            <p>
+              En la manera de hablar.
+            </p>
+
+            <p>
+              En la forma en que el futuro parecía, por un momento, algo negociable y no una condena repetida.
+            </p>
+
+            <div class="quote">Hubo días en que el porvenir pareció abrirse como una puerta, no como una amenaza.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Pero la historia nunca avanza solo con entusiasmo.
+            </p>
+
+            <p>
+              En cada proceso de cambio hay fuerzas que operan a plena vista
+              y otras que prefieren actuar en los márgenes.
+            </p>
+
+            <p>
+              Mientras una parte de Chile se abrazaba a la esperanza,
+              otra empezaba a calcular consecuencias, resistencias y límites.
+            </p>
+
+            <p>
+              Los grandes intereses no suelen mirar en silencio cuando sienten que su posición puede verse alterada.
+            </p>
+
+            <p>
+              Y aunque aún no se viera el conflicto en toda su magnitud,
+              ya comenzaban a moverse piezas en distintos niveles del poder.
+            </p>
+
+            <p>
+              En oficinas.
+            </p>
+
+            <p>
+              En editoriales.
+            </p>
+
+            <p>
+              En reuniones cerradas.
+            </p>
+
+            <p>
+              En análisis internacionales que entendían que Chile podía transformarse en un precedente incómodo.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              La vía chilena al socialismo no nacía solamente como una apuesta de gobierno.
+            </p>
+
+            <p>
+              Nacía también como un símbolo.
+            </p>
+
+            <p>
+              La idea de que una transformación profunda podía abrirse paso mediante mecanismos democráticos,
+              respetando instituciones y apelando a la voluntad popular.
+            </p>
+
+            <p>
+              Esa sola posibilidad resultaba poderosa.
+            </p>
+
+            <p>
+              Y precisamente por eso también resultaba amenazante para quienes pensaban que ciertos cambios solo debían existir como advertencia, nunca como realidad.
+            </p>
+
+            <p>
+              Allí comenzó a incubarse una disputa más grande que la coyuntura inmediata.
+            </p>
+
+            <p>
+              No se trataba solo de un presidente.
+            </p>
+
+            <p>
+              Se trataba de lo que podía demostrar un país entero.
+            </p>
+
+            <div class="quote">Cuando una experiencia política amenaza con demostrar que otro camino es posible, deja de ser solo nacional.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              En la superficie, sin embargo, Chile seguía respirando esperanza.
+            </p>
+
+            <p>
+              La gente hablaba de justicia.
+            </p>
+
+            <p>
+              De reformas.
+            </p>
+
+            <p>
+              De dignidad.
+            </p>
+
+            <p>
+              De una nueva forma de entender el país y su riqueza.
+            </p>
+
+            <p>
+              Lo que estaba naciendo todavía no tenía el rostro completo de la confrontación futura.
+            </p>
+
+            <p>
+              Tenía, sobre todo, el brillo inicial de una promesa.
+            </p>
+
+            <p>
+              Pero bajo ese brillo ya se movían sombras.
+            </p>
+
+            <p>
+              Sombras que observaban, medían y esperaban.
+            </p>
+
+            <p><strong>Nadie sabía aún hasta dónde llegaría esa tensión. Pero ya había comenzado.</strong></p>
+
+            <div class="divider"></div>
+
+            <p>
+              Ese fue el verdadero inicio.
+            </p>
+
+            <p>
+              No solo la llegada de una figura política a una posición decisiva,
+              sino la apertura de una etapa en la que Chile comenzó a enfrentarse a su propia posibilidad de transformación.
+            </p>
+
+            <p>
+              Una parte del país vio en ello una oportunidad histórica.
+            </p>
+
+            <p>
+              Otra vio una amenaza intolerable.
+            </p>
+
+            <p>
+              Entre ambas fuerzas empezó a construirse el clima que marcaría los años siguientes.
+            </p>
+
+            <p>
+              Lo que comenzaba como una esperanza profunda,
+              con el tiempo se convertiría en uno de los conflictos más decisivos de la historia chilena.
+            </p>
+
+            <p><strong>Y apenas era el primer movimiento.</strong></p>
+          </div>
+        </div>
+
+        <div class="reader-bottom">
+          <p class="reader-note">
+            Continúa al capítulo 2 para entrar en la etapa en que la esperanza inicial empieza a medirse con las primeras resistencias, tensiones y señales de un conflicto mayor.
+          </p>
+
+          <div class="nav-actions">
+            <a href="../../../../index.html" class="btn btn-ghost">← Inicio</a>
+            <a href="capitulo2.html" class="btn btn-primary">Leer capítulo 2 →</a>
+          </div>
+        </div>
+      </article>
+    </main>
   </div>
 
-  <!-- HERO -->
-  <div class="hero">
-    <img src="../allende_portada_nebula.png" alt="Salvador Allende">
-  </div>
-
-  <!-- INFO -->
-  <div class="chapter-card">
-    <h1>Salvador Allende</h1>
-    <p>Capítulo 1: El inicio de un cambio</p>
-  </div>
-
-  <!-- LECTOR -->
-  <div class="reader">
-    <div class="story">
-
-      <p>
-        Chile, 1970.  
-        El país estaba dividido, pero también lleno de esperanza.
-      </p>
-
-      <p>
-        En las calles, la gente hablaba de cambios. De justicia. De un nuevo camino.
-        Por primera vez, un proyecto político prometía transformar la estructura del país desde dentro.
-      </p>
-
-      <p>
-        :contentReference[oaicite:0]{index=0} no era un desconocido.  
-        Había intentado llegar a la presidencia varias veces, pero esta vez era distinto.
-      </p>
-
-      <p>
-        La llamada “vía chilena al socialismo” comenzaba a tomar forma, no con armas,
-        sino con votos.
-      </p>
-
-      <p>
-        Pero detrás de los discursos, de los aplausos y de las banderas,
-        ya se movían fuerzas invisibles.
-      </p>
-
-      <p>
-        Empresarios, políticos y actores internacionales observaban con atención.
-        Algunos con esperanza… otros con miedo.
-      </p>
-
-      <p>
-        Nadie lo decía en voz alta,
-        pero el país estaba entrando en una tensión silenciosa.
-      </p>
-
-      <p>
-        Y lo que comenzaba como un cambio,
-        pronto se convertiría en un conflicto que marcaría la historia para siempre.
-      </p>
-
-    </div>
-  </div>
-
-  <!-- NAVEGACIÓN -->
-  <div class="chapter-navigation">
-    <button onclick="goToChapter('INDEX')">← Volver</button>
-    <button onclick="goToChapter(2)">Continuar →</button>
-  </div>
-
-  <!-- SCRIPT -->
   <script>
-    function goToChapter(target) {
-      const base = "allende";
+    const canvas = document.getElementById("stars");
+    const ctx = canvas.getContext("2d");
+    let stars = [];
 
-      if (target === "INDEX") {
-        window.location.href = "/nebula/index.html";
-        return;
+    function resize(){
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      createStars();
+    }
+
+    function createStars(){
+      stars = [];
+      const amount = Math.floor((canvas.width * canvas.height) / 14000);
+      for(let i = 0; i < amount; i++){
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.6 + 0.3,
+          speed: Math.random() * 0.35 + 0.08,
+          alpha: Math.random() * 0.7 + 0.2
+        });
+      }
+    }
+
+    function animate(){
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for(const s of stars){
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        s.y += s.speed;
+
+        if(s.y > canvas.height){
+          s.y = -2;
+          s.x = Math.random() * canvas.width;
+        }
       }
 
-      window.location.href = `/${base}/capitulo${target}.html`;
+      requestAnimationFrame(animate);
     }
-  </script>
 
+    window.addEventListener("resize", resize);
+    resize();
+    animate();
+  </script>
 </body>
 </html>
+
