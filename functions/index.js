@@ -26,59 +26,28 @@ const preApprovalClient = new PreApproval(client);
 
 const FRONTEND_URL =
   process.env.FRONTEND_URL || "https://skanoalerta-maker.github.io/nebula";
-const WEBHOOK_URL = process.env.WEBHOOK_URL || "";
+
+const WEBHOOK_URL =
+  process.env.WEBHOOK_URL ||
+  "https://us-central1-nebula-app.cloudfunctions.net/api/webhook";
 
 /**
- * PRECIOS NÉBULA
+ * PRECIOS
  */
 const NOVEL_PRICE = 1500;
-const PREMIUM_LAUNCH_PRICE = 4990;
-const PREMIUM_NORMAL_PRICE = 6990;
-const PREMIUM_MODE = "launch"; // "launch" o "normal"
-
-function getPremiumPrice() {
-  return PREMIUM_MODE === "launch"
-    ? PREMIUM_LAUNCH_PRICE
-    : PREMIUM_NORMAL_PRICE;
-}
-
-function getPremiumReason() {
-  return PREMIUM_MODE === "launch"
-    ? "Nébula Premium Mensual - Precio lanzamiento"
-    : "Nébula Premium Mensual";
-}
-
-app.get("/", (req, res) => {
-  res.json({
-    ok: true,
-    service: "Nebula payments backend",
-    premium_mode: PREMIUM_MODE,
-    premium_price: getPremiumPrice()
-  });
-});
+const PREMIUM_PRICE = 4990;
 
 /**
- * Crear pago individual por novela
- * body esperado:
- * {
- *   uid: "abc123",
- *   novelId: "codigo-nebula",
- *   title: "Código Nébula",
- *   price: 1500
- * }
+ * CREAR PAGO NOVELA
  */
 app.post("/create-novel-payment", async (req, res) => {
   try {
-    const { uid, novelId, title, price } = req.body || {};
+    const { uid, novelId, title } = req.body;
 
     if (!uid || !novelId || !title) {
-      return res.status(400).json({
-        ok: false,
-        error: "Faltan datos obligatorios: uid, novelId, title"
-      });
+      return res.status(400).json({ ok: false });
     }
 
-    const finalPrice = Number(price || NOVEL_PRICE);
     const externalReference = `novel_${uid}_${novelId}_${Date.now()}`;
 
     const preference = await preferenceClient.create({
@@ -87,7 +56,7 @@ app.post("/create-novel-payment", async (req, res) => {
           {
             title: `Nébula - ${title}`,
             quantity: 1,
-            unit_price: finalPrice,
+            unit_price: NOVEL_PRICE,
             currency_id: "CLP"
           }
         ],
@@ -95,7 +64,7 @@ app.post("/create-novel-payment", async (req, res) => {
         metadata: {
           uid,
           novelId,
-          type: "single_novel"
+          type: "novel"
         },
         back_urls: {
           success: `${FRONTEND_URL}/success.html`,
@@ -103,111 +72,129 @@ app.post("/create-novel-payment", async (req, res) => {
           pending: `${FRONTEND_URL}/pending.html`
         },
         auto_return: "approved",
-        notification_url: WEBHOOK_URL || undefined
+        notification_url: WEBHOOK_URL
       }
     });
 
     await db.collection("payments").doc(externalReference).set({
       uid,
       novelId,
-      title,
-      price: finalPrice,
-      type: "single_novel",
-      status: "created",
-      externalReference,
-      preferenceId: preference.id,
+      status: "pending",
       createdAt: admin.firestore.FieldValue.serverTimestamp()
     });
 
-    return res.json({
+    res.json({
       ok: true,
-      init_point: preference.init_point,
-      preference_id: preference.id,
-      external_reference: externalReference
+      init_point: preference.init_point
     });
-  } catch (error) {
-    console.error("Error create-novel-payment:", error);
-    return res.status(500).json({
-      ok: false,
-      error: error.message || "No se pudo crear el pago"
-    });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ ok: false });
   }
 });
 
 /**
- * Crear suscripción premium mensual
- * body esperado:
- * {
- *   uid: "abc123",
- *   email: "correo@ejemplo.com"
- * }
+ * CREAR PREMIUM
  */
 app.post("/create-premium-subscription", async (req, res) => {
   try {
-    const { uid, email } = req.body || {};
+    const { uid, email } = req.body;
 
-    if (!uid || !email) {
-      return res.status(400).json({
-        ok: false,
-        error: "Faltan datos obligatorios: uid, email"
-      });
-    }
-
-    const premiumPrice = getPremiumPrice();
     const externalReference = `premium_${uid}_${Date.now()}`;
 
     const preapproval = await preApprovalClient.create({
       body: {
-        reason: getPremiumReason(),
+        reason: "Nébula Premium",
         external_reference: externalReference,
         payer_email: email,
         auto_recurring: {
           frequency: 1,
           frequency_type: "months",
-          transaction_amount: premiumPrice,
+          transaction_amount: PREMIUM_PRICE,
           currency_id: "CLP"
         },
         back_url: `${FRONTEND_URL}/success.html`,
-        status: "pending",
-        notification_url: WEBHOOK_URL || undefined
+        notification_url: WEBHOOK_URL
       }
     });
 
     await db.collection("subscriptions").doc(externalReference).set({
       uid,
-      email,
-      type: "premium_monthly",
-      premiumMode: PREMIUM_MODE,
-      launchPrice: PREMIUM_LAUNCH_PRICE,
-      normalPrice: PREMIUM_NORMAL_PRICE,
-      chargedPrice: premiumPrice,
-      status: "created",
-      externalReference,
-      preapprovalId: preapproval.id,
-      initPoint: preapproval.init_point || null,
+      status: "pending",
       createdAt: admin.firestore.FieldValue.serverTimestamp()
     });
 
-    return res.json({
+    res.json({
       ok: true,
-      init_point: preapproval.init_point,
-      preapproval_id: preapproval.id,
-      external_reference: externalReference,
-      premium_mode: PREMIUM_MODE,
-      premium_price: premiumPrice
+      init_point: preapproval.init_point
     });
-  } catch (error) {
-    console.error("Error create-premium-subscription:", error);
-    return res.status(500).json({
-      ok: false,
-      error: error.message || "No se pudo crear la suscripción"
-    });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ ok: false });
   }
 });
 
-export const api = onRequest(
-  {
-    cors: true
-  },
-  app
-);
+/**
+ * 🔥 WEBHOOK (LO IMPORTANTE)
+ */
+app.post("/webhook", async (req, res) => {
+  try {
+    const data = req.body;
+
+    console.log("Webhook recibido:", data);
+
+    const externalReference =
+      data?.data?.id || data?.external_reference;
+
+    if (!externalReference) {
+      return res.sendStatus(200);
+    }
+
+    // 🔹 NOVELA
+    if (externalReference.startsWith("novel_")) {
+      const paymentRef = db.collection("payments").doc(externalReference);
+      const paymentDoc = await paymentRef.get();
+
+      if (paymentDoc.exists) {
+        const { uid, novelId } = paymentDoc.data();
+
+        // marcar pagado
+        await paymentRef.update({
+          status: "approved"
+        });
+
+        // 🔥 AGREGAR NOVELA AL USUARIO
+        await db.collection("users").doc(uid).update({
+          purchasedNovels: admin.firestore.FieldValue.arrayUnion(novelId)
+        });
+      }
+    }
+
+    // 🔹 PREMIUM
+    if (externalReference.startsWith("premium_")) {
+      const subRef = db.collection("subscriptions").doc(externalReference);
+      const subDoc = await subRef.get();
+
+      if (subDoc.exists) {
+        const { uid } = subDoc.data();
+
+        await subRef.update({
+          status: "active"
+        });
+
+        // 🔥 ACTIVAR PREMIUM
+        await db.collection("users").doc(uid).update({
+          plan: "premium",
+          subscription: "premium"
+        });
+      }
+    }
+
+    res.sendStatus(200);
+  } catch (e) {
+    console.error("Webhook error:", e);
+    res.sendStatus(200);
+  }
+});
+
+export const api = onRequest({ cors: true }, app);
