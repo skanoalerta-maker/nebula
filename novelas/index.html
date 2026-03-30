@@ -873,24 +873,22 @@
       max-width:100%;
     }
 
-    .mp-logo{
-      width:46px;
-      height:46px;
-      border-radius:50%;
-      background:#00b1ea;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      box-shadow:0 10px 20px rgba(0,177,234,.20);
-      flex-shrink:0;
-      overflow:hidden;
-    }
+.mp-logo{
+  width:64px;
+  height:64px;
+  border-radius:14px;
+  background:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:8px;
+}
 
-    .mp-logo svg{
-      width:34px;
-      height:34px;
-      display:block;
-    }
+.mp-logo img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
 
     .payment-brand-copy strong{
       display:block;
@@ -1161,7 +1159,6 @@ function renderMercadoPagoBrand(){
       <div class="mp-logo">
         <img src="../assets/covers/mercado-pago.png" alt="Mercado Pago" />
       </div>
-
       <div class="payment-brand-copy">
         <strong>Pago seguro con Mercado Pago</strong>
         <span>Checkout confiable para novela individual y suscripción premium.</span>
