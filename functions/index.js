@@ -24,11 +24,37 @@ const client = new MercadoPagoConfig({
 const preferenceClient = new Preference(client);
 const preApprovalClient = new PreApproval(client);
 
-const FRONTEND_URL = process.env.FRONTEND_URL || "https://skanoalerta-maker.github.io/nebula";
+const FRONTEND_URL =
+  process.env.FRONTEND_URL || "https://skanoalerta-maker.github.io/nebula";
 const WEBHOOK_URL = process.env.WEBHOOK_URL || "";
 
+/**
+ * PRECIOS NÉBULA
+ */
+const NOVEL_PRICE = 1500;
+const PREMIUM_LAUNCH_PRICE = 4990;
+const PREMIUM_NORMAL_PRICE = 6990;
+const PREMIUM_MODE = "launch"; // "launch" o "normal"
+
+function getPremiumPrice() {
+  return PREMIUM_MODE === "launch"
+    ? PREMIUM_LAUNCH_PRICE
+    : PREMIUM_NORMAL_PRICE;
+}
+
+function getPremiumReason() {
+  return PREMIUM_MODE === "launch"
+    ? "Nébula Premium Mensual - Precio lanzamiento"
+    : "Nébula Premium Mensual";
+}
+
 app.get("/", (req, res) => {
-  res.json({ ok: true, service: "Nebula payments backend" });
+  res.json({
+    ok: true,
+    service: "Nebula payments backend",
+    premium_mode: PREMIUM_MODE,
+    premium_price: getPremiumPrice()
+  });
 });
 
 /**
@@ -45,13 +71,14 @@ app.post("/create-novel-payment", async (req, res) => {
   try {
     const { uid, novelId, title, price } = req.body || {};
 
-    if (!uid || !novelId || !title || !price) {
+    if (!uid || !novelId || !title) {
       return res.status(400).json({
         ok: false,
-        error: "Faltan datos obligatorios: uid, novelId, title, price"
+        error: "Faltan datos obligatorios: uid, novelId, title"
       });
     }
 
+    const finalPrice = Number(price || NOVEL_PRICE);
     const externalReference = `novel_${uid}_${novelId}_${Date.now()}`;
 
     const preference = await preferenceClient.create({
@@ -60,7 +87,7 @@ app.post("/create-novel-payment", async (req, res) => {
           {
             title: `Nébula - ${title}`,
             quantity: 1,
-            unit_price: Number(price),
+            unit_price: finalPrice,
             currency_id: "CLP"
           }
         ],
@@ -84,7 +111,7 @@ app.post("/create-novel-payment", async (req, res) => {
       uid,
       novelId,
       title,
-      price: Number(price),
+      price: finalPrice,
       type: "single_novel",
       status: "created",
       externalReference,
@@ -126,17 +153,18 @@ app.post("/create-premium-subscription", async (req, res) => {
       });
     }
 
+    const premiumPrice = getPremiumPrice();
     const externalReference = `premium_${uid}_${Date.now()}`;
 
     const preapproval = await preApprovalClient.create({
       body: {
-        reason: "Nébula Premium Mensual",
+        reason: getPremiumReason(),
         external_reference: externalReference,
         payer_email: email,
         auto_recurring: {
           frequency: 1,
           frequency_type: "months",
-          transaction_amount: 6990,
+          transaction_amount: premiumPrice,
           currency_id: "CLP"
         },
         back_url: `${FRONTEND_URL}/success.html`,
@@ -149,6 +177,10 @@ app.post("/create-premium-subscription", async (req, res) => {
       uid,
       email,
       type: "premium_monthly",
+      premiumMode: PREMIUM_MODE,
+      launchPrice: PREMIUM_LAUNCH_PRICE,
+      normalPrice: PREMIUM_NORMAL_PRICE,
+      chargedPrice: premiumPrice,
       status: "created",
       externalReference,
       preapprovalId: preapproval.id,
@@ -160,7 +192,9 @@ app.post("/create-premium-subscription", async (req, res) => {
       ok: true,
       init_point: preapproval.init_point,
       preapproval_id: preapproval.id,
-      external_reference: externalReference
+      external_reference: externalReference,
+      premium_mode: PREMIUM_MODE,
+      premium_price: premiumPrice
     });
   } catch (error) {
     console.error("Error create-premium-subscription:", error);
