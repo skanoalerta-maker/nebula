@@ -1268,11 +1268,12 @@ function renderMercadoPagoBrand(){
         window.location.href = data.init_point;
       }
 
-      function chapterIsAccessible(index){
-        const position = index + 1;
-        if (accessState.isPremium) return true;
-        return position <= freeChapters;
-      }
+function chapterIsAccessible(index){
+  const position = index + 1;
+  if (accessState.isPremium) return true;
+  if (accessState.hasNovelAccess) return true;
+  return position <= freeChapters;
+}
 
       function buildChapterCard(chapter, index){
         const position = index + 1;
