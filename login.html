@@ -2,15 +2,9 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-  />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Nébula | Acceso</title>
-  <meta
-    name="description"
-    content="Accede a Nébula para leer tus historias, guardar tu progreso y desbloquear capítulos."
-  />
+  <meta name="description" content="Accede a Nébula para leer tus historias, guardar tu progreso y desbloquear capítulos." />
   <meta name="theme-color" content="#07101f" />
 
   <style>
@@ -21,26 +15,22 @@
       --panel:rgba(8,18,40,.78);
       --panel-strong:rgba(10,20,44,.92);
       --line:rgba(255,255,255,.08);
+      --line-strong:rgba(104,160,255,.22);
       --text:#f8fbff;
       --muted:#b8c4da;
       --muted-2:#8ea3c8;
       --blue:#3490ff;
       --blue2:#66b8ff;
+      --violet:#9a66ff;
+      --cyan:#50dbff;
       --shadow:0 24px 70px rgba(0,0,0,.34);
       --shadow-soft:0 18px 46px rgba(0,0,0,.24);
       --radius:26px;
       --container:min(1120px, calc(100% - 32px));
     }
 
-    *{
-      box-sizing:border-box;
-      margin:0;
-      padding:0;
-    }
-
-    html{
-      scroll-behavior:smooth;
-    }
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    html{ scroll-behavior:smooth; }
 
     body{
       min-height:100vh;
@@ -55,38 +45,14 @@
       position:relative;
     }
 
-    a{
-      color:inherit;
-      text-decoration:none;
-    }
+    a{ color:inherit; text-decoration:none; }
+    button,input{ font:inherit; }
+    .container{ width:var(--container); margin:0 auto; position:relative; z-index:2; }
 
-    button,
-    input{
-      font:inherit;
+    .galaxy-bg,.galaxy-bg::before,.galaxy-bg::after{
+      content:""; position:fixed; inset:0; pointer-events:none; display:block;
     }
-
-    .container{
-      width:var(--container);
-      margin:0 auto;
-      position:relative;
-      z-index:2;
-    }
-
-    .galaxy-bg,
-    .galaxy-bg::before,
-    .galaxy-bg::after{
-      content:"";
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      display:block;
-    }
-
-    .galaxy-bg{
-      z-index:-30;
-      overflow:hidden;
-    }
-
+    .galaxy-bg{ z-index:-30; overflow:hidden; }
     .galaxy-bg::before{
       background-image:
         radial-gradient(2px 2px at 8% 11%, rgba(255,255,255,.94), transparent 62%),
@@ -102,7 +68,6 @@
       opacity:.95;
       animation:starsFloat 120s linear infinite;
     }
-
     .galaxy-bg::after{
       background:
         radial-gradient(circle at 18% 22%, rgba(75,122,255,.12), transparent 20%),
@@ -113,12 +78,8 @@
       opacity:.95;
       animation:nebulaDrift 22s ease-in-out infinite alternate;
     }
-
     .bg-grid{
-      position:fixed;
-      inset:0;
-      z-index:-28;
-      pointer-events:none;
+      position:fixed; inset:0; z-index:-28; pointer-events:none;
       background:
         linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
@@ -126,73 +87,23 @@
       mask-image:radial-gradient(circle at center, rgba(0,0,0,.95), transparent 88%);
       opacity:.26;
     }
-
     .bg-orb{
-      position:fixed;
-      pointer-events:none;
-      border-radius:50%;
-      filter:blur(48px);
-      z-index:-27;
-      opacity:.36;
+      position:fixed; pointer-events:none; border-radius:50%; filter:blur(48px); z-index:-27; opacity:.36;
     }
+    .orb-1{ width:420px; height:420px; top:14%; right:-120px; background:radial-gradient(circle, rgba(123,78,255,.36), transparent 68%); animation:orbMove1 18s ease-in-out infinite alternate; }
+    .orb-2{ width:360px; height:360px; left:-120px; top:34%; background:radial-gradient(circle, rgba(61,173,255,.28), transparent 68%); animation:orbMove2 20s ease-in-out infinite alternate; }
 
-    .orb-1{
-      width:420px;
-      height:420px;
-      top:14%;
-      right:-120px;
-      background:radial-gradient(circle, rgba(123,78,255,.36), transparent 68%);
-      animation:orbMove1 18s ease-in-out infinite alternate;
-    }
+    @keyframes starsFloat{ from{ transform:translateY(0);} to{ transform:translateY(-120px);} }
+    @keyframes nebulaDrift{ 0%{ transform:scale(1) translate3d(0,0,0);} 100%{ transform:scale(1.07) translate3d(-1.5%, 1.5%, 0);} }
+    @keyframes orbMove1{ from{ transform:translate3d(0,0,0);} to{ transform:translate3d(-30px,35px,0);} }
+    @keyframes orbMove2{ from{ transform:translate3d(0,0,0);} to{ transform:translate3d(35px,-22px,0);} }
 
-    .orb-2{
-      width:360px;
-      height:360px;
-      left:-120px;
-      top:34%;
-      background:radial-gradient(circle, rgba(61,173,255,.28), transparent 68%);
-      animation:orbMove2 20s ease-in-out infinite alternate;
-    }
+    .page{ min-height:100vh; display:flex; align-items:center; padding:32px 0; }
+    .shell{ display:grid; grid-template-columns:minmax(0,1fr) minmax(380px,500px); gap:28px; align-items:stretch; }
 
-    @keyframes starsFloat{
-      from{ transform:translateY(0); }
-      to{ transform:translateY(-120px); }
-    }
-
-    @keyframes nebulaDrift{
-      0%{ transform:scale(1) translate3d(0,0,0); }
-      100%{ transform:scale(1.07) translate3d(-1.5%, 1.5%, 0); }
-    }
-
-    @keyframes orbMove1{
-      from{ transform:translate3d(0,0,0); }
-      to{ transform:translate3d(-30px, 35px, 0); }
-    }
-
-    @keyframes orbMove2{
-      from{ transform:translate3d(0,0,0); }
-      to{ transform:translate3d(35px, -22px, 0); }
-    }
-
-    .page{
-      min-height:100vh;
-      display:flex;
-      align-items:center;
-      padding:32px 0;
-    }
-
-    .shell{
-      display:grid;
-      grid-template-columns:minmax(0, 1fr) minmax(360px, 480px);
-      gap:28px;
-      align-items:stretch;
-    }
-
-    .info-card,
-    .auth-card{
+    .info-card,.auth-card{
       border-radius:32px;
-      background:
-        linear-gradient(180deg, rgba(9,18,42,.78), rgba(9,18,42,.58));
+      background:linear-gradient(180deg, rgba(9,18,42,.78), rgba(9,18,42,.58));
       border:1px solid var(--line);
       box-shadow:var(--shadow);
       overflow:hidden;
@@ -203,472 +114,152 @@
       display:flex;
       flex-direction:column;
       justify-content:center;
-      min-height:640px;
+      min-height:680px;
       position:relative;
     }
 
     .eyebrow{
-      display:inline-flex;
-      align-items:center;
-      min-height:34px;
-      padding:0 14px;
-      border-radius:999px;
-      background:rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.07);
-      color:#d8e7ff;
-      font-size:.84rem;
-      font-weight:700;
-      letter-spacing:.04em;
-      text-transform:uppercase;
-      width:max-content;
+      display:inline-flex; align-items:center; min-height:34px; padding:0 14px; border-radius:999px;
+      background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.07); color:#d8e7ff;
+      font-size:.84rem; font-weight:700; letter-spacing:.04em; text-transform:uppercase; width:max-content;
     }
 
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:14px;
-      margin-bottom:18px;
-    }
-
+    .brand{ display:flex; align-items:center; gap:14px; margin-bottom:18px; }
     .brand-mark{
-      width:58px;
-      height:58px;
-      border-radius:18px;
-      display:grid;
-      place-items:center;
-      font-weight:900;
-      font-size:1.5rem;
-      letter-spacing:.04em;
-      color:#ffffff;
-      background:
-        linear-gradient(135deg, rgba(18,68,150,.9), rgba(10,35,84,.9)),
-        radial-gradient(circle at 30% 20%, rgba(255,255,255,.25), transparent 40%);
+      width:58px; height:58px; border-radius:18px; display:grid; place-items:center; font-weight:900; font-size:1.5rem;
+      color:#ffffff; background:linear-gradient(135deg, rgba(18,68,150,.9), rgba(10,35,84,.9));
       border:1px solid rgba(115,183,255,.22);
-      box-shadow:
-        0 14px 30px rgba(5, 17, 40, .45),
-        inset 0 1px 0 rgba(255,255,255,.14),
-        0 0 24px rgba(66,137,255,.12);
+      box-shadow:0 14px 30px rgba(5,17,40,.45), inset 0 1px 0 rgba(255,255,255,.14), 0 0 24px rgba(66,137,255,.12);
+      flex-shrink:0;
+    }
+    .brand-copy strong{ display:block; font-size:1.65rem; line-height:1; letter-spacing:.08em; }
+    .brand-copy span{ display:block; color:var(--muted); font-size:1rem; margin-top:4px; }
+
+    .info-card h1{ margin-top:18px; font-size:clamp(2rem,4vw,4rem); line-height:.95; letter-spacing:-.04em; max-width:10ch; }
+    .info-card h1 span{ display:block; color:#9fd4ff; margin-top:10px; }
+    .info-card p{ margin-top:22px; max-width:62ch; color:var(--muted); font-size:1.06rem; line-height:1.8; }
+
+    .benefits{ margin-top:28px; display:grid; gap:14px; }
+    .benefit{ padding:18px 18px 16px; border-radius:22px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.06); box-shadow:var(--shadow-soft); }
+    .benefit small{ display:block; color:var(--muted-2); font-size:.84rem; margin-bottom:6px; }
+    .benefit strong{ display:block; font-size:1rem; line-height:1.35; }
+
+    .back-link{ display:inline-flex; align-items:center; justify-content:center; margin-top:28px; min-height:50px; padding:0 22px; border-radius:18px; color:#fff; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08); width:max-content; font-weight:800; }
+
+    .auth-card{ padding:28px; display:flex; flex-direction:column; justify-content:center; min-height:680px; }
+    .session-box{ display:none; margin-bottom:18px; padding:18px; border-radius:22px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08); box-shadow:var(--shadow-soft); }
+    .session-box.show{ display:block; }
+    .session-head{ display:flex; align-items:center; gap:14px; margin-bottom:14px; }
+
+    .session-avatar{
+      width:62px; height:62px; border-radius:20px; display:grid; place-items:center;
+      background:linear-gradient(135deg, rgba(42,130,255,.20), rgba(110,89,255,.18));
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow:0 14px 26px rgba(0,0,0,.22);
+      overflow:hidden;
       flex-shrink:0;
     }
 
-    .brand-copy strong{
-      display:block;
-      font-size:1.65rem;
-      line-height:1;
-      letter-spacing:.08em;
-    }
+    .session-meta strong{ display:block; font-size:1rem; line-height:1.2; }
+    .session-meta span{ display:block; color:var(--muted); margin-top:4px; font-size:.94rem; word-break:break-word; }
+    .session-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px; }
+    .session-item{ padding:12px 14px; border-radius:16px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.06); }
+    .session-item small{ display:block; color:var(--muted-2); margin-bottom:6px; font-size:.8rem; text-transform:uppercase; letter-spacing:.04em; }
+    .session-item strong{ font-size:.98rem; line-height:1.3; }
+    .session-actions{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
 
-    .brand-copy span{
-      display:block;
-      color:var(--muted);
-      font-size:1rem;
-      margin-top:4px;
-    }
+    .tabs{ display:grid; grid-template-columns:1fr 1fr; gap:10px; background:rgba(255,255,255,.04); padding:8px; border-radius:20px; border:1px solid rgba(255,255,255,.06); margin-bottom:24px; }
+    .tabs.hide{ display:none; }
+    .tab-btn{ min-height:48px; border:none; border-radius:14px; color:#dce7f8; background:transparent; font-weight:800; cursor:pointer; transition:.2s ease; }
+    .tab-btn.active{ background:linear-gradient(135deg, #2a82ff 0%, #4aa7ff 100%); color:#fff; box-shadow:0 12px 24px rgba(38,121,255,.22); }
 
-    .info-card h1{
-      margin-top:18px;
-      font-size:clamp(2rem, 4vw, 4rem);
-      line-height:.95;
-      letter-spacing:-.04em;
-      max-width:10ch;
-    }
+    .auth-forms.hide{ display:none; }
+    .form-box{ display:none; flex-direction:column; gap:16px; }
+    .form-box.active{ display:flex; }
+    .form-title{ font-size:1.8rem; line-height:1.05; margin-bottom:4px; }
+    .form-note{ color:var(--muted); line-height:1.65; margin-bottom:8px; }
 
-    .info-card h1 span{
-      display:block;
-      color:#9fd4ff;
-      margin-top:10px;
-    }
-
-    .info-card p{
-      margin-top:22px;
-      max-width:62ch;
-      color:var(--muted);
-      font-size:1.06rem;
-      line-height:1.8;
-    }
-
-    .benefits{
-      margin-top:28px;
-      display:grid;
-      grid-template-columns:1fr;
-      gap:14px;
-    }
-
-    .benefit{
-      padding:18px 18px 16px;
-      border-radius:22px;
-      background:rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.06);
-      box-shadow:var(--shadow-soft);
-    }
-
-    .benefit small{
-      display:block;
-      color:var(--muted-2);
-      font-size:.84rem;
-      margin-bottom:6px;
-    }
-
-    .benefit strong{
-      display:block;
-      font-size:1rem;
-      line-height:1.35;
-    }
-
-    .back-link{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      margin-top:28px;
-      min-height:50px;
-      padding:0 22px;
-      border-radius:18px;
-      color:#fff;
-      background:rgba(255,255,255,.05);
-      border:1px solid rgba(255,255,255,.08);
-      width:max-content;
-      font-weight:800;
-    }
-
-    .auth-card{
-      padding:28px;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      min-height:640px;
-    }
-
-    .session-box{
-      display:none;
-      margin-bottom:18px;
-      padding:18px;
-      border-radius:22px;
-      background:rgba(255,255,255,.05);
-      border:1px solid rgba(255,255,255,.08);
-      box-shadow:var(--shadow-soft);
-    }
-
-    .session-box.show{
-      display:block;
-    }
-
-    .session-head{
-      display:flex;
-      align-items:center;
-      gap:14px;
-      margin-bottom:14px;
-    }
-
-    .session-avatar{
-      width:58px;
-      height:58px;
-      border-radius:18px;
-      display:grid;
-      place-items:center;
-      font-size:1.8rem;
-      background:linear-gradient(135deg, rgba(42,130,255,.24), rgba(110,89,255,.24));
-      border:1px solid rgba(255,255,255,.10);
-    }
-
-    .session-meta strong{
-      display:block;
-      font-size:1rem;
-      line-height:1.2;
-    }
-
-    .session-meta span{
-      display:block;
-      color:var(--muted);
-      margin-top:4px;
-      font-size:.94rem;
-      word-break:break-word;
-    }
-
-    .session-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:10px;
-      margin-bottom:14px;
-    }
-
-    .session-item{
-      padding:12px 14px;
-      border-radius:16px;
-      background:rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.06);
-    }
-
-    .session-item small{
-      display:block;
-      color:var(--muted-2);
-      margin-bottom:6px;
-      font-size:.8rem;
-      text-transform:uppercase;
-      letter-spacing:.04em;
-    }
-
-    .session-item strong{
-      font-size:.98rem;
-      line-height:1.3;
-    }
-
-    .session-actions{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:10px;
-    }
-
-    .tabs{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:10px;
-      background:rgba(255,255,255,.04);
-      padding:8px;
-      border-radius:20px;
-      border:1px solid rgba(255,255,255,.06);
-      margin-bottom:24px;
-    }
-
-    .tabs.hide{
-      display:none;
-    }
-
-    .tab-btn{
-      min-height:48px;
-      border:none;
-      border-radius:14px;
-      color:#dce7f8;
-      background:transparent;
-      font-weight:800;
-      cursor:pointer;
-      transition:.2s ease;
-    }
-
-    .tab-btn.active{
-      background:linear-gradient(135deg, #2a82ff 0%, #4aa7ff 100%);
-      color:#fff;
-      box-shadow:0 12px 24px rgba(38,121,255,.22);
-    }
-
-    .auth-forms.hide{
-      display:none;
-    }
-
-    .form-box{
-      display:none;
-      flex-direction:column;
-      gap:16px;
-    }
-
-    .form-box.active{
-      display:flex;
-    }
-
-    .form-title{
-      font-size:1.8rem;
-      line-height:1.05;
-      margin-bottom:4px;
-    }
-
-    .form-note{
-      color:var(--muted);
-      line-height:1.65;
-      margin-bottom:8px;
-    }
-
-    .field{
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-    }
-
-    .field label{
-      color:#dce7f8;
-      font-size:.95rem;
-      font-weight:700;
-    }
-
+    .field{ display:flex; flex-direction:column; gap:8px; }
+    .field label{ color:#dce7f8; font-size:.95rem; font-weight:700; }
     .field input{
-      min-height:54px;
-      border-radius:18px;
-      border:1px solid rgba(255,255,255,.08);
-      background:rgba(255,255,255,.05);
-      color:#fff;
-      padding:0 16px;
-      outline:none;
+      min-height:56px; border-radius:18px; border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.05); color:#fff; padding:0 16px; outline:none;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.03);
     }
+    .field input::placeholder{ color:#91a6c7; }
+    .field input:focus{ border-color:rgba(102,184,255,.34); box-shadow:0 0 0 4px rgba(73,147,255,.10); }
 
-    .field input::placeholder{
-      color:#91a6c7;
-    }
-
-    .avatar-picker{
-      display:grid;
-      grid-template-columns:repeat(4, 1fr);
-      gap:10px;
-    }
-
-    .avatar-option input{
-      display:none;
-    }
+    .avatar-picker{ display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:12px; }
+    .avatar-option input{ display:none; }
 
     .avatar-label{
-      min-height:62px;
-      border-radius:18px;
-      display:grid;
-      place-items:center;
-      font-size:1.55rem;
-      background:rgba(255,255,255,.05);
+      min-height:98px;
+      border-radius:22px;
+      display:flex;
+      align-items:center;
+      gap:14px;
+      padding:14px;
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.035));
       border:1px solid rgba(255,255,255,.08);
       cursor:pointer;
       transition:.2s ease;
+      box-shadow:var(--shadow-soft);
     }
 
     .avatar-option input:checked + .avatar-label{
-      background:linear-gradient(135deg, #2a82ff 0%, #4aa7ff 100%);
-      border-color:rgba(255,255,255,.20);
-      box-shadow:0 14px 30px rgba(38,121,255,.22);
+      background:linear-gradient(135deg, rgba(42,130,255,.18), rgba(90,150,255,.12));
+      border-color:rgba(122,180,255,.32);
+      box-shadow:0 16px 30px rgba(38,121,255,.18);
       transform:translateY(-1px);
     }
 
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      min-height:54px;
-      padding:0 24px;
-      border-radius:18px;
-      border:1px solid transparent;
-      font-weight:800;
-      font-size:1rem;
-      cursor:pointer;
-      transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
-      white-space:nowrap;
+    .avatar-icon-wrap{
+      width:58px; height:58px; border-radius:18px;
+      display:grid; place-items:center;
+      background:linear-gradient(135deg, rgba(22,45,94,.95), rgba(11,22,50,.95));
+      border:1px solid rgba(118,170,255,.18);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.06), 0 10px 20px rgba(0,0,0,.22);
+      flex-shrink:0;
     }
 
-    .btn:hover{
-      transform:translateY(-1px);
+    .avatar-copy{ min-width:0; }
+    .avatar-copy strong{ display:block; font-size:.95rem; line-height:1.1; margin-bottom:4px; }
+    .avatar-copy span{ display:block; color:var(--muted); font-size:.84rem; line-height:1.35; }
+
+    .avatar-svg{ width:30px; height:30px; display:block; }
+    .avatar-svg path, .avatar-svg circle, .avatar-svg rect, .avatar-svg ellipse, .avatar-svg line, .avatar-svg polygon {
+      vector-effect:non-scaling-stroke;
     }
 
-    .btn-primary{
-      color:#fff;
-      background:linear-gradient(135deg, #2a82ff 0%, #4aa7ff 100%);
-      box-shadow:0 18px 34px rgba(38,121,255,.24);
-    }
+    .btn{ display:inline-flex; align-items:center; justify-content:center; gap:10px; min-height:54px; padding:0 24px; border-radius:18px; border:1px solid transparent; font-weight:800; font-size:1rem; cursor:pointer; transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease; white-space:nowrap; }
+    .btn:hover{ transform:translateY(-1px); }
+    .btn-primary{ color:#fff; background:linear-gradient(135deg, #2a82ff 0%, #4aa7ff 100%); box-shadow:0 18px 34px rgba(38,121,255,.24); }
+    .btn-primary:hover{ box-shadow:0 20px 36px rgba(38,121,255,.30); }
+    .btn-secondary{ color:#fff; background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.08); backdrop-filter:blur(10px); }
 
-    .btn-primary:hover{
-      box-shadow:0 20px 36px rgba(38,121,255,.30);
-    }
+    .divider{ display:flex; align-items:center; gap:12px; color:var(--muted-2); font-size:.9rem; margin:4px 0; }
+    .divider::before,.divider::after{ content:""; flex:1; height:1px; background:rgba(255,255,255,.08); }
 
-    .btn-secondary{
-      color:#fff;
-      background:rgba(255,255,255,.06);
-      border-color:rgba(255,255,255,.08);
-      backdrop-filter:blur(10px);
-    }
-
-    .divider{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      color:var(--muted-2);
-      font-size:.9rem;
-      margin:4px 0;
-    }
-
-    .divider::before,
-    .divider::after{
-      content:"";
-      flex:1;
-      height:1px;
-      background:rgba(255,255,255,.08);
-    }
-
-    .status{
-      min-height:54px;
-      padding:14px 16px;
-      border-radius:18px;
-      background:rgba(255,255,255,.05);
-      border:1px solid rgba(255,255,255,.08);
-      color:#dce7f8;
-      line-height:1.5;
-      display:none;
-      margin-bottom:16px;
-    }
-
-    .status.show{
-      display:block;
-    }
-
-    .status.error{
-      border-color:rgba(255,88,88,.28);
-      background:rgba(255,88,88,.10);
-      color:#ffd4d4;
-    }
-
-    .status.success{
-      border-color:rgba(88,255,174,.22);
-      background:rgba(88,255,174,.10);
-      color:#d7ffee;
-    }
-
-    .footer-help{
-      margin-top:18px;
-      color:var(--muted);
-      font-size:.94rem;
-      line-height:1.65;
-    }
+    .status{ min-height:54px; padding:14px 16px; border-radius:18px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08); color:#dce7f8; line-height:1.5; display:none; margin-bottom:16px; }
+    .status.show{ display:block; }
+    .status.error{ border-color:rgba(255,88,88,.28); background:rgba(255,88,88,.10); color:#ffd4d4; }
+    .status.success{ border-color:rgba(88,255,174,.22); background:rgba(88,255,174,.10); color:#d7ffee; }
+    .footer-help{ margin-top:18px; color:var(--muted); font-size:.94rem; line-height:1.65; }
 
     @media (max-width: 980px){
-      .shell{
-        grid-template-columns:1fr;
-      }
-
-      .info-card,
-      .auth-card{
-        min-height:auto;
-      }
+      .shell{ grid-template-columns:1fr; }
+      .info-card,.auth-card{ min-height:auto; }
     }
 
     @media (max-width: 640px){
-      .container{
-        width:min(100% - 18px, 1000px);
-      }
-
-      .page{
-        padding:18px 0;
-      }
-
-      .info-card,
-      .auth-card{
-        padding:20px;
-        border-radius:26px;
-      }
-
-      .brand-mark{
-        width:50px;
-        height:50px;
-        font-size:1.3rem;
-      }
-
-      .brand-copy strong{
-        font-size:1.4rem;
-      }
-
-      .avatar-picker{
-        grid-template-columns:repeat(4, 1fr);
-      }
-
-      .session-grid,
-      .session-actions{
-        grid-template-columns:1fr;
-      }
-
-      .btn,
-      .back-link{
-        width:100%;
-      }
+      .container{ width:min(100% - 18px, 1000px); }
+      .page{ padding:18px 0; }
+      .info-card,.auth-card{ padding:20px; border-radius:26px; }
+      .brand-mark{ width:50px; height:50px; font-size:1.3rem; }
+      .brand-copy strong{ font-size:1.4rem; }
+      .avatar-picker{ grid-template-columns:1fr; }
+      .session-grid,.session-actions{ grid-template-columns:1fr; }
+      .btn,.back-link{ width:100%; }
     }
   </style>
 </head>
@@ -724,7 +315,7 @@
       <section class="auth-card">
         <div id="sessionBox" class="session-box">
           <div class="session-head">
-            <div id="sessionAvatar" class="session-avatar">🌌</div>
+            <div id="sessionAvatar" class="session-avatar"></div>
             <div class="session-meta">
               <strong id="sessionName">Usuario Nébula</strong>
               <span id="sessionEmail">correo@ejemplo.com</span>
@@ -758,131 +349,125 @@
         <div id="authForms" class="auth-forms">
           <form id="loginForm" class="form-box active">
             <h2 class="form-title">Bienvenido de vuelta</h2>
-            <p class="form-note">
-              Inicia sesión para continuar con tu lectura.
-            </p>
+            <p class="form-note">Inicia sesión para continuar con tu lectura.</p>
 
             <div class="field">
               <label for="loginEmail">Correo electrónico</label>
-              <input
-                type="email"
-                id="loginEmail"
-                placeholder="tucorreo@ejemplo.com"
-                autocomplete="email"
-                required
-              />
+              <input type="email" id="loginEmail" placeholder="tucorreo@ejemplo.com" autocomplete="email" required />
             </div>
 
             <div class="field">
               <label for="loginPassword">Contraseña</label>
-              <input
-                type="password"
-                id="loginPassword"
-                placeholder="Tu contraseña"
-                autocomplete="current-password"
-                required
-              />
+              <input type="password" id="loginPassword" placeholder="Tu contraseña" autocomplete="current-password" required />
             </div>
 
             <button class="btn btn-primary" type="submit">Entrar</button>
 
             <div class="divider">o</div>
 
-            <button id="googleLoginBtn" class="btn btn-secondary" type="button">
-              Entrar con Google
-            </button>
+            <button id="googleLoginBtn" class="btn btn-secondary" type="button">Entrar con Google</button>
           </form>
 
           <form id="registerForm" class="form-box">
             <h2 class="form-title">Crea tu cuenta</h2>
-            <p class="form-note">
-              Regístrate para comenzar a guardar tu progreso de lectura.
-            </p>
+            <p class="form-note">Regístrate para comenzar a guardar tu progreso de lectura.</p>
 
             <div class="field">
               <label for="registerName">Tu nombre</label>
-              <input
-                type="text"
-                id="registerName"
-                placeholder="Tu nombre o apodo"
-                autocomplete="name"
-                required
-              />
+              <input type="text" id="registerName" placeholder="Tu nombre o apodo" autocomplete="name" required />
             </div>
 
             <div class="field">
-              <label>Elige un icono que te represente</label>
+              <label>Elige un perfil visual</label>
               <div class="avatar-picker">
                 <label class="avatar-option">
-                  <input type="radio" name="avatar" value="🌌" checked />
-                  <span class="avatar-label">🌌</span>
+                  <input type="radio" name="avatar" value="navigator" checked />
+                  <span class="avatar-label">
+                    <span class="avatar-icon-wrap" data-icon-preview="navigator"></span>
+                    <span class="avatar-copy">
+                      <strong>Navegante</strong>
+                      <span>Perfil limpio y sobrio</span>
+                    </span>
+                  </span>
                 </label>
+
                 <label class="avatar-option">
-                  <input type="radio" name="avatar" value="🚀" />
-                  <span class="avatar-label">🚀</span>
+                  <input type="radio" name="avatar" value="observer" />
+                  <span class="avatar-label">
+                    <span class="avatar-icon-wrap" data-icon-preview="observer"></span>
+                    <span class="avatar-copy">
+                      <strong>Observador</strong>
+                      <span>Estilo analítico y preciso</span>
+                    </span>
+                  </span>
                 </label>
+
                 <label class="avatar-option">
-                  <input type="radio" name="avatar" value="📘" />
-                  <span class="avatar-label">📘</span>
+                  <input type="radio" name="avatar" value="reader" />
+                  <span class="avatar-label">
+                    <span class="avatar-icon-wrap" data-icon-preview="reader"></span>
+                    <span class="avatar-copy">
+                      <strong>Lector</strong>
+                      <span>Perfil clásico editorial</span>
+                    </span>
+                  </span>
                 </label>
+
                 <label class="avatar-option">
-                  <input type="radio" name="avatar" value="🧠" />
-                  <span class="avatar-label">🧠</span>
+                  <input type="radio" name="avatar" value="sentinel" />
+                  <span class="avatar-label">
+                    <span class="avatar-icon-wrap" data-icon-preview="sentinel"></span>
+                    <span class="avatar-copy">
+                      <strong>Centinela</strong>
+                      <span>Visual más fuerte y oscuro</span>
+                    </span>
+                  </span>
                 </label>
+
                 <label class="avatar-option">
-                  <input type="radio" name="avatar" value="✨" />
-                  <span class="avatar-label">✨</span>
+                  <input type="radio" name="avatar" value="stellar" />
+                  <span class="avatar-label">
+                    <span class="avatar-icon-wrap" data-icon-preview="stellar"></span>
+                    <span class="avatar-copy">
+                      <strong>Estelar</strong>
+                      <span>Inspiración cósmica premium</span>
+                    </span>
+                  </span>
                 </label>
+
                 <label class="avatar-option">
-                  <input type="radio" name="avatar" value="🌙" />
-                  <span class="avatar-label">🌙</span>
-                </label>
-                <label class="avatar-option">
-                  <input type="radio" name="avatar" value="🔥" />
-                  <span class="avatar-label">🔥</span>
-                </label>
-                <label class="avatar-option">
-                  <input type="radio" name="avatar" value="👁️" />
-                  <span class="avatar-label">👁️</span>
+                  <input type="radio" name="avatar" value="crown" />
+                  <span class="avatar-label">
+                    <span class="avatar-icon-wrap" data-icon-preview="crown"></span>
+                    <span class="avatar-copy">
+                      <strong>Premium</strong>
+                      <span>Perfil con presencia elegante</span>
+                    </span>
+                  </span>
                 </label>
               </div>
             </div>
 
             <div class="field">
               <label for="registerEmail">Correo electrónico</label>
-              <input
-                type="email"
-                id="registerEmail"
-                placeholder="tucorreo@ejemplo.com"
-                autocomplete="email"
-                required
-              />
+              <input type="email" id="registerEmail" placeholder="tucorreo@ejemplo.com" autocomplete="email" required />
             </div>
 
             <div class="field">
               <label for="registerPassword">Contraseña</label>
-              <input
-                type="password"
-                id="registerPassword"
-                placeholder="Mínimo 6 caracteres"
-                autocomplete="new-password"
-                required
-              />
+              <input type="password" id="registerPassword" placeholder="Mínimo 6 caracteres" autocomplete="new-password" required />
             </div>
 
             <button class="btn btn-primary" type="submit">Crear cuenta</button>
 
             <div class="divider">o</div>
 
-            <button id="googleRegisterBtn" class="btn btn-secondary" type="button">
-              Registrarme con Google
-            </button>
+            <button id="googleRegisterBtn" class="btn btn-secondary" type="button">Registrarme con Google</button>
           </form>
         </div>
 
         <p class="footer-help">
-          Al continuar, tu cuenta quedará vinculada a Nébula para futuras funciones
-          como biblioteca, compras y progreso sincronizado.
+          Al continuar, tu cuenta quedará vinculada a Nébula para futuras funciones como biblioteca, compras y progreso sincronizado.
         </p>
       </section>
     </div>
@@ -911,15 +496,16 @@
       serverTimestamp
     } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDccMk1KLoCwXWG2g4r1sOI6qEt_7d5gTw",
-  authDomain: "dyh-nebula.firebaseapp.com",
-  projectId: "dyh-nebula",
-  storageBucket: "dyh-nebula.firebasestorage.app",
-  messagingSenderId: "230506596749",
-  appId: "1:230506596749:web:d7ffcf38de039c9629d5c4",
-  measurementId: "G-KD5ZRFR8C9"
-};
+    const firebaseConfig = {
+      apiKey: "AIzaSyDccMk1KLoCwXWG2g4r1sOI6qEt_7d5gTw",
+      authDomain: "dyh-nebula.firebaseapp.com",
+      projectId: "dyh-nebula",
+      storageBucket: "dyh-nebula.firebasestorage.app",
+      messagingSenderId: "230506596749",
+      appId: "1:230506596749:web:d7ffcf38de039c9629d5c4",
+      measurementId: "G-KD5ZRFR8C9"
+    };
+
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
@@ -942,6 +528,93 @@ const firebaseConfig = {
     const sessionPlan = document.getElementById("sessionPlan");
     const sessionReadCount = document.getElementById("sessionReadCount");
     const logoutBtn = document.getElementById("logoutBtn");
+
+    const avatarIcons = {
+      navigator: `
+        <svg class="avatar-svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="24" cy="24" r="18" fill="url(#g1)" stroke="#78A9FF" stroke-width="1.5"/>
+          <circle cx="24" cy="24" r="4.2" fill="#DDEBFF"/>
+          <path d="M24 12L28.7 24L24 36L19.3 24L24 12Z" fill="#8ED0FF" stroke="#DDEBFF" stroke-width="1.2"/>
+          <defs>
+            <linearGradient id="g1" x1="10" y1="10" x2="38" y2="38" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#173B84"/>
+              <stop offset="1" stop-color="#0A183B"/>
+            </linearGradient>
+          </defs>
+        </svg>`,
+      observer: `
+        <svg class="avatar-svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <ellipse cx="24" cy="24" rx="16" ry="10" fill="url(#g2)" stroke="#88B8FF" stroke-width="1.5"/>
+          <circle cx="24" cy="24" r="6" fill="#DDEBFF"/>
+          <circle cx="24" cy="24" r="2.6" fill="#143D7A"/>
+          <defs>
+            <linearGradient id="g2" x1="8" y1="14" x2="40" y2="34" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#1A428F"/>
+              <stop offset="1" stop-color="#102247"/>
+            </linearGradient>
+          </defs>
+        </svg>`,
+      reader: `
+        <svg class="avatar-svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M10 13.5C10 11.567 11.567 10 13.5 10H23V37H13.5C11.567 37 10 35.433 10 33.5V13.5Z" fill="#D9E7FF"/>
+          <path d="M38 13.5C38 11.567 36.433 10 34.5 10H25V37H34.5C36.433 37 38 35.433 38 33.5V13.5Z" fill="url(#g3)"/>
+          <path d="M23 10H25V37H23V10Z" fill="#8EB7FF"/>
+          <defs>
+            <linearGradient id="g3" x1="25" y1="10" x2="38" y2="37" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#2D6DDA"/>
+              <stop offset="1" stop-color="#17396F"/>
+            </linearGradient>
+          </defs>
+        </svg>`,
+      sentinel: `
+        <svg class="avatar-svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M24 8L36 13V23.8C36 31.1 31 37.7 24 40C17 37.7 12 31.1 12 23.8V13L24 8Z" fill="url(#g4)" stroke="#86B4FF" stroke-width="1.5"/>
+          <path d="M19.5 23.8L22.5 27L29.5 20" stroke="#E6F0FF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <defs>
+            <linearGradient id="g4" x1="12" y1="8" x2="36" y2="40" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#153676"/>
+              <stop offset="1" stop-color="#0B1734"/>
+            </linearGradient>
+          </defs>
+        </svg>`,
+      stellar: `
+        <svg class="avatar-svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="24" cy="24" r="16" fill="url(#g5)" stroke="#89D7FF" stroke-width="1.5"/>
+          <path d="M24 12.5L26.6 21.4L35.5 24L26.6 26.6L24 35.5L21.4 26.6L12.5 24L21.4 21.4L24 12.5Z" fill="#E8F7FF"/>
+          <defs>
+            <linearGradient id="g5" x1="10" y1="10" x2="38" y2="38" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#174392"/>
+              <stop offset="1" stop-color="#1B2C66"/>
+            </linearGradient>
+          </defs>
+        </svg>`,
+      crown: `
+        <svg class="avatar-svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M12 33L15 17L24 24L33 17L36 33H12Z" fill="url(#g6)" stroke="#FFD978" stroke-width="1.5"/>
+          <path d="M15 33H33" stroke="#FFE8A6" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="15" cy="16" r="2.4" fill="#FFE8A6"/>
+          <circle cx="24" cy="22" r="2.4" fill="#FFE8A6"/>
+          <circle cx="33" cy="16" r="2.4" fill="#FFE8A6"/>
+          <defs>
+            <linearGradient id="g6" x1="12" y1="17" x2="36" y2="33" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#A26814"/>
+              <stop offset="1" stop-color="#F0B64D"/>
+            </linearGradient>
+          </defs>
+        </svg>`
+    };
+
+    function renderAvatarMarkup(key) {
+      return avatarIcons[key] || avatarIcons.navigator;
+    }
+
+    function paintAvatarPreviews() {
+      document.querySelectorAll("[data-icon-preview]").forEach(node => {
+        node.innerHTML = renderAvatarMarkup(node.dataset.iconPreview);
+      });
+    }
+
+    paintAvatarPreviews();
 
     function showStatus(message, type = "success") {
       statusBox.textContent = message;
@@ -971,7 +644,7 @@ const firebaseConfig = {
 
     function getSelectedAvatar() {
       const selected = document.querySelector('input[name="avatar"]:checked');
-      return selected ? selected.value : "🌌";
+      return selected ? selected.value : "navigator";
     }
 
     function getFriendlyError(error) {
@@ -1003,7 +676,7 @@ const firebaseConfig = {
         uid: user.uid,
         name: extraData.name || user.displayName || "Lector Nébula",
         email: user.email || "",
-        avatar: extraData.avatar || "🌌",
+        avatar: extraData.avatar || "navigator",
         subscription: extraData.subscription || "free",
         plan: extraData.plan || "free",
         readChapters: extraData.readChapters || [],
@@ -1040,7 +713,7 @@ const firebaseConfig = {
       const data = snap.data();
       const readCount = Array.isArray(data.readChapters) ? data.readChapters.length : 0;
 
-      sessionAvatar.textContent = data.avatar || "🌌";
+      sessionAvatar.innerHTML = renderAvatarMarkup(data.avatar || "navigator");
       sessionName.textContent = data.name || user.displayName || "Lector Nébula";
       sessionEmail.textContent = data.email || user.email || "";
       sessionPlan.textContent = data.subscription || data.plan || "free";
@@ -1115,7 +788,7 @@ const firebaseConfig = {
 
         await ensureUserDocument(result.user, {
           name: result.user.displayName || "Lector Nébula",
-          avatar: "🌌",
+          avatar: "navigator",
           subscription: "free",
           plan: "free",
           readChapters: []
