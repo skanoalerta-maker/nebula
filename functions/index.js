@@ -1,11 +1,8 @@
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
-import { MercadoPagoConfig, Preference, PreApproval } from "mercadopago";
 import admin from "firebase-admin";
 import { onRequest } from "firebase-functions/v2/https";
-
-dotenv.config();
+import { MercadoPagoConfig, Preference } from "mercadopago";
 
 if (!admin.apps.length) {
   admin.initializeApp();
@@ -17,183 +14,172 @@ const app = express();
 app.use(cors({ origin: true }));
 app.use(express.json());
 
-const client = new MercadoPagoConfig({
-  accessToken: process.env.MP_ACCESS_TOKEN
+const MP_ACCESS_TOKEN = process.env.MP_ACCESS_TOKEN;
+const FRONTEND_URL = (process.env.FRONTEND_URL || "https://skanoalerta-maker.github.io/nebula").replace(/\/$/, "");
+const WEBHOOK_URL = process.env.WEBHOOK_URL || "";
+
+if (!MP_ACCESS_TOKEN) {
+  console.error("Falta MP_ACCESS_TOKEN en variables de entorno.");
+}
+
+const mpClient = new MercadoPagoConfig({
+  accessToken: MP_ACCESS_TOKEN,
 });
 
-const preferenceClient = new Preference(client);
-const preApprovalClient = new PreApproval(client);
-
-const FRONTEND_URL =
-  process.env.FRONTEND_URL || "https://skanoalerta-maker.github.io/nebula";
-
-const WEBHOOK_URL =
-  process.env.WEBHOOK_URL ||
-  "https://us-central1-nebula-app.cloudfunctions.net/api/webhook";
+app.get("/", (req, res) => {
+  res.json({
+    ok: true,
+    message: "Nebula functions working",
+  });
+});
 
 /**
- * PRECIOS
+ * Crea una preferencia de pago en Mercado Pago
+ * Espera un body como:
+ * {
+ *   "title": "Nébula Premium Mensual",
+ *   "price": 6990,
+ *   "quantity": 1,
+ *   "type": "premium_monthly",
+ *   "novelId": "codigo-nebula",
+ *   "userId": "abc123",
+ *   "email": "cliente@email.com"
+ * }
  */
-const NOVEL_PRICE = 1500;
-const PREMIUM_PRICE = 4990;
-
-/**
- * CREAR PAGO NOVELA
- */
-app.post("/create-novel-payment", async (req, res) => {
+app.post("/create-preference", async (req, res) => {
   try {
-    const { uid, novelId, title } = req.body;
-
-    if (!uid || !novelId || !title) {
-      return res.status(400).json({ ok: false });
+    if (!MP_ACCESS_TOKEN) {
+      return res.status(500).json({
+        ok: false,
+        error: "Mercado Pago no está configurado en el backend.",
+      });
     }
 
-    const externalReference = `novel_${uid}_${novelId}_${Date.now()}`;
+    const {
+      title,
+      price,
+      quantity = 1,
+      type = "single_purchase",
+      novelId = null,
+      userId = null,
+      email = null,
+    } = req.body || {};
 
-    const preference = await preferenceClient.create({
-      body: {
-        items: [
-          {
-            title: `Nébula - ${title}`,
-            quantity: 1,
-            unit_price: NOVEL_PRICE,
-            currency_id: "CLP"
-          }
-        ],
-        external_reference: externalReference,
-        metadata: {
-          uid,
-          novelId,
-          type: "novel"
-        },
-        back_urls: {
-          success: `${FRONTEND_URL}/success.html`,
-          failure: `${FRONTEND_URL}/failure.html`,
-          pending: `${FRONTEND_URL}/pending.html`
-        },
-        auto_return: "approved",
-        notification_url: WEBHOOK_URL
-      }
-    });
+    if (!title || !price) {
+      return res.status(400).json({
+        ok: false,
+        error: "Faltan datos obligatorios: title y price.",
+      });
+    }
 
-    await db.collection("payments").doc(externalReference).set({
-      uid,
+    const numericPrice = Number(price);
+    const numericQuantity = Number(quantity);
+
+    if (!Number.isFinite(numericPrice) || numericPrice <= 0) {
+      return res.status(400).json({
+        ok: false,
+        error: "price debe ser un número mayor a 0.",
+      });
+    }
+
+    if (!Number.isInteger(numericQuantity) || numericQuantity <= 0) {
+      return res.status(400).json({
+        ok: false,
+        error: "quantity debe ser un entero mayor a 0.",
+      });
+    }
+
+    const externalReference = [
+      type || "purchase",
+      novelId || "general",
+      userId || "guest",
+      Date.now(),
+    ].join("_");
+
+    const preferenceClient = new Preference(mpClient);
+
+    const preferenceData = {
+      items: [
+        {
+          title: String(title),
+          quantity: numericQuantity,
+          unit_price: numericPrice,
+          currency_id: "CLP",
+        },
+      ],
+      external_reference: externalReference,
+      payer: email ? { email: String(email) } : undefined,
+      back_urls: {
+        success: `${FRONTEND_URL}/?mp_status=success`,
+        failure: `${FRONTEND_URL}/?mp_status=failure`,
+        pending: `${FRONTEND_URL}/?mp_status=pending`,
+      },
+      auto_return: "approved",
+      notification_url: WEBHOOK_URL || undefined,
+      metadata: {
+        type,
+        novelId,
+        userId,
+        email,
+      },
+    };
+
+    const result = await preferenceClient.create({ body: preferenceData });
+
+    await db.collection("mp_preferences").add({
+      createdAt: admin.firestore.FieldValue.serverTimestamp(),
+      title,
+      price: numericPrice,
+      quantity: numericQuantity,
+      type,
       novelId,
-      status: "pending",
-      createdAt: admin.firestore.FieldValue.serverTimestamp()
+      userId,
+      email,
+      externalReference,
+      preferenceId: result.id || null,
+      initPoint: result.init_point || null,
+      sandboxInitPoint: result.sandbox_init_point || null,
+      status: "created",
     });
 
-    res.json({
+    return res.status(200).json({
       ok: true,
-      init_point: preference.init_point
+      preferenceId: result.id,
+      initPoint: result.init_point,
+      sandboxInitPoint: result.sandbox_init_point,
+      externalReference,
     });
-  } catch (e) {
-    console.error(e);
-    res.status(500).json({ ok: false });
+  } catch (error) {
+    console.error("Error creando preferencia:", error);
+
+    return res.status(500).json({
+      ok: false,
+      error: "No se pudo crear la preferencia de pago.",
+      detail: error?.message || "Error desconocido",
+    });
   }
 });
 
 /**
- * CREAR PREMIUM
- */
-app.post("/create-premium-subscription", async (req, res) => {
-  try {
-    const { uid, email } = req.body;
-
-    const externalReference = `premium_${uid}_${Date.now()}`;
-
-    const preapproval = await preApprovalClient.create({
-      body: {
-        reason: "Nébula Premium",
-        external_reference: externalReference,
-        payer_email: email,
-        auto_recurring: {
-          frequency: 1,
-          frequency_type: "months",
-          transaction_amount: PREMIUM_PRICE,
-          currency_id: "CLP"
-        },
-        back_url: `${FRONTEND_URL}/success.html`,
-        notification_url: WEBHOOK_URL
-      }
-    });
-
-    await db.collection("subscriptions").doc(externalReference).set({
-      uid,
-      status: "pending",
-      createdAt: admin.firestore.FieldValue.serverTimestamp()
-    });
-
-    res.json({
-      ok: true,
-      init_point: preapproval.init_point
-    });
-  } catch (e) {
-    console.error(e);
-    res.status(500).json({ ok: false });
-  }
-});
-
-/**
- * 🔥 WEBHOOK (LO IMPORTANTE)
+ * Webhook de Mercado Pago
+ * Aquí se reciben notificaciones automáticas del pago.
  */
 app.post("/webhook", async (req, res) => {
   try {
-    const data = req.body;
+    await db.collection("mp_webhooks").add({
+      createdAt: admin.firestore.FieldValue.serverTimestamp(),
+      body: req.body || null,
+      query: req.query || null,
+      headers: {
+        "x-signature": req.headers["x-signature"] || null,
+        "x-request-id": req.headers["x-request-id"] || null,
+      },
+    });
 
-    console.log("Webhook recibido:", data);
-
-    const externalReference =
-      data?.data?.id || data?.external_reference;
-
-    if (!externalReference) {
-      return res.sendStatus(200);
-    }
-
-    // 🔹 NOVELA
-    if (externalReference.startsWith("novel_")) {
-      const paymentRef = db.collection("payments").doc(externalReference);
-      const paymentDoc = await paymentRef.get();
-
-      if (paymentDoc.exists) {
-        const { uid, novelId } = paymentDoc.data();
-
-        // marcar pagado
-        await paymentRef.update({
-          status: "approved"
-        });
-
-        // 🔥 AGREGAR NOVELA AL USUARIO
-        await db.collection("users").doc(uid).update({
-          purchasedNovels: admin.firestore.FieldValue.arrayUnion(novelId)
-        });
-      }
-    }
-
-    // 🔹 PREMIUM
-    if (externalReference.startsWith("premium_")) {
-      const subRef = db.collection("subscriptions").doc(externalReference);
-      const subDoc = await subRef.get();
-
-      if (subDoc.exists) {
-        const { uid } = subDoc.data();
-
-        await subRef.update({
-          status: "active"
-        });
-
-        // 🔥 ACTIVAR PREMIUM
-        await db.collection("users").doc(uid).update({
-          plan: "premium",
-          subscription: "premium"
-        });
-      }
-    }
-
-    res.sendStatus(200);
-  } catch (e) {
-    console.error("Webhook error:", e);
-    res.sendStatus(200);
+    return res.status(200).send("ok");
+  } catch (error) {
+    console.error("Error en webhook:", error);
+    return res.status(500).send("error");
   }
 });
 
