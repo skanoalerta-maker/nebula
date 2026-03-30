@@ -1518,9 +1518,34 @@ function renderMercadoPagoBrand(){
         localStorage.setItem(progressKey, getChapterPath(chapters[0]));
       });
 
-      continueBtn.addEventListener("click", () => {
-        window.location.href = getContinuePath();
-      });
+function getChapterNumberFromPath(path){
+  const match = String(path || "").match(/capitulo(\d+)\.html$/i);
+  return match ? Number(match[1]) : 1;
+}
+
+function userCanAccessChapter(chapterNumber){
+  if (accessState.isPremium) return true;
+  if (chapterNumber <= freeChapters) return true;
+  return false;
+}
+
+continueBtn.addEventListener("click", () => {
+  const continuePath = getContinuePath();
+  const chapterNumber = getChapterNumberFromPath(continuePath);
+
+  if (!userCanAccessChapter(chapterNumber)) {
+    alert("🔒 Debes comprar esta novela o tener Nébula Premium para continuar.");
+    
+    const premiumBox = document.getElementById("premiumBox");
+    if (premiumBox) {
+      premiumBox.scrollIntoView({ behavior: "smooth" });
+    }
+
+    return;
+  }
+
+  window.location.href = continuePath;
+});
 
       document.querySelectorAll("[data-chapter-path]").forEach(link => {
         link.addEventListener("click", (e) => {
