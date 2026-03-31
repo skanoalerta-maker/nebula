@@ -1082,6 +1082,14 @@
       }
     }
 
+    function getStoredUserUid(){
+      return localStorage.getItem("nebula_user_uid") || "";
+    }
+
+    function getStoredUserEmail(){
+      return localStorage.getItem("nebula_user_email") || "";
+    }
+
     function getPaymentStatusHtml(status){
       if (status === "success") {
         return `
@@ -1516,6 +1524,15 @@
         buyBtn.addEventListener("click", async () => {
           if (localStorage.getItem(paidKey) === "true") return;
 
+          const userId = getStoredUserUid();
+          const userEmail = getStoredUserEmail();
+
+          if (!userId || !userEmail) {
+            alert("Debes iniciar sesión o crear una cuenta para comprar en Nébula.");
+            window.location.href = "../login.html";
+            return;
+          }
+
           buyBtn.textContent = "Conectando con Mercado Pago...";
           buyBtn.disabled = true;
 
@@ -1531,8 +1548,8 @@
                 quantity: 1,
                 type: "single_novel",
                 novelId: novelId,
-                userId: "guest",
-                email: "cliente@nebula.cl"
+                userId: userId,
+                email: userEmail
               })
             });
 
@@ -1545,7 +1562,7 @@
             window.location.href = data.initPoint;
           } catch (error) {
             console.error("Error al iniciar pago:", error);
-            alert("No se pudo iniciar el pago con Mercado Pago. Intenta nuevamente.");
+            alert(error?.message || "No se pudo iniciar el pago con Mercado Pago. Intenta nuevamente.");
             buyBtn.textContent = "Pagar con Mercado Pago";
             buyBtn.disabled = false;
           }
@@ -1614,4 +1631,3 @@
   </script>
 </body>
 </html>
-
