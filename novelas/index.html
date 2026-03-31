@@ -550,29 +550,22 @@
     }
 
     .rating-star{
-      --fill:0%;
       border:none;
-      background:linear-gradient(
-        90deg,
-        #ffd54a 0%,
-        #ffd54a var(--fill),
-        rgba(255,255,255,.22) var(--fill),
-        rgba(255,255,255,.22) 100%
-      );
-      -webkit-background-clip:text;
-      background-clip:text;
-      -webkit-text-fill-color:transparent;
-      color:transparent;
+      background:transparent;
+      color:rgba(255,255,255,.22);
       font-size:2rem;
       line-height:1;
       cursor:pointer;
-      transition:transform .15s ease, filter .15s ease;
+      transition:transform .15s ease, color .15s ease;
       padding:0;
     }
 
     .rating-star:hover{
       transform:scale(1.08);
-      filter:brightness(1.05);
+    }
+
+    .rating-star.active{
+      color:#ffd54a;
     }
 
     .rating-meta{
@@ -890,6 +883,30 @@
       margin-bottom:18px;
     }
 
+    .payment-status{
+      margin-top:14px;
+      padding:16px 18px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.08);
+      font-weight:700;
+      line-height:1.6;
+    }
+
+    .payment-status.success{
+      background:rgba(49,166,105,.14);
+      color:#c9ffdd;
+    }
+
+    .payment-status.pending{
+      background:rgba(255,213,74,.12);
+      color:#ffe9a2;
+    }
+
+    .payment-status.failure{
+      background:rgba(255,102,102,.12);
+      color:#ffd1d1;
+    }
+
     .footer-space{
       height:20px;
     }
@@ -990,23 +1007,14 @@
 
   <div id="app"></div>
 
-  <script src="data.js"></script>
+  <script src="./data.js"></script>
 
-  <script type="module">
-    import { db, auth } from "../js/firebase.js";
-    import {
-      doc,
-      getDoc,
-      runTransaction,
-      serverTimestamp,
-      onSnapshot
-    } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
-    import {
-      onAuthStateChanged
-    } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
-
+  <script>
+    const API_BASE_URL = "https://api-mvtstimkcq-uc.a.run.app";
+    const FALLBACK_COVER = "../assets/covers/placeholder-cover.jpg";
     const params = new URLSearchParams(window.location.search);
     const novelId = params.get("id");
+    const paymentStatusParam = params.get("mp_status");
     const app = document.getElementById("app");
 
     function escapeHtml(text){
@@ -1016,6 +1024,27 @@
         .replaceAll(">", "&gt;")
         .replaceAll('"', "&quot;")
         .replaceAll("'", "&#039;");
+    }
+
+    function normalizePath(path){
+      let value = String(path || "").trim();
+      if (!value) return "";
+      if (/^(https?:)?\/\//i.test(value) || value.startsWith("../")) return value;
+      if (value.startsWith("./assets/")) return `../${value.slice(2)}`;
+      if (value.startsWith("assets/")) return `../${value}`;
+      if (value.startsWith("./")) return value.slice(2);
+      return value;
+    }
+
+    function normalizeBaseFolder(path){
+      let value = normalizePath(path);
+      value = value.replace(/^novelas\//i, "");
+      return value;
+    }
+
+    function normalizeCover(path){
+      const value = normalizePath(path);
+      return value || FALLBACK_COVER;
     }
 
     function getSeasonOrderValue(season){
@@ -1053,32 +1082,50 @@
       }
     }
 
-    function setStarFill(stars, value){
-      stars.forEach((star, index) => {
-        const starNumber = index + 1;
-        const fill = Math.max(0, Math.min(1, value - (starNumber - 1)));
-        star.style.setProperty("--fill", `${fill * 100}%`);
-      });
+    function getPaymentStatusHtml(status){
+      if (status === "success") {
+        return `
+          <div class="payment-status success">
+            Pago iniciado correctamente. Si Mercado Pago aprobó la transacción,
+            en el siguiente paso conectaremos la validación automática para desbloquear la novela sin depender del navegador.
+          </div>
+        `;
+      }
+
+      if (status === "pending") {
+        return `
+          <div class="payment-status pending">
+            Tu pago quedó pendiente de confirmación. Cuando Mercado Pago lo confirme,
+            podremos validar y desbloquear el acceso.
+          </div>
+        `;
+      }
+
+      if (status === "failure") {
+        return `
+          <div class="payment-status failure">
+            El pago no se completó o fue cancelado. Puedes intentarlo nuevamente.
+          </div>
+        `;
+      }
+
+      return "";
     }
 
-    function formatAverage(value){
-      return Number(value || 0).toFixed(1);
-    }
+    const novelsData = window.NEBULA_NOVELS || {};
 
-    function normalizeBaseFolder(baseFolder){
-      return String(baseFolder || "")
-       .replace(/^\.?\//, "")
-       .replace(/\/+$/, "");
-    }
-
-    function resolveAssetPath(path){
-      const clean = String(path || "")
-        .replace(/^\.?\//, "")
-        .replace(/^\/+/, "");
-      return `../${clean}`;
-    }
-
-    if (!novelId || !window.NEBULA_NOVELS || !window.NEBULA_NOVELS[novelId]) {
+    if (!window.NEBULA_NOVELS) {
+      app.innerHTML = `
+        <section class="error-box">
+          <h1>data.js no cargó</h1>
+          <p>
+            El archivo <strong>./data.js</strong> no se cargó correctamente.
+            Verifica que exista dentro de la carpeta <strong>novelas</strong>.
+          </p>
+          <a class="btn btn-primary" href="../index.html">Volver al inicio</a>
+        </section>
+      `;
+    } else if (!novelId || !novelsData[novelId]) {
       app.innerHTML = `
         <section class="error-box">
           <h1>Novela no encontrada</h1>
@@ -1090,11 +1137,18 @@
         </section>
       `;
     } else {
-      const novel = window.NEBULA_NOVELS[novelId];
+      const novel = {
+        ...novelsData[novelId],
+        cover: normalizeCover(novelsData[novelId].cover),
+        baseFolder: normalizeBaseFolder(novelsData[novelId].baseFolder)
+      };
+
       const chapters = getOrderedChapters(novel.chapters);
       const freeChapters = Number(novel.freeChapters ?? 3);
       const paidKey = "paid-" + novelId;
       const progressKey = "nebula-progress-" + novelId;
+      const ratingKey = "nebula-rating-" + novelId;
+      const userVoteKey = "nebula-rating-user-" + novelId;
       const paid = localStorage.getItem(paidKey) === "true";
 
       if (!chapters.length) {
@@ -1111,8 +1165,7 @@
       } else {
         function getChapterPath(chapter){
           const seasonFolder = chapter.season || novel.defaultSeason || "temporada1";
-          const baseFolder = normalizeBaseFolder(novel.baseFolder);
-          return `./${baseFolder}/${seasonFolder}/capitulo${chapter.num}.html`;
+          return `./${novel.baseFolder}/${seasonFolder}/capitulo${chapter.num}.html`;
         }
 
         function getContinuePath(){
@@ -1123,6 +1176,22 @@
           if (!localStorage.getItem(progressKey)) {
             localStorage.setItem(progressKey, getChapterPath(chapters[0]));
           }
+        }
+
+        function getRatingData(){
+          try{
+            const raw = localStorage.getItem(ratingKey);
+            if (!raw) return { votes: [] };
+            const parsed = JSON.parse(raw);
+            if (!Array.isArray(parsed.votes)) return { votes: [] };
+            return parsed;
+          }catch{
+            return { votes: [] };
+          }
+        }
+
+        function saveRatingData(data){
+          localStorage.setItem(ratingKey, JSON.stringify(data));
         }
 
         function buildChapterCard(chapter, index){
@@ -1197,8 +1266,9 @@
                   <div class="hero-cover-wrap">
                     <img
                       class="hero-cover"
-                      src="${escapeHtml(resolveAssetPath(novel.cover))}"
+                      src="${escapeHtml(novel.cover)}"
                       alt="${escapeHtml(novel.title)}"
+                      onerror="this.onerror=null;this.src='${FALLBACK_COVER}'"
                     />
                   </div>
                 </div>
@@ -1212,6 +1282,8 @@
                   <h1>${escapeHtml(novel.title)}</h1>
 
                   <p class="story-description">${escapeHtml(novel.description)}</p>
+
+                  ${getPaymentStatusHtml(paymentStatusParam)}
 
                   <div class="hero-meta">
                     <div class="meta-card">
@@ -1284,7 +1356,7 @@
                       · Votos: <strong id="ratingTotal">0</strong>
                     </p>
 
-                    <p id="ratingStatus" class="rating-status">Cargando votación real...</p>
+                    <p id="ratingStatus" class="rating-status">Cargando votación...</p>
                   </section>
 
                   <div class="hero-actions">
@@ -1351,166 +1423,80 @@
         const continueBtn = document.getElementById("continueBtn");
         const buyBtn = document.getElementById("buyBtn");
         const startBtn = document.getElementById("startBtn");
-        const accessState = document.getElementById("accessState");
         const ratingStars = Array.from(document.querySelectorAll(".rating-star"));
         const ratingAverage = document.getElementById("ratingAverage");
         const ratingTotal = document.getElementById("ratingTotal");
         const ratingStatus = document.getElementById("ratingStatus");
 
-        let currentUser = null;
-        let currentUserVote = 0;
-        let currentAverage = 0;
-        let currentTotalVotes = 0;
-
-        const summaryRef = doc(db, "novel_ratings_summary", novelId);
+        function paintStars(value){
+          ratingStars.forEach(star => {
+            const starValue = Number(star.dataset.value);
+            star.classList.toggle("active", starValue <= value);
+          });
+        }
 
         function renderRating(){
-          ratingAverage.textContent = formatAverage(currentAverage);
-          ratingTotal.textContent = String(currentTotalVotes);
+          const data = getRatingData();
+          const votes = data.votes || [];
+          const total = votes.length;
 
-          if (currentUserVote > 0) {
-            ratingStatus.textContent = `Tu valoración actual es de ${currentUserVote} estrella${currentUserVote === 1 ? "" : "s"}.`;
-            setStarFill(ratingStars, currentUserVote);
+          if (!total) {
+            ratingAverage.textContent = "0.0";
+            ratingTotal.textContent = "0";
+            ratingStatus.textContent = "Sé el primero en valorar esta novela.";
+            paintStars(0);
             return;
           }
 
-          if (currentTotalVotes > 0) {
-            ratingStatus.textContent = currentUser
-              ? "Valoración real registrada por lectores de Nébula."
-              : "Inicia sesión para votar. La valoración mostrada es real.";
-            setStarFill(ratingStars, currentAverage);
-            return;
-          }
+          const sum = votes.reduce((acc, value) => acc + Number(value || 0), 0);
+          const average = sum / total;
 
-          ratingStatus.textContent = currentUser
-            ? "Sé el primero en valorar esta novela."
-            : "Inicia sesión para ser el primero en valorar esta novela.";
-          setStarFill(ratingStars, 0);
-        }
+          ratingAverage.textContent = average.toFixed(1);
+          ratingTotal.textContent = String(total);
 
-        async function loadUserVote(user){
-          if (!user) {
-            currentUserVote = 0;
-            renderRating();
-            return;
-          }
+          const userVote = Number(localStorage.getItem(userVoteKey) || 0);
 
-          try{
-            const voteRef = doc(db, "novel_ratings", novelId, "votes", user.uid);
-            const voteSnap = await getDoc(voteRef);
-
-            if (voteSnap.exists()) {
-              currentUserVote = Number(voteSnap.data().value || 0);
-            } else {
-              currentUserVote = 0;
-            }
-
-            renderRating();
-          }catch(error){
-            console.error("Error cargando voto del usuario:", error);
-            ratingStatus.textContent = "No se pudo cargar tu votación.";
+          if (userVote > 0) {
+            ratingStatus.textContent = `Tu valoración actual es de ${userVote} estrella${userVote === 1 ? "" : "s"}.`;
+            paintStars(userVote);
+          } else {
+            ratingStatus.textContent = "Valora esta novela para ayudar a otros lectores.";
+            paintStars(Math.round(average));
           }
         }
 
-        async function voteNovel(value){
-          if (!currentUser) {
-            ratingStatus.textContent = "Debes iniciar sesión para votar realmente.";
-            return;
-          }
-
-          const sanitizedValue = Math.max(1, Math.min(5, Number(value || 0)));
-          if (!sanitizedValue) return;
-
-          const voteRef = doc(db, "novel_ratings", novelId, "votes", currentUser.uid);
-
-          try{
-            ratingStatus.textContent = "Guardando tu voto...";
-
-            await runTransaction(db, async (transaction) => {
-              const summarySnap = await transaction.get(summaryRef);
-              const voteSnap = await transaction.get(voteRef);
-
-              let totalVotes = 0;
-              let totalScore = 0;
-
-              if (summarySnap.exists()) {
-                totalVotes = Number(summarySnap.data().totalVotes || 0);
-                totalScore = Number(summarySnap.data().totalScore || 0);
-              }
-
-              if (voteSnap.exists()) {
-                const previousValue = Number(voteSnap.data().value || 0);
-                totalScore = totalScore - previousValue + sanitizedValue;
-              } else {
-                totalVotes += 1;
-                totalScore += sanitizedValue;
-              }
-
-              const average = totalVotes > 0 ? totalScore / totalVotes : 0;
-
-              transaction.set(voteRef, {
-                userId: currentUser.uid,
-                novelId,
-                value: sanitizedValue,
-                updatedAt: serverTimestamp()
-              });
-
-              transaction.set(summaryRef, {
-                novelId,
-                totalVotes,
-                totalScore,
-                average,
-                updatedAt: serverTimestamp()
-              }, { merge: true });
-            });
-
-            currentUserVote = sanitizedValue;
-            renderRating();
-          }catch(error){
-            console.error("Error guardando voto:", error);
-            ratingStatus.textContent = "No se pudo guardar tu voto. Intenta nuevamente.";
-          }
-        }
-
-        ratingStars.forEach((star) => {
+        ratingStars.forEach(star => {
           star.addEventListener("mouseenter", () => {
             const value = Number(star.dataset.value);
-            setStarFill(ratingStars, value);
+            paintStars(value);
           });
 
           star.addEventListener("mouseleave", () => {
-            if (currentUserVote > 0) {
-              setStarFill(ratingStars, currentUserVote);
-            } else {
-              setStarFill(ratingStars, currentAverage);
+            const userVote = Number(localStorage.getItem(userVoteKey) || 0);
+            if (userVote > 0) {
+              paintStars(userVote);
+              return;
             }
+
+            const data = getRatingData();
+            const votes = data.votes || [];
+            if (!votes.length) {
+              paintStars(0);
+              return;
+            }
+
+            const avg = votes.reduce((acc, value) => acc + Number(value || 0), 0) / votes.length;
+            paintStars(Math.round(avg));
           });
 
           star.addEventListener("click", () => {
             const value = Number(star.dataset.value);
-            voteNovel(value);
+            const data = getRatingData();
+            data.votes.push(value);
+            saveRatingData(data);
+            localStorage.setItem(userVoteKey, String(value));
+            renderRating();
           });
-        });
-
-        onAuthStateChanged(auth, async (user) => {
-          currentUser = user || null;
-          await loadUserVote(currentUser);
-        });
-
-        onSnapshot(summaryRef, (snapshot) => {
-          if (snapshot.exists()) {
-            const data = snapshot.data();
-            currentAverage = Number(data.average || 0);
-            currentTotalVotes = Number(data.totalVotes || 0);
-          } else {
-            currentAverage = 0;
-            currentTotalVotes = 0;
-          }
-
-          renderRating();
-        }, (error) => {
-          console.error("Error escuchando resumen de rating:", error);
-          ratingStatus.textContent = "No se pudo cargar la valoración real.";
         });
 
         startBtn.addEventListener("click", () => {
@@ -1527,12 +1513,42 @@
           });
         });
 
-        buyBtn.addEventListener("click", () => {
+        buyBtn.addEventListener("click", async () => {
           if (localStorage.getItem(paidKey) === "true") return;
-          localStorage.setItem(paidKey, "true");
-          if (accessState) accessState.textContent = "Historia desbloqueada";
-          buyBtn.textContent = "Historia ya desbloqueada";
-          location.reload();
+
+          buyBtn.textContent = "Conectando con Mercado Pago...";
+          buyBtn.disabled = true;
+
+          try {
+            const response = await fetch(`${API_BASE_URL}/create-preference`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                title: novel.title,
+                price: Number(novel.individualPrice || 1500),
+                quantity: 1,
+                type: "single_novel",
+                novelId: novelId,
+                userId: "guest",
+                email: "cliente@nebula.cl"
+              })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok || !data.ok || !data.initPoint) {
+              throw new Error(data?.error || "No se pudo iniciar el pago.");
+            }
+
+            window.location.href = data.initPoint;
+          } catch (error) {
+            console.error("Error al iniciar pago:", error);
+            alert("No se pudo iniciar el pago con Mercado Pago. Intenta nuevamente.");
+            buyBtn.textContent = "Pagar con Mercado Pago";
+            buyBtn.disabled = false;
+          }
         });
 
         renderRating();
@@ -1598,3 +1614,4 @@
   </script>
 </body>
 </html>
+
