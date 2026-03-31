@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import admin from "firebase-admin";
 import { onRequest } from "firebase-functions/v2/https";
+import { defineSecret } from "firebase-functions/params";
 import { MercadoPagoConfig, Preference } from "mercadopago";
 
 if (!admin.apps.length) {
@@ -9,45 +10,33 @@ if (!admin.apps.length) {
 }
 
 const db = admin.firestore();
+const mpAccessToken = defineSecret("MP_ACCESS_TOKEN");
 
 const app = express();
 app.use(cors({ origin: true }));
 app.use(express.json());
 
-const MP_ACCESS_TOKEN = process.env.MP_ACCESS_TOKEN;
 const FRONTEND_URL = (process.env.FRONTEND_URL || "https://skanoalerta-maker.github.io/nebula").replace(/\/$/, "");
 const WEBHOOK_URL = process.env.WEBHOOK_URL || "";
 
-if (!MP_ACCESS_TOKEN) {
-  console.error("Falta MP_ACCESS_TOKEN en variables de entorno.");
-}
-
-const mpClient = new MercadoPagoConfig({
-  accessToken: MP_ACCESS_TOKEN,
-});
-
 app.get("/", (req, res) => {
-  res.json({
+  res.status(200).json({
     ok: true,
     message: "Nebula functions working",
   });
 });
 
-/**
- * Crea una preferencia de pago en Mercado Pago
- * Espera un body como:
- * {
- *   "title": "Nébula Premium Mensual",
- *   "price": 6990,
- *   "quantity": 1,
- *   "type": "premium_monthly",
- *   "novelId": "codigo-nebula",
- *   "userId": "abc123",
- *   "email": "cliente@email.com"
- * }
- */
+app.get("/create-preference", (req, res) => {
+  res.status(405).json({
+    ok: false,
+    error: "Método no permitido. Usa POST para crear la preferencia.",
+  });
+});
+
 app.post("/create-preference", async (req, res) => {
   try {
+    const MP_ACCESS_TOKEN = mpAccessToken.value();
+
     if (!MP_ACCESS_TOKEN) {
       return res.status(500).json({
         ok: false,
@@ -72,6 +61,13 @@ app.post("/create-preference", async (req, res) => {
       });
     }
 
+    if (!userId || !email) {
+      return res.status(401).json({
+        ok: false,
+        error: "Debes iniciar sesión para comprar.",
+      });
+    }
+
     const numericPrice = Number(price);
     const numericQuantity = Number(quantity);
 
@@ -92,9 +88,13 @@ app.post("/create-preference", async (req, res) => {
     const externalReference = [
       type || "purchase",
       novelId || "general",
-      userId || "guest",
+      userId,
       Date.now(),
     ].join("_");
+
+    const mpClient = new MercadoPagoConfig({
+      accessToken: MP_ACCESS_TOKEN,
+    });
 
     const preferenceClient = new Preference(mpClient);
 
@@ -108,7 +108,9 @@ app.post("/create-preference", async (req, res) => {
         },
       ],
       external_reference: externalReference,
-      payer: email ? { email: String(email) } : undefined,
+      payer: {
+        email: String(email),
+      },
       back_urls: {
         success: `${FRONTEND_URL}/?mp_status=success`,
         failure: `${FRONTEND_URL}/?mp_status=failure`,
@@ -146,7 +148,9 @@ app.post("/create-preference", async (req, res) => {
       ok: true,
       preferenceId: result.id,
       initPoint: result.init_point,
+      init_point: result.init_point,
       sandboxInitPoint: result.sandbox_init_point,
+      sandbox_init_point: result.sandbox_init_point,
       externalReference,
     });
   } catch (error) {
@@ -160,10 +164,6 @@ app.post("/create-preference", async (req, res) => {
   }
 });
 
-/**
- * Webhook de Mercado Pago
- * Aquí se reciben notificaciones automáticas del pago.
- */
 app.post("/webhook", async (req, res) => {
   try {
     await db.collection("mp_webhooks").add({
@@ -183,4 +183,10 @@ app.post("/webhook", async (req, res) => {
   }
 });
 
-export const api = onRequest({ cors: true }, app);
+export const api = onRequest(
+  {
+    cors: true,
+    secrets: [mpAccessToken],
+  },
+  app
+);
