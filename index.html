@@ -2114,683 +2114,368 @@
   </section>
 
   <script src="novelas/data.js"></script>
-
-  <script>
-    const fallbackNovelas = [
-      {
-        id: "codigo-nebula",
-        titulo: "Código Nébula",
-        genero: "futurista",
-        portada: "assets/covers/nebula.jpg",
-        descripcion: "Una historia futurista donde nada es lo que parece y cada capítulo abre una nueva grieta en el sistema.",
-        ruta: "novelas/index.html?id=codigo-nebula",
-        visitas: 1542,
-        gratis: 3,
-        destacada: true,
-        temporada: "Temporada 1",
-        capitulos: 10,
-        rating: 5
-      },
-      {
-        id: "no-debi-enamorarme",
-        titulo: "No debí enamorarme de ti",
-        genero: "romance",
-        portada: "assets/covers/no-debi-enamorarme.jpg",
-        descripcion: "Una historia intensa sobre deseo, decisiones equivocadas y emociones que arden demasiado.",
-        ruta: "novelas/index.html?id=no-debi-enamorarme",
-        visitas: 2984,
-        gratis: 3,
-        destacada: false,
-        temporada: "Temporada 1",
-        capitulos: 10,
-        rating: 5
-      },
-      {
-        id: "despues-de-tu-adios",
-        titulo: "Después de tu adiós",
-        genero: "romance",
-        portada: "assets/covers/despues-de-tu-adios.jpg",
-        descripcion: "Una novela emocional sobre recuerdos, ausencia y todo lo que sigue vivo después de una despedida.",
-        ruta: "novelas/index.html?id=despues-de-tu-adios",
-        visitas: 1187,
-        gratis: 3,
-        destacada: false,
-        temporada: "Temporada 1",
-        capitulos: 3,
-        rating: 4
-      },
-      {
-        id: "bajo-la-misma-lluvia",
-        titulo: "Bajo la misma lluvia",
-        genero: "romance",
-        portada: "assets/covers/bajo-la-misma-lluvia.jpg",
-        descripcion: "Dos vidas marcadas por heridas distintas vuelven a cruzarse en el peor momento posible.",
-        ruta: "novelas/index.html?id=bajo-la-misma-lluvia",
-        visitas: 0,
-        gratis: 3,
-        destacada: false,
-        temporada: "Temporada 1",
-        capitulos: 3,
-        rating: 4
-      },
-      {
-        id: "la-ultima-conexion",
-        titulo: "La última conexión",
-        genero: "terror",
-        portada: "assets/covers/la-ultima-conexion.jpg",
-        descripcion: "A las 02:17 de la madrugada, Daniel recibe mensajes desde su propio número.",
-        ruta: "novelas/index.html?id=la-ultima-conexion",
-        visitas: 842,
-        gratis: 3,
-        destacada: false,
-        temporada: "Temporada 1",
-        capitulos: 10,
-        rating: 5
-      },
-      {
-        id: "ya-habias-estado-ahi",
-        titulo: "Ya habías estado ahí",
-        genero: "terror",
-        portada: "assets/covers/ya-habias-estado-ahi.jpg",
-        descripcion: "Volver a casa nunca volvió a sentirse normal.",
-        ruta: "novelas/index.html?id=ya-habias-estado-ahi",
-        visitas: 0,
-        gratis: 3,
-        destacada: false,
-        temporada: "Temporada 1",
-        capitulos: 3,
-        rating: 4
-      },
-      {
-        id: "golpe-de-estado",
-        titulo: "Golpe de Estado",
-        genero: "historia",
-        portada: "assets/covers/golpe_estado_nebula.png",
-        descripcion: "Una historia política, social y humana sobre la fractura de un país.",
-        ruta: "novelas/index.html?id=golpe-de-estado",
-        visitas: 0,
-        gratis: 3,
-        destacada: false,
-        temporada: "Temporada 1",
-        capitulos: 3,
-        rating: 5
-      },
-      {
-        id: "pinochet",
-        titulo: "Pinochet",
-        genero: "historia",
-        portada: "assets/covers/pinochet_nebula_portada.png",
-        descripcion: "Una novela histórica intensa sobre poder, control, decisiones militares y el impacto humano.",
-        ruta: "novelas/index.html?id=pinochet",
-        visitas: 0,
-        gratis: 3,
-        destacada: false,
-        temporada: "Temporada 1",
-        capitulos: 3,
-        rating: 5
-      }
-    ];
-
-    let novelas = [];
-    let filtradas = [];
-
-    const storyGrid = document.getElementById("storyGrid");
-    const genreGrid = document.getElementById("genreGrid");
-    const emptyState = document.getElementById("emptyState");
-    const storySearch = document.getElementById("storySearch");
-
-    function capitalizar(texto) {
-      if (!texto) return "";
-      return texto.charAt(0).toUpperCase() + texto.slice(1);
-    }
-
-    function normalizarGenero(texto) {
-      const value = String(texto || "").trim().toLowerCase();
-      if (!value) return "general";
-
-      if (value.includes("romance")) return "romance";
-      if (value.includes("terror")) return "terror";
-      if (value.includes("historia")) return "historia";
-      if (value.includes("militar")) return "historia";
-      if (value.includes("política")) return "historia";
-      if (value.includes("politica")) return "historia";
-      if (value.includes("futur")) return "futurista";
-      if (value.includes("tecnolog")) return "futurista";
-      if (value.includes("suspenso")) return "suspenso";
-      return value;
-    }
-
-    function obtenerGeneroDesdeNovela(novel) {
-      if (Array.isArray(novel.tags) && novel.tags.length) {
-        return normalizarGenero(novel.tags[0]);
-      }
-
-      const folder = String(novel.baseFolder || "").split("/")[0];
-      return normalizarGenero(folder || novel.genero || "general");
-    }
-
-    function obtenerTemporadaLabel(novel) {
-      const chapters = Array.isArray(novel.chapters) ? novel.chapters : [];
-      const labels = [...new Set(chapters.map(ch => ch.seasonLabel || ch.season).filter(Boolean))];
-      if (labels.length > 1) return labels.join(" · ");
-      if (labels.length === 1) return labels[0];
-      return novel.defaultSeasonLabel || novel.temporada || "Temporada 1";
-    }
-
-    function obtenerCapitulosCount(novel) {
-      if (Array.isArray(novel.chapters)) return novel.chapters.length;
-      if (Number.isFinite(Number(novel.capitulos))) return Number(novel.capitulos);
-      return 0;
-    }
-
-    function obtenerCover(novel) {
-      const raw = String(novel.cover || novel.portada || "").trim();
-      if (!raw) return "assets/covers/nebula.jpg";
-      return raw.startsWith("../") ? raw.replace("../", "") : raw;
-    }
-
-    function getStorageViewsKey(novelId) {
-      return "nebula-views-" + novelId;
-    }
-
-    function getProgressKey(novelId) {
-      return "nebula-progress-" + novelId;
-    }
-
-    function getPaidKey(novelId) {
-      return "paid-" + novelId;
-    }
-
-    function getContinuePath(novela) {
-      return localStorage.getItem(getProgressKey(novela.id)) || novela.ruta;
-    }
-
-    function saveInitialProgress(novela) {
-      const key = getProgressKey(novela.id);
-      if (!localStorage.getItem(key)) {
-        localStorage.setItem(key, novela.ruta);
-      }
-    }
-
-    function getStoredViews(novela) {
-      const key = getStorageViewsKey(novela.id);
-      const stored = Number(localStorage.getItem(key));
-      return Number.isFinite(stored) && stored > 0 ? stored : Number(novela.visitas || 0);
-    }
-
-    function increaseViews(novela) {
-      const key = getStorageViewsKey(novela.id);
-      const current = getStoredViews(novela);
-      const next = current + 1;
-      localStorage.setItem(key, String(next));
-      novela.visitas = next;
-    }
-
-    function getRating(novela) {
-      const val = Number(novela.rating || 5);
-      if (!Number.isFinite(val)) return 5;
-      return Math.max(1, Math.min(5, Math.round(val)));
-    }
-
-    function renderStarsHTML(rating) {
-      const safe = Math.max(1, Math.min(5, Math.round(Number(rating) || 5)));
-      return Array.from({ length: 5 }, (_, i) => {
-        return `<span class="star ${i < safe ? "active" : ""}">★</span>`;
-      }).join("");
-    }
-
-    function buildCatalogFromNebulaData() {
-      const source = window.NEBULA_NOVELS;
-      if (!source || typeof source !== "object") return [];
-
-      return Object.entries(source).map(([id, novel], index) => ({
-        id,
-        titulo: novel.title || novel.titulo || id,
-        genero: obtenerGeneroDesdeNovela(novel),
-        portada: obtenerCover(novel),
-        descripcion: novel.description || novel.descripcion || "Historia disponible en Nébula.",
-        ruta: `novelas/index.html?id=${id}`,
-        visitas: Number(novel.visitas || 0),
-        gratis: Number(novel.freeChapters ?? novel.gratis ?? 3),
-        destacada: typeof novel.destacada === "boolean" ? novel.destacada : index === 0,
-        temporada: obtenerTemporadaLabel(novel),
-        capitulos: obtenerCapitulosCount(novel),
-        precio: novel.price || novel.precio || "$1.500 CLP",
-        premium: localStorage.getItem(getPaidKey(id)) === "true",
-        rating: Number(novel.rating || 5)
-      }));
-    }
-
-    function prepararNovelas(data) {
-      return data.map((novela, index) => ({
-        ...novela,
-        visitas: getStoredViews(novela),
-        destacada: typeof novela.destacada === "boolean" ? novela.destacada : index === 0,
-        rating: getRating(novela)
-      }));
-    }
-
-    function renderFeatured() {
-      const destacada = novelas.find(n => n.destacada) || novelas[0];
-      if (!destacada) return;
-
-      document.getElementById("featuredCover").src = destacada.portada;
-      document.getElementById("featuredCover").alt = destacada.titulo;
-      document.getElementById("featuredGenreTag").textContent = capitalizar(destacada.genero);
-      document.getElementById("featuredSeasonTag").textContent = destacada.temporada || "Temporada 1";
-      document.getElementById("featuredTitle").textContent = destacada.titulo;
-      document.getElementById("featuredDescription").textContent = destacada.descripcion;
-      document.getElementById("featuredViews").textContent = getStoredViews(destacada);
-      document.getElementById("featuredFree").textContent = (destacada.gratis || 3) + " capítulos";
-      document.getElementById("featuredReadLink").href = destacada.ruta;
-      document.getElementById("featuredStars").innerHTML = renderStarsHTML(destacada.rating);
-      document.getElementById("featuredRatingLabel").textContent = `${destacada.rating}.0 / 5`;
-
-      const readLink = document.getElementById("featuredReadLink");
-      readLink.onclick = () => {
-        saveInitialProgress(destacada);
-        increaseViews(destacada);
-      };
-
-      const continueBtn = document.getElementById("featuredContinueBtn");
-      continueBtn.onclick = () => {
-        saveInitialProgress(destacada);
-        window.location.href = getContinuePath(destacada);
-      };
-    }
-
-    function renderGenres() {
-      const genres = [...new Set(novelas.map(n => n.genero))];
-
-      genreGrid.innerHTML = genres.map(genre => {
-        const total = novelas.filter(n => n.genero === genre).length;
-        return `
-          <button class="genre-card" type="button" data-genre="${genre}">
-            <span>${capitalizar(genre)}</span>
-            <small>${total} historia${total !== 1 ? "s" : ""}</small>
-          </button>
-        `;
-      }).join("");
-
-      document.querySelectorAll(".genre-card").forEach(btn => {
-        btn.addEventListener("click", () => {
-          storySearch.value = btn.dataset.genre;
-          filtrarHistorias();
-          document.getElementById("catalogo").scrollIntoView({ behavior: "smooth" });
-        });
-      });
-    }
-
-    function renderStories(items) {
-      if (!items.length) {
-        storyGrid.innerHTML = "";
-        emptyState.classList.remove("hidden");
-        return;
-      }
-
-      emptyState.classList.add("hidden");
-
-      storyGrid.innerHTML = items.map(novela => `
-        <article class="story-card">
-          <div class="story-cover-shell">
-            <img class="story-cover" src="${novela.portada}" alt="${novela.titulo}" />
-            <div class="story-cover-shadow"></div>
-
-            <div class="story-badges">
-              <span>${capitalizar(novela.genero)}</span>
-              <span>${novela.temporada || "Temporada 1"}</span>
-            </div>
-          </div>
-
-          <div class="story-body">
-            <div class="story-topline">
-              <h3>${novela.titulo}</h3>
-              <small>${getStoredViews(novela)} visitas</small>
-            </div>
-
-            <div class="story-rating-line">
-              <div class="stars" aria-label="Calificación ${novela.rating} de 5">
-                ${renderStarsHTML(novela.rating)}
-              </div>
-              <span class="rating-label">${novela.rating}.0 / 5</span>
-            </div>
-
-            <p>${novela.descripcion}</p>
-
-            <div class="story-mini-meta">
-              <div>
-                <small>Gratis</small>
-                <strong>${novela.gratis || 3} capítulos</strong>
-              </div>
-
-              <div>
-                <small>Capítulos</small>
-                <strong>${novela.capitulos || 0} disponibles</strong>
-              </div>
-            </div>
-
-            <div class="story-card-actions">
-              <a class="btn btn-primary" href="${novela.ruta}" data-read-id="${novela.id}">
-                Comenzar
-              </a>
-
-              <button class="btn btn-secondary" type="button" data-continue-id="${novela.id}">
-                Seguir
-              </button>
-            </div>
-          </div>
-        </article>
-      `).join("");
-
-      document.querySelectorAll("[data-read-id]").forEach(link => {
-        const novela = novelas.find(n => n.id === link.dataset.readId);
-        if (!novela) return;
-
-        link.addEventListener("click", () => {
-          saveInitialProgress(novela);
-          increaseViews(novela);
-        });
-      });
-
-      document.querySelectorAll("[data-continue-id]").forEach(btn => {
-        const novela = novelas.find(n => n.id === btn.dataset.continueId);
-        if (!novela) return;
-
-        btn.addEventListener("click", () => {
-          saveInitialProgress(novela);
-          window.location.href = getContinuePath(novela);
-        });
-      });
-    }
-
-    function filtrarHistorias() {
-      const q = storySearch.value.trim().toLowerCase();
-
-      filtradas = novelas.filter(n => {
-        const texto = [
-          n.titulo,
-          n.genero,
-          n.descripcion,
-          n.temporada || "",
-          String(n.capitulos || ""),
-          String(n.gratis || ""),
-          String(n.rating || "")
-        ].join(" ").toLowerCase();
-
-        return texto.includes(q);
-      });
-
-      renderStories(filtradas);
-    }
-
-    function cargarNovelas() {
-      const desdeDataJs = buildCatalogFromNebulaData();
-      novelas = prepararNovelas(desdeDataJs.length ? desdeDataJs : fallbackNovelas);
-      filtradas = [...novelas];
-      renderFeatured();
-      renderGenres();
-      renderStories(filtradas);
-      updateUserReadingStats();
-    }
-
-    function getAllProgressEntries() {
-      const entries = [];
-      for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        if (key && key.startsWith("nebula-progress-")) {
-          entries.push({
-            key,
-            value: localStorage.getItem(key)
-          });
-        }
-      }
-      return entries;
-    }
-
-    function updateUserReadingStats() {
-      const progressEntries = getAllProgressEntries();
-      const viewedStories = progressEntries.length;
-      const readChapters = progressEntries.reduce((acc, item) => {
-        const match = String(item.value || "").match(/capitulo(\d+)\.html/i);
-        if (match) return acc + Number(match[1] || 0);
-        return acc;
-      }, 0);
-
-      let lastProgressText = "Aún sin progreso";
-
-      if (progressEntries.length) {
-        const last = progressEntries[progressEntries.length - 1];
-        const matchedNovel = novelas.find(n => last.key === getProgressKey(n.id));
-        if (matchedNovel) {
-          lastProgressText = matchedNovel.titulo;
-        }
-      }
-
-      document.getElementById("userViewedStories").textContent = `${viewedStories} registradas`;
-      document.getElementById("userProgressPill").textContent = `Capítulos leídos: ${readChapters}`;
-      document.getElementById("userLastProgress").textContent = lastProgressText;
-    }
-
-    storySearch.addEventListener("input", filtrarHistorias);
-    cargarNovelas();
-  </script>
-
-  <script>
-    const canvas = document.getElementById("stars-canvas");
-    const ctx = canvas.getContext("2d");
-    let stars = [];
-
-    function resizeStarsCanvas() {
-      const dpr = window.devicePixelRatio || 1;
-      canvas.width = window.innerWidth * dpr;
-      canvas.height = window.innerHeight * dpr;
-      canvas.style.width = window.innerWidth + "px";
-      canvas.style.height = window.innerHeight + "px";
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      createStars();
-    }
-
-    function createStars() {
-      stars = [];
-      const area = window.innerWidth * window.innerHeight;
-      const amount = Math.max(70, Math.floor(area / 14000));
-
-      for (let i = 0; i < amount; i++) {
-        stars.push({
-          x: Math.random() * window.innerWidth,
-          y: Math.random() * window.innerHeight,
-          r: Math.random() * 1.5 + 0.4,
-          speed: Math.random() * 0.25 + 0.05,
-          alpha: Math.random() * 0.7 + 0.15
-        });
-      }
-    }
-
-    function animateStars() {
-      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-
-      for (const s of stars) {
-        ctx.beginPath();
-        ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
-        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-        ctx.fill();
-
-        s.y += s.speed;
-
-        if (s.y > window.innerHeight + 2) {
-          s.y = -2;
-          s.x = Math.random() * window.innerWidth;
-        }
-      }
-
-      requestAnimationFrame(animateStars);
-    }
-
-    window.addEventListener("resize", resizeStarsCanvas);
-    resizeStarsCanvas();
-    animateStars();
-  </script>
-
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
-    import { getFirestore } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
-
-   const firebaseConfig = {
-  apiKey: "AIzaSyDccMk1KLoCwXWG2g4r1sOI6qEt_7d5gTw",
-  authDomain: "dyh-nebula.firebaseapp.com",
-  projectId: "dyh-nebula",
-  storageBucket: "dyh-nebula.firebasestorage.app",
-  messagingSenderId: "230506596749",
-  appId: "1:230506596749:web:d7ffcf38de039c9629d5c4",
-  measurementId: "G-KD5ZRFR8C9"
-};
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    window.firebaseApp = app;
-    window.firebaseAuth = auth;
-    window.firebaseDb = db;
-
-    console.log("🔥 Firebase conectado correctamente");
-
-    const headerSessionBtn = document.getElementById("headerSessionBtn");
-    const userGreeting = document.getElementById("userGreeting");
-    const userEmailText = document.getElementById("userEmailText");
-    const userPlanPill = document.getElementById("userPlanPill");
-    const userStatePill = document.getElementById("userStatePill");
-    const userMembershipText = document.getElementById("userMembershipText");
-    const userAvatar = document.getElementById("userAvatar");
-    const userGuestBox = document.getElementById("userGuestBox");
-    const userLoggedBox = document.getElementById("userLoggedBox");
-    const logoutBtn = document.getElementById("logoutBtn");
-    const userContinueBtn = document.getElementById("userContinueBtn");
-
-    function getLocalProfile() {
-      try {
-        const raw = localStorage.getItem("nebula-user-profile");
-        return raw ? JSON.parse(raw) : {};
-      } catch {
-        return {};
-      }
-    }
-
-    function getMembershipLabel() {
-      const raw = localStorage.getItem("nebula-membership") || "free";
-      if (raw === "premium") return "Premium";
-      return "Free";
-    }
-    function getLastProgressPath() {
-  const entries = [];
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    if (key && key.startsWith("nebula-progress-")) {
-      entries.push(localStorage.getItem(key));
-    }
-  }
-  return entries.length ? entries[entries.length - 1] : "novelas/index.html?id=codigo-nebula-t1";
-}
-
-    function resolveAvatar(user) {
-      const localProfile = getLocalProfile();
-      if (localProfile.icon) return localProfile.icon;
-      if (user?.displayName) return user.displayName.trim().charAt(0).toUpperCase();
-      if (user?.email) return user.email.trim().charAt(0).toUpperCase();
-      return "🌌";
-    }
-
-    function updateLoggedOutUI() {
-      headerSessionBtn.textContent = "Iniciar sesión";
-      headerSessionBtn.href = "login.html";
-
-      userGreeting.textContent = "Usuario Nébula";
-      userEmailText.textContent = "Inicia sesión para guardar tu progreso, continuar leyendo y ver tu membresía activa.";
-      userPlanPill.textContent = "Suscripción: Free";
-      userStatePill.textContent = "Estado: Invitado";
-      userMembershipText.textContent = "Puedes desbloquear temporadas completas";
-      userAvatar.textContent = "🌌";
-
-      userGuestBox.classList.remove("hidden-panel");
-      userLoggedBox.classList.add("hidden-panel");
-    }
-
-    function updateLoggedInUI(user) {
-      const profile = getLocalProfile();
-      const membership = getMembershipLabel();
-      const displayName =
-        profile.name ||
-        user.displayName ||
-        (user.email ? user.email.split("@")[0] : "Usuario Nébula");
-
-      headerSessionBtn.textContent = displayName;
-      headerSessionBtn.href = "#usuario-nebula";
-
-      userGreeting.textContent = displayName;
-      userEmailText.textContent = user.email || "Tu cuenta está conectada correctamente.";
-      userPlanPill.textContent = `Suscripción: ${membership}`;
-      userStatePill.textContent = "Estado: Activo";
-      userMembershipText.textContent =
-        membership === "Premium"
-          ? "Tu acceso premium está activo"
-          : "Aún puedes mejorar a Premium";
-      userAvatar.textContent = resolveAvatar(user);
-
-      userGuestBox.classList.add("hidden-panel");
-      userLoggedBox.classList.remove("hidden-panel");
-    }
-
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        updateLoggedInUI(user);
-      } else {
-        updateLoggedOutUI();
-      }
-    });
-
-    logoutBtn.addEventListener("click", async () => {
-      try {
-        await signOut(auth);
-        updateLoggedOutUI();
-      } catch (error) {
-        console.error("Error al cerrar sesión:", error);
-      }
-    });
-  </script>
-  <!-- TODO tu contenido anterior -->
+<script src="novelas/data.js"></script>
 
 <script>
-async function pagarNovela(novelId) {
-  try {
-    const res = await fetch("https://us-central1-dyh-nebula.cloudfunctions.net/api/create-preference", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        novelId: novelId,
-        title: "Acceso a novela",
-        price: 1500
-      })
-    });
+  const fallbackNovelas = [];
 
-    const data = await res.json();
+  let novelas = [];
+  let filtradas = [];
 
-    if (data.init_point) {
-      window.location.href = data.init_point;
-    } else {
-      alert("Error creando pago");
+  const storyGrid = document.getElementById("storyGrid");
+  const genreGrid = document.getElementById("genreGrid");
+  const emptyState = document.getElementById("emptyState");
+  const storySearch = document.getElementById("storySearch");
+
+  function capitalizar(texto) {
+    if (!texto) return "";
+    return texto.charAt(0).toUpperCase() + texto.slice(1);
+  }
+
+  function normalizarGenero(texto) {
+    const value = String(texto || "").trim().toLowerCase();
+    if (!value) return "general";
+
+    if (value.includes("romance")) return "romance";
+    if (value.includes("terror")) return "terror";
+    if (value.includes("historia")) return "historia";
+    if (value.includes("militar")) return "historia";
+    if (value.includes("política")) return "historia";
+    if (value.includes("politica")) return "historia";
+    if (value.includes("futur")) return "futurista";
+    if (value.includes("tecnolog")) return "futurista";
+    if (value.includes("suspenso")) return "suspenso";
+    if (value.includes("thriller")) return "thriller";
+    if (value.includes("corrup")) return "thriller";
+    return value;
+  }
+
+  function obtenerGeneroDesdeNovela(novel) {
+    if (Array.isArray(novel.tags) && novel.tags.length) {
+      return normalizarGenero(novel.tags[0]);
     }
 
-  } catch (error) {
-    console.error(error);
-    alert("Error de conexión");
-  }
-}
-</script>
+    const parts = String(novel.baseFolder || "").split("/").filter(Boolean);
 
-</body>
-</html>
-</body>
-</html>
+    if (parts.length >= 2 && parts[0] === "novelas") {
+      return normalizarGenero(parts[1]);
+    }
+
+    if (parts.length >= 1) {
+      return normalizarGenero(parts[0]);
+    }
+
+    return normalizarGenero(novel.genero || "general");
+  }
+
+  function obtenerTemporadaLabel(novel) {
+    if (novel.defaultSeasonLabel) return novel.defaultSeasonLabel;
+    if (novel.temporada) return novel.temporada;
+
+    const chapters = Array.isArray(novel.chapters) ? novel.chapters : [];
+    const labels = [...new Set(
+      chapters.map(ch => ch.seasonLabel || ch.season).filter(Boolean)
+    )];
+
+    if (labels.length) return labels[0];
+
+    return "Temporada 1";
+  }
+
+  function obtenerCapitulosCount(novel) {
+    if (Array.isArray(novel.chapters)) return novel.chapters.length;
+    if (Number.isFinite(Number(novel.capitulos))) return Number(novel.capitulos);
+    return 0;
+  }
+
+  function obtenerCover(novel) {
+    const raw = String(novel.cover || novel.portada || "").trim();
+    if (!raw) return "assets/covers/nebula.jpg";
+    return raw.startsWith("../") ? raw.replace("../", "") : raw;
+  }
+
+  function getStorageViewsKey(novelId) {
+    return "nebula-views-" + novelId;
+  }
+
+  function getProgressKey(novelId) {
+    return "nebula-progress-" + novelId;
+  }
+
+  function getPaidKey(novelId) {
+    return "paid-" + novelId;
+  }
+
+  function getContinuePath(novela) {
+    return localStorage.getItem(getProgressKey(novela.id)) || novela.ruta;
+  }
+
+  function saveInitialProgress(novela) {
+    const key = getProgressKey(novela.id);
+    if (!localStorage.getItem(key)) {
+      localStorage.setItem(key, novela.ruta);
+    }
+  }
+
+  function getStoredViews(novela) {
+    const key = getStorageViewsKey(novela.id);
+    const stored = Number(localStorage.getItem(key));
+    return Number.isFinite(stored) && stored > 0 ? stored : Number(novela.visitas || 0);
+  }
+
+  function increaseViews(novela) {
+    const key = getStorageViewsKey(novela.id);
+    const current = getStoredViews(novela);
+    const next = current + 1;
+    localStorage.setItem(key, String(next));
+    novela.visitas = next;
+  }
+
+  function getRating(novela) {
+    const val = Number(novela.rating || 5);
+    if (!Number.isFinite(val)) return 5;
+    return Math.max(1, Math.min(5, Math.round(val)));
+  }
+
+  function renderStarsHTML(rating) {
+    const safe = Math.max(1, Math.min(5, Math.round(Number(rating) || 5)));
+    return Array.from({ length: 5 }, (_, i) => {
+      return `<span class="star ${i < safe ? "active" : ""}">★</span>`;
+    }).join("");
+  }
+
+  function buildCatalogFromNebulaData() {
+    const source = window.NEBULA_NOVELS;
+    if (!source || typeof source !== "object") return [];
+
+    return Object.entries(source).map(([id, novel], index) => ({
+      id,
+      titulo: novel.title || novel.titulo || id,
+      genero: obtenerGeneroDesdeNovela(novel),
+      portada: obtenerCover(novel),
+      descripcion: novel.description || novel.descripcion || "Historia disponible en Nébula.",
+      ruta: `novelas/index.html?id=${id}`,
+      visitas: Number(novel.visitas || 0),
+      gratis: Number(novel.freeChapters ?? novel.gratis ?? 3),
+      destacada: typeof novel.destacada === "boolean" ? novel.destacada : index === 0,
+      temporada: obtenerTemporadaLabel(novel),
+      capitulos: obtenerCapitulosCount(novel),
+      precio: novel.price || novel.precio || "$1.500 CLP",
+      premium: localStorage.getItem(getPaidKey(id)) === "true",
+      rating: Number(novel.rating || 5)
+    }));
+  }
+
+  function prepararNovelas(data) {
+    return data.map((novela, index) => ({
+      ...novela,
+      visitas: getStoredViews(novela),
+      destacada: typeof novela.destacada === "boolean" ? novela.destacada : index === 0,
+      rating: getRating(novela)
+    }));
+  }
+
+  function renderFeatured() {
+    const destacada = novelas.find(n => n.destacada) || novelas[0];
+    if (!destacada) return;
+
+    document.getElementById("featuredCover").src = destacada.portada;
+    document.getElementById("featuredCover").alt = destacada.titulo;
+    document.getElementById("featuredGenreTag").textContent = capitalizar(destacada.genero);
+    document.getElementById("featuredSeasonTag").textContent = destacada.temporada || "Temporada 1";
+    document.getElementById("featuredTitle").textContent = destacada.titulo;
+    document.getElementById("featuredDescription").textContent = destacada.descripcion;
+    document.getElementById("featuredViews").textContent = getStoredViews(destacada);
+    document.getElementById("featuredFree").textContent = (destacada.gratis || 3) + " capítulos";
+    document.getElementById("featuredReadLink").href = destacada.ruta;
+    document.getElementById("featuredStars").innerHTML = renderStarsHTML(destacada.rating);
+    document.getElementById("featuredRatingLabel").textContent = `${destacada.rating}.0 / 5`;
+
+    const readLink = document.getElementById("featuredReadLink");
+    readLink.onclick = () => {
+      saveInitialProgress(destacada);
+      increaseViews(destacada);
+    };
+
+    const continueBtn = document.getElementById("featuredContinueBtn");
+    continueBtn.onclick = () => {
+      saveInitialProgress(destacada);
+      window.location.href = getContinuePath(destacada);
+    };
+  }
+
+  function renderGenres() {
+    const genres = [...new Set(novelas.map(n => n.genero))];
+
+    genreGrid.innerHTML = genres.map(genre => {
+      const total = novelas.filter(n => n.genero === genre).length;
+      return `
+        <button class="genre-card" type="button" data-genre="${genre}">
+          <span>${capitalizar(genre)}</span>
+          <small>${total} historia${total !== 1 ? "s" : ""}</small>
+        </button>
+      `;
+    }).join("");
+
+    document.querySelectorAll(".genre-card").forEach(btn => {
+      btn.addEventListener("click", () => {
+        storySearch.value = btn.dataset.genre;
+        filtrarHistorias();
+        document.getElementById("catalogo").scrollIntoView({ behavior: "smooth" });
+      });
+    });
+  }
+
+  function renderStories(items) {
+    if (!items.length) {
+      storyGrid.innerHTML = "";
+      emptyState.classList.remove("hidden");
+      return;
+    }
+
+    emptyState.classList.add("hidden");
+
+    storyGrid.innerHTML = items.map(novela => `
+      <article class="story-card">
+        <div class="story-cover-shell">
+          <img class="story-cover" src="${novela.portada}" alt="${novela.titulo}" />
+          <div class="story-cover-shadow"></div>
+
+          <div class="story-badges">
+            <span>${capitalizar(novela.genero)}</span>
+            <span>${novela.temporada || "Temporada 1"}</span>
+          </div>
+        </div>
+
+        <div class="story-body">
+          <div class="story-topline">
+            <h3>${novela.titulo}</h3>
+            <small>${getStoredViews(novela)} visitas</small>
+          </div>
+
+          <div class="story-rating-line">
+            <div class="stars" aria-label="Calificación ${novela.rating} de 5">
+              ${renderStarsHTML(novela.rating)}
+            </div>
+            <span class="rating-label">${novela.rating}.0 / 5</span>
+          </div>
+
+          <p>${novela.descripcion}</p>
+
+          <div class="story-mini-meta">
+            <div>
+              <small>Gratis</small>
+              <strong>${novela.gratis || 3} capítulos</strong>
+            </div>
+
+            <div>
+              <small>Capítulos</small>
+              <strong>${novela.capitulos || 0} disponibles</strong>
+            </div>
+          </div>
+
+          <div class="story-card-actions">
+            <a class="btn btn-primary" href="${novela.ruta}" data-read-id="${novela.id}">
+              Comenzar
+            </a>
+
+            <button class="btn btn-secondary" type="button" data-continue-id="${novela.id}">
+              Seguir
+            </button>
+          </div>
+        </div>
+      </article>
+    `).join("");
+
+    document.querySelectorAll("[data-read-id]").forEach(link => {
+      const novela = novelas.find(n => n.id === link.dataset.readId);
+      if (!novela) return;
+
+      link.addEventListener("click", () => {
+        saveInitialProgress(novela);
+        increaseViews(novela);
+      });
+    });
+
+    document.querySelectorAll("[data-continue-id]").forEach(btn => {
+      const novela = novelas.find(n => n.id === btn.dataset.continueId);
+      if (!novela) return;
+
+      btn.addEventListener("click", () => {
+        saveInitialProgress(novela);
+        window.location.href = getContinuePath(novela);
+      });
+    });
+  }
+
+  function filtrarHistorias() {
+    const q = storySearch.value.trim().toLowerCase();
+
+    filtradas = novelas.filter(n => {
+      const texto = [
+        n.titulo,
+        n.genero,
+        n.descripcion,
+        n.temporada || "",
+        String(n.capitulos || ""),
+        String(n.gratis || ""),
+        String(n.rating || "")
+      ].join(" ").toLowerCase();
+
+      return texto.includes(q);
+    });
+
+    renderStories(filtradas);
+  }
+
+  function cargarNovelas() {
+    const desdeDataJs = buildCatalogFromNebulaData();
+    novelas = prepararNovelas(desdeDataJs.length ? desdeDataJs : fallbackNovelas);
+    filtradas = [...novelas];
+    renderFeatured();
+    renderGenres();
+    renderStories(filtradas);
+    updateUserReadingStats();
+  }
+
+  function getAllProgressEntries() {
+    const entries = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && key.startsWith("nebula-progress-")) {
+        entries.push({
+          key,
+          value: localStorage.getItem(key)
+        });
+      }
+    }
+    return entries;
+  }
+
+  function updateUserReadingStats() {
+    const progressEntries = getAllProgressEntries();
+    const viewedStories = progressEntries.length;
+    const readChapters = progressEntries.reduce((acc, item) => {
+      const match = String(item.value || "").match(/capitulo(\d+)\.html/i);
+      if (match) return acc + Number(match[1] || 0);
+      return acc;
+    }, 0);
+
+    let lastProgressText = "Aún sin progreso";
+
+    if (progressEntries.length) {
+      const last = progressEntries[progressEntries.length - 1];
+      const matchedNovel = novelas.find(n => last.key === getProgressKey(n.id));
+      if (matchedNovel) {
+        lastProgressText = matchedNovel.titulo;
+      }
+    }
+
+    document.getElementById("userViewedStories").textContent = `${viewedStories} registradas`;
+    document.getElementById("userProgressPill").textContent = `Capítulos leídos: ${readChapters}`;
+    document.getElementById("userLastProgress").textContent = lastProgressText;
+  }
+
+  storySearch.addEventListener("input", filtrarHistorias);
+  cargarNovelas();
+</script>
