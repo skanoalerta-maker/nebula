@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capítulo 12 | La Vía y la Ruptura</title>
+  <meta
+    name="description"
+    content="Capítulo 12 de La Vía y la Ruptura: el final de Allende, el silencio después del fuego y el comienzo de la larga noche sobre Chile."
+  />
+
+  <style>
+    :root{
+      --bg:#05080f;
+      --bg2:#0b1220;
+      --card:rgba(12,18,32,0.82);
+      --line:rgba(255,255,255,0.08);
+      --line-strong:rgba(73,182,255,.24);
+      --text:#f5f8ff;
+      --muted:#aebad1;
+      --muted-2:#7f90ae;
+      --blue:#0A6CFF;
+      --blue2:#49b6ff;
+      --blue-soft:rgba(73,182,255,.14);
+      --shadow:0 24px 60px rgba(0,0,0,.45);
+      --radius:22px;
+      --max:860px;
+    }
+
+    *{
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      color:var(--text);
+      background:#04070d;
+      line-height:1.8;
+      position:relative;
+      overflow-x:hidden;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    #stars{
+      position:fixed;
+      inset:0;
+      width:100%;
+      height:100%;
+      z-index:0;
+      background:
+        radial-gradient(circle at top left, rgba(10,108,255,.12), transparent 24%),
+        radial-gradient(circle at top right, rgba(73,182,255,.08), transparent 20%),
+        linear-gradient(180deg, #04070d 0%, #08101c 45%, #05080f 100%);
+    }
+
+    .page{
+      min-height:100vh;
+      position:relative;
+      z-index:1;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:30;
+      backdrop-filter:blur(14px);
+      background:rgba(5,8,15,.72);
+      border-bottom:1px solid var(--line);
+    }
+
+    .topbar-inner{
+      max-width:1100px;
+      margin:0 auto;
+      padding:16px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .brand-badge{
+      width:38px;
+      height:38px;
+      border-radius:12px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg, rgba(10,108,255,.22), rgba(73,182,255,.08));
+      border:1px solid var(--line-strong);
+      box-shadow:0 0 24px rgba(10,108,255,.12);
+      font-weight:700;
+      color:var(--blue2);
+      flex:0 0 auto;
+    }
+
+    .brand-title{
+      font-size:14px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:#dfe9ff;
+      margin:0 0 2px;
+    }
+
+    .brand-sub{
+      font-size:12px;
+      color:var(--muted-2);
+      margin:0;
+    }
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height:44px;
+      padding:0 18px;
+      border-radius:12px;
+      font-size:14px;
+      font-weight:700;
+      transition:transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+      border:1px solid transparent;
+      cursor:pointer;
+    }
+
+    .btn:hover{
+      transform:translateY(-1px);
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg, var(--blue) 0%, #0d7eff 100%);
+      color:white;
+      box-shadow:0 12px 28px rgba(10,108,255,.28);
+    }
+
+    .btn-primary:hover{
+      background:linear-gradient(135deg, #0c62e0 0%, #0a6cef 100%);
+    }
+
+    .btn-ghost{
+      background:rgba(255,255,255,.03);
+      border-color:var(--line);
+      color:#dbe8ff;
+    }
+
+    .btn-ghost:hover{
+      background:rgba(255,255,255,.06);
+      border-color:var(--line-strong);
+    }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      border-bottom:1px solid rgba(255,255,255,.04);
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(180deg, rgba(5,8,15,.58) 0%, rgba(5,8,15,.86) 80%, rgba(5,8,15,1) 100%),
+        url("../assets/allende-portada.jpg");
+      background-size:cover;
+      background-position:center;
+      opacity:.28;
+      filter:saturate(.9) contrast(1.03);
+    }
+
+    .hero-inner{
+      position:relative;
+      z-index:1;
+      max-width:1100px;
+      margin:0 auto;
+      padding:56px 20px 34px;
+    }
+
+    .crumb{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.06);
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:18px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:28px;
+      align-items:end;
+    }
+
+    .hero-copy h1{
+      margin:0 0 12px;
+      font-size:clamp(34px, 6vw, 64px);
+      line-height:1.02;
+      letter-spacing:.02em;
+      color:white;
+      text-shadow:0 0 22px rgba(10,108,255,.18);
+    }
+
+    .eyebrow{
+      margin:0 0 14px;
+      color:var(--blue2);
+      font-weight:700;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      font-size:12px;
+    }
+
+    .hero-copy p{
+      margin:0;
+      max-width:700px;
+      color:#d4def3;
+      font-size:18px;
+      line-height:1.75;
+    }
+
+    .hero-side{
+      display:flex;
+      justify-content:flex-end;
+    }
+
+    .chapter-card{
+      width:min(100%, 360px);
+      background:linear-gradient(180deg, rgba(12,18,32,.75), rgba(9,13,24,.88));
+      border:1px solid rgba(73,182,255,.18);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:22px;
+      backdrop-filter:blur(16px);
+    }
+
+    .chapter-label{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 12px;
+      border-radius:999px;
+      background:var(--blue-soft);
+      border:1px solid rgba(73,182,255,.18);
+      color:var(--blue2);
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:14px;
+    }
+
+    .chapter-card h2{
+      margin:0 0 10px;
+      font-size:24px;
+      line-height:1.15;
+      color:white;
+    }
+
+    .chapter-card p{
+      margin:0 0 18px;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.7;
+    }
+
+    .meta{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .meta-item{
+      padding:12px;
+      border-radius:14px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.05);
+    }
+
+    .meta-k{
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--muted-2);
+      margin:0 0 6px;
+    }
+
+    .meta-v{
+      margin:0;
+      font-size:13px;
+      color:#e7efff;
+      font-weight:700;
+    }
+
+    .content-wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:28px 20px 80px;
+    }
+
+    .reader{
+      position:relative;
+      background:linear-gradient(180deg, rgba(11,18,32,.58), rgba(8,13,24,.72));
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:22px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      backdrop-filter:blur(4px);
+    }
+
+    .reader-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:18px 22px;
+      border-bottom:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+    }
+
+    .reader-top-left h3{
+      margin:0 0 4px;
+      font-size:18px;
+      color:#edf3ff;
+    }
+
+    .reader-top-left p{
+      margin:0;
+      color:var(--muted-2);
+      font-size:13px;
+    }
+
+    .reader-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:34px;
+      padding:0 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.06);
+      color:#cfe0ff;
+      font-size:12px;
+      font-weight:700;
+      white-space:nowrap;
+    }
+
+    .reader-body{
+      padding:34px 26px 18px;
+      position:relative;
+    }
+
+    .story{
+      max-width:720px;
+      margin:0 auto;
+      position:relative;
+      z-index:2;
+    }
+
+    .lead{
+      font-size:19px;
+      line-height:1.9;
+      color:#ecf3ff;
+      margin:0 0 26px;
+      padding:18px 18px 18px 20px;
+      border-left:3px solid rgba(73,182,255,.44);
+      background:rgba(9,18,35,.68);
+      border-radius:0 14px 14px 0;
+      backdrop-filter:blur(4px);
+    }
+
+    .story p{
+      margin:0 0 22px;
+      color:#e4ecfb;
+      font-size:18px;
+      line-height:1.95;
+      letter-spacing:.01em;
+      text-shadow:0 1px 2px rgba(0,0,0,.4);
+    }
+
+    .story p strong{
+      color:#ffffff;
+      font-weight:700;
+    }
+
+    .story .quote{
+      margin:34px 0;
+      padding:20px 22px;
+      border-radius:18px;
+      background:linear-gradient(180deg, rgba(10,108,255,.12), rgba(73,182,255,.06));
+      border:1px solid rgba(73,182,255,.14);
+      color:#edf5ff;
+      font-size:19px;
+      line-height:1.7;
+      text-align:center;
+      box-shadow:0 12px 30px rgba(0,0,0,.18);
+      backdrop-filter:blur(4px);
+    }
+
+    .story .divider{
+      width:86px;
+      height:1px;
+      background:linear-gradient(90deg, transparent, rgba(73,182,255,.6), transparent);
+      margin:34px auto;
+    }
+
+    .reader-bottom{
+      padding:24px 26px 28px;
+      border-top:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .reader-note{
+      color:var(--muted-2);
+      font-size:13px;
+      margin:0;
+    }
+
+    .nav-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    @media (max-width: 900px){
+      .hero-grid{
+        grid-template-columns:1fr;
+      }
+
+      .hero-side{
+        justify-content:flex-start;
+      }
+
+      .chapter-card{
+        width:100%;
+        max-width:unset;
+      }
+    }
+
+    @media (max-width: 640px){
+      .topbar-inner{
+        padding:14px 14px;
+      }
+
+      .hero-inner{
+        padding:34px 14px 22px;
+      }
+
+      .content-wrap{
+        padding:20px 14px 60px;
+      }
+
+      .reader-top,
+      .reader-body,
+      .reader-bottom{
+        padding-left:16px;
+        padding-right:16px;
+      }
+
+      .reader-body{
+        padding-top:24px;
+      }
+
+      .hero-copy p,
+      .story p,
+      .lead{
+        font-size:16px;
+      }
+
+      .meta{
+        grid-template-columns:1fr;
+      }
+
+      .top-actions{
+        width:100%;
+      }
+
+      .btn{
+        width:100%;
+      }
+
+      .nav-actions{
+        width:100%;
+      }
+
+      .nav-actions .btn{
+        flex:1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="stars"></canvas>
+
+  <div class="page">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <div class="brand-badge">N</div>
+          <div>
+            <p class="brand-title">La Vía y la Ruptura</p>
+            <p class="brand-sub">Drama histórico chileno</p>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <a href="capitulo11.html" class="btn btn-ghost">← Capítulo anterior</a>
+          <a href="capitulo13.html" class="btn btn-primary">Siguiente capítulo →</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="crumb">Inicio / Corrupción y poder / Capítulo 12</div>
+
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Capítulo 12</p>
+            <h1>Después del fuego, el silencio</h1>
+            <p>
+              El estruendo termina, pero no llega la paz. Llega otra cosa: el vacío, la noticia final y el nacimiento de una noche que no caerá solo sobre una jornada, sino sobre toda una generación.
+            </p>
+          </div>
+
+          <div class="hero-side">
+            <aside class="chapter-card">
+              <div class="chapter-label">El final del día</div>
+              <h2>Cuando termina una voz y comienza la larga oscuridad</h2>
+              <p>
+                La resistencia se apaga, el país recibe la noticia más dura y el golpe deja de ser acción militar para convertirse en destino histórico. Chile entra, definitivamente, en otra época.
+              </p>
+
+              <div class="meta">
+                <div class="meta-item">
+                  <p class="meta-k">Estado</p>
+                  <p class="meta-v">Gratis</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Género</p>
+                  <p class="meta-v">Histórico</p>
+                </div>
+                <div class="meta-item">
+                  <p class="meta-k">Temporada</p>
+                  <p class="meta-v">12 de 17</p>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="content-wrap">
+      <article class="reader">
+        <div class="reader-top">
+          <div class="reader-top-left">
+            <h3>Capítulo 12: Después del fuego, el silencio</h3>
+            <p>Lectura gratuita · El final de Allende y el comienzo real de la larga noche</p>
+          </div>
+          <div class="reader-badge">Acceso abierto</div>
+        </div>
+
+        <div class="reader-body">
+          <div class="story">
+            <p class="lead">
+              Después del fuego vino el silencio.
+              No un silencio pacífico.
+              No un silencio de alivio.
+              Vino el silencio más brutal:
+              el que llega cuando una nación comprende que algo esencial acaba de ser arrancado de su centro.
+              La Moneda seguía humeando.
+              La mañana seguía avanzando.
+              Chile seguía respirando.
+              Pero ya no quedaba duda:
+              una época había terminado.
+            </p>
+
+            <p>
+              El estruendo había llenado el aire durante horas.
+            </p>
+
+            <p>
+              El país entero había sentido la violencia del golpe como un golpe físico sobre sus propios nervios.
+            </p>
+
+            <p>
+              Y sin embargo,
+              cuando la intensidad del fuego empezó a bajar,
+              no llegó una sensación de cierre.
+            </p>
+
+            <p>
+              Llegó una suspensión.
+            </p>
+
+            <p>
+              Una especie de vacío.
+            </p>
+
+            <p>
+              Como si Chile entero quedara escuchando el eco de algo que todavía no terminaba de entender,
+              pero que ya sabía irreversible.
+            </p>
+
+            <div class="quote">A veces el momento más terrible no es el de la explosión, sino el segundo exacto en que se comprende lo que la explosión acaba de destruir.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Allende ya pertenecía a otro plano.
+            </p>
+
+            <p>
+              Incluso antes de que el país conociera todos los detalles,
+              incluso antes de que la historia organizara versiones, testimonios, disputas y memoria,
+              ya era evidente que su figura había cruzado una frontera.
+            </p>
+
+            <p>
+              Había dejado de ser solo el presidente sitiado.
+            </p>
+
+            <p>
+              Se había convertido en el último rostro visible de una legalidad que eligió no entregarse de rodillas.
+            </p>
+
+            <p>
+              Esa transformación ocurre muy pocas veces en la historia.
+            </p>
+
+            <p>
+              Ocurre cuando una persona deja de pertenecer únicamente a su tiempo
+              y comienza a ser absorbida por la memoria moral de un pueblo.
+            </p>
+
+            <p>
+              Allende estaba entrando allí:
+              en el territorio donde la política se vuelve destino,
+              y el destino se vuelve símbolo.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              Para muchos chilenos, la noticia fue imposible de recibir de inmediato.
+            </p>
+
+            <p>
+              El cuerpo la rechazó antes que la razón la aceptara.
+            </p>
+
+            <p>
+              Había demasiada violencia acumulada en la mañana,
+              demasiado humo,
+              demasiadas órdenes,
+              demasiada brutalidad recién inaugurada,
+              como para procesar de una vez el sentido completo de la pérdida.
+            </p>
+
+            <p>
+              Pero lentamente la verdad fue cayendo:
+              la voz que había sostenido a millones,
+              la figura que había encarnado la apuesta más radical de transformación democrática en Chile,
+              ya no estaba.
+            </p>
+
+            <p><strong>Y con esa ausencia el país sintió que algo más grande que un hombre había sido herido de muerte.</strong></p>
+
+            <div class="quote">La muerte de un presidente puede ser un hecho político. La muerte de un símbolo sitiado se vuelve una herida que atraviesa generaciones.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              En las casas, la reacción fue distinta en cada lugar.
+            </p>
+
+            <p>
+              En algunas, silencio absoluto.
+            </p>
+
+            <p>
+              En otras, llanto.
+            </p>
+
+            <p>
+              En otras, una rigidez sin lágrimas, esa forma seca del dolor cuando todavía no se atreve a salir porque el miedo ya se ha instalado a su lado.
+            </p>
+
+            <p>
+              También hubo quienes sintieron alivio,
+              quienes pensaron que por fin terminaba la crisis,
+              quienes eligieron creer que lo que comenzaba sería orden.
+            </p>
+
+            <p>
+              Esa fractura en la recepción del día también formaría parte de la herida nacional.
+            </p>
+
+            <p>
+              Porque Chile no solo quedó dividido por el golpe,
+              sino por el significado moral que cada sector dio al final de Allende.
+            </p>
+
+            <p>
+              Para unos, caída necesaria.
+            </p>
+
+            <p>
+              Para otros, asesinato histórico de una esperanza.
+            </p>
+
+            <p>
+              Entre esas dos formas de leer el día,
+              el país entró a una grieta que tardaría décadas en nombrarse sin temblor.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              La Moneda, ya herida y humeante, dejó una imagen que no se borraría nunca.
+            </p>
+
+            <p>
+              No solo porque ardió.
+            </p>
+
+            <p>
+              Sino porque ardió como escenario de un tránsito brutal:
+              el paso de una democracia en disputa a un orden que nacería declarando su poder a través del miedo.
+            </p>
+
+            <p>
+              El fuego sobre el palacio fue también un fuego sobre la imaginación republicana del país.
+            </p>
+
+            <p>
+              A partir de ese momento,
+              Chile tendría que aprender a recordar no solo lo que quiso ser,
+              sino la forma en que fue violentamente arrancado de esa posibilidad.
+            </p>
+
+            <div class="quote">No ardió solo un edificio. Ardió la ilusión de que la voluntad popular siempre encontraría defensa suficiente dentro del marco republicano.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              El nuevo poder empezó a instalarse con rapidez.
+            </p>
+
+            <p>
+              Esa es otra de las crueldades del golpe:
+              no espera duelo.
+            </p>
+
+            <p>
+              No concede tiempo.
+            </p>
+
+            <p>
+              Mientras una parte del país recién intentaba comprender la magnitud del derrumbe,
+              la otra maquinaria ya avanzaba.
+            </p>
+
+            <p>
+              Comunicados,
+              órdenes,
+              ocupación,
+              control,
+              advertencias.
+            </p>
+
+            <p>
+              La larga noche no entró pidiendo permiso.
+            </p>
+
+            <p>
+              Entró trabajando.
+            </p>
+
+            <p>
+              Porque el terror político necesita velocidad en su instalación inicial.
+            </p>
+
+            <p>
+              Necesita que el shock no se convierta en reacción colectiva,
+              sino en desconcierto paralizante.
+            </p>
+
+            <p>
+              Ese día comenzó a operar exactamente esa lógica.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              Para quienes amaban a Allende o habían depositado en él la esperanza de otra forma de país,
+              el dolor no fue solo personal ni partidario.
+            </p>
+
+            <p>
+              Fue histórico.
+            </p>
+
+            <p>
+              Porque sintieron que no solo les habían derrotado un gobierno,
+              sino que habían atacado la posibilidad de creer que Chile podía transformarse sin someterse siempre a los mismos guardianes del orden.
+            </p>
+
+            <p>
+              Esa sensación de despojo fue una de las raíces más profundas de la memoria posterior.
+            </p>
+
+            <p>
+              No era únicamente tristeza.
+            </p>
+
+            <p>
+              Era duelo por una posibilidad.
+            </p>
+
+            <p>
+              Y cuando un pueblo entra en duelo por una posibilidad histórica,
+              lo que se rompe no se mide en días,
+              sino en generaciones.
+            </p>
+
+            <div class="quote">A veces una derrota no mata solo un proyecto. Mata una forma entera de imaginar el futuro.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              Pero al mismo tiempo,
+              en la caída de Allende quedó sembrado algo que el golpe nunca podría destruir por completo.
+            </p>
+
+            <p>
+              La dignidad de no haber legitimado la fuerza con obediencia.
+            </p>
+
+            <p>
+              El gesto de no convertir la derrota en sumisión.
+            </p>
+
+            <p>
+              Esa es la materia de las memorias que sobreviven incluso a las dictaduras más largas:
+              la certeza de que, en el instante decisivo,
+              hubo quienes eligieron no rendirse moralmente aunque ya no pudieran vencer materialmente.
+            </p>
+
+            <p>
+              Esa clase de legado no derrota al terror de inmediato.
+            </p>
+
+            <p>
+              Pero le disputa el sentido del tiempo.
+            </p>
+
+            <p>
+              Y eso, en la historia larga, importa enormemente.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              La tarde avanzó sobre un país irreconocible.
+            </p>
+
+            <p>
+              La gente hablaba menos.
+            </p>
+
+            <p>
+              Escuchaba más.
+            </p>
+
+            <p>
+              Miraba las calles con otros ojos.
+            </p>
+
+            <p>
+              El miedo ya no era presentimiento.
+            </p>
+
+            <p>
+              Era presencia.
+            </p>
+
+            <p>
+              Y, sin embargo, todavía flotaba algo del desconcierto inicial:
+              esa incapacidad de aceptar del todo que el mundo conocido se hubiese roto en tan pocas horas.
+            </p>
+
+            <p>
+              Así empiezan las largas noches históricas.
+            </p>
+
+            <p>
+              No con una sola orden.
+            </p>
+
+            <p>
+              Empiezan con una mezcla de shock, violencia y silencio,
+              donde el país aún no termina de reconocer la forma completa de la oscuridad que acaba de caer sobre él.
+            </p>
+
+            <div class="quote">El terror no entra siempre como una sombra nítida. A veces entra primero como desconcierto, y recién después muestra todo su rostro.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              En la memoria chilena,
+              el final de Allende quedaría suspendido en una dimensión única.
+            </p>
+
+            <p>
+              Trágica,
+              épica,
+              insoportable,
+              luminosa en medio de la catástrofe.
+            </p>
+
+            <p>
+              Porque no se lo recordaría solo por haber sido derrocado,
+              sino por la forma en que enfrentó el final:
+              sin convertirlo en capitulación del espíritu.
+            </p>
+
+            <p>
+              Allí reside la fuerza de ciertos símbolos.
+            </p>
+
+            <p>
+              No evitan la derrota.
+            </p>
+
+            <p>
+              Pero impiden que la derrota tenga la última palabra moral.
+            </p>
+
+            <p>
+              El golpe ganó el control del día.
+            </p>
+
+            <p>
+              Pero no logró borrar por completo la imagen del hombre que eligió no abandonar su lugar en la historia.
+            </p>
+
+            <div class="divider"></div>
+
+            <p>
+              Esa noche,
+              Chile ya no era el mismo país que había despertado.
+            </p>
+
+            <p>
+              Había perdido un presidente,
+              una sede de gobierno intacta,
+              una continuidad democrática
+              y una parte profunda de su inocencia histórica.
+            </p>
+
+            <p>
+              Había ganado otra cosa:
+              una sombra larga,
+              pesada,
+              disciplinaria,
+              hecha de miedo y de silencio.
+            </p>
+
+            <p>
+              Y, sin embargo, también había ganado una memoria imposible de sofocar por completo:
+              la del último acto de dignidad frente a la fuerza.
+            </p>
+
+            <p>
+              Esas dos herencias caerían juntas sobre las décadas por venir:
+              la noche
+              y la memoria de quien la enfrentó sin arrodillarse.
+            </p>
+
+            <div class="quote">El día terminó, pero no terminó realmente. Desde entonces siguió viviendo en la conciencia chilena como herida y como advertencia.</div>
+
+            <div class="divider"></div>
+
+            <p>
+              En una casa, alguien lloró por primera vez cuando ya no quedaban noticias nuevas.
+            </p>
+
+            <p>
+              En otra, nadie habló durante horas.
+            </p>
+
+            <p>
+              En alguna parte, alguien celebró creyendo que había llegado el orden.
+            </p>
+
+            <p>
+              Y en el centro invisible de la memoria nacional comenzó a formarse una verdad que tardaría años en desplegar toda su fuerza:
+              que el fuego había terminado,
+              sí,
+              pero que lo que venía después sería todavía más largo,
+              más frío
+              y más difícil de atravesar.
+            </p>
+
+            <p><strong>Después del estruendo vino el silencio. Y dentro de ese silencio comenzó realmente la larga noche de Chile.</strong></p>
+          </div>
+        </div>
+
+        <div class="reader-bottom">
+          <p class="reader-note">
+            Continúa al capítulo 13 para entrar en los primeros días de la dictadura: el miedo en las calles, el silencio impuesto y la manera en que un país aprende a reconocerse bajo vigilancia.
+          </p>
+
+          <div class="nav-actions">
+            <a href="capitulo11.html" class="btn btn-ghost">← Capítulo 11</a>
+            <a href="capitulo13.html" class="btn btn-primary">Leer capítulo 13 →</a>
+          </div>
+        </div>
+      </article>
+    </main>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("stars");
+    const ctx = canvas.getContext("2d");
+    let stars = [];
+
+    function resize(){
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      createStars();
+    }
+
+    function createStars(){
+      stars = [];
+      const amount = Math.floor((canvas.width * canvas.height) / 14000);
+      for(let i = 0; i < amount; i++){
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.6 + 0.3,
+          speed: Math.random() * 0.35 + 0.08,
+          alpha: Math.random() * 0.7 + 0.2
+        });
+      }
+    }
+
+    function animate(){
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for(const s of stars){
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        s.y += s.speed;
+
+        if(s.y > canvas.height){
+          s.y = -2;
+          s.x = Math.random() * canvas.width;
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener("resize", resize);
+    resize();
+    animate();
+  </script>
+</body>
+</html>
