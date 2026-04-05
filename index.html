@@ -2662,15 +2662,20 @@ function filtrarHistorias() {
     document.getElementById("userLastProgress").textContent = lastProgressText;
   }
 
-  function cargarNovelas() {
-    const desdeDataJs = buildCatalogFromNebulaData();
-    novelas = prepararNovelas(desdeDataJs.length ? desdeDataJs : fallbackNovelas);
-    filtradas = [...novelas];
-    renderFeatured();
-    renderGenres();
-    renderStories(filtradas);
-    updateUserReadingStats();
-  }
+ function cargarNovelas() {
+  const desdeDataJs = buildCatalogFromNebulaData();
+  novelas = prepararNovelas(desdeDataJs.length ? desdeDataJs : fallbackNovelas);
+  filtradas = [...novelas];
+
+  renderFeatured();
+  renderGenres();
+
+  renderCategoryRows(novelas); // 👈 ESTA ES LA CLAVE
+
+  renderStories(filtradas); // (puedes dejarlo o quitarlo después)
+
+  updateUserReadingStats();
+}
 
   storySearch.addEventListener("input", filtrarHistorias);
   cargarNovelas();
