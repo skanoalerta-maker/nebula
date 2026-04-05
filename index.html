@@ -2342,7 +2342,193 @@
       emptyState.classList.remove("hidden");
       return;
     }
+    
+  emptyState.classList.add("hidden");
 
+  storyGrid.innerHTML = items.map(novela => `
+    <article class="story-card">
+      <div class="story-cover-shell">
+        <img class="story-cover" src="${novela.portada}" alt="${novela.titulo}" />
+        <div class="story-cover-shadow"></div>
+
+        <div class="story-badges">
+          <span>${capitalizar(novela.genero)}</span>
+          <span>${novela.temporada || "Temporada 1"}</span>
+        </div>
+      </div>
+
+      <div class="story-body">
+        <div class="story-topline">
+          <h3>${novela.titulo}</h3>
+          <small>${getStoredViews(novela)} visitas</small>
+        </div>
+
+        <div class="story-rating-line">
+          <div class="stars" aria-label="Calificación ${novela.rating} de 5">
+            ${renderStarsHTML(novela.rating)}
+          </div>
+          <span class="rating-label">${novela.rating}.0 / 5</span>
+        </div>
+
+        <p>${novela.descripcion}</p>
+
+        <div class="story-mini-meta">
+          <div>
+            <small>Gratis</small>
+            <strong>${novela.gratis || 3} capítulos</strong>
+          </div>
+
+          <div>
+            <small>Capítulos</small>
+            <strong>${novela.capitulos || 0} disponibles</strong>
+          </div>
+        </div>
+
+        <div class="story-card-actions">
+          <a class="btn btn-primary" href="${novela.ruta}" data-read-id="${novela.id}">
+            Comenzar a leer
+          </a>
+
+          <button class="btn btn-secondary" type="button" data-continue-id="${novela.id}">
+            Seguir leyendo
+          </button>
+        </div>
+      </div>
+    </article>
+  `).join("");
+
+  document.querySelectorAll("[data-read-id]").forEach(link => {
+    const novela = novelas.find(n => n.id === link.dataset.readId);
+    if (!novela) return;
+
+    link.addEventListener("click", () => {
+      saveInitialProgress(novela);
+      increaseViews(novela);
+    });
+  });
+
+  document.querySelectorAll("[data-continue-id]").forEach(btn => {
+    const novela = novelas.find(n => n.id === btn.dataset.continueId);
+    if (!novela) return;
+
+    btn.addEventListener("click", () => {
+      saveInitialProgress(novela);
+      window.location.href = getContinuePath(novela);
+    });
+  });
+}
+
+/* 👇 AQUÍ MISMO PEGA ESTO */
+function renderCategoryRows(items) {
+  const container = document.getElementById("categoryRows");
+  if (!container) return;
+
+  const categorias = [...new Set(items.map(item => item.genero).filter(Boolean))];
+
+  container.innerHTML = categorias.map(categoria => {
+    const novelasCategoria = items.filter(item => item.genero === categoria);
+
+    return `
+      <section class="category-row">
+        <div class="category-row-top">
+          <h3>${capitalizar(categoria)}</h3>
+
+          <div class="category-row-top-controls">
+            <button type="button" onclick="moveCategoryRow('row-${categoria}', -1)">‹</button>
+            <button type="button" onclick="moveCategoryRow('row-${categoria}', 1)">›</button>
+          </div>
+        </div>
+
+        <div class="category-slider" id="row-${categoria}">
+          ${novelasCategoria.map(novela => `
+            <article class="story-card">
+              <div class="story-cover-shell">
+                <img class="story-cover" src="${novela.portada}" alt="${novela.titulo}" />
+                <div class="story-cover-shadow"></div>
+
+                <div class="story-badges">
+                  <span>${capitalizar(novela.genero)}</span>
+                  <span>${novela.temporada || "Temporada 1"}</span>
+                </div>
+              </div>
+
+              <div class="story-body">
+                <div class="story-topline">
+                  <h3>${novela.titulo}</h3>
+                  <small>${getStoredViews(novela)} visitas</small>
+                </div>
+
+                <div class="story-rating-line">
+                  <div class="stars" aria-label="Calificación ${novela.rating} de 5">
+                    ${renderStarsHTML(novela.rating)}
+                  </div>
+                  <span class="rating-label">${novela.rating}.0 / 5</span>
+                </div>
+
+                <p>${novela.descripcion}</p>
+
+                <div class="story-mini-meta">
+                  <div>
+                    <small>Gratis</small>
+                    <strong>${novela.gratis || 3} capítulos</strong>
+                  </div>
+
+                  <div>
+                    <small>Capítulos</small>
+                    <strong>${novela.capitulos || 0} disponibles</strong>
+                  </div>
+                </div>
+
+                <div class="story-card-actions">
+                  <a class="btn btn-primary" href="${novela.ruta}" data-row-read-id="${novela.id}">
+                    Comenzar a leer
+                  </a>
+
+                  <button class="btn btn-secondary" type="button" data-row-continue-id="${novela.id}">
+                    Seguir leyendo
+                  </button>
+                </div>
+              </div>
+            </article>
+          `).join("")}
+        </div>
+      </section>
+    `;
+  }).join("");
+
+  document.querySelectorAll("[data-row-read-id]").forEach(link => {
+    const novela = novelas.find(n => n.id === link.dataset.rowReadId);
+    if (!novela) return;
+
+    link.addEventListener("click", () => {
+      saveInitialProgress(novela);
+      increaseViews(novela);
+    });
+  });
+
+  document.querySelectorAll("[data-row-continue-id]").forEach(btn => {
+    const novela = novelas.find(n => n.id === btn.dataset.rowContinueId);
+    if (!novela) return;
+
+    btn.addEventListener("click", () => {
+      saveInitialProgress(novela);
+      window.location.href = getContinuePath(novela);
+    });
+  });
+}
+
+function moveCategoryRow(id, direction) {
+  const row = document.getElementById(id);
+  if (!row) return;
+
+  row.scrollBy({
+    left: direction * 340,
+    behavior: "smooth"
+  });
+}
+
+function filtrarHistorias() {
+  const q = storySearch.value.trim().toLowerCase();
     emptyState.classList.add("hidden");
 
     storyGrid.innerHTML = items.map(novela => `
